@@ -5,9 +5,11 @@ function newConnection(uri) {
     console.log(uri)
     const connection = mongoose.createConnection(uri, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
     })
-    
+
     connection.on('connected', () => {
         console.log(`Connected database successfully!`)
     })
