@@ -1,7 +1,7 @@
-import Course from '../models/Course'
-import User from '../models/User'
 import { StatusCodes } from 'http-status-codes'
 import { BadRequestError, NotFoundError, UnauthenticatedError } from '../errors'
+import Course from '../models/course.model'
+import User from '../models/user.model'
 // {{URL}}/courses
 const getAllCourses = async (req, res) => {
     const { search, limit } = req.query;

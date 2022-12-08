@@ -1,12 +1,13 @@
 import express from 'express'
 const userRouter = express.Router()
-
-
 import {
     updatePassword,
     getUserInfor,
-} from '../../controllers/users'
+} from '../controllers/user.controller'
+
+
+
 userRouter.route('/').get(getUserInfor)
-userRouter.route('/updatepassword').patch(updatePassword)
+userRouter.route('/update-password').patch(updatePassword)
 
 export default userRouter

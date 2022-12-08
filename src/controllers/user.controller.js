@@ -1,7 +1,7 @@
-import User from '../models/User';
-import { StatusCodes } from 'http-status-codes';
-import { BadRequestError, UnauthenticatedError, NotFoundError } from '../errors';
 import bcrypt from 'bcryptjs';
+import { StatusCodes } from 'http-status-codes';
+import { BadRequestError, NotFoundError, UnauthenticatedError } from '../errors';
+import User from '../models/user.model';
 // {{URL}}/user
 const getUserInfor = async (req, res) => {
     const user = await User.findOne({ _id: req.user.userId });
@@ -53,7 +53,7 @@ const updatePassword = async (req, res) => {
 export {
     updatePassword,
     getUserInfor,
-}
+};
 
 /*flow
 Khi updatePassword sẽ cho nhập mật khẩu cũ và mật khẩu mới nếu nhập mật khẩu cũ đúng thì sẽ đổi thành công

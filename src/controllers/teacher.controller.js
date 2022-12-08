@@ -1,7 +1,7 @@
-import User from '../models/User'
-import Course from '../models/Course'
 import { StatusCodes } from 'http-status-codes'
-import { BadRequestError, UnauthenticatedError, NotFoundError } from '../errors'
+import { BadRequestError, NotFoundError, UnauthenticatedError } from '../errors'
+import Course from '../models/course.model'
+import User from '../models/user.model'
 //{{URL}}/teacher/courses
 const getOwnerCourses = async (req, res) => {
     const userCheck = await User.findOne({ _id: req.user.userId });

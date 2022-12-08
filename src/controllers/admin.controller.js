@@ -1,6 +1,6 @@
-import User from '../models/User'
-import { StatusCodes } from 'http-status-codes'
-import { BadRequestError, UnauthenticatedError, NotFoundError } from '../errors'
+import { StatusCodes } from 'http-status-codes';
+import { BadRequestError, NotFoundError, UnauthenticatedError } from '../errors';
+import User from '../models/user.model';
 
 //{{URL}}/admin
 const getAllUsers = async (req, res) => {
@@ -104,7 +104,7 @@ export {
     getAllUsers,
     deleteUser,
     updateUser,
-}
+};
 
 //flow
 /* 

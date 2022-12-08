@@ -7,7 +7,7 @@ import {
     createCourse,
     updateCourse,
     deleteCourse,
-} from '../../controllers/teachers'
+} from '../controllers/teacher.controller'
 teacherRouter.route('/courses').post(createCourse).get(getOwnerCourses)
 teacherRouter.route('/courses/:id').patch(updateCourse).delete(deleteCourse)
 

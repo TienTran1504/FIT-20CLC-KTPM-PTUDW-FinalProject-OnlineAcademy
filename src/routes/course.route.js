@@ -3,8 +3,8 @@ const coursesRouter = express.Router()
 
 import {
     getAllCourses,
-    getCourse,
-} from '../../controllers/courses'
+    getCourse
+} from '../controllers/course.controller'
 
 coursesRouter.route('/').get(getAllCourses)
 coursesRouter.route('/:id').get(getCourse)
