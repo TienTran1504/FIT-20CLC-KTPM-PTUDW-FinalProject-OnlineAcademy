@@ -14,17 +14,13 @@ const CourseSchema = new mongoose.Schema({
         required: [true, 'Please provide type of course'],
         enum: ['Javascript', 'HTML', 'NodeJS', 'ReactJS', 'Python'],
     },
-    // briefDescription: {
-    //     type: String,
-    //     trim: true
-    // },
-    // detailDescription: {
-    //     type: String,
-    //     trim: true
-    // },
-    description: {
+    briefDescription: {
         type: String,
-        trim: true,
+        trim: true
+    },
+    detailDescription: {
+        type: String,
+        trim: true
     },
     status: {
         type: String,

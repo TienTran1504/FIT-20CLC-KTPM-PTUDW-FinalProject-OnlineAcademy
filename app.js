@@ -5,7 +5,7 @@ import { engine } from 'express-handlebars'
 import morgan from 'morgan'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import newConnection from './src/config/db.config'
+import connectDB from './src/config/connect.js'
 import route from './src/routes'
 dotenv.config()
 
@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-    await newConnection(process.env.URI_MONGODB);
+    await connectDB(process.env.URI_MONGODB);
 
     app.listen(PORT, () =>
       console.log(`Server is running on port ${PORT}...`)

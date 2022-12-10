@@ -7,7 +7,7 @@ import userRouter from "./user.route";
 
 function route(app) {
   // app.use('/api/v1/auth', authRouter);
-  app.use("/api/v1/admin", adminRouter);
+  app.use("/admin", adminRouter);
   app.use("/api/v1/courses", coursesRouter);
   app.use("/api/v1/student", studentRouter);
   app.use("/api/v1/teacher", teacherRouter);
