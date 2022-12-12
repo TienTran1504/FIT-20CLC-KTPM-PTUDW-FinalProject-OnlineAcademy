@@ -47,7 +47,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-})
+}, { timestamps: true })
 
 //Hashing password
 UserSchema.pre('save', async function () {

@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import Course from "../models/course.model.js";
+import CourseCategory from "../models/coursecategory.model.js";
 import createError from "http-errors";
 
 //{{URL}}/admin
@@ -7,7 +8,7 @@ const getAllUsers = async (req, res) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const users = await User.find({});
+  const users = await User.find({}).sort('createdAt').lean();
   let sortedUsers = [...users];
   if (search) {
     sortedUsers = sortedUsers.filter((user) => {
@@ -18,7 +19,6 @@ const getAllUsers = async (req, res) => {
     sortedUsers = sortedUsers.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
-  console.log(sortedUsers);
   res.render('vwAdminManagement/index', {
     users: sortedUsers,
     empty: sortedUsers.length === 0
@@ -32,7 +32,7 @@ const getAllStudents = async (req, res) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const users = await User.find({ permission: "student" });
+  const users = await User.find({ permission: "student" }).sort('createdAt').lean();
   let sortedUsers = [...users];
   if (search) {
     sortedUsers = sortedUsers.filter((user) => {
@@ -43,7 +43,6 @@ const getAllStudents = async (req, res) => {
     sortedUsers = sortedUsers.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
-  console.log(sortedUsers);
   res.render('vwAdminManagement/students', {
     users: sortedUsers,
     empty: sortedUsers.length === 0
@@ -57,7 +56,7 @@ const getAllTeachers = async (req, res) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const users = await User.find({ permission: "teacher" });
+  const users = await User.find({ permission: "teacher" }).sort('createdAt').lean();
   let sortedUsers = [...users];
   if (search) {
     sortedUsers = sortedUsers.filter((user) => {
@@ -68,7 +67,6 @@ const getAllTeachers = async (req, res) => {
     sortedUsers = sortedUsers.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
-  console.log(sortedUsers);
   res.render('vwAdminManagement/teachers', {
     users: sortedUsers,
     empty: sortedUsers.length === 0
@@ -82,7 +80,7 @@ const getAllCourses = async (req, res) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const courses = await Course.find({});
+  const courses = await Course.find({}).sort('createdAt').lean();
   let sortedCourses = [...courses];
   if (search) {
     sortedCourses = sortedCourses.filter((course) => {
@@ -93,7 +91,6 @@ const getAllCourses = async (req, res) => {
     sortedCourses = sortedCourses.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedCourses, count: sortedCourses.length });
-  console.log(sortedCourses);
   res.render('vwAdminManagement/courses', {
     courses: sortedCourses,
     empty: sortedCourses.length === 0
@@ -103,31 +100,66 @@ const getAllCourses = async (req, res) => {
   // }
 };
 
-//{{URL}}/admin/managetypecourses
-const getAllTypeCourses = async (req, res) => {
+//{{URL}}/admin/managecoursecategory
+const getAllCourseCategories = async (req, res) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const courses = await Course.find({});
-  let sortedCourses = [...courses];
+  const courseCategories = await CourseCategory.find({}).sort('createdAt').lean();
+  let sortedCourseCategories = [...courseCategories];
   if (search) {
-    sortedCourses = sortedCourses.filter((course) => {
+    sortedCourseCategories = sortedCourseCategories.filter((course) => {
       return course.name.startsWith(search);
     });
   }
   if (limit) {
-    sortedCourses = sortedCourses.slice(0, Number(limit));
+    sortedCourseCategories = sortedCourseCategories.slice(0, Number(limit));
   }
-  // res.status(StatusCodes.OK).json({ sortedCourses, count: sortedCourses.length });
-  console.log(sortedCourses);
-  res.render('vwAdminManagement/typecourses', {
-    courses: sortedCourses,
-    empty: sortedCourses.length === 0
+  // res.status(StatusCodes.OK).json({ sortedCourseCategories, count: sortedCourseCategories.length });
+  res.render('vwAdminManagement/coursecategory', {
+    courses: sortedCourseCategories,
+    empty: sortedCourseCategories.length === 0
   });
   // } else {
   //   throw createError.Unauthorized();
   // }
 };
+const getEditPage = async function (req, res) {
+  const id = req.query.id || 0;
+  const user = await User.findById({ _id: id }).lean();
+  if (user === null) {
+    return res.redirect('/admin');
+  }
+
+  res.render('vwAdminManagement/edit/edituser', {
+    user
+  });
+}
+
+const updateUserPermission = async function (req, res) {
+  const { UserID, permission } = req.body;
+  const userUpdate = await User.findByIdAndUpdate(
+    {
+      _id: UserID,
+
+    },
+    { permission },
+    { new: true, runValidators: true }
+  )
+  if (!userUpdate) {
+    throw createError.NotFound();
+  }
+  res.redirect('/admin');
+}
+
+const deleteUser = async function (req, res) {
+  const { UserID } = req.body;
+  const deleteUser = await User.findByIdAndRemove({ _id: UserID })
+  if (!deleteUser) {
+    throw createError.NotFound();
+  }
+  res.redirect('/admin');
+}
 
 // {{URL}}/admin/:id
 // const getUser = async (req, res) => {
@@ -200,7 +232,16 @@ const getAllTypeCourses = async (req, res) => {
 //   }
 // };
 
-export { getAllUsers, getAllStudents, getAllTeachers, getAllCourses, getAllTypeCourses };
+export {
+  getAllUsers,
+  getAllStudents,
+  getAllTeachers,
+  getAllCourses,
+  getAllCourseCategories,
+  getEditPage,
+  updateUserPermission,
+  deleteUser,
+};
 
 //flow
 /* 

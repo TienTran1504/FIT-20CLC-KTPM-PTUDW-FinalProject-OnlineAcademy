@@ -1,0 +1,69 @@
+<form method="post">
+  <div class="card">
+    <h4 class="card-header">
+      Edit Permission
+    </h4>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="txtUserID">User ID</label>
+        <input
+          name="UserID"
+          type="text"
+          class="form-control"
+          id="txtUserID"
+          value="{{user._id}}"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <label for="txtUserName">Name</label>
+        <input
+          name="UserName"
+          type="text"
+          class="form-control"
+          id="txtUserName"
+          value="{{user.name}}"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Options
+              permission</label>
+          </div>
+          <select
+            class="custom-select"
+            id="inputGroupSelect01"
+            name="permission"
+          >
+            <option selected value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      <a class="btn btn-outline-success" href="/admin" role="button">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        List
+      </a>
+      <button
+        type="submit"
+        class="btn btn-danger"
+        formaction="/admin/edituser/del"
+      >
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Delete
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        formaction="/admin/edituser/patch"
+      >
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+  </div>
+</form>

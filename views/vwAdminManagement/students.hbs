@@ -7,27 +7,34 @@
           style="background-color:#52ab98; color:#fff"
         >Management</h4>
         <div class="list-group list-group-flush">
-          <a href="/admin" class="list-group-item list-group-item-action">
+          <a
+            href="/admin"
+            class="list-group-item list-group-item-action"
+            style="font-weight:bold"
+          >
             All User
           </a>
           <a
             href="/admin/managestudents"
             class="list-group-item list-group-item-action active"
             aria-current="true"
-            style="background-color:#2b6777; color:#000"
+            style="background-color:#2b6777; color:#000; font-weight: bold"
           >Student</a>
           <a
             href="/admin/manageteachers"
             class="list-group-item list-group-item-action"
+            style="font-weight:bold"
           >Teacher</a>
           <a
-            href="/admin/managetypecourses"
+            href="/admin/managecoursecategory"
             class="list-group-item list-group-item-action"
             aria-current="true"
-          >Type Of Courses</a>
+            style="font-weight:bold"
+          >Course Categories</a>
           <a
             href="/admin/managecourses"
             class="list-group-item list-group-item-action"
+            style="font-weight:bold"
           >Courses</a>
         </div>
       </div>
@@ -51,35 +58,35 @@
               <th scope="col">Giới tính</th>
               <th scope="col">Phân Loại</th>
               <th scope="col">Email</th>
-              <th scope="col">Password</th>
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
             {{#each users}}
+
               <tr>
-                <th scope="row">{{ID}}</th>
-                <td>{{FullName}}</td>
-                <td>{{gender}}</td>
-                <td>{{type}}</td>
-                <td>{{email}}</td>
-                <td>{{password}}</td>
+                <th scope="row">{{@index}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.gender}}</td>
+                <td>{{this.permission}}</td>
+                <td>{{this.email}}</td>
                 <td class="text-right">
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
+                  <a
+                    class="btn btn-sm btn-primary"
+                    href="/admin/edituser?id={{this._id}}"
+                    role="button"
+                    title="Edit"
+                  >
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                   </a>
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  </a>
                 </td>
-
               </tr>
             {{/each}}
           </tbody>
         </table>
 
         <div class="card-footer text-muted">
-          2 days ago
+          Users Student
         </div>
       </div>
     </div>

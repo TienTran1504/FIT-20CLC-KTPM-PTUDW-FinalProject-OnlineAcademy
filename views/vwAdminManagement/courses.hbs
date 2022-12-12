@@ -7,26 +7,33 @@
           style="background-color:#52ab98; color:#fff"
         >Management</h4>
         <div class="list-group list-group-flush">
-          <a href="/admin" class="list-group-item list-group-item-action">
+          <a
+            href="/admin"
+            class="list-group-item list-group-item-action"
+            style="font-weight:bold"
+          >
             All User
           </a>
           <a
             href="/admin/managestudents"
             class="list-group-item list-group-item-action"
+            style="font-weight:bold"
           >Student</a>
           <a
             href="/admin/manageteachers"
             class="list-group-item list-group-item-action"
+            style="font-weight:bold"
           >Teacher</a>
           <a
-            href="/admin/managetypecourses"
+            href="/admin/managecoursecategory"
             class="list-group-item list-group-item-action"
-          >Type Of Courses</a>
+            style="font-weight:bold"
+          >Course Categories</a>
           <a
             href="/admin/managecourses"
             class="list-group-item list-group-item-action active"
             aria-current="true"
-            style="background-color:#2b6777; color:#000"
+            style="background-color:#2b6777; color:#000; font-weight: bold"
           >Courses</a>
         </div>
       </div>
@@ -40,16 +47,8 @@
           class="card-header d-flex justify-content-between"
           style="background-color:#52ab98; color:#fff"
         >
-          Type of Courses Management
-          <a
-            class="btn btn-sm btn-outline-primary"
-            href="/admin/categories/add"
-            role="button"
-            style="color:#fff; border-color:#fff;"
-          >
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Course
-          </a>
+          Courses Management
+
         </h4>
         <table class="table table-hover">
           <thead>
@@ -64,10 +63,10 @@
           <tbody>
             {{#each courses}}
               <tr>
-                <th scope="row">{{ID}}</th>
-                <td>{{courseName}}</td>
+                <th scope="row">{{@index}}</th>
+                <td>{{name}}</td>
                 <td>{{type}}</td>
-                <td class="text-center">{{numberStudents}}</td>
+                <td class="text-center">{{studentList.length}}</td>
                 <td class="text-right">
                   <a class="btn btn-sm btn-primary" href="#" role="button">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
