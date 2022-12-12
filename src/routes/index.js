@@ -7,11 +7,11 @@ import userRouter from "./user.route";
 
 function route(app) {
   // app.use('/api/v1/auth', authRouter);
-  app.use("/api/v1/admin", adminRouter);
-  app.use("/api/v1/courses", coursesRouter);
-  app.use("/api/v1/student", studentRouter);
-  app.use("/api/v1/teacher", teacherRouter);
-  app.use("/api/v1/user", userRouter);
+  app.use("/admin", adminRouter);
+  app.use("/courses", coursesRouter);
+  app.use("/student", studentRouter);
+  app.use("/teacher", teacherRouter);
+  app.use("/user", userRouter);
 
   app.use("/", (req, res, next) => {
     res.render("home");
