@@ -5,10 +5,11 @@ import User from "../models/user.model";
 
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
-  const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
-  res
-    .status(StatusCodes.OK)
-    .json({ id: user._id, name: user.name, courseList: user.courseList });
+  // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // res
+  //   .status(StatusCodes.OK)
+  //   .json({ id: user._id, name: user.name, courseList: user.courseList });
+  res.render("vwStudentProfile/profile", {});
 };
 
 // {{URL}}/student/courses/:courseId
@@ -37,14 +38,12 @@ const addCourse = async (req, res) => {
       req.body,
       { new: true, runValidators: true }
     );
-    res
-      .status(StatusCodes.OK)
-      .json({
-        msg: `Add ${course.name} successfully`,
-        name: userUpdate.name,
-        courseList: userUpdate.courseList,
-        courseLength: userUpdate.courseList.length,
-      });
+    res.status(StatusCodes.OK).json({
+      msg: `Add ${course.name} successfully`,
+      name: userUpdate.name,
+      courseList: userUpdate.courseList,
+      courseLength: userUpdate.courseList.length,
+    });
   }
 };
 
@@ -81,15 +80,13 @@ const removeCourse = async (req, res) => {
     req.body,
     { new: true, runValidators: true }
   );
-  res
-    .status(StatusCodes.OK)
-    .json({
-      msg: `Delete course: ${course.name} from student course's list successfully`,
-      _id: userUpdate._id,
-      name: userUpdate.name,
-      courseList: userUpdate.courseList,
-      courseLength: userUpdate.courseList.length,
-    });
+  res.status(StatusCodes.OK).json({
+    msg: `Delete course: ${course.name} from student course's list successfully`,
+    _id: userUpdate._id,
+    name: userUpdate.name,
+    courseList: userUpdate.courseList,
+    courseLength: userUpdate.courseList.length,
+  });
 };
 
 // {{URL}}/student/courses/:courseId
@@ -124,14 +121,12 @@ const updateStatusCourse = async (req, res) => {
       req.body,
       { new: true, runValidators: true }
     );
-    res
-      .status(StatusCodes.OK)
-      .json({
-        msg: `Update quantity ${courseId} successfully`,
-        name: userUpdate.name,
-        courseList: userUpdate.courseList,
-        courseLength: userUpdate.courseList.length,
-      });
+    res.status(StatusCodes.OK).json({
+      msg: `Update quantity ${courseId} successfully`,
+      name: userUpdate.name,
+      courseList: userUpdate.courseList,
+      courseLength: userUpdate.courseList.length,
+    });
   }
 };
 
