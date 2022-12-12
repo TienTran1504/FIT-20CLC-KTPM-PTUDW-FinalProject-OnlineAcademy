@@ -38,7 +38,7 @@ const getUser = async (req, res) => {
       _id: userId,
     });
     if (!user) {
-      throw new NotFoundError(`No user with id ${userId}`);
+      throw createError.NotFound(`No user with id ${userId}`);
     }
     res.status(StatusCodes.OK).json({ user });
   } else {
@@ -62,7 +62,7 @@ const deleteUser = async (req, res) => {
     }
     res
       .status(StatusCodes.OK)
-      .json({ msg: `Delete user ID: ${userId} successfully ` });
+      .json({ msg: `Delete user ID: ${userId} successfully` });
   } else {
     throw createError.Unauthorized();
   }
