@@ -8,19 +8,27 @@ import {
     getAllCourseCategories,
     // deleteUser, getAllUsers, getUser, updateUser
     getAllUsers,
-    getEditPage,
+    getEditUserPage,
+    getAddCategoryPage,
     updateUserPermission,
-    deleteUser
+    deleteUser,
+    createCourseCategory,
+    getEditCategoryPage,
+    updateCourseCategory,
+    deleteCourseCategory
 } from '../controllers/admin.controller'
-adminRouter.route('/edituser').get(getEditPage)
+adminRouter.route('/edituser').get(getEditUserPage)
 adminRouter.route('/edituser/patch').post(updateUserPermission)
 adminRouter.route('/edituser/del').post(deleteUser)
+adminRouter.route('/editcategory').get(getEditCategoryPage)
+adminRouter.route('/editcategory/patch').post(updateCourseCategory)
+adminRouter.route('/editcategory/del').post(deleteCourseCategory)
 adminRouter.route('/').get(getAllUsers)
 adminRouter.route('/managestudents').get(getAllStudents)
 adminRouter.route('/manageteachers').get(getAllTeachers)
 adminRouter.route('/managecourses').get(getAllCourses)
-adminRouter.route('/managecoursecategory').get(getAllCourseCategories)
-adminRouter.route('/managecoursecategory/add').get().post()
-adminRouter.route('/managecoursecategory/edit').get().patch()
+adminRouter.route('/managecategory').get(getAllCourseCategories)
+adminRouter.route('/addcategory').get(getAddCategoryPage)
+adminRouter.route('/addcategory/post').post(createCourseCategory)
 
 export default adminRouter

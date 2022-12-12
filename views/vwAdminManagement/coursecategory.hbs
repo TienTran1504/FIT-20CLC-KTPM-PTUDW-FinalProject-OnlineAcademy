@@ -25,7 +25,7 @@
             class="list-group-item list-group-item-action"
           >Teacher</a>
           <a
-            href="/admin/managecoursecategory"
+            href="/admin/managecategory"
             class="list-group-item list-group-item-action active"
             aria-current="true"
             style="background-color:#2b6777; color:#000; font-weight:bold"
@@ -39,7 +39,7 @@
       </div>
       <div class="card">
         <h4 class="card-header">Total Course Types:
-          {{courseCategory.length}}
+          {{categories.length}}
         </h4>
       </div>
     </div>
@@ -52,12 +52,12 @@
           Course Categories Management
           <a
             class="btn btn-sm btn-outline-primary"
-            href="/admin/categories/add"
+            href="/admin/addcategory"
             role="button"
             style="color:#fff; border-color:#fff;"
           >
             <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Course
+            Add Category
           </a>
         </h4>
         <table class="table table-hover">
@@ -69,19 +69,20 @@
             </tr>
           </thead>
           <tbody>
-            {{#each courseCategory}}
+            {{#each categories}}
               <tr>
                 <th scope="row">{{name}}</th>
                 <td class="text-center">{{courseList.length}}</td>
                 <td class="text-right">
                   <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </a>
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                   </a>
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  <a
+                    class="btn btn-sm btn-primary"
+                    href="/admin/editcategory?id={{_id}}"
+                    role="button"
+                  >
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
                   </a>
                 </td>
 
@@ -91,7 +92,7 @@
         </table>
 
         <div class="card-footer text-muted">
-          2 days ago
+          Categories
         </div>
       </div>
     </div>

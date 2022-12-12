@@ -13,7 +13,7 @@ const app = express()
 const corsOptions = { origin: '*' }
 
 
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
 app.use(cors(corsOptions))
 app.use('/public', express.static('public'));
 app.engine('hbs', engine({

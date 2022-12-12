@@ -100,7 +100,7 @@ const getAllCourses = async (req, res) => {
   // }
 };
 
-//{{URL}}/admin/managecoursecategory
+//{{URL}}/admin/managecategory
 const getAllCourseCategories = async (req, res) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
@@ -117,14 +117,15 @@ const getAllCourseCategories = async (req, res) => {
   }
   // res.status(StatusCodes.OK).json({ sortedCourseCategories, count: sortedCourseCategories.length });
   res.render('vwAdminManagement/coursecategory', {
-    courses: sortedCourseCategories,
+    categories: sortedCourseCategories,
     empty: sortedCourseCategories.length === 0
   });
   // } else {
   //   throw createError.Unauthorized();
   // }
 };
-const getEditPage = async function (req, res) {
+
+const getEditUserPage = async function (req, res) {
   const id = req.query.id || 0;
   const user = await User.findById({ _id: id }).lean();
   if (user === null) {
@@ -134,6 +135,23 @@ const getEditPage = async function (req, res) {
   res.render('vwAdminManagement/edit/edituser', {
     user
   });
+}
+
+const getEditCategoryPage = async function (req, res) {
+  const id = req.query.id || 0;
+  const category = await CourseCategory.findById({ _id: id }).lean();
+  if (category === null) {
+    return res.redirect('/admin/managecategory');
+  }
+
+  res.render('vwAdminManagement/edit/editcategory', {
+    category
+  });
+}
+
+const getAddCategoryPage = async function (req, res) {
+
+  res.render('vwAdminManagement/add/addcategory');
 }
 
 const updateUserPermission = async function (req, res) {
@@ -159,6 +177,40 @@ const deleteUser = async function (req, res) {
     throw createError.NotFound();
   }
   res.redirect('/admin');
+}
+
+const createCourseCategory = async function (req, res) {
+  // req.body.createdBy= req.user._id
+  const createCategory = await CourseCategory.create({ name: req.body.CategoryName });
+  if (!createCategory) {
+    throw createCategory.NotFound();
+  }
+  res.redirect('/admin/managecategory')
+}
+
+const updateCourseCategory = async function (req, res) {
+  const { CategoryID, CategoryNewName } = req.body;
+  const userUpdate = await CourseCategory.findByIdAndUpdate(
+    {
+      _id: CategoryID,
+
+    },
+    { name: CategoryNewName },
+    { new: true, runValidators: true }
+  )
+  if (!userUpdate) {
+    throw createError.NotFound();
+  }
+  res.redirect('/admin/managecategory');
+}
+
+const deleteCourseCategory = async function (req, res) {
+  const { CategoryID } = req.body;
+  const deleteCategory = await CourseCategory.findByIdAndRemove({ _id: CategoryID })
+  if (!deleteCategory) {
+    throw createError.NotFound();
+  }
+  res.redirect('/admin/managecategory');
 }
 
 // {{URL}}/admin/:id
@@ -238,9 +290,14 @@ export {
   getAllTeachers,
   getAllCourses,
   getAllCourseCategories,
-  getEditPage,
+  getEditUserPage,
+  getEditCategoryPage,
+  getAddCategoryPage,
   updateUserPermission,
   deleteUser,
+  createCourseCategory,
+  updateCourseCategory,
+  deleteCourseCategory
 };
 
 //flow

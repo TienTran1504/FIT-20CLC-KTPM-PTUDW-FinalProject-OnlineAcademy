@@ -1,11 +1,14 @@
-<form method="post">
+<form method="post" style="margin-top: 80px">
   <div class="card">
-    <h4 class="card-header">
+    <h4
+      class="card-header d-flex justify-content-between"
+      style="background-color:#52ab98; color:#fff"
+    >
       Edit Permission
     </h4>
     <div class="card-body">
       <div class="form-group">
-        <label for="txtUserID">User ID</label>
+        <label for="txtUserID" style="font-weight:bold">User ID</label>
         <input
           name="UserID"
           type="text"
@@ -15,8 +18,8 @@
           readonly
         />
       </div>
-      <div class="form-group">
-        <label for="txtUserName">Name</label>
+      <div class="form-group mb-3">
+        <label for="txtUserName" style="font-weight:bold">Name</label>
         <input
           name="UserName"
           type="text"
