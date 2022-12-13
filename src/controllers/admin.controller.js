@@ -4,11 +4,11 @@ import CourseCategory from "../models/coursecategory.model.js";
 import createError from "http-errors";
 
 //{{URL}}/admin
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const users = await User.find({}).sort("createdAt").lean();
+  const users = await User.find({}).sort('createdAt').lean();
   let sortedUsers = [...users];
   if (search) {
     sortedUsers = sortedUsers.filter((user) => {
@@ -19,22 +19,20 @@ const getAllUsers = async (req, res) => {
     sortedUsers = sortedUsers.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
-  res.render("vwAdminManagement/index", {
+  res.render('vwAdminManagement/index', {
     users: sortedUsers,
-    empty: sortedUsers.length === 0,
+    empty: sortedUsers.length === 0
   });
   // } else {
   //   throw createError.Unauthorized();
   // }
 };
 //{{URL}}/admin/managestudents
-const getAllStudents = async (req, res) => {
+const getAllStudents = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const users = await User.find({ permission: "student" })
-    .sort("createdAt")
-    .lean();
+  const users = await User.find({ permission: "student" }).sort('createdAt').lean();
   let sortedUsers = [...users];
   if (search) {
     sortedUsers = sortedUsers.filter((user) => {
@@ -45,22 +43,20 @@ const getAllStudents = async (req, res) => {
     sortedUsers = sortedUsers.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
-  res.render("vwAdminManagement/students", {
+  res.render('vwAdminManagement/students', {
     users: sortedUsers,
-    empty: sortedUsers.length === 0,
+    empty: sortedUsers.length === 0
   });
   // } else {
   //   throw createError.Unauthorized();
   // }
 };
 //{{URL}}/admin/manageteachers
-const getAllTeachers = async (req, res) => {
+const getAllTeachers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const users = await User.find({ permission: "teacher" })
-    .sort("createdAt")
-    .lean();
+  const users = await User.find({ permission: "teacher" }).sort('createdAt').lean();
   let sortedUsers = [...users];
   if (search) {
     sortedUsers = sortedUsers.filter((user) => {
@@ -71,20 +67,20 @@ const getAllTeachers = async (req, res) => {
     sortedUsers = sortedUsers.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
-  res.render("vwAdminManagement/teachers", {
+  res.render('vwAdminManagement/teachers', {
     users: sortedUsers,
-    empty: sortedUsers.length === 0,
+    empty: sortedUsers.length === 0
   });
   // } else {
   //   throw createError.Unauthorized();
   // }
 };
 //{{URL}}/admin/managecourses
-const getAllCourses = async (req, res) => {
+const getAllCourses = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const courses = await Course.find({}).sort("createdAt").lean();
+  const courses = await Course.find({}).sort('createdAt').lean();
   let sortedCourses = [...courses];
   if (search) {
     sortedCourses = sortedCourses.filter((course) => {
@@ -95,9 +91,9 @@ const getAllCourses = async (req, res) => {
     sortedCourses = sortedCourses.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedCourses, count: sortedCourses.length });
-  res.render("vwAdminManagement/courses", {
+  res.render('vwAdminManagement/courses', {
     courses: sortedCourses,
-    empty: sortedCourses.length === 0,
+    empty: sortedCourses.length === 0
   });
   // } else {
   //   throw createError.Unauthorized();
@@ -105,13 +101,11 @@ const getAllCourses = async (req, res) => {
 };
 
 //{{URL}}/admin/managecategory
-const getAllCourseCategories = async (req, res) => {
+const getAllCourseCategories = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
-  const courseCategories = await CourseCategory.find({})
-    .sort("createdAt")
-    .lean();
+  const courseCategories = await CourseCategory.find({}).sort('createdAt').lean();
   let sortedCourseCategories = [...courseCategories];
   if (search) {
     sortedCourseCategories = sortedCourseCategories.filter((course) => {
@@ -122,106 +116,136 @@ const getAllCourseCategories = async (req, res) => {
     sortedCourseCategories = sortedCourseCategories.slice(0, Number(limit));
   }
   // res.status(StatusCodes.OK).json({ sortedCourseCategories, count: sortedCourseCategories.length });
-  res.render("vwAdminManagement/coursecategory", {
+  res.render('vwAdminManagement/coursecategory', {
     categories: sortedCourseCategories,
-    empty: sortedCourseCategories.length === 0,
+    empty: sortedCourseCategories.length === 0
   });
   // } else {
   //   throw createError.Unauthorized();
   // }
 };
 
-const getEditUserPage = async function (req, res) {
+//{{URL}}/admin/edituser?id
+const getEditUserPage = async function (req, res, next) {
   const id = req.query.id || 0;
   const user = await User.findById({ _id: id }).lean();
   if (user === null) {
-    return res.redirect("/admin");
+    return res.redirect('/admin');
   }
 
-  res.render("vwAdminManagement/edit/edituser", {
-    user,
+  res.render('vwAdminManagement/edit/edituser', {
+    user
   });
-};
+}
 
-const getEditCategoryPage = async function (req, res) {
+//{{URL}}/admin/editcategory
+const getEditCategoryPage = async function (req, res, next) {
   const id = req.query.id || 0;
   const category = await CourseCategory.findById({ _id: id }).lean();
   if (category === null) {
-    return res.redirect("/admin/managecategory");
+    return res.redirect('/admin/managecategory');
   }
 
-  res.render("vwAdminManagement/edit/editcategory", {
-    category,
+  res.render('vwAdminManagement/edit/editcategory', {
+    category
   });
-};
+}
 
-const getAddCategoryPage = async function (req, res) {
-  res.render("vwAdminManagement/add/addcategory");
-};
+//{{URL}}/admin/addcategory
+const getAddCategoryPage = async function (req, res, next) {
 
-const updateUserPermission = async function (req, res) {
+  res.render('vwAdminManagement/add/addcategory');
+}
+
+//{{URL}}/admin/managecourses?id
+const viewCoursesByID = async function (req, res, next) {
+  const id = req.query.id || 0;
+  const category = await CourseCategory.findById({ _id: id }).lean();
+  const courses = await Course.find({ category: id }).lean();
+  if (category === null) {
+    return res.redirect('/admin/managecategory');
+  }
+  res.render('vwAdminManagement/coursesID', {
+    category,
+    courses,
+    empty: courses.length === 0,
+  })
+}
+
+//{{URL}}/admin/edituser/patch
+const updateUserPermission = async function (req, res, next) {
   const { UserID, permission } = req.body;
   const userUpdate = await User.findByIdAndUpdate(
     {
       _id: UserID,
+
     },
     { permission },
     { new: true, runValidators: true }
-  );
+  )
   if (!userUpdate) {
-    throw createError.NotFound();
+    return next(createError(400, "Please provide a user"));
   }
-  res.redirect("/admin");
-};
+  res.redirect('/admin');
+}
 
-const deleteUser = async function (req, res) {
+//{{URL}}/admin/edituser/del
+const deleteUser = async function (req, res, next) {
   const { UserID } = req.body;
-  const deleteUser = await User.findByIdAndRemove({ _id: UserID });
+  const deleteUser = await User.findByIdAndRemove({ _id: UserID })
   if (!deleteUser) {
-    throw createError.NotFound();
-  }
-  res.redirect("/admin");
-};
+    return next(createError(400, "Please provide a user"));
 
-const createCourseCategory = async function (req, res) {
+  }
+  res.redirect('/admin');
+}
+
+//{{URL}}//admin/addcategory/post
+const createCourseCategory = async function (req, res, next) {
   // req.body.createdBy= req.user._id
-  const createCategory = await CourseCategory.create({
-    name: req.body.CategoryName,
-  });
-  if (!createCategory) {
-    throw createCategory.NotFound();
+  if (!req.body.CategoryName) {
+    return next(createError(400, "Please provide category name"));
   }
-  res.redirect("/admin/managecategory");
-};
+  else {
+    const createCategory = await CourseCategory.create({ name: req.body.CategoryName });
+  }
+  res.redirect('/admin/managecategory')
+}
 
-const updateCourseCategory = async function (req, res) {
+//{{URL}}/admin/editcategory/patch
+const updateCourseCategory = async function (req, res, next) {
   const { CategoryID, CategoryNewName } = req.body;
   const userUpdate = await CourseCategory.findByIdAndUpdate(
     {
       _id: CategoryID,
+
     },
     { name: CategoryNewName },
     { new: true, runValidators: true }
-  );
+  )
   if (!userUpdate) {
-    throw createError.NotFound();
+    return next(createError(400, "Please provide a user"));
   }
-  res.redirect("/admin/managecategory");
-};
+  res.redirect('/admin/managecategory');
+}
 
-const deleteCourseCategory = async function (req, res) {
+//{{URL}}/admin/editcategory/del
+const deleteCourseCategory = async function (req, res, next) {
   const { CategoryID } = req.body;
-  const deleteCategory = await CourseCategory.findByIdAndRemove({
-    _id: CategoryID,
-  });
-  if (!deleteCategory) {
-    throw createError.NotFound();
+  const categoryCheck = await CourseCategory.findById({ _id: CategoryID })
+  if (!categoryCheck) {
+    return next(createError(404, "This category doesn't exist"));
   }
-  res.redirect("/admin/managecategory");
-};
+  if (categoryCheck.courseList.length > 0) {
+    return next(createError(400, "Cant delete a category when having courses"));
+  }
+  const deleteCategory = await CourseCategory.findByIdAndRemove({ _id: CategoryID })
+  res.redirect('/admin/managecategory');
+}
+
 
 // {{URL}}/admin/:id
-// const getUser = async (req, res) => {
+// const getUser = async (req, res, next) => {
 //   const userCheck = await User.findOne({ _id: req.user.userId });
 //   if (userCheck.permission === "admin") {
 //     const {
@@ -300,11 +324,12 @@ export {
   getEditUserPage,
   getEditCategoryPage,
   getAddCategoryPage,
+  viewCoursesByID,
   updateUserPermission,
   deleteUser,
   createCourseCategory,
   updateCourseCategory,
-  deleteCourseCategory,
+  deleteCourseCategory
 };
 
 //flow

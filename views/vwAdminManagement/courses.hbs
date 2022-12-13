@@ -60,25 +60,31 @@
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
-          <tbody>
-            {{#each courses}}
-              <tr>
-                <th scope="row">{{@index}}</th>
-                <td>{{name}}</td>
-                <td>{{type}}</td>
-                <td class="text-center">{{studentList.length}}</td>
-                <td class="text-right">
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </a>
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  </a>
-                </td>
+          {{#if this.empty}}
+            <div class="card-body text-muted">
+              Empty Data!!!
+            </div>
+          {{else}}
+            <tbody>
+              {{#each courses}}
+                <tr>
+                  <th scope="row">{{@index}}</th>
+                  <td>{{name}}</td>
+                  <td>{{type}}</td>
+                  <td class="text-center">{{studentList.length}}</td>
+                  <td class="text-right">
+                    <a class="btn btn-sm btn-primary" href="#" role="button">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-sm btn-primary" href="#" role="button">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                  </td>
 
-              </tr>
-            {{/each}}
-          </tbody>
+                </tr>
+              {{/each}}
+            </tbody>
+          {{/if}}
         </table>
 
         <div class="card-footer text-muted">

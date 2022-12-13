@@ -60,36 +60,46 @@
             Add Category
           </a>
         </h4>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Loại Khoá Học</th>
-              <th class="text-center" scope="col">Số Lượng Khoá Học</th>
-              <th scope="col">&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each categories}}
+        {{#if this.empty}}
+          <div class="card-body text-muted">
+            Empty Data!!!
+          </div>
+        {{else}}
+          <table class="table table-hover">
+            <thead>
               <tr>
-                <th scope="row">{{name}}</th>
-                <td class="text-center">{{courseList.length}}</td>
-                <td class="text-right">
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
-                  </a>
-                  <a
-                    class="btn btn-sm btn-primary"
-                    href="/admin/editcategory?id={{_id}}"
-                    role="button"
-                  >
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </a>
-                </td>
-
+                <th scope="col">Loại Khoá Học</th>
+                <th class="text-center" scope="col">Số Lượng Khoá Học</th>
+                <th scope="col">&nbsp;</th>
               </tr>
-            {{/each}}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {{#each categories}}
+                <tr>
+                  <th scope="row">{{name}}</th>
+                  <td class="text-center">{{courseList.length}}</td>
+                  <td class="text-right">
+                    <a
+                      class="btn btn-sm btn-primary"
+                      href="/admin/managecoursesid?id={{_id}}"
+                      role="button"
+                    >
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                    <a
+                      class="btn btn-sm btn-primary"
+                      href="/admin/editcategory?id={{_id}}"
+                      role="button"
+                    >
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                  </td>
+
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
 
         <div class="card-footer text-muted">
           Categories

@@ -50,40 +50,47 @@
         >
           Teachers Management
         </h4>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Họ Tên</th>
-              <th scope="col">Giới tính</th>
-              <th scope="col">Phân Loại</th>
-              <th scope="col">Email</th>
-              <th scope="col">&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each users}}
-
+        {{#if this.empty}}
+          <div class="card-body text-muted">
+            Empty Data!!!
+          </div>
+        {{else}}
+          <table class="table table-hover">
+            <thead>
               <tr>
-                <th scope="row">{{@index}}</th>
-                <td>{{this.name}}</td>
-                <td>{{this.gender}}</td>
-                <td>{{this.permission}}</td>
-                <td>{{this.email}}</td>
-                <td class="text-right">
-                  <a
-                    class="btn btn-sm btn-primary"
-                    href="/admin/edituser?id={{this._id}}"
-                    role="button"
-                    title="Edit"
-                  >
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </a>
-                </td>
+                <th scope="col">#</th>
+                <th scope="col">Họ Tên</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">Phân Loại</th>
+                <th scope="col">Email</th>
+                <th scope="col">&nbsp;</th>
               </tr>
-            {{/each}}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {{!-- {{log users}} --}}
+              {{#each users}}
+
+                <tr>
+                  <th scope="row">{{@index}}</th>
+                  <td>{{this.name}}</td>
+                  <td>{{this.gender}}</td>
+                  <td>{{this.permission}}</td>
+                  <td>{{this.email}}</td>
+                  <td class="text-right">
+                    <a
+                      class="btn btn-sm btn-primary"
+                      href="/admin/edituser?id={{this._id}}"
+                      role="button"
+                      title="Edit"
+                    >
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
 
         <div class="card-footer text-muted">
           Users Teacher
