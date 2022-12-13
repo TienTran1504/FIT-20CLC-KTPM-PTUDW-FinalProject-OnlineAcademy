@@ -6,14 +6,9 @@ const CourseSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "Please provide Course name"],
-      maxlength: 50,
+      maxlength: 100,
       trim: true,
       unique: true,
-    },
-    type: {
-      type: String,
-      required: [true, "Please provide type of course"],
-      enum: ["Javascript", "HTML", "NodeJS", "ReactJS", "Python"],
     },
     briefDescription: {
       type: String,

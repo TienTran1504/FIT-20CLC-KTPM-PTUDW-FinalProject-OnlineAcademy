@@ -16,6 +16,7 @@ import {
   getEditCategoryPage,
   updateCourseCategory,
   deleteCourseCategory,
+  viewCoursesByID,
 } from "../controllers/admin.controller";
 adminRouter.route("/edituser").get(getEditUserPage);
 adminRouter.route("/edituser/patch").post(updateUserPermission);
@@ -29,6 +30,5 @@ adminRouter.route("/manageteachers").get(getAllTeachers);
 adminRouter.route("/managecourses").get(getAllCourses);
 adminRouter.route("/managecategory").get(getAllCourseCategories);
 adminRouter.route("/addcategory").get(getAddCategoryPage);
+adminRouter.route("/managecoursesid").get(viewCoursesByID);
 adminRouter.route("/addcategory/post").post(createCourseCategory);
-
-export default adminRouter;

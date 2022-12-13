@@ -4,7 +4,7 @@ import CourseCategory from "../models/coursecategory.model.js";
 import createError from "http-errors";
 
 //{{URL}}/admin
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
@@ -29,7 +29,7 @@ const getAllUsers = async (req, res) => {
   // }
 };
 //{{URL}}/admin/managestudents
-const getAllStudents = async (req, res) => {
+const getAllStudents = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
@@ -55,7 +55,7 @@ const getAllStudents = async (req, res) => {
   // }
 };
 //{{URL}}/admin/manageteachers
-const getAllTeachers = async (req, res) => {
+const getAllTeachers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
@@ -88,7 +88,7 @@ const getAllTeachers = async (req, res) => {
   // }
 };
 //{{URL}}/admin/managecourses
-const getAllCourses = async (req, res) => {
+const getAllCourses = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
@@ -114,7 +114,7 @@ const getAllCourses = async (req, res) => {
 };
 
 //{{URL}}/admin/managecategory
-const getAllCourseCategories = async (req, res) => {
+const getAllCourseCategories = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "admin") {
   const { search, limit } = req.query;
@@ -141,7 +141,8 @@ const getAllCourseCategories = async (req, res) => {
   // }
 };
 
-const getEditUserPage = async function (req, res) {
+//{{URL}}/admin/edituser?id
+const getEditUserPage = async function (req, res, next) {
   const id = req.query.id || 0;
   const user = await User.findById({ _id: id }).lean();
   if (user === null) {
@@ -153,7 +154,8 @@ const getEditUserPage = async function (req, res) {
   });
 };
 
-const getEditCategoryPage = async function (req, res) {
+//{{URL}}/admin/editcategory
+const getEditCategoryPage = async function (req, res, next) {
   const id = req.query.id || 0;
   const category = await CourseCategory.findById({ _id: id }).lean();
   if (category === null) {
@@ -165,11 +167,28 @@ const getEditCategoryPage = async function (req, res) {
   });
 };
 
-const getAddCategoryPage = async function (req, res) {
+//{{URL}}/admin/addcategory
+const getAddCategoryPage = async function (req, res, next) {
   res.render("vwAdminManagement/add/addcategory");
 };
 
-const updateUserPermission = async function (req, res) {
+//{{URL}}/admin/managecourses?id
+const viewCoursesByID = async function (req, res, next) {
+  const id = req.query.id || 0;
+  const category = await CourseCategory.findById({ _id: id }).lean();
+  const courses = await Course.find({ category: id }).lean();
+  if (category === null) {
+    return res.redirect("/admin/managecategory");
+  }
+  res.render("vwAdminManagement/coursesID", {
+    category,
+    courses,
+    empty: courses.length === 0,
+  });
+};
+
+//{{URL}}/admin/edituser/patch
+const updateUserPermission = async function (req, res, next) {
   const { UserID, permission } = req.body;
   const userUpdate = await User.findByIdAndUpdate(
     {
@@ -179,21 +198,23 @@ const updateUserPermission = async function (req, res) {
     { new: true, runValidators: true }
   );
   if (!userUpdate) {
-    throw createError.NotFound();
+    return next(createError(400, "Please provide a user"));
   }
   res.redirect("/admin");
 };
 
-const deleteUser = async function (req, res) {
+//{{URL}}/admin/edituser/del
+const deleteUser = async function (req, res, next) {
   const { UserID } = req.body;
   const deleteUser = await User.findByIdAndRemove({ _id: UserID });
   if (!deleteUser) {
-    throw createError.NotFound();
+    return next(createError(400, "Please provide a user"));
   }
   res.redirect("/admin");
 };
 
-const createCourseCategory = async function (req, res) {
+//{{URL}}//admin/addcategory/post
+const createCourseCategory = async function (req, res, next) {
   // req.body.createdBy= req.user._id
   const createCategory = await CourseCategory.create({
     name: req.body.CategoryName,
@@ -204,7 +225,8 @@ const createCourseCategory = async function (req, res) {
   res.redirect("/admin/managecategory");
 };
 
-const updateCourseCategory = async function (req, res) {
+//{{URL}}/admin/editcategory/patch
+const updateCourseCategory = async function (req, res, next) {
   const { CategoryID, CategoryNewName } = req.body;
   const userUpdate = await CourseCategory.findByIdAndUpdate(
     {
@@ -214,12 +236,13 @@ const updateCourseCategory = async function (req, res) {
     { new: true, runValidators: true }
   );
   if (!userUpdate) {
-    throw createError.NotFound();
+    return next(createError(400, "Please provide a user"));
   }
   res.redirect("/admin/managecategory");
 };
 
-const deleteCourseCategory = async function (req, res) {
+//{{URL}}/admin/editcategory/del
+const deleteCourseCategory = async function (req, res, next) {
   const { CategoryID } = req.body;
   const deleteCategory = await CourseCategory.findByIdAndRemove({
     _id: CategoryID,
@@ -231,7 +254,7 @@ const deleteCourseCategory = async function (req, res) {
 };
 
 // {{URL}}/admin/:id
-// const getUser = async (req, res) => {
+// const getUser = async (req, res, next) => {
 //   const userCheck = await User.findOne({ _id: req.user.userId });
 //   if (userCheck.permission === "admin") {
 //     const {
@@ -306,7 +329,15 @@ export {
   getAllStudents,
   getAllTeachers,
   getAllCourses,
-  getAllTypeCourses,
+  getAllCourseCategories,
+  getEditUserPage,
+  getEditCategoryPage,
+  getAddCategoryPage,
+  updateUserPermission,
+  deleteUser,
+  createCourseCategory,
+  updateCourseCategory,
+  deleteCourseCategory,
 };
 
 //flow

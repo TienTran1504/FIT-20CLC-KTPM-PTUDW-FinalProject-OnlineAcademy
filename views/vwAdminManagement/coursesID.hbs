@@ -1,0 +1,61 @@
+<div class="container-fluid" style="margin-top: 80px;">
+  <div class="row">
+    <div class="card" style="width:100%">
+      <h4
+        class="card-header d-flex justify-content-between"
+        style="background-color:#52ab98; color:#fff"
+      >
+        {{this.category.name}}
+        Course Management
+
+      </h4>
+      {{#if this.empty}}
+        <div class="card-body text-muted">
+          Empty Data!!!
+        </div>
+      {{else}}
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tên Khoá Học</th>
+              <th scope="col">Loại Khoá Học</th>
+              <th class="text-center" scope="col">Số lượng Học Viên</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each courses}}
+              <tr>
+                <th scope="row">{{@index}}</th>
+                <td>{{name}}</td>
+                <td>{{type}}</td>
+                <td class="text-center">{{studentList.length}}</td>
+                <td class="text-right">
+                  <a class="btn btn-sm btn-primary" href="#" role="button">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </a>
+                  <a class="btn btn-sm btn-primary" href="#" role="button">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </a>
+                </td>
+
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+
+      <div class="card-footer text-muted">
+        <a
+          class="btn btn-outline-success"
+          href="/admin/managecategory"
+          role="button"
+        >
+          <i class="fa fa-backward" aria-hidden="true"></i>
+          Back
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
