@@ -1,0 +1,40 @@
+<form method="post" style="margin-top: 80px">
+  <div class="card">
+    <h4
+      class="card-header d-flex justify-content-between"
+      style="background-color:#52ab98; color:#fff"
+    >
+      Add Course Category
+    </h4>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="txtCategoryName" style="font-weight:bold">Enter New
+          Category's Name</label>
+        <input
+          name="CategoryName"
+          type="text"
+          class="form-control"
+          id="txtCategoryName"
+        />
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      <a
+        class="btn btn-outline-success"
+        href="/admin/managecategory"
+        role="button"
+      >
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back
+      </a>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        formaction="/admin/addcategory/post"
+      >
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Add New
+      </button>
+    </div>
+  </div>
+</form>

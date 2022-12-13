@@ -7,31 +7,40 @@
           style="background-color:#52ab98; color:#fff"
         >Management</h4>
         <div class="list-group list-group-flush">
-          <a href="/admin" class="list-group-item list-group-item-action">
+          <a
+            href="/admin"
+            class="list-group-item list-group-item-action"
+            style="font-weight:bold"
+          >
             All User
           </a>
           <a
             href="/admin/managestudents"
             class="list-group-item list-group-item-action"
+            style="font-weight:bold"
           >Student</a>
           <a
             href="/admin/manageteachers"
+            style="font-weight:bold"
             class="list-group-item list-group-item-action"
           >Teacher</a>
           <a
-            href="/admin/managetypecourses"
+            href="/admin/managecategory"
             class="list-group-item list-group-item-action active"
             aria-current="true"
-            style="background-color:#2b6777; color:#000"
-          >Type Of Courses</a>
+            style="background-color:#2b6777; color:#000; font-weight:bold"
+          >Course Categories</a>
           <a
             href="/admin/managecourses"
             class="list-group-item list-group-item-action"
+            style="font-weight:bold"
           >Courses</a>
         </div>
       </div>
       <div class="card">
-        <h4 class="card-header">Total Course Types: {{courseTypes.length}} </h4>
+        <h4 class="card-header">Total Course Types:
+          {{categories.length}}
+        </h4>
       </div>
     </div>
     <div class="col-sm-9">
@@ -40,7 +49,16 @@
           class="card-header d-flex justify-content-between"
           style="background-color:#52ab98; color:#fff"
         >
-          Type of Courses Management
+          Course Categories Management
+          <a
+            class="btn btn-sm btn-outline-primary"
+            href="/admin/addcategory"
+            role="button"
+            style="color:#fff; border-color:#fff;"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add Category
+          </a>
         </h4>
         <table class="table table-hover">
           <thead>
@@ -51,19 +69,20 @@
             </tr>
           </thead>
           <tbody>
-            {{#each courseTypes}}
+            {{#each categories}}
               <tr>
-                <th scope="row">{{courseTypeName}}</th>
-                <td class="text-center">{{numberCourses}}</td>
+                <th scope="row">{{name}}</th>
+                <td class="text-center">{{courseList.length}}</td>
                 <td class="text-right">
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </a>
                   <a class="btn btn-sm btn-primary" href="#" role="button">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                   </a>
-                  <a class="btn btn-sm btn-primary" href="#" role="button">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  <a
+                    class="btn btn-sm btn-primary"
+                    href="/admin/editcategory?id={{_id}}"
+                    role="button"
+                  >
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
                   </a>
                 </td>
 
@@ -73,7 +92,7 @@
         </table>
 
         <div class="card-footer text-muted">
-          2 days ago
+          Categories
         </div>
       </div>
     </div>

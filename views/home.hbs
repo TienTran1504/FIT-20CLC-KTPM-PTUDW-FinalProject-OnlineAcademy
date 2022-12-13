@@ -1,52 +1,99 @@
-<div class="card">
-  <h4 class="card-header">
-    Home
-  </h4>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table>
-  <nav aria-label="...">
-    <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
-        <span class="page-link">Previous</span>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item active" aria-current="page">
-        <span class="page-link">2</span>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
-      </li>
-    </ul>
-  </nav>
-  <div class="card-footer text-muted">
-    2 days ago
+<head>
+  <style>
+    .swiper { width: 90%; margin-top: 80px;} .slider-img { width: 100%; }
+    .swiper-pagination-bullet { color: white; } .swiper
+    .swiper-pagination-bullet-active { background-color: white; }
+    .swiper-pagination-bullet:hover { opacity: 0.5; transition: opacity 0.3s; }
+    .info-container { display: flex; justify-content: space-around;
+    background-color: #f7f9fa; padding: 20px; } .info-item { display: flex;
+    flex: 0.22; justify-content: space-between; align-items: center; }
+    .info-item-icon { font-size: 30px; margin-right: 20px; }
+
+  </style>
+</head>
+
+<div>
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img
+          class="slider-img"
+          src="https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg"
+          alt=""
+        />
+      </div>
+      <div class="swiper-slide">
+        <img
+          class="slider-img"
+          src="https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg"
+          alt=""
+        />
+      </div>
+      <div class="swiper-slide">
+        <img
+          class="slider-img"
+          src="https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg"
+          alt=""
+        />
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+
+  <br />
+  <div class="info-container">
+    <div class="info-item">
+      <div class="info-item-icon"><i
+          class="fa fa-play"
+          aria-hidden="true"
+        ></i></div>
+      <b>Học các kỹ năng có nhu cầu lớn với hơn 213000 khóa học video</b>
+    </div>
+    <div class="info-item">
+      <div class="info-item-icon"><i
+          class="fa fa-star"
+          aria-hidden="true"
+        ></i></div>
+      <b>Chọn khóa học do chuyên gia trong thế giới thực giảng dạy</b>
+    </div>
+    <div class="info-item">
+      <div class="info-item-icon"><i
+          class="fa fa-thumbs-o-up"
+          aria-hidden="true"
+        ></i></div>
+      <b>Học theo tốc độ phù hợp với bạn, với quyền truy cập suốt đời trên thiết
+        bị di động và máy tính để bàn</b>
+    </div>
+  </div>
+
+  <div class="card text-left mx-auto border-0" style="width: 90%">
+    <div class="card-body">
+      <h4 class="card-title">Khóa học nổi bật</h4>
+      <p class="card-text">...</p>
+    </div>
+  </div>
+
+  <div class="card text-left mx-auto border-0" style="width: 90%">
+    <div class="card-body">
+      <h4 class="card-title">Khóa học được xem nhiều nhất</h4>
+      <p class="card-text">...</p>
+    </div>
+  </div>
+
+  <div class="card text-left mx-auto border-0" style="width: 90%">
+    <div class="card-body">
+      <h4 class="card-title">Khóa học mới nhất</h4>
+      <p class="card-text">...</p>
+    </div>
+  </div>
+
+  <div class="card text-left mx-auto border-0" style="width: 90%">
+    <div class="card-body">
+      <h4 class="card-title">Các lĩnh vực hàng đầu</h4>
+      <p class="card-text">...</p>
+    </div>
   </div>
 </div>

@@ -1,0 +1,70 @@
+<form method="post" style="margin-top: 80px">
+  <div class="card">
+    <h4
+      class="card-header d-flex justify-content-between"
+      style="background-color:#52ab98; color:#fff"
+    >
+      Edit Category
+    </h4>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="txtCategoryID" style="font-weight:bold">Category ID</label>
+        <input
+          name="CategoryID"
+          type="text"
+          class="form-control"
+          id="txtCategoryID"
+          value="{{category._id}}"
+          readonly
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="txtCategoryCurrentName" style="font-weight:bold">Current
+          Name</label>
+        <input
+          name="CategoryCurrentName"
+          type="text"
+          class="form-control"
+          id="txtCategoryCurrentName"
+          value="{{category.name}}"
+          readonly
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="txtCategoryNewName" style="font-weight:bold">New Name</label>
+        <input
+          name="CategoryNewName"
+          type="text"
+          class="form-control"
+          id="txtCategoryNewName"
+        />
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      <a
+        class="btn btn-outline-success"
+        href="/admin/managecategory"
+        role="button"
+      >
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back
+      </a>
+      <button
+        type="submit"
+        class="btn btn-danger"
+        formaction="/admin/editcategory/del"
+      >
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Delete
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        formaction="/admin/editcategory/patch"
+      >
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </div>
+  </div>
+</form>
