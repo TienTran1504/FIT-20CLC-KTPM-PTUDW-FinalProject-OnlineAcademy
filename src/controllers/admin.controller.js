@@ -68,7 +68,7 @@ const getAllTeachers = async (req, res) => {
     }
     res.status(StatusCodes.OK).json({ user });
   } else {
-    throw createError.Unauthorized();
+    // throw createError.Unauthorized();
   }
   if (limit) {
     sortedUsers = sortedUsers.slice(0, Number(limit));

@@ -1,5 +1,5 @@
-import { StatusCodes } from "http-status-codes";
 import createError from "http-errors";
+import { StatusCodes } from "http-status-codes";
 import Course from "../models/course.model";
 import User from "../models/user.model";
 
@@ -104,7 +104,11 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-export { getOwnerCourses, createCourse, updateCourse, deleteCourse };
+const getInfo = (req, res) => {
+  res.render("vwTeacher/profile");
+};
+
+export { getInfo, getOwnerCourses, createCourse, updateCourse, deleteCourse };
 
 //flow
 /*
