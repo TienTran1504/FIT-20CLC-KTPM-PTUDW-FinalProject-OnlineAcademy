@@ -23,12 +23,12 @@ const CourseSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    status: {
-      type: String,
-      enum: ["in progress", "completed"],
-      default: "in progress",
-      trim: true,
-    },
+    // status: {
+    //     type: String,
+    //     enum: ['in progress', 'completed'],
+    //     default: 'in progress',
+    //     trim: true,
+    // },
     image: {
       type: String,
       default: "./default.png",
@@ -57,6 +57,11 @@ const CourseSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    category: {
+      type: mongoose.Types.ObjectId,
+      ref: "CourseCategory",
+      required: [true, "Please provide category of course"],
+    },
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",
@@ -69,6 +74,6 @@ const CourseSchema = new mongoose.Schema(
 export default mongoose.model("Course", CourseSchema);
 
 /*
-model sẽ có: name, type, description, status( của khoá học ), image, studentList(danh sách sinh viên đăng ký),createdBy( lưu id của giáo viên tạo khoá học)
+model sẽ có: name, category, description, status( của khoá học ), image, studentList(danh sách sinh viên đăng ký),createdBy( lưu id của giáo viên tạo khoá học)
             rating, ratingList(danh sách sinh viên đã rating và điểm rating), price, feedback(danh sách sinh viên đã feedback, nội dung feedback)
 */

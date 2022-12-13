@@ -19,6 +19,10 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
     <style>
       #btn-back-to-top { position: fixed; bottom: 20px; right: 20px; display:
       none; } a.navbar1{ background-color: #52ab98; color: black; border: 1px
@@ -141,9 +145,14 @@
       integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
       crossorigin="anonymous"
     ></script>
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
+    ></script>
     <script>
-      feather.replace()
+      const swiper = new Swiper(".swiper", { autoplay: { delay: 5000,
+      disableOnInteraction: false, }, autoHeight: true, loop: true, pagination:
+      { el: ".swiper-pagination", clickable: true, }, navigation: { nextEl:
+      ".swiper-button-next", prevEl: ".swiper-button-prev", }, });
     </script>
   </body>
 </html>
