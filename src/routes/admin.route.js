@@ -1,5 +1,5 @@
-import express from "express";
-const adminRouter = express.Router();
+import express from 'express'
+const adminRouter = express.Router()
 
 import {
   getAllCourses,
@@ -16,22 +16,21 @@ import {
   getEditCategoryPage,
   updateCourseCategory,
   deleteCourseCategory,
-  // viewCoursesByID,
-} from "../controllers/admin.controller";
+  viewCoursesByID
+} from '../controllers/admin.controller'
+adminRouter.route('/edituser').get(getEditUserPage)
+adminRouter.route('/edituser/patch').post(updateUserPermission)
+adminRouter.route('/edituser/del').post(deleteUser)
+adminRouter.route('/editcategory').get(getEditCategoryPage)
+adminRouter.route('/editcategory/patch').post(updateCourseCategory)
+adminRouter.route('/editcategory/del').post(deleteCourseCategory)
+adminRouter.route('/').get(getAllUsers)
+adminRouter.route('/managestudents').get(getAllStudents)
+adminRouter.route('/manageteachers').get(getAllTeachers)
+adminRouter.route('/managecourses').get(getAllCourses)
+adminRouter.route('/managecategory').get(getAllCourseCategories)
+adminRouter.route('/addcategory').get(getAddCategoryPage)
+adminRouter.route('/managecoursesid').get(viewCoursesByID)
+adminRouter.route('/addcategory/post').post(createCourseCategory)
 
-adminRouter.route("/edituser").get(getEditUserPage);
-adminRouter.route("/edituser/patch").post(updateUserPermission);
-adminRouter.route("/edituser/del").post(deleteUser);
-adminRouter.route("/editcategory").get(getEditCategoryPage);
-adminRouter.route("/editcategory/patch").post(updateCourseCategory);
-adminRouter.route("/editcategory/del").post(deleteCourseCategory);
-adminRouter.route("/").get(getAllUsers);
-adminRouter.route("/managestudents").get(getAllStudents);
-adminRouter.route("/manageteachers").get(getAllTeachers);
-adminRouter.route("/managecourses").get(getAllCourses);
-adminRouter.route("/managecategory").get(getAllCourseCategories);
-adminRouter.route("/addcategory").get(getAddCategoryPage);
-// adminRouter.route("/managecoursesid").get(viewCoursesByID);
-adminRouter.route("/addcategory/post").post(createCourseCategory);
-
-export default adminRouter;
+export default adminRouter
