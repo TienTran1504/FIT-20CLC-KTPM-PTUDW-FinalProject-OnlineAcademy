@@ -16,8 +16,10 @@ import {
   getEditCategoryPage,
   updateCourseCategory,
   deleteCourseCategory,
-  viewCoursesByID
+  viewCoursesByID,
+  register,
 } from '../controllers/admin.controller'
+adminRouter.route('/register').post(register)
 adminRouter.route('/edituser').get(getEditUserPage)
 adminRouter.route('/edituser/patch').post(updateUserPermission)
 adminRouter.route('/edituser/del').post(deleteUser)
