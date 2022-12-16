@@ -105,7 +105,9 @@ const deleteCourse = async (req, res) => {
 };
 
 const getInfo = (req, res) => {
-  res.render("vwTeacher/profile");
+  res.render("vwTeacher/profile", {
+    custom_style: "teacher_profile.css",
+  });
 };
 
 export { getInfo, getOwnerCourses, createCourse, updateCourse, deleteCourse };
