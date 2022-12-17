@@ -7,6 +7,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./src/config/connect.js";
 import route from "./src/routes";
+import hbs_sections from "express-handlebars-sections";
 dotenv.config();
 
 const app = express();
@@ -20,6 +21,9 @@ app.engine(
   engine({
     // defaultLayout: 'main.hbs'
     extname: "hbs",
+    helpers: {
+      section: hbs_sections(),
+    },
   })
 );
 app.set("view engine", "hbs");
