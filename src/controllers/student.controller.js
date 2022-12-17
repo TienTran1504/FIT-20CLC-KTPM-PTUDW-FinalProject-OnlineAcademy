@@ -9,7 +9,7 @@ const getCourseList = async (req, res) => {
   // res
   //   .status(StatusCodes.OK)
   //   .json({ id: user._id, name: user.name, courseList: user.courseList });
-  res.render("vwStudentProfile/profile", { style: "profileStyle.css" });
+  res.render("vwStudentProfile/profile", { style: "student_profile.css" });
 };
 
 // {{URL}}/student/courses/:courseId
