@@ -7,11 +7,16 @@ const UserSchema = new mongoose.Schema(
     //required: name, email, password
     // register: name, email, password
     // login: email, password
-    name: {
+    firstName: {
       type: String,
-      required: [true, "Please provide name"],
-      minlength: 3,
-      maxlength: 50,
+      required: [true, "Please provide first name"],
+      maxlength: 25,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, "Please provide last name"],
+      maxlength: 25,
       trim: true,
     },
     email: {
@@ -32,13 +37,13 @@ const UserSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["nam", "nữ"],
-      default: "nam",
+      enum: ["Nam", "Nữ"],
+      default: "Nam",
     },
     permission: {
       type: String,
-      enum: ["student", "teacher", "admin"],
-      default: "student",
+      enum: ["Student", "Teacher", "Admin"],
+      default: "Student",
     },
     courseList: {
       type: Array,

@@ -1,0 +1,65 @@
+<form method="post" style="margin-top: 80px">
+  <div class="card">
+    <h4
+      class="card-header d-flex justify-content-between"
+      style="background-color:#52ab98; color:#fff"
+    >
+      Add Course Category
+    </h4>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="txtTeacherFirstName" style="font-weight:bold">Enter New
+          Teacher's First Name</label>
+        <input
+          name="TeacherFirstName"
+          type="text"
+          class="form-control"
+          id="txtTeacherFirstName"
+        />
+        <label for="txtTeacherLastName" style="font-weight:bold">Enter New
+          Teacher's Last Name</label>
+        <input
+          name="TeacherLastName"
+          type="text"
+          class="form-control"
+          id="txtTeacherLastName"
+        />
+        <label for="txtTeacherEmail" style="font-weight:bold">Enter New
+          Teacher's Email</label>
+        <input
+          name="TeacherEmail"
+          type="text"
+          class="form-control"
+          id="txtTeacherEmail"
+        />
+        <label for="txtTeacherPassword" style="font-weight:bold">Enter New
+          Teacher's Password</label>
+        <input
+          name="TeacherPassword"
+          type="password"
+          class="form-control"
+          id="txtTeacherPassword"
+        />
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      <a
+        class="btn btn-outline-success"
+        href="/admin/manageteachers"
+        role="button"
+      >
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back
+      </a>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        formaction="/admin/addteacher/post"
+        style="background-color:#52ab98"
+      >
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Add New
+      </button>
+    </div>
+  </div>
+</form>

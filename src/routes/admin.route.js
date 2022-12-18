@@ -10,9 +10,11 @@ import {
   getAllUsers,
   getEditUserPage,
   getAddCategoryPage,
+  getAddTeacherPage,
   updateUserPermission,
   deleteUser,
   createCourseCategory,
+  createTeacherAccount,
   getEditCategoryPage,
   updateCourseCategory,
   deleteCourseCategory,
@@ -32,7 +34,9 @@ adminRouter.route('/manageteachers').get(getAllTeachers)
 adminRouter.route('/managecourses').get(getAllCourses)
 adminRouter.route('/managecategory').get(getAllCourseCategories)
 adminRouter.route('/addcategory').get(getAddCategoryPage)
+adminRouter.route('/addteacher').get(getAddTeacherPage)
 adminRouter.route('/managecoursesid').get(viewCoursesByID)
 adminRouter.route('/addcategory/post').post(createCourseCategory)
+adminRouter.route('/addteacher/post').post(createTeacherAccount)
 
 export default adminRouter
