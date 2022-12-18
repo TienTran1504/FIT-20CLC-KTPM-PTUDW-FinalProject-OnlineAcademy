@@ -1,5 +1,5 @@
 <div style="margin-top: 80px;">
-  <div class="main-content">
+  <div class="main-content-student">
     <div class="container">
       <div class="row">
         <div
@@ -20,44 +20,29 @@
               </div>
             </div>
             <a
+              href="/student"
               class="list-group-item list-group-item-action active"
               id="list-profile-list"
-              data-toggle="list"
-              href="#list-profile"
-              role="tab"
-              aria-controls="profile"
             >Profile</a>
             <a
+              href="/student/photo"
               class="list-group-item list-group-item-action"
               id="list-photo-list"
-              data-toggle="list"
-              href="#list-photo"
-              role="tab"
-              aria-controls="photo"
             >Photo</a>
             <a
+              href="/student/accountSecurity"
               class="list-group-item list-group-item-action"
               id="list-password-list"
-              data-toggle="list"
-              href="#list-password"
-              role="tab"
-              aria-controls="password"
             >Account Security</a>
             <a
+              href="/student/courseLearn"
               class="list-group-item list-group-item-action"
               id="list-courses-list"
-              data-toggle="list"
-              href="#list-courses"
-              role="tab"
-              aria-controls="courses"
             >My learning</a>
             <a
+              href="/student/favoriteCourse"
               class="list-group-item list-group-item-action"
               id="list-favorite-list"
-              data-toggle="list"
-              href="#list-favorite"
-              role="tab"
-              aria-controls="favorite"
             >Favorite course</a>
           </div>
         </div>
@@ -214,331 +199,6 @@
                       </div>
                     </div>
                   </form>
-                </div>
-              </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="list-photo"
-              role="tabpanel"
-              aria-labelledby="list-photo-list"
-            >
-              <div class="card text-center">
-                <div
-                  class="card-header"
-                  style="background-color: #2b6777; color: #ffffff;"
-                >
-                  <h3>Photo</h3>
-                  <p>Add a nice photo of yourself for your profile</p>
-                </div>
-                <div class="card-body" style="background-color: #f2f2f2;">
-                  <form>
-                    <div class="form-group">
-                      <label for="" class="d-flex p-2">Image preview</label>
-                      <div
-                        class="text-center rounded mx-auto p-3 col-md-8 border border-dark-1"
-                      >
-                        <img
-                          src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
-                          class="img-fluid"
-                          alt=" none"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="d-flex p-2">Add / Change Image</label>
-                      <div class="input-group mb-3">
-                        <div class="custom-file">
-                          <input
-                            type="file"
-                            class="custom-file-input"
-                            id="inputGroupFile01"
-                          />
-                          <label
-                            class="custom-file-label"
-                            for="inputGroupFile01"
-                          >Choose file</label>
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      type="submit"
-                      class="btn btn-primary d-flex px-4 course-btn"
-                    >Save</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="list-password"
-              role="tabpanel"
-              aria-labelledby="list-password-list"
-            >
-              <div class="card text-center">
-                <div
-                  class="card-header"
-                  style="background-color: #2b6777; color: #ffffff;"
-                >
-                  <h3>Account</h3>
-                  <p>Edit your account settings and change your password here
-                  </p>
-                </div>
-                <div class="card-body" style="background-color: #f2f2f2;">
-                  <form>
-                    <div class="form-group">
-                      <label for="" class="d-flex p-2">Password:</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        placeholder="Enter current password"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <input
-                        type="password"
-                        class="form-control"
-                        placeholder="Enter new password"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <input
-                        type="password"
-                        class="form-control"
-                        placeholder="Re-type new passworf"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      class="btn btn-primary d-flex px-4 course-btn"
-                    >Change password</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="list-courses"
-              role="tabpanel"
-              aria-labelledby="list-courses-list"
-            >
-              <div class="card text-center">
-                <div
-                  class="card-header"
-                  style="background-color: #2b6777; color: #ffffff;"
-                >
-                  <h3>My Learning</h3>
-                  <p>All your courses </p>
-                </div>
-                <div class="card-body" style="background-color: #f2f2f2;">
-                  <div class="more-courses-container">
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="list-favorite"
-              role="tabpanel"
-              aria-labelledby="list-favorite-list"
-            >
-              <div class="card text-center">
-                <div
-                  class="card-header"
-                  style="background-color: #2b6777; color: #ffffff;"
-                >
-                  <h3>Favorite courses</h3>
-                  <p>Add your favorite courses</p>
-                </div>
-                <div class="card-body" style="background-color: #f2f2f2;">
-                  <div class="more-courses-container">
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                        <button class="btn course-btn">Remove</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                        <button class="btn course-btn">Remove</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                        <button class="btn course-btn">Remove</button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

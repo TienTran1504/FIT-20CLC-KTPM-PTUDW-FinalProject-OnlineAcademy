@@ -3,15 +3,41 @@ import createError from "http-errors";
 import Course from "../models/course.model";
 import User from "../models/user.model";
 
+const getProfile = async (req, res) => {
+  res.render("vwStudentProfile/profile", {
+    custom_style: "student_profile.css",
+  });
+};
+
+const getPhoto = async (req, res) => {
+  res.render("vwStudentProfile/photo", {
+    custom_style: "student_profile.css",
+  });
+};
+
+const getAccountSecurity = async (req, res) => {
+  res.render("vwStudentProfile/accountSecurity", {
+    custom_style: "student_profile.css",
+  });
+};
+
+const getCourseLearn = async (req, res) => {
+  res.render("vwStudentProfile/coursesLearn", {
+    custom_style: "student_profile.css",
+  });
+};
+
+const getFavoriteCourse = async (req, res) => {
+  res.render("vwStudentProfile/favoriteCourses", {
+    custom_style: "student_profile.css",
+  });
+};
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
   // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // res
   //   .status(StatusCodes.OK)
   //   .json({ id: user._id, name: user.name, courseList: user.courseList });
-  res.render("vwStudentProfile/profile", {
-    custom_style: "student_profile.css",
-  });
 };
 
 // {{URL}}/student/courses/:courseId
@@ -132,7 +158,13 @@ const updateStatusCourse = async (req, res) => {
   }
 };
 
-export { getCourseList, updateStatusCourse, removeCourse, addCourse };
+export {
+  getProfile,
+  getPhoto,
+  getAccountSecurity,
+  getCourseLearn,
+  getFavoriteCourse,
+};
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký
 Khi updateStatusCourse sẽ tìm course đó có trong danh sách học viên đã đăng ký dựa trên id course và sẽ update trạng thái in progress hay completed khoá học

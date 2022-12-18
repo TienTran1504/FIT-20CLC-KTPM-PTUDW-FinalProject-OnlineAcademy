@@ -1,0 +1,108 @@
+<div style="margin-top: 80px;">
+  <div class="main-content-student">
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-md-2 d-none d-md-block bg-light sidebar"
+          style="height: 100%;"
+        >
+          <div class="list-group" id="list-tab" role="tablist">
+            <div class="card text-center" style="background-color: #F2F2F2;">
+              <div class="img-profile">
+                <img
+                  class="img-fluid rounded-circle img-thumbnail img-responsive"
+                  src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
+                  alt="none"
+                />
+              </div>
+              <div>
+                <p>Name</p>
+              </div>
+            </div>
+            <a
+              href="/student"
+              class="list-group-item list-group-item-action"
+              id="list-profile-list"
+            >Profile</a>
+            <a
+              href="/student/photo"
+              class="list-group-item list-group-item-action active"
+              id="list-photo-list"
+            >Photo</a>
+            <a
+              href="/student/accountSecurity"
+              class="list-group-item list-group-item-action"
+              id="list-password-list"
+            >Account Security</a>
+            <a
+              href="/student/courseLearn"
+              class="list-group-item list-group-item-action"
+              id="list-courses-list"
+            >My learning</a>
+            <a
+              href="/student/favoriteCourse"
+              class="list-group-item list-group-item-action"
+              id="list-favorite-list"
+            >Favorite course</a>
+          </div>
+        </div>
+        <div class="col-9 h-100">
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="list-photo"
+              role="tabpanel"
+              aria-labelledby="list-photo-list "
+            >
+              <div class="card text-center">
+                <div
+                  class="card-header"
+                  style="background-color: #2b6777; color: #ffffff;"
+                >
+                  <h3>Photo</h3>
+                  <p>Add a nice photo of yourself for your profile</p>
+                </div>
+                <div class="card-body" style="background-color: #f2f2f2;">
+                  <form>
+                    <div class="form-group">
+                      <label for="" class="d-flex p-2">Image preview</label>
+                      <div
+                        class="text-center rounded mx-auto p-3 col-md-8 border border-dark-1"
+                      >
+                        <img
+                          src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
+                          class="img-fluid"
+                          alt=" none"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="d-flex p-2">Add / Change Image</label>
+                      <div class="input-group mb-3">
+                        <div class="custom-file">
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            id="inputGroupFile01"
+                          />
+                          <label
+                            class="custom-file-label"
+                            for="inputGroupFile01"
+                          >Choose file</label>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary d-flex px-4 course-btn"
+                    >Save</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
