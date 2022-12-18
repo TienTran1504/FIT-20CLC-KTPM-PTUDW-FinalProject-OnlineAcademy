@@ -58,10 +58,11 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Họ Tên</th>
-                <th scope="col">Giới tính</th>
-                <th scope="col">Phân Loại</th>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Permission</th>
                 <th scope="col">Email</th>
                 <th scope="col">&nbsp;</th>
               </tr>
@@ -71,8 +72,9 @@
               {{#each users}}
 
                 <tr>
-                  <th scope="row">{{@index}}</th>
-                  <td>{{this.name}}</td>
+                  <th scope="row">{{this._id}}</th>
+                  <td>{{this.firstName}}</td>
+                  <td>{{this.lastName}}</td>
                   <td>{{this.gender}}</td>
                   <td>{{this.permission}}</td>
                   <td>{{this.email}}</td>
