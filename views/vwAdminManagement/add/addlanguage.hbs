@@ -1,0 +1,58 @@
+<form method="post" style="margin-top: 80px">
+  <div class="card">
+    <h4
+      class="card-header d-flex justify-content-between"
+      style="background-color:#52ab98; color:#fff"
+    >
+      Add Language
+    </h4>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="txtLanguageName" style="font-weight:bold">Enter New
+          Language's Name</label>
+        <input
+          name="LanguageName"
+          type="text"
+          class="form-control"
+          id="txtLanguageName"
+        />
+      </div>
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Options
+              Category</label>
+          </div>
+          <select
+            class="custom-select"
+            id="inputGroupSelect01"
+            name="CategoryName"
+          >
+            {{#each categories}}
+              <option value="{{name}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      <a
+        class="btn btn-outline-success"
+        href="/admin/managelanguage"
+        role="button"
+      >
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back
+      </a>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        formaction="/admin/addlanguage/post"
+        style="background-color:#52ab98"
+      >
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Add New
+      </button>
+    </div>
+  </div>
+</form>

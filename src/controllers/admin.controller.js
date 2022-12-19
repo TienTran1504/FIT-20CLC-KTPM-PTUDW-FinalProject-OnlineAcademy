@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Course from "../models/course.model.js";
 import CourseCategory from "../models/coursecategory.model.js";
+import CourseLanguage from "../models/courselanguage.model";
 import createError from "http-errors";
 
 const register = async (req, res) => {
@@ -138,6 +139,31 @@ const getAllCourseCategories = async (req, res, next) => {
   // }
 };
 
+//{{URL}}/admin/managelanguage
+const getAllCourseLanguages = async (req, res, next) => {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
+  const { search, limit } = req.query;
+  const courseLanguages = await CourseLanguage.find({}).sort('createdAt').lean();
+  let sortedCourseLanguages = [...courseLanguages];
+  if (search) {
+    sortedCourseLanguages = sortedCourseLanguages.filter((course) => {
+      return course.name.startsWith(search);
+    });
+  }
+  if (limit) {
+    sortedCourseLanguages = sortedCourseLanguages.slice(0, Number(limit));
+  }
+  // res.status(StatusCodes.OK).json({ sortedCourseLanguages, count: sortedCourseLanguages.length });
+  res.render('vwAdminManagement/courselanguage', {
+    languages: sortedCourseLanguages,
+    empty: sortedCourseLanguages.length === 0
+  });
+  // } else {
+  //   throw createError.Unauthorized();
+  // }
+};
+
 //{{URL}}/admin/edituser?id
 const getEditUserPage = async function (req, res, next) {
   const id = req.query.id || 0;
@@ -164,10 +190,33 @@ const getEditCategoryPage = async function (req, res, next) {
   });
 }
 
+//{{URL}}/admin/editcategory
+const getEditLanguagePage = async function (req, res, next) {
+  const id = req.query.id || 0;
+  const language = await CourseLanguage.findById({ _id: id }).lean();
+  const courseCategories = await CourseCategory.find({}).sort('createdAt').lean();
+  let sortedCourseCategories = [...courseCategories];
+  if (language === null) {
+    return res.redirect('/admin/managelanguage');
+  }
+  res.render('vwAdminManagement/edit/editlanguage', {
+    language,
+    categories: sortedCourseCategories
+  });
+}
+
 //{{URL}}/admin/addcategory
 const getAddCategoryPage = async function (req, res, next) {
-
   res.render('vwAdminManagement/add/addcategory');
+}
+
+//{{URL}}/admin/addlanguage
+const getAddLanguagePage = async function (req, res, next) {
+  const courseCategories = await CourseCategory.find({}).sort('createdAt').lean();
+  let sortedCourseCategories = [...courseCategories];
+  res.render('vwAdminManagement/add/addlanguage', {
+    categories: sortedCourseCategories
+  });
 }
 
 //{{URL}}/admin/addcategory
@@ -176,16 +225,31 @@ const getAddTeacherPage = async function (req, res, next) {
   res.render('vwAdminManagement/add/addteacher');
 }
 
-//{{URL}}/admin/managecourses?id
-const viewCoursesByID = async function (req, res, next) {
+//{{URL}}/admin/managecategoryid?id
+const viewLanguagesByID = async function (req, res, next) {
   const id = req.query.id || 0;
   const category = await CourseCategory.findById({ _id: id }).lean();
-  const courses = await Course.find({ category: id }).lean();
+  const languages = await CourseLanguage.find({ categoryId: id }).lean();
   if (category === null) {
     return res.redirect('/admin/managecategory');
   }
-  res.render('vwAdminManagement/coursesID', {
+  res.render('vwAdminManagement/languagesID', {
     category,
+    languages,
+    empty: languages.length === 0,
+  })
+}
+
+// {{ URL }}/admin/manageclanguageid?id
+const viewCoursesByID = async function (req, res, next) {
+  const id = req.query.id || 0;
+  const language = await CourseLanguage.findById({ _id: id }).lean();
+  const courses = await Course.find({ languageId: id }).lean();
+  if (language === null) {
+    return res.redirect('/admin/managelanguage');
+  }
+  res.render('vwAdminManagement/coursesID', {
+    language,
     courses,
     empty: courses.length === 0,
   })
@@ -223,7 +287,7 @@ const deleteUser = async function (req, res, next) {
   res.redirect('/admin');
 }
 
-//{{URL}}//admin/addteacher/post
+//{{URL}}/admin/addteacher/post
 const createCourseCategory = async function (req, res, next) {
   // req.body.createdBy= req.user._id
   if (!req.body.CategoryName) {
@@ -233,6 +297,33 @@ const createCourseCategory = async function (req, res, next) {
     const createCategory = await CourseCategory.create({ name: req.body.CategoryName });
   }
   res.redirect('/admin/managecategory')
+}
+
+//{{URL}}/admin/addteacher/post
+const createLanguage = async function (req, res, next) {
+  let newLanguage = {};
+  // req.body.createdBy= req.user._id
+  if (!req.body.CategoryName || !req.body.LanguageName) {
+    return next(createError(400, "Please provide category name"));
+  }
+  else {
+    const category = await CourseCategory.findOne({ name: req.body.CategoryName });
+    const createLanguage = await CourseLanguage.create({ name: req.body.LanguageName, categoryId: category._id, categoryName: category.name });
+    newLanguage = { _id: createLanguage._id, name: createLanguage.name };
+    category.language.push(newLanguage);
+    console.log(category.language);
+    const updateCategory = await CourseCategory.findOneAndUpdate(
+      {
+        name: req.body.CategoryName
+      },
+      {
+        language: category.language,
+      },
+      { new: true, runValidators: true }
+    )
+    console.log(updateCategory);
+  }
+  res.redirect('/admin/managelanguage')
 }
 
 //{{URL}}//admin/addcategory/post
@@ -255,19 +346,50 @@ const createTeacherAccount = async function (req, res, next) {
 
 //{{URL}}/admin/editcategory/patch
 const updateCourseCategory = async function (req, res, next) {
-  const { CategoryID, CategoryNewName } = req.body;
-  const userUpdate = await CourseCategory.findByIdAndUpdate(
+  const { CategoryID, CategoryName } = req.body;
+  const courseUpdate = await CourseCategory.findByIdAndUpdate(
     {
       _id: CategoryID,
 
     },
-    { name: CategoryNewName },
+    {
+      name: CategoryName,
+    },
     { new: true, runValidators: true }
   )
-  if (!userUpdate) {
-    return next(createError(400, "Please provide a user"));
+  const languageUpdate = await CourseLanguage.updateMany(
+    {
+      categoryId: CategoryID
+    },
+    {
+      categoryName: CategoryName
+    }
+  )
+  if (!courseUpdate) {
+    return next(createError(400, "Please provide a course"));
   }
   res.redirect('/admin/managecategory');
+}
+
+//{{URL}}/admin/editLanguage/patch
+const updateLanguageCategory = async function (req, res, next) {
+  const { LanguageID, LanguageName, CategoryName } = req.body;
+
+  const languageUpdate = await CourseLanguage.findByIdAndUpdate(
+    {
+      _id: LanguageID,
+
+    },
+    {
+      name: LanguageName,
+      categoryName: CategoryName,
+    },
+    { new: true, runValidators: true }
+  )
+  if (!languageUpdate) {
+    return next(createError(400, "Please provide a language"));
+  }
+  res.redirect('/admin/managelanguage');
 }
 
 //{{URL}}/admin/editcategory/del
@@ -277,11 +399,25 @@ const deleteCourseCategory = async function (req, res, next) {
   if (!categoryCheck) {
     return next(createError(404, "This category doesn't exist"));
   }
-  if (categoryCheck.courseList.length > 0) {
-    return next(createError(400, "Cant delete a category when having courses"));
+  if (categoryCheck.language.length > 0) {
+    return next(createError(400, "Cant delete a category when having languages"));
   }
   const deleteCategory = await CourseCategory.findByIdAndRemove({ _id: CategoryID })
   res.redirect('/admin/managecategory');
+}
+
+//{{URL}}/admin/editcategory/del
+const deleteCourseLanguage = async function (req, res, next) {
+  const { LanguageID } = req.body;
+  const languageCheck = await CourseLanguage.findById({ _id: LanguageID })
+  if (!languageCheck) {
+    return next(createError(404, "This language doesn't exist"));
+  }
+  if (languageCheck.courseList.length > 0) {
+    return next(createError(400, "Cant delete a language when having courses "));
+  }
+  const deleteLanguage = await CourseLanguage.findByIdAndRemove({ _id: LanguageID })
+  res.redirect('/admin/managelanguage');
 }
 
 
@@ -363,17 +499,25 @@ export {
   getAllTeachers,
   getAllCourses,
   getAllCourseCategories,
+  getAllCourseLanguages,
   getEditUserPage,
   getEditCategoryPage,
+  getEditLanguagePage,
   getAddCategoryPage,
+  getAddLanguagePage,
   getAddTeacherPage,
+  viewLanguagesByID,
   viewCoursesByID,
   updateUserPermission,
   deleteUser,
   createCourseCategory,
   createTeacherAccount,
+  createLanguage,
   updateCourseCategory,
-  deleteCourseCategory
+  updateLanguageCategory,
+  deleteCourseCategory,
+  deleteCourseLanguage,
+
 };
 
 //flow

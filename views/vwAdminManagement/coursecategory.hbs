@@ -31,6 +31,11 @@
             style="background-color:#2b6777; color:#000; font-weight:bold"
           >Course Categories</a>
           <a
+            href="/admin/managelanguage"
+            class="list-group-item list-group-item-action"
+            style="font-weight:bold"
+          >Languages</a>
+          <a
             href="/admin/managecourses"
             class="list-group-item list-group-item-action"
             style="font-weight:bold"
@@ -50,15 +55,17 @@
           style="background-color:#52ab98; color:#fff"
         >
           Course Categories Management
-          <a
-            class="btn btn-sm btn-outline-primary"
-            href="/admin/addcategory"
-            role="button"
-            style="color:#fff; border-color:#fff;"
-          >
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Category
-          </a>
+          <div>
+            <a
+              class="btn btn-sm btn-outline-primary"
+              href="/admin/addcategory"
+              role="button"
+              style="color:#fff; border-color:#fff;"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Add Category
+            </a>
+          </div>
         </h4>
         {{#if this.empty}}
           <div class="card-body text-muted">
@@ -68,20 +75,22 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">Loại Khoá Học</th>
-                <th class="text-center" scope="col">Số Lượng Khoá Học</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th class="text-center" scope="col">Number Languages</th>
                 <th scope="col">&nbsp;</th>
               </tr>
             </thead>
             <tbody>
               {{#each categories}}
                 <tr>
-                  <th scope="row">{{name}}</th>
-                  <td class="text-center">{{courseList.length}}</td>
+                  <th scope="row">{{_id}}</th>
+                  <td>{{name}}</td>
+                  <td class="text-center">{{language.length}}</td>
                   <td class="text-right">
                     <a
                       class="btn btn-sm btn-primary"
-                      href="/admin/managecoursesid?id={{_id}}"
+                      href="/admin/managecategoryid?id={{_id}}"
                       role="button"
                     >
                       <i class="fa fa-eye" aria-hidden="true"></i>

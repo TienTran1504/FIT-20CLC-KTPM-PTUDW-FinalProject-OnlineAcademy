@@ -2,17 +2,16 @@ import mongoose from "mongoose";
 
 const CourseCategorySchema = new mongoose.Schema(
   {
-    //required: name, typeOf, price
     name: {
       type: String,
       required: [true, "Please provide course category name"],
-      maxlength: 50,
       trim: true,
       unique: true,
     },
-    courseList: {
+    language: {
       type: Array,
       default: [],
+      // ref: "CourseLanguage",
     },
     createdBy: {
       type: mongoose.Types.ObjectId,

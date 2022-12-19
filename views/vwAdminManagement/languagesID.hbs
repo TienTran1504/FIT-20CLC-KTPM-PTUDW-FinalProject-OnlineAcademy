@@ -6,7 +6,7 @@
         style="background-color:#52ab98; color:#fff"
       >
         {{this.category.name}}
-        Course Management
+        Language Course Management
 
       </h4>
       {{#if this.empty}}
@@ -17,20 +17,20 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Tên Khoá Học</th>
-              <th scope="col">Loại Khoá Học</th>
-              <th class="text-center" scope="col">Số lượng Học Viên</th>
+              <th scope="col">ID</th>
+              <th scope="col">Language</th>
+              <th scope="col">Category</th>
+              <th class="text-center" scope="col">Number Courses</th>
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
-            {{#each courses}}
+            {{#each languages}}
               <tr>
-                <th scope="row">{{@index}}</th>
+                <th scope="row">{{_id}}</th>
                 <td>{{name}}</td>
-                <td>{{type}}</td>
-                <td class="text-center">{{studentList.length}}</td>
+                <td>{{categoryName}}</td>
+                <td class="text-center">{{courseList.length}}</td>
                 <td class="text-right">
                   <a class="btn btn-sm btn-primary" href="#" role="button">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -49,7 +49,7 @@
       <div class="card-footer text-muted">
         <a
           class="btn btn-outline-success"
-          href="/admin/managelanguage"
+          href="/admin/managecategory"
           role="button"
         >
           <i class="fa fa-backward" aria-hidden="true"></i>

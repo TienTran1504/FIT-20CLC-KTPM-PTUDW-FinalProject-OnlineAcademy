@@ -4,63 +4,82 @@
       class="card-header d-flex justify-content-between"
       style="background-color:#52ab98; color:#fff"
     >
-      Edit Permission
+      Edit Language
     </h4>
     <div class="card-body">
       <div class="form-group">
-        <label for="txtUserID" style="font-weight:bold">User ID</label>
+        <label for="txtLanguageID" style="font-weight:bold">Language ID</label>
         <input
-          name="UserID"
+          name="LanguageID"
           type="text"
           class="form-control"
-          id="txtUserID"
-          value="{{user._id}}"
+          id="txtLanguageID"
+          value="{{language._id}}"
           readonly
         />
       </div>
       <div class="form-group mb-3">
-        <label for="txtUserName" style="font-weight:bold">First Name</label>
+        <label for="txtCurrentLanguageName" style="font-weight:bold">Current
+          Name</label>
         <input
-          name="UserFirstName"
+          name="CurrentLanguageName"
           type="text"
           class="form-control"
-          id="txtUserFirstName"
-          value="{{user.firstName}}"
-          readonly
-        />
-        <label for="txtUserLastName" style="font-weight:bold">Last Name</label>
-        <input
-          name="UserLastName"
-          type="text"
-          class="form-control"
-          id="txtUserLastName"
-          value="{{user.lastName}}"
+          id="txtCurrentLanguageName"
+          value="{{language.name}}"
           readonly
         />
       </div>
-      <div class="form-group">
+      <div class="form-group mb-3">
+        <label for="txtCurrentCategoryName" style="font-weight:bold">Current
+          Category Name</label>
+        <input
+          name="CurrentCategoryName"
+          type="text"
+          class="form-control"
+          id="txtCurrentCategoryName"
+          value="{{language.categoryName}}"
+          readonly
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="txtLanguageName" style="font-weight:bold">New Language's
+          Name</label>
+        <input
+          name="LanguageName"
+          type="text"
+          class="form-control"
+          id="txtLanguageName"
+        />
+      </div>
+      <div class="form-group mb-3">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Options
-              permission</label>
+              Category</label>
           </div>
           <select
             class="custom-select"
             id="inputGroupSelect01"
-            name="permission"
+            name="CategoryName"
           >
-            <option selected value="Student">Student</option>
-            <option value="Teacher">Teacher</option>
+            {{#each categories}}
+              <option value="{{name}}">{{name}}</option>
+            {{/each}}
           </select>
         </div>
       </div>
+
     </div>
     <div class="card-footer text-muted">
-      <a class="btn btn-outline-success" href="/admin" role="button">
+      <a
+        class="btn btn-outline-success"
+        href="/admin/managecategory"
+        role="button"
+      >
         <i class="fa fa-backward" aria-hidden="true"></i>
         Back
       </a>
-
       <button
         type="button"
         class="btn btn-danger"
@@ -92,7 +111,7 @@
               </button>
             </div>
             <div class="modal-body">
-              Are you sure want to delete this user?
+              Are you sure want to delete this category ?
             </div>
             <div class="modal-footer">
               <button
@@ -103,7 +122,7 @@
               <button
                 type="submit"
                 class="btn btn-danger"
-                formaction="/admin/edituser/del"
+                formaction="/admin/editlanguage/del"
               >Delete</button>
             </div>
           </div>
@@ -113,7 +132,7 @@
       <button
         type="submit"
         class="btn btn-primary"
-        formaction="/admin/edituser/patch"
+        formaction="/admin/editlanguage/patch"
       >
         <i class="fa fa-check" aria-hidden="true"></i>
         Save

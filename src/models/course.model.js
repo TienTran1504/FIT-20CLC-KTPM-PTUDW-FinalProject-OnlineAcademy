@@ -52,10 +52,15 @@ const CourseSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    category: {
+    // category: {
+    //   type: mongoose.Types.ObjectId,
+    //   ref: "CourseCategory",
+    //   required: [true, "Please provide category of course"],
+    // },
+    languageId: {
       type: mongoose.Types.ObjectId,
-      ref: "CourseCategory",
-      required: [true, "Please provide category of course"],
+      ref: "CourseLanguage",
+      required: [true, "Please provide language of course"],
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
