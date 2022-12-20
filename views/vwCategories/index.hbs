@@ -1,31 +1,86 @@
-<div class="main-container">
-
-</div>
-
-<div class="card text-left mx-auto border-0" style="width: 90%; margin-top: 12vh;">
-  <div class="card-body">
-    <p>
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-toggle="collapse"
-        data-target="#collapseExample"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        Lập trình web
-      </button>
-    </p>
-    <div class="collapse" id="collapseExample">
-      <div class="card text-left" style="width: 20%;">
-        <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-            React
-          </a>
-          <a href="#" class="list-group-item list-group-item-action">Angular</a>
-          <a href="#" class="list-group-item list-group-item-action">VueJS</a>
+{{! <div class="main-container">
+  <div class="card text-left mx-auto border-0" style="width: 90%; margin-top: 12vh;">
+    <div class="card-body">
+      <p>
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          Lập trình web
+        </button>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card text-left" style="width: 20%;">
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+              React
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">Angular</a>
+            <a href="#" class="list-group-item list-group-item-action">VueJS</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div> }}
+
+<div class="card text-left mx-auto border-0" style="width: 100%">
+  <div class="card-body">
+    <div class="main-container">
+      <nav id="sidebar">
+        <div class="p-5 pt-5">
+          <h3 style="font-weight: 600;">Categories</h3>
+          <ul class="list-unstyled components mb-5">
+            <li>
+              <div class="category-container" href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">
+                <a class="category">Web</a>
+                <div class="dropdown-arrow rotate"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+              </div>
+              <ul class="collapse list-unstyled" id="pageSubmenu1">
+                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>ReactJS</a></li>
+                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>AngularJS</a></li>
+                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>VueJS</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <div class="category-container" href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">
+                <a class="category">Mobile</a>
+                <div class="dropdown-arrow rotate"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+              </div>
+              <ul class="collapse list-unstyled" id="pageSubmenu2">
+                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>React Native</a></li>
+                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Flutter</a></li>
+                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Kotlin</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="mb-4">Sidebar #08</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+          id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+          nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+          id est laborum.</p>
+      </div>
+    </div>
+  </div>
 </div>
+
+{{! <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script>
+  $(".rotate").click(function () { $(this).toggleClass("down"); })
+</script> }}
