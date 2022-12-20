@@ -310,14 +310,14 @@ const createLanguage = async function (req, res, next) {
     const category = await CourseCategory.findOne({ name: req.body.CategoryName });
     const createLanguage = await CourseLanguage.create({ name: req.body.LanguageName, categoryId: category._id, categoryName: category.name });
     newLanguage = { _id: createLanguage._id, name: createLanguage.name };
-    category.language.push(newLanguage);
-    console.log(category.language);
+    category.languageList.push(newLanguage);
+    console.log(category.languageList);
     const updateCategory = await CourseCategory.findOneAndUpdate(
       {
         name: req.body.CategoryName
       },
       {
-        language: category.language,
+        languageList: category.languageList,
       },
       { new: true, runValidators: true }
     )
@@ -399,7 +399,7 @@ const deleteCourseCategory = async function (req, res, next) {
   if (!categoryCheck) {
     return next(createError(404, "This category doesn't exist"));
   }
-  if (categoryCheck.language.length > 0) {
+  if (categoryCheck.languageList.length > 0) {
     return next(createError(400, "Cant delete a category when having languages"));
   }
   const deleteCategory = await CourseCategory.findByIdAndRemove({ _id: CategoryID })
@@ -416,6 +416,26 @@ const deleteCourseLanguage = async function (req, res, next) {
   if (languageCheck.courseList.length > 0) {
     return next(createError(400, "Cant delete a language when having courses "));
   }
+  const language = await CourseLanguage.findById({ _id: LanguageID })
+  const categoryID = language.categoryId;
+
+  const category = await CourseCategory.findById({ _id: categoryID });
+
+  const indexOf = category.languageList.findIndex((langObj) => {
+    return langObj._id == LanguageID;
+  });
+  category.languageList.splice(indexOf, 1);
+  const newlanguageList = category.languageList;
+  const categoryUpdate = await CourseCategory.findByIdAndUpdate(
+    {
+      _id: categoryID,
+
+    },
+    {
+      languageList: newlanguageList
+    },
+    { new: true, runValidators: true }
+  )
   const deleteLanguage = await CourseLanguage.findByIdAndRemove({ _id: LanguageID })
   res.redirect('/admin/managelanguage');
 }

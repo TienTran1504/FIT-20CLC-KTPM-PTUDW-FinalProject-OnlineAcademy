@@ -8,10 +8,10 @@ const CourseCategorySchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    language: {
+    languageList: {
       type: Array,
       default: [],
-      // ref: "CourseLanguage",
+      ref: "CourseLanguage",
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
