@@ -49,6 +49,10 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    watchList: {
+      type: Array,
+      default: [],
+    },
     image: {
       type: String,
       default: "",

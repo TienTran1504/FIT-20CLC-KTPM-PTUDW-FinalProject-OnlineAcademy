@@ -58,10 +58,10 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Tên Khoá Học</th>
-              <th scope="col">Loại Khoá Học</th>
-              <th class="text-center" scope="col">Số lượng Học Viên</th>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Language</th>
+              <th class="text-center" scope="col">Number Students</th>
               <th scope="col">&nbsp;</th>
             </tr>
           </thead>
@@ -73,9 +73,10 @@
             <tbody>
               {{#each courses}}
                 <tr>
-                  <th scope="row">{{@index}}</th>
+                  <th scope="row">{{_id}}</th>
                   <td>{{name}}</td>
                   <td>{{type}}</td>
+                  {{!-- <td>{{languageName}}</td> --}}
                   <td class="text-center">{{studentList.length}}</td>
                   {{! <td class="text-right">
                     <a class="btn btn-sm btn-primary" href="#" role="button">

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import Topic from "./topic.model"
 const CourseSchema = new mongoose.Schema(
   {
     //required: name, typeOf, price
@@ -62,6 +62,26 @@ const CourseSchema = new mongoose.Schema(
       ref: "CourseLanguage",
       required: [true, "Please provide language of course"],
     },
+    languageName: {
+      type: String,
+      ref: "CourseLanguage",
+      required: [true, "Please provide language name"],
+    },
+
+    categoryId: {
+      type: mongoose.Types.ObjectId,
+      ref: "CourseCategory",
+      required: [true, "Please provide category of course"],
+    },
+    categoryName: {
+      type: String,
+      ref: "CourseLanguage",
+      required: [true, "Please provide category's id"],
+    },
+    topic: {
+      type: Array,
+      default: [],
+    },
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",
@@ -71,6 +91,15 @@ const CourseSchema = new mongoose.Schema(
   { timestamps: true }
 ); // timestamps -> key createdAt, updatedAt
 
+CourseSchema.pre("deleteOne", function (next) {
+  const courseID = this.getQuery()["_id"];
+  Topic.deleteMany({ createdIn: courseID }, function (err, result) {
+    if (err) {
+      next(err);
+    }
+    next();
+  })
+})
 export default mongoose.model("Course", CourseSchema);
 
 /*

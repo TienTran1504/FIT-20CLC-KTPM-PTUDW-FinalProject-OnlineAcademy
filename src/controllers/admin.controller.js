@@ -308,20 +308,28 @@ const createLanguage = async function (req, res, next) {
   }
   else {
     const category = await CourseCategory.findOne({ name: req.body.CategoryName });
-    const createLanguage = await CourseLanguage.create({ name: req.body.LanguageName, categoryId: category._id, categoryName: category.name });
-    newLanguage = { _id: createLanguage._id, name: createLanguage.name };
-    category.languageList.push(newLanguage);
-    console.log(category.languageList);
-    const updateCategory = await CourseCategory.findOneAndUpdate(
-      {
-        name: req.body.CategoryName
-      },
-      {
-        languageList: category.languageList,
-      },
-      { new: true, runValidators: true }
-    )
-    console.log(updateCategory);
+    const checkExistLanguage = category.languageList.some((language) => {
+      return language.name === req.body.LanguageName;
+    })
+    if (checkExistLanguage) {
+      return next(createError(404, `Already have this language in ${req.body.CategoryName} category`));
+    }
+    else {
+      const createLanguage = await CourseLanguage.create({ name: req.body.LanguageName, categoryId: category._id, categoryName: category.name });
+      newLanguage = { _id: createLanguage._id, name: createLanguage.name };
+      category.languageList.push(newLanguage);
+      console.log(category.languageList);
+      const updateCategory = await CourseCategory.findOneAndUpdate(
+        {
+          name: req.body.CategoryName
+        },
+        {
+          languageList: category.languageList,
+        },
+        { new: true, runValidators: true }
+      )
+      console.log(updateCategory);
+    }
   }
   res.redirect('/admin/managelanguage')
 }

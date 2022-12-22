@@ -6,7 +6,6 @@ const CourseLanguageSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide course category name"],
       trim: true,
-      unique: true,
     },
     categoryName: {
       type: String,
