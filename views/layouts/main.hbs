@@ -5,29 +5,23 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
-      crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="../../public/assets/css/{{style}}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
     <style>
       #btn-back-to-top { position: fixed; bottom: 20px; right: 20px; display: none; } a.navbar1{ background-color:
       #52ab98; color: black; border: 1px solid green; border-radius: 15px; margin: 5px 10px; text-align: center;
       text-decoration: none; display: inline-block; } a.navbar1:hover{ background-color: #c8d8e4; } body{ margin-bottom:
       12px; }
     </style>
-    <link rel="stylesheet" href="../../public/assets/css/{{{custom_style}}}" />
-
+    {{{_sections.css}}}
   </head>
-
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
       <a class="navbar-brand" href="#" style="color: black">AcademyOnline</a>
@@ -114,21 +108,23 @@
 
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
     ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-      crossorigin="anonymous"
     ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-      integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
-      crossorigin="anonymous"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script src="../../public/assets/js/{{{js}}}">
+    <script
+      src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
+    ></script>
+    <script>
+      const swiper = new Swiper(".swiper", { autoplay: { delay: 5000,
+      disableOnInteraction: false, }, autoHeight: true, loop: true, pagination:
+      { el: ".swiper-pagination", clickable: true, }, navigation: { nextEl:
+      ".swiper-button-next", prevEl: ".swiper-button-prev", }, });
     </script>
+    </script>
+    {{{_sections.js}}}
   </body>
 </html>

@@ -1,17 +1,9 @@
 {{#section "css"}}
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
   <link
     rel="stylesheet"
     type="text/css"
     href="../../public/assets/css/teacher/teacher_profile.css"
   />
-{{/section}}
-
-{{#section "js"}}
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  <script>
-    var quill = new Quill('#editor', { theme: 'snow' });
-  </script>
 {{/section}}
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="container">
@@ -31,7 +23,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+            <a class="nav-link" href="/teacher/profile">
               <span data-feather="home"></span>
               Profile
             </a>
@@ -43,7 +35,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/teacher/profile/account_security">
+            <a class="nav-link active" href="#">
               <span data-feather="shopping-cart"></span>
               Account Security
             </a>
@@ -76,61 +68,57 @@
       <div class="col-9 h-100">
         <div class="card text-center">
           <div class="card-header">
-            <h3>Public profile</h3>
-            <p>Add information about yourself</p>
+            <h3>Account</h3>
+            <p>Edit your account settings and change your password here.</p>
           </div>
 
           <div class="card-body">
             <form method="post" action="/profile">
               <div class="pl-5 pr-5">
                 <div class="input-group form-group">
-                  <input
-                    type="text"
-                    class="form-control border border-dark"
-                    placeholder="First Name"
-                    style="height: 3.0rem;"
-                  />
+                  <label class="h6" for="">Email:</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Your email"
+                    />
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button"><i
+                          class="fa fa-pencil"
+                          aria-hidden="true"
+                        ></i></button>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="input-group form-group">
-                  <input
-                    type="text"
-                    class="form-control border border-dark"
-                    placeholder="Last Name"
-                    style="height: 3.0rem;"
-                  />
-                </div>
-
-                <div class="input-group form-group" style="margin-bottom: 2px;">
-                  <input
-                    type="text"
-                    class="form-control border border-dark"
-                    placeholder="Headline"
-                    style="height: 3.0rem;"
-                  />
-                </div>
-                <p
-                  class="form-group"
-                  style="font-size: 12px; text-align: left;"
-                >Add a professional headline like, "Instructor at Udemy" or
-                  "Architect."</p>
-
-                <!-- Create the editor container -->
-                <div style="margin-bottom: 2px;">
-                  <div id="editor">
-                    <p>Hello World!</p>
-                    <p>Some initial <strong>bold</strong> text</p>
-                    <p><br /></p>
+                  <label class="h6" for="">Password:</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter current password"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter new password"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Re-type new password"
+                    />
                   </div>
                 </div>
-                <p
-                  class="form-group"
-                  style="font-size: 12px; text-align: left;"
-                >Add description</p>
 
-                <button
-                  type="submit"
-                  class="btn btn-primary d-flex px-4"
-                >SAVE</button>
+                <button type="submit" class="btn btn-primary d-flex px-4">Change
+                  password</button>
               </div>
             </form>
           </div>

@@ -1,39 +1,64 @@
 import createError from "http-errors";
-import { StatusCodes } from "http-status-codes";
-import Course from "../models/course.model";
-import User from "../models/user.model";
+import CourseCategory from "../models/coursecategory.model";
+import CourseLanguage from "../models/courselanguage.model";
+
+const getInfo = (req, res) => {
+  res.render("vwTeacher/profile");
+};
+
+const getPhoto = (req, res) => {
+  res.render("vwTeacher/photo");
+};
+
+const getAccountSecurity = (req, res) => {
+  res.render("vwTeacher/account_security");
+};
 
 //{{URL}}/teacher/courses
 const getOwnerCourses = async (req, res) => {
-  const userCheck = await User.findOne({ _id: req.user.userId });
-  if (userCheck.permission === "teacher") {
-    const { search, limit } = req.query;
-    req.body.createdBy = req.user.userId;
-    const courses = await Course.find({ createdBy: req.user.userId }).sort(
-      "createdAt"
-    );
-    let sortedCourses = [...courses];
-    if (search) {
-      sortedCourses = sortedCourses.filter((course) => {
-        return course.name.startsWith(search);
-      });
-    }
-    if (limit) {
-      sortedCourses = sortedCourses.slice(0, Number(limit));
-    }
-    if (sortedCourses.length < 1) {
-      return res
-        .status(StatusCodes.OK)
-        .json({ msg: "No courses match your search" });
-    }
-    res
-      .status(StatusCodes.OK)
-      .json({ sortedCourses, count: sortedCourses.length });
-  } else {
-    throw createError.Unauthorized("User have no permission");
-  }
+  // const userCheck = await User.findOne({ _id: req.user.userId });
+  // if (userCheck.permission === "teacher") {
+  //   const { search, limit } = req.query;
+  //   req.body.createdBy = req.user.userId;
+  //   const courses = await Course.find({ createdBy: req.user.userId }).sort(
+  //     "createdAt"
+  //   );
+  //   let sortedCourses = [...courses];
+  //   if (search) {
+  //     sortedCourses = sortedCourses.filter((course) => {
+  //       return course.name.startsWith(search);
+  //     });
+  //   }
+  //   if (limit) {
+  //     sortedCourses = sortedCourses.slice(0, Number(limit));
+  //   }
+  //   if (sortedCourses.length < 1) {
+  //     return res
+  //       .status(StatusCodes.OK)
+  //       .json({ msg: "No courses match your search" });
+  //   }
+  //   res
+  //     .status(StatusCodes.OK)
+  //     .json({ sortedCourses, count: sortedCourses.length });
+  // } else {
+  //   throw createError.Unauthorized("User have no permission");
+  // }
+
+  res.render("vwTeacher/my_course");
 };
-//{{URL}}/teacher/courses
+
+const newCourse = async (req, res) => {
+  const courseCategories = await CourseCategory.find({})
+    .sort("createdAt")
+    .lean();
+  const sortedCourseCategories = [...courseCategories];
+
+  res.render("vwTeacher/create_course", {
+    categories: sortedCourseCategories,
+  });
+};
+
+//{{URL}}/courses/create
 const createCourse = async (req, res) => {
   const userCheck = await User.findOne({ _id: req.user.userId });
   if (userCheck.permission === "teacher") {
@@ -46,7 +71,7 @@ const createCourse = async (req, res) => {
     throw createError.Unauthorized("User have no permission");
   }
 };
-// {{URL}}/teacher/courses/:id
+// {{URL}}/courses/:id
 const updateCourse = async (req, res) => {
   const userCheck = await User.findOne({ _id: req.user.userId });
   if (userCheck.permission === "teacher") {
@@ -76,7 +101,7 @@ const updateCourse = async (req, res) => {
   }
 };
 
-// {{URL}}/teacher/courses/:id
+// {{URL}}/courses/:id
 const deleteCourse = async (req, res) => {
   const userCheck = await User.findOne({ _id: req.user.userId });
   if (userCheck.permission === "teacher") {
@@ -104,13 +129,16 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-const getInfo = (req, res) => {
-  res.render("vwTeacher/profile", {
-    custom_style: "teacher_profile.css",
-  });
+export {
+  getInfo,
+  getPhoto,
+  getAccountSecurity,
+  getOwnerCourses,
+  newCourse,
+  createCourse,
+  updateCourse,
+  deleteCourse,
 };
-
-export { getInfo, getOwnerCourses, createCourse, updateCourse, deleteCourse };
 
 //flow
 /*

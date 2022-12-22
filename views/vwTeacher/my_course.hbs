@@ -1,0 +1,221 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/teacher/my_course.css"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/teacher/teacher_profile.css"
+  />
+{{/section}}
+
+<div class="container-fluid" style="margin-top: 80px;">
+  <div class="container">
+    <div class="row">
+      <nav class="col-2 bg-light sidebar">
+        <ul class="nav flex-column">
+          <li>
+            <div class="img-profile">
+              <img
+                class="rounded-circle img-thumbnail"
+                src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
+                alt="none"
+              />
+            </div>
+            <div>
+              <p class="h6 img-name">Lê Đông Đông</p>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/teacher/profile">
+              <span data-feather="home"></span>
+              Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/teacher/profile/photo">
+              <span data-feather="file"></span>
+              Photo
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/teacher/profile/account_security">
+              <span data-feather="shopping-cart"></span>
+              Account Security
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="users"></span>
+              My Course
+            </a>
+          </li>
+        </ul>
+
+        <h6
+          class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+        >
+          <span>Last course</span>
+          <a class="d-flex align-items-center text-muted" href="#">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Course 1
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="col-9 h-100">
+        <div class="card-body" style="display: flex;">
+          <div class="input-group col-4" style="padding-left: 0px;">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search your course"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button"><i
+                  class="fa fa-search"
+                  aria-hidden="true"
+                ></i></button>
+            </div>
+
+          </div>
+          <div class="dropdown col-4">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Newest
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Newest</a>
+              <a class="dropdown-item" href="#">Oldest</a>
+              <a class="dropdown-item" href="#">A-Z</a>
+              <a class="dropdown-item" href="#">Z-A</a>
+            </div>
+          </div>
+          <div class="col-4">
+            <a class="btn btn-primary float-right" href="/teacher/course">New
+              course</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div
+            class="menu-item row border"
+            style="padding-top: 10px; position:relative;"
+          >
+            <div class="col-3">
+              <img
+                class="img-thumbnail"
+                style="padding: 0;"
+                src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg"
+                alt=""
+              />
+            </div>
+            <div class="col-7">
+              <b>ReactJS cho người mới bắt đầu</b>
+              <div class="r">
+                <span style="font-weight: bold; color: #CE810E;">4,2</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span
+                  style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                >(621)</span>
+              </div>
+              <b>999.000đ</b>
+              <p class="category-label">CNTT và phần mềm</p>
+            </div>
+            <div class="col-2">
+              <p class="category-label">Hoàn thành</p>
+            </div>
+            <div class="edit-btn">
+              <a href="/" class="heading-lg">Edit / manage course</a>
+            </div>
+          </div>
+          <div class="menu-item row border" style="padding-top: 10px">
+            <div class="col-3">
+              <img
+                class="img-thumbnail"
+                style="padding: 0;"
+                src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg"
+                alt=""
+              />
+            </div>
+            <div class="col-7">
+              <b>ReactJS cho người mới bắt đầu</b>
+              <div class="r">
+                <span style="font-weight: bold; color: #CE810E;">4,2</span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span
+                  style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                >(621)</span>
+              </div>
+              <b>999.000đ</b>
+              <p class="category-label">CNTT và phần mềm</p>
+            </div>
+            <div class="col-2">
+              <p class="category-label">Hoàn thành</p>
+            </div>
+            <div class="edit-btn">
+              <a href="/" class="heading-lg">Edit / manage course</a>
+            </div>
+          </div>
+          <div class="row mx-auto" style="width:20%;">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item active"><a
+                  class="page-link"
+                  href="#"
+                >1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#section "js"}}
+  <script>
+    {{! const $$ = document.querySelectorAll.bind(document);
+  const courses = $$('.menu-item') }}
+
+    $('.menu-item').hover(function() {
+    $(this).find('.edit-btn').toggleClass('active'); })
+
+  </script>
+{{/section}}

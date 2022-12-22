@@ -1,0 +1,277 @@
+[33mcommit 36562179bda829222e98ec8a048383909b15453b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Phuoc Dinh <74655729+20127287@users.noreply.github.com>
+Date:   Thu Dec 22 19:31:37 2022 +0700
+
+    style: update categories, home
+
+[33mcommit 5cffbfc89866229c90db87275f55672ad5972642[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Thu Dec 22 17:37:23 2022 +0700
+
+    chore: rebuild model, check language in category
+
+[33mcommit 6ea0ada9ee269a2e829337ab54f73fa74680cef8[m
+Author: Phuoc Dinh <74655729+20127287@users.noreply.github.com>
+Date:   Wed Dec 21 01:59:57 2022 +0700
+
+    refactor: home, categories
+
+[33mcommit 6d7331504e536d9f2b7913f87051afb994aa3d2d[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Tue Dec 20 19:33:37 2022 +0700
+
+    fix: bug when deleting language
+
+[33mcommit ccb0a045c7073a44c8e9dca2196b3b0b7693afe4[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Mon Dec 19 08:22:42 2022 +0700
+
+    chore: rebuild model, add language page, delete & edit language, add language to category
+
+[33mcommit c8d58d331576b0167d0756215702363820863194[m
+Author: Phuoc Dinh <74655729+20127287@users.noreply.github.com>
+Date:   Mon Dec 19 02:11:03 2022 +0700
+
+    refactor: add categories
+
+[33mcommit 2059e03c66358a405da76f5e0653334bc6fe3b28[m
+Merge: 3bd4168 9a6caee
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Sun Dec 18 11:19:49 2022 +0700
+
+    Merge branch 'main' of https://github.com/dongle4dev/FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy
+
+[33mcommit 3bd4168026c8bf0e09ff9027a30e181bb49356bc[m
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Sun Dec 18 11:19:26 2022 +0700
+
+    style: update student profile
+
+[33mcommit 9a6caee9c019f11386637c65d4a564c73284ecca[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Sun Dec 18 10:38:03 2022 +0700
+
+    refactor: provided teacher account
+
+[33mcommit f6bc2972e2271071578a7424925963a87661ae34[m
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Sat Dec 17 10:04:09 2022 +0700
+
+    style: update student profile
+
+[33mcommit 81ad34af1a2fe9906c6f036e7f67c5135b9341e5[m
+Merge: a5a0d52 6f9209e
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Sat Dec 17 09:11:29 2022 +0700
+
+    style: student profile
+
+[33mcommit a5a0d5218077f89d56f267fd16c9474b54a64ddb[m
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Sat Dec 17 09:10:04 2022 +0700
+
+    style: student profile
+
+[33mcommit 6f9209e720448c833bba1f8dcca10c2749e27d65[m
+Merge: 214c5c5 44aa3cf
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Fri Dec 16 21:36:38 2022 +0700
+
+    Merge branch 'main' of https://github.com/dongle4dev/FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy
+
+[33mcommit 214c5c5f2d7d7aa1c8d8ae8e5e99a54a9a8359fa[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Fri Dec 16 21:36:25 2022 +0700
+
+    style: teacher profile
+
+[33mcommit 44aa3cff90d14ac5f92e88a126dadf8e485cdb64[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Fri Dec 16 11:05:46 2022 +0700
+
+    test: testing register new user
+
+[33mcommit be990c01c84ac1b85e1fab88ff322839f41c611f[m
+Author: Phuoc Dinh <74655729+20127287@users.noreply.github.com>
+Date:   Fri Dec 16 02:41:50 2022 +0700
+
+    style: update style in home page
+
+[33mcommit b419f5cdb94b47fd9336c40dc778beed629e141d[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Wed Dec 14 14:24:16 2022 +0700
+
+    fix: bug admin controllers
+
+[33mcommit fc2efc233227227936ccd209a22503813cf9d8f0[m
+Merge: 1518cf0 b4bdfea
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Wed Dec 14 14:12:59 2022 +0700
+
+    Merge branch 'main' of https://github.com/dongle4dev/FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy
+
+[33mcommit 1518cf06c876ba860fa38838888d9829b83642ea[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Wed Dec 14 14:12:42 2022 +0700
+
+    fix: bug admin route
+
+[33mcommit b4bdfeacdf1ee8812663c9ad5c0416f7eee7e217[m
+Author: LeThuyNga1606 <85446368+LeThuyNga1606@users.noreply.github.com>
+Date:   Wed Dec 14 12:06:05 2022 +0700
+
+    Merge branch 'main' of https://github.com/dongle4dev/FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy
+
+[33mcommit 600cc332cec68efdc4b8b6568924308fbdb4eb46[m
+Author: Phuoc Dinh <74655729+20127287@users.noreply.github.com>
+Date:   Wed Dec 14 00:16:38 2022 +0700
+
+    style: update style in home page
+
+[33mcommit 8b43486e0298117cf6a5d4d0872cd31521cf74c4[m
+Merge: 9475a88 6219789
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Tue Dec 13 17:46:49 2022 +0700
+
+    Merge branch 'main' of https://github.com/dongle4dev/FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy
+
+[33mcommit 62197892546d67a3306a104402ed0ea556ed6bac[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Tue Dec 13 16:09:14 2022 +0700
+
+    refactor: view all courses by category ID
+
+[33mcommit 48746ae17c0f8a4d10793144b83210dc4b7d60f8[m
+Merge: d4b9ee8 5d7122f
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Tue Dec 13 15:06:14 2022 +0700
+
+    style: update style for view profile of student
+
+[33mcommit d4b9ee88e24dc23d137a435ee1e4ae1a37a82af7[m
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Tue Dec 13 14:59:48 2022 +0700
+
+    style: update style for view profile of student
+
+[33mcommit 9475a881633b48d0812936a96c24e9f975decf83[m
+Merge: 3770f22 5d7122f
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Tue Dec 13 10:11:40 2022 +0700
+
+    Merge branch 'main' of https://github.com/dongle4dev/FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy
+
+[33mcommit 3770f22de69975a9e6e0b7c7a3861a245179209b[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Tue Dec 13 10:07:20 2022 +0700
+
+    style: add view teacher
+
+[33mcommit 5d7122f318797025d6f1abde0899f99e06987f9f[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Mon Dec 12 22:19:20 2022 +0700
+
+    fix: undo comments
+
+[33mcommit 9877ec7e70c0dc076ba02a24e6992158dd18df9a[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Mon Dec 12 22:16:26 2022 +0700
+
+    chore: create category, edit category, delete category, view add category
+
+[33mcommit 92afc07a30d11edb5e8e77418b344a4f1567e905[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Mon Dec 12 17:39:09 2022 +0700
+
+    refactor: edit user, delete user, course category model
+
+[33mcommit f903093a4fa312c8c3d14b67be396d2177a86c58[m
+Author: Phuoc Dinh <74655729+20127287@users.noreply.github.com>
+Date:   Mon Dec 12 14:17:41 2022 +0700
+
+    style: add carousel, main layout for guest
+
+[33mcommit badf24d803a2ffd5d1b2e7d331874f4ee8a46516[m
+Author: Phuoc Dinh <74655729+20127287@users.noreply.github.com>
+Date:   Mon Dec 12 14:03:06 2022 +0700
+
+    Update home.hbs
+
+[33mcommit 69f80e2998ca4dc76d9f4079ef8e479b869c86f9[m
+Merge: 08aa43b 008d0a9
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Mon Dec 12 12:04:32 2022 +0700
+
+    Merge branch 'main' of https://github.com/dongle4dev/FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy
+
+[33mcommit 08aa43be4ebe43f9d442b2b71d47ef3eeb42b973[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Mon Dec 12 12:00:47 2022 +0700
+
+    refactor: update hadle error admin controller
+
+[33mcommit 008d0a9aef6cf415ad9bc82a5ed61a45bdf36645[m
+Author: Hasaghi <tblonga6nd2020@gmail.com>
+Date:   Mon Dec 12 08:51:20 2022 +0700
+
+    chore: add view profile student
+
+[33mcommit 5727dbd976c7c46aa1054801a22f66720ccb10b1[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Sat Dec 10 18:07:38 2022 +0700
+
+    style: view admin management layout
+
+[33mcommit b361e5cb80038544de73aeba7e83686fc20fbc72[m
+Author: LeThuyNga1606 <85446368+LeThuyNga1606@users.noreply.github.com>
+Date:   Sat Dec 10 16:42:26 2022 +0700
+
+    refactor: views folder, create error
+
+[33mcommit ee80d9c4194750bbf96243e29769cf2fa9e25997[m
+Author: Lê Đông Đông <84095284+dongle4dev@users.noreply.github.com>
+Date:   Sat Dec 10 14:53:21 2022 +0700
+
+    docs: update readme
+
+[33mcommit 4dbc8b3e89ea3bbf6c72a3beab79e9d1313c6489[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Sat Dec 10 14:07:57 2022 +0700
+
+    refactor: views folder, create error
+
+[33mcommit c6c730e0fa51a2032e597f843dc0e0d104d042cb[m
+Author: LeThuyNga1606 <85446368+LeThuyNga1606@users.noreply.github.com>
+Date:   Sat Dec 10 13:28:43 2022 +0700
+
+    style: base layout formatting
+
+[33mcommit e59e5978c3a80d01791a7ee5f4b662ec49505623[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Thu Dec 8 11:34:15 2022 +0700
+
+    refactor: renaming file, flow of route, handle error
+
+[33mcommit 133a95d3b840c21712e45f2ca16dc0af5ade4171[m
+Author: TienTran1504 <74586033+TienTran1504@users.noreply.github.com>
+Date:   Wed Dec 7 21:01:50 2022 +0700
+
+    build: Build Model, Build Some Basic API
+
+[33mcommit c9b2dd63a2731c48951e3d71add21552e275a56e[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Tue Dec 6 17:35:51 2022 +0700
+
+    bug: Fix bug base code và config MongoDB database
+
+[33mcommit 6a90255f9cf4b67dfe399e557524c0220a428427[m
+Author: DongEmSi <ledongdong102@gmail.com>
+Date:   Mon Dec 5 10:01:09 2022 +0700
+
+    Add base code
+
+[33mcommit b108376921691e61c5be9d4fe1f1ca3588a40c76[m
+Author: Lê Đông Đông <84095284+dongle4dev@users.noreply.github.com>
+Date:   Mon Dec 5 09:40:31 2022 +0700
+
+    Initial commit
