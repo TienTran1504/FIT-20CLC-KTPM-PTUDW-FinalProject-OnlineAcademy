@@ -1,7 +1,10 @@
 import express from "express";
-const categoriesRouter = express.Router();
-import { renderCategories } from "../controllers/categories.controller";
+import * as categories from "../controllers/categories.controller";
 
-categoriesRouter.route("/").get(renderCategories);
+const categoriesRouter = express.Router();
+
+categoriesRouter.route("/").get(categories.renderCategories);
+
+categoriesRouter.route("/:category/:language").get(categories.getCategory);
 
 export default categoriesRouter;

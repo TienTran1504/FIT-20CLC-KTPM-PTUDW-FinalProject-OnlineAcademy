@@ -19,6 +19,10 @@ a:hover {
   text-decoration: none;
 }
 
+#content {
+  flex: 1;
+}
+
 /*****************************************/
 .main-container {
   margin-top: 10vh;
@@ -117,5 +121,9 @@ a:hover {
 }
 
 .card {
+  align-items: center;
+}
+
+.pagination {
   align-items: center;
 }

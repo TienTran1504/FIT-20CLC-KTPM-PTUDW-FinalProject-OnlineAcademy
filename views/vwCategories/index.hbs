@@ -1,114 +1,77 @@
-<div class="card text-left mx-auto border-0" style="width: 100%">
-  <div class="card-body">
-    <div class="main-container">
-      <nav id="sidebar">
-        <div class="p-5 pt-5">
-          <h3 style="font-weight: 600;">Categories</h3>
-          <ul class="list-unstyled components mb-5">
-            <li>
-              <div class="category-container" href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">
-                <a class="category">Web</a>
-                <div class="dropdown-arrow rotate"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
-              </div>
-              <ul class="collapse list-unstyled" id="pageSubmenu1">
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>ReactJS</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>AngularJS</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>VueJS</a></li>
-              </ul>
-            </li>
-
-            <li>
-              <div class="category-container" href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">
-                <a class="category">Mobile</a>
-                <div class="dropdown-arrow rotate"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
-              </div>
-              <ul class="collapse list-unstyled" id="pageSubmenu2">
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>React Native</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Flutter</a></li>
-                <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Kotlin</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <!-- Page Content  -->
-      <div id="content" class="p-4 p-md-5 pt-5">
-        <h2 class="mb-4">ReactJS</h2>
-        <div class="course-container">
-          <div class="course">
-            <img class="course-img" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-            <div class="course-info">
-              <b>React - The Complete Guide (incl Hooks, React Router, Redux)</b>
-              <p style="margin-bottom: 5px;">Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React
-                Routing, Animations, Next.js and way more!</p>
-              <p style="font-size: 12px; margin-bottom: 0px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-              <div class="rate">
-                <span style="font-weight: bold; color: #CE810E;">4,2</span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-              </div>
-              <div class="category-lable-container">
-                <p class="category-lable category-level-I">Web</p>
-                <p class="category-lable category-level-II">ReactJS</p>
-              </div>
+<div class="main-container">
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+    <div class="p-5 pt-5">
+      <h3 style="font-weight: 600;">Categories</h3>
+      <ul class="list-unstyled components mb-5">
+        {{#each CatList}}
+          <li>
+            <div class="category-container" href="#pageSubmenu{{CatID}}" data-toggle="collapse" aria-expanded="false">
+              <a class="category">{{CatName}}</a>
+              <div class="dropdown-arrow rotate"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
             </div>
-          </div>
-          <div class="price">549.000đ</div>
-        </div>
-
-        <div class="course-container">
-          <div class="course">
-            <img class="course-img" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-            <div class="course-info">
-              <b>React - The Complete Guide (incl Hooks, React Router, Redux)</b>
-              <p style="margin-bottom: 5px;">Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React
-                Routing, Animations, Next.js and way more!</p>
-              <p style="font-size: 12px; margin-bottom: 0px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-              <div class="rate">
-                <span style="font-weight: bold; color: #CE810E;">4,2</span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-              </div>
-              <div class="category-lable-container">
-                <p class="category-lable category-level-I">Web</p>
-                <p class="category-lable category-level-II">ReactJS</p>
-              </div>
-            </div>
-          </div>
-          <div class="price">549.000đ</div>
-        </div>
-
-        <div class="card mx-auto border-0">
-          <div class="card-body">
-            <nav aria-label="...">
-              <ul class="pagination">
-                <li class="page-item disabled">
-                  <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                  <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-
-      </div>
+            <ul class="collapse list-unstyled" id="pageSubmenu{{CatID}}">
+              {{#each LanguegeList}}
+                <li><a href="/categories/{{../CatName}}/{{LanguegeName}}"><span
+                      class="fa fa-chevron-right mr-2"
+                    ></span>{{LanguegeName}}</a></li>
+              {{/each}}
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
     </div>
+  </nav>
+
+  <!-- Page Content  -->
+  <div id="content" class="p-4 p-md-5 pt-5">
+    <h2 class="mb-4">{{language}}</h2>
+
+    {{#each courses}}
+      <div class="course-container">
+        <div class="course">
+          <img class="course-img" src="{{CourseImage}}" alt="" />
+          <div class="course-info">
+            <b style="font-size: 20px;">{{CourseName}}</b>
+            <p style="margin-bottom: 5px;">{{CourseDescription}}</p>
+            <p style="font-size: 12px; margin-bottom: 0px; color: rgb(109, 107, 107);">{{CourseAuthor}}</p>
+            <div class="rate">
+              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span
+                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+              >({{CourseRatingVote}})</span>
+            </div>
+            <div class="category-lable-container">
+              <p class="category-lable category-level-I">{{CourseCategory}}</p>
+              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+            </div>
+          </div>
+        </div>
+        <p class="price">{{CoursePrice}}đ</p>
+      </div>
+    {{/each}}
+    <!-- Pagination  -->
+    <nav aria-label="...">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">2</span>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+
   </div>
 </div>
 
