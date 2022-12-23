@@ -29,127 +29,124 @@ const register = async (req, res) => {
 const getAllUsers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { search, limit } = req.query;
-  const users = await User.find({}).sort("createdAt").lean();
+  const limit = 2;
+  const curPage = req.query.page || 1;
+  const offset = (curPage - 1) * limit;
+
+  const users = await User.find({}).sort('createdAt').lean();
   let sortedUsers = [...users];
-  if (search) {
-    sortedUsers = sortedUsers.filter((user) => {
-      return user.name.startsWith(search);
-    });
+
+  const total = sortedUsers.length;
+  const nPages = Math.ceil(total / limit);
+  sortedUsers = sortedUsers.slice(offset, offset + limit);
+  console.log(sortedUsers);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === +curPage
+    })
   }
-  if (limit) {
-    sortedUsers = sortedUsers.slice(0, Number(limit));
-  }
-  // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
-  res.render("vwAdminManagement/index", {
+
+  res.render('vwAdminManagement/index', {
     users: sortedUsers,
     empty: sortedUsers.length === 0,
+    pageNumbers: pageNumbers
   });
   // } else {
-  //   throw createError.Unauthorized();
+  //    return next(createError(500, "User has no permission "));
   // }
 };
 //{{URL}}/admin/managestudents
 const getAllStudents = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { search, limit } = req.query;
+
   const users = await User.find({ permission: "Student" })
     .sort("createdAt")
     .lean();
   let sortedUsers = [...users];
-  if (search) {
-    sortedUsers = sortedUsers.filter((user) => {
-      return user.name.startsWith(search);
-    });
-  }
-  if (limit) {
-    sortedUsers = sortedUsers.slice(0, Number(limit));
-  }
+
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
   res.render("vwAdminManagement/students", {
     users: sortedUsers,
     empty: sortedUsers.length === 0,
   });
   // } else {
-  //   throw createError.Unauthorized();
+  //    return next(createError(500, "User has no permission "));
   // }
 };
 //{{URL}}/admin/manageteachers
 const getAllTeachers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { search, limit } = req.query;
+
   const users = await User.find({ permission: "Teacher" })
     .sort("createdAt")
     .lean();
   let sortedUsers = [...users];
-  if (search) {
-    sortedUsers = sortedUsers.filter((user) => {
-      return user.name.startsWith(search);
-    });
-  }
-  if (limit) {
-    sortedUsers = sortedUsers.slice(0, Number(limit));
-  }
+
   // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
   res.render("vwAdminManagement/teachers", {
     users: sortedUsers,
     empty: sortedUsers.length === 0,
   });
   // } else {
-  //   throw createError.Unauthorized();
+  //    return next(createError(500, "User has no permission "));
   // }
 };
 //{{URL}}/admin/managecourses
 const getAllCourses = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { search, limit } = req.query;
+  const limit = 7;
+  const curPage = req.query.page || 1;
+  const offset = (curPage - 1) * limit;
   const courses = await Course.find({}).sort("createdAt").lean();
   let sortedCourses = [...courses];
-  if (search) {
-    sortedCourses = sortedCourses.filter((course) => {
-      return course.name.startsWith(search);
-    });
+
+  const total = sortedCourses.length;
+  const nPages = Math.ceil(total / limit);
+  sortedCourses = sortedCourses.slice(offset, offset + limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === +curPage
+    })
   }
-  if (limit) {
-    sortedCourses = sortedCourses.slice(0, Number(limit));
-  }
+
   // res.status(StatusCodes.OK).json({ sortedCourses, count: sortedCourses.length });
   res.render("vwAdminManagement/courses", {
     courses: sortedCourses,
     empty: sortedCourses.length === 0,
+    pageNumbers: pageNumbers
   });
   // } else {
-  //   throw createError.Unauthorized();
+  //    return next(createError(500, "User has no permission "));
   // }
+
 };
 
 //{{URL}}/admin/managecategory
 const getAllCourseCategories = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { search, limit } = req.query;
+
   const courseCategories = await CourseCategory.find({})
     .sort("createdAt")
     .lean();
   let sortedCourseCategories = [...courseCategories];
-  if (search) {
-    sortedCourseCategories = sortedCourseCategories.filter((course) => {
-      return course.name.startsWith(search);
-    });
-  }
-  if (limit) {
-    sortedCourseCategories = sortedCourseCategories.slice(0, Number(limit));
-  }
+
   // res.status(StatusCodes.OK).json({ sortedCourseCategories, count: sortedCourseCategories.length });
   res.render("vwAdminManagement/coursecategory", {
     categories: sortedCourseCategories,
     empty: sortedCourseCategories.length === 0,
   });
   // } else {
-  //   throw createError.Unauthorized();
+  //    return next(createError(500, "User has no permission "));
   // }
 };
 
@@ -157,31 +154,26 @@ const getAllCourseCategories = async (req, res, next) => {
 const getAllCourseLanguages = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { search, limit } = req.query;
+
   const courseLanguages = await CourseLanguage.find({})
     .sort("createdAt")
     .lean();
   let sortedCourseLanguages = [...courseLanguages];
-  if (search) {
-    sortedCourseLanguages = sortedCourseLanguages.filter((course) => {
-      return course.name.startsWith(search);
-    });
-  }
-  if (limit) {
-    sortedCourseLanguages = sortedCourseLanguages.slice(0, Number(limit));
-  }
+
   // res.status(StatusCodes.OK).json({ sortedCourseLanguages, count: sortedCourseLanguages.length });
   res.render("vwAdminManagement/courselanguage", {
     languages: sortedCourseLanguages,
     empty: sortedCourseLanguages.length === 0,
   });
   // } else {
-  //   throw createError.Unauthorized();
+  //    return next(createError(500, "User has no permission "));
   // }
 };
 
 //{{URL}}/admin/edituser?id
 const getEditUserPage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const id = req.query.id || 0;
   const user = await User.findById({ _id: id }).lean();
   if (user === null) {
@@ -191,10 +183,15 @@ const getEditUserPage = async function (req, res, next) {
   res.render("vwAdminManagement/edit/edituser", {
     user,
   });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/editcategory
 const getEditCategoryPage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const id = req.query.id || 0;
   const category = await CourseCategory.findById({ _id: id }).lean();
   if (category === null) {
@@ -204,10 +201,15 @@ const getEditCategoryPage = async function (req, res, next) {
   res.render("vwAdminManagement/edit/editcategory", {
     category,
   });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/editcategory
 const getEditLanguagePage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const id = req.query.id || 0;
   const language = await CourseLanguage.findById({ _id: id }).lean();
   const courseCategories = await CourseCategory.find({})
@@ -221,15 +223,25 @@ const getEditLanguagePage = async function (req, res, next) {
     language,
     categories: sortedCourseCategories,
   });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/addcategory
 const getAddCategoryPage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   res.render("vwAdminManagement/add/addcategory");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/addlanguage
 const getAddLanguagePage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const courseCategories = await CourseCategory.find({})
     .sort("createdAt")
     .lean();
@@ -238,15 +250,25 @@ const getAddLanguagePage = async function (req, res, next) {
   res.render("vwAdminManagement/add/addlanguage", {
     categories: sortedCourseCategories,
   });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/addcategory
 const getAddTeacherPage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   res.render("vwAdminManagement/add/addteacher");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/managecategoryid?id
 const viewLanguagesByID = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const id = req.query.id || 0;
   const category = await CourseCategory.findById({ _id: id }).lean();
   const languages = await CourseLanguage.find({ categoryId: id }).lean();
@@ -258,10 +280,15 @@ const viewLanguagesByID = async function (req, res, next) {
     languages,
     empty: languages.length === 0,
   });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 // {{ URL }}/admin/manageclanguageid?id
 const viewCoursesByID = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const id = req.query.id || 0;
   const language = await CourseLanguage.findById({ _id: id }).lean();
   const courses = await Course.find({ languageId: id }).lean();
@@ -273,10 +300,15 @@ const viewCoursesByID = async function (req, res, next) {
     courses,
     empty: courses.length === 0,
   });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/edituser/patch
 const updateUserPermission = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const { UserID, permission } = req.body;
   const userUpdate = await User.findByIdAndUpdate(
     {
@@ -289,10 +321,15 @@ const updateUserPermission = async function (req, res, next) {
     return next(createError(400, "Please provide a user"));
   }
   res.redirect("/admin");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/edituser/del
 const deleteUser = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const { UserID } = req.body;
   const userCheck = await User.findById({ _id: UserID });
   if (userCheck.permission === "Teacher") {
@@ -303,10 +340,15 @@ const deleteUser = async function (req, res, next) {
     return next(createError(400, "Please provide a user"));
   }
   res.redirect("/admin");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/addteacher/post
 const createCourseCategory = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   // req.body.createdBy= req.user._id
   if (!req.body.CategoryName) {
     return next(createError(400, "Please provide category name"));
@@ -316,10 +358,15 @@ const createCourseCategory = async function (req, res, next) {
     });
   }
   res.redirect("/admin/managecategory");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/addteacher/post
 const createLanguage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   let newLanguage = {};
   // req.body.createdBy= req.user._id
   if (!req.body.CategoryName || !req.body.LanguageName) {
@@ -348,10 +395,15 @@ const createLanguage = async function (req, res, next) {
     console.log(updateCategory);
   }
   res.redirect("/admin/managelanguage");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}//admin/addcategory/post
 const createTeacherAccount = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   // req.body.createdBy= req.user._id
   if (
     !req.body.TeacherFirstName ||
@@ -375,10 +427,15 @@ const createTeacherAccount = async function (req, res, next) {
     });
   }
   res.redirect("/admin/manageteachers");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/editcategory/patch
 const updateCourseCategory = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const { CategoryID, CategoryName } = req.body;
   const courseUpdate = await CourseCategory.findByIdAndUpdate(
     {
@@ -401,10 +458,15 @@ const updateCourseCategory = async function (req, res, next) {
     return next(createError(400, "Please provide a course"));
   }
   res.redirect("/admin/managecategory");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/editLanguage/patch
 const updateLanguageCategory = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const { LanguageID, LanguageName, CategoryName } = req.body;
 
   const languageUpdate = await CourseLanguage.findByIdAndUpdate(
@@ -421,10 +483,15 @@ const updateLanguageCategory = async function (req, res, next) {
     return next(createError(400, "Please provide a language"));
   }
   res.redirect("/admin/managelanguage");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/editcategory/del
 const deleteCourseCategory = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const { CategoryID } = req.body;
   const categoryCheck = await CourseCategory.findById({ _id: CategoryID });
   if (!categoryCheck) {
@@ -439,10 +506,15 @@ const deleteCourseCategory = async function (req, res, next) {
     _id: CategoryID,
   });
   res.redirect("/admin/managecategory");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 //{{URL}}/admin/editcategory/del
 const deleteCourseLanguage = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
   const { LanguageID } = req.body;
   const languageCheck = await CourseLanguage.findById({ _id: LanguageID });
   if (!languageCheck) {
@@ -457,6 +529,9 @@ const deleteCourseLanguage = async function (req, res, next) {
     _id: LanguageID,
   });
   res.redirect("/admin/managelanguage");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
 };
 
 // {{URL}}/admin/:id
