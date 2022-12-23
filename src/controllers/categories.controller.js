@@ -39,7 +39,7 @@ const CourseList = [
     CourseDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
     CourseAuthor: "Hau Nguyen",
-    CourseRatingPoint: 4.2,
+    CourseRatingPoint: 4.3,
     CourseRatingVote: 621,
     CourseCategory: "Web",
     CourseLanguage: "ReactJS",
@@ -52,12 +52,38 @@ const CourseList = [
     CourseDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
     CourseAuthor: "Hau Nguyen",
-    CourseRatingPoint: 4.2,
+    CourseRatingPoint: 4.9,
     CourseRatingVote: 621,
     CourseCategory: "Web",
     CourseLanguage: "ReactJS",
     CoursePrice: 549000,
     CourseImage: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+  },
+  {
+    CourseID: 4,
+    CourseName: "React Native - The Practical Guide [2023]",
+    CourseDescription:
+      "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
+    CourseAuthor: "Phuoc Dinh",
+    CourseRatingPoint: 4.8,
+    CourseRatingVote: 1080,
+    CourseCategory: "Mobile",
+    CourseLanguage: "React Native",
+    CoursePrice: 600000,
+    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+  },
+  {
+    CourseID: 5,
+    CourseName: "React Native - The Practical Guide [2023]",
+    CourseDescription:
+      "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
+    CourseAuthor: "Phuoc Dinh",
+    CourseRatingPoint: 4.8,
+    CourseRatingVote: 1080,
+    CourseCategory: "Mobile",
+    CourseLanguage: "React Native",
+    CoursePrice: 600000,
+    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
   },
 ];
 
@@ -80,12 +106,46 @@ const getCategory = async (req, res) => {
     }
   });
 
+  function fullStar(ratingPoint) {
+    var fullStar = [];
+    var stars = ratingPoint - ratingPoint.toFixed(0) >= 0.75 ? ratingPoint + 1 : ratingPoint.toFixed(0);
+    for (let i = 0; i < stars; i++) {
+      fullStar.push(stars);
+    }
+    return fullStar;
+  }
+
+  function halfStar(ratingPoint) {
+    var halfStar = [];
+    var stars = ratingPoint - ratingPoint.toFixed(0) >= 0.25 ? 1 : 0;
+    for (let i = 0; i < stars; i++) {
+      halfStar.push(stars);
+    }
+    return halfStar;
+  }
+
+  function blankStar(ratingPoint) {
+    var blankStar = [];
+    var stars = 5 - fullStar(ratingPoint).length - halfStar(ratingPoint).length;
+    for (let i = 0; i < stars; i++) {
+      blankStar.push(stars);
+    }
+    return blankStar;
+  }
+
   res.render("vwCategories/index", {
     style: "categories.css",
     CatList: CatList,
     category: category,
     language: language,
-    courses: courses,
+    courses: courses.map((course) => {
+      return {
+        ...course,
+        fullStar: fullStar(course.CourseRatingPoint),
+        halfStar: halfStar(course.CourseRatingPoint),
+        blankStar: blankStar(course.CourseRatingPoint),
+      };
+    }),
   });
 };
 

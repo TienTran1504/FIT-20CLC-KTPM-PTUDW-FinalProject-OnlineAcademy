@@ -25,7 +25,7 @@
 
   <!-- Page Content  -->
   <div id="content" class="p-4 p-md-5 pt-5">
-    <h2 class="mb-4">{{language}}</h2>
+    <h2 class="mb-4">{{category}} - {{language}}</h2>
 
     {{#each courses}}
       <div class="course-container">
@@ -37,11 +37,15 @@
             <p style="font-size: 12px; margin-bottom: 0px; color: rgb(109, 107, 107);">{{CourseAuthor}}</p>
             <div class="rate">
               <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
+              {{#each fullStar}}
+                <span class="fa fa-star star"></span>
+              {{/each}}
+              {{#each halfStar}}
+                <span class="fa fa-star-half-o star"></span>
+              {{/each}}
+              {{#each blankStar}}
+                <span class="fa fa-star-o star"></span>
+              {{/each}}
               <span
                 style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
               >({{CourseRatingVote}})</span>
