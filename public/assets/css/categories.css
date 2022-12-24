@@ -127,3 +127,11 @@ a:hover {
 .pagination {
   align-items: center;
 }
+
+.language {
+  transition: opacity 0.15s;
+}
+
+.language:hover {
+  opacity: 0.3;
+}

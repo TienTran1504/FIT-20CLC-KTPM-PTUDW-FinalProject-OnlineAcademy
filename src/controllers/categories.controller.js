@@ -105,8 +105,9 @@ const getCategory = async (req, res) => {
       courses.push(course);
     }
   });
+
   const curPage = parseInt(page) || 1;
-  const limit = 6;
+  const limit = 1;
   const offset = (curPage - 1) * limit;
 
   const total = courses.length;
@@ -116,7 +117,7 @@ const getCategory = async (req, res) => {
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push({
       value: i,
-      isCurrent: i === +curPage,
+      isCurrentPage: i === +curPage,
     });
   }
 
@@ -147,6 +148,13 @@ const getCategory = async (req, res) => {
     return blankStar;
   }
 
+  function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x)) x = x.replace(pattern, "$1,$2");
+    return x;
+  }
+
   res.render("vwCategories/index", {
     style: "categories.css",
     CatList: CatList,
@@ -159,6 +167,7 @@ const getCategory = async (req, res) => {
           fullStar: fullStar(course.CourseRatingPoint),
           halfStar: halfStar(course.CourseRatingPoint),
           blankStar: blankStar(course.CourseRatingPoint),
+          CoursePrice: numberWithCommas(course.CoursePrice),
         };
       })
       .slice(offset, offset + limit),

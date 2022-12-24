@@ -1,3 +1,11 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../../public/assets/css/categories.css"
+  />
+{{/section}}
+
 <div class="main-container">
   <!-- Sidebar  -->
   <nav id="sidebar">
@@ -12,8 +20,8 @@
             </div>
             <ul class="collapse show list-unstyled" id="pageSubmenu{{CatID}}">
               {{#each LanguegeList}}
-                <li><a href="/categories/{{../CatName}}/{{LanguegeName}}"><span
-                      class="fa fa-chevron-right mr-2"
+                <li><a class="language" href="/categories/{{../CatName}}/{{LanguegeName}}/1"><span
+                      class="fa fa-chevron-right mr-2 language"
                     ></span>{{LanguegeName}}</a></li>
               {{/each}}
             </ul>
@@ -72,7 +80,7 @@
         </li>
         {{/if}}
         {{#each this.pageNumbers}}
-          {{#if isCurrent}}
+          {{#if isCurrentPage}}
             <li class="page-item active" aria-current="page">
               <span class="page-link">{{value}}</span>
             </li>
