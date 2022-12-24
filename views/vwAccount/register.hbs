@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>FIT-20CLC-KTPM-PTUDW-FinalProject-OnlineAcademy</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="../../public/assets/css/{{{custom_style}}}" />
+</head>
+<body>
+    <div class="container">
+        <form class="form-horizontal" method="post" id="frmRegister">
+            <div class="card">
+                <h4 class="card-header">
+                    Account Registration
+                </h4>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="txtName">Name</label>
+                        <input name="name" type="text" class="form-control" id="txtName" autofocus/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtPassword">Password</label>
+                        <input name="password" type="password" class="form-control" id="txtPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtConfirm">Confirm Password</label>
+                        <input type="password" class="form-control" id="txtConfirm">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtEmail">Email</label>
+                        <input name="email" type="text" class="form-control" id="txtEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtGender">Gender</label>
+                        <input name="gender" type="text" class="form-control" id="txtGender">
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-primary float-right">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Register
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("frmRegister").on('submit', function (e) {
+            e.preventDefault();
+
+            const Name = document.getElementById("txtName").value;
+            if (Name.length === 0) {
+                alert('Please input a valid username.');
+                return;
+            }
+
+            const pass = document.getElementById("txtPassword").value;
+            const confirmPass = document.getElementById("txtConfirm").value;
+
+            if (pass != confirmPass) {
+                alert('Password and Confirm password are not same.');
+                return;
+            }
+            document.getElementById("frmRegister").off('submit').submit();
+        });
+    </script>
+
+</body>
+</html>
+
