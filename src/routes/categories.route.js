@@ -5,6 +5,6 @@ const categoriesRouter = express.Router();
 
 categoriesRouter.route("/").get(categories.renderCategories);
 
-categoriesRouter.route("/:category/:language").get(categories.getCategory);
+categoriesRouter.route("/:category/:language/:page").get(categories.getCategory);
 
 export default categoriesRouter;

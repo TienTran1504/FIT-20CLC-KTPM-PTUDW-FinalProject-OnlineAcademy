@@ -96,7 +96,7 @@ const renderCategories = async (req, res) => {
 
 const getCategory = async (req, res) => {
   const {
-    params: { category: category, language: language },
+    params: { category: category, language: language, page: page },
   } = req;
 
   var courses = [];
@@ -105,6 +105,20 @@ const getCategory = async (req, res) => {
       courses.push(course);
     }
   });
+  const curPage = parseInt(page) || 1;
+  const limit = 6;
+  const offset = (curPage - 1) * limit;
+
+  const total = courses.length;
+  const nPages = Math.ceil(total / limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === +curPage,
+    });
+  }
 
   function fullStar(ratingPoint) {
     var fullStar = [];
@@ -138,14 +152,22 @@ const getCategory = async (req, res) => {
     CatList: CatList,
     category: category,
     language: language,
-    courses: courses.map((course) => {
-      return {
-        ...course,
-        fullStar: fullStar(course.CourseRatingPoint),
-        halfStar: halfStar(course.CourseRatingPoint),
-        blankStar: blankStar(course.CourseRatingPoint),
-      };
-    }),
+    courses: courses
+      .map((course) => {
+        return {
+          ...course,
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
+        };
+      })
+      .slice(offset, offset + limit),
+    havePagination: courses.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: curPage === 1 ? true : false,
+    lastPage: curPage === total ? true : false,
+    prevPage: curPage - 1,
+    nextPage: curPage + 1,
   });
 };
 

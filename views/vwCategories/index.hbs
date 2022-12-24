@@ -10,7 +10,7 @@
               <a class="category">{{CatName}}</a>
               <div class="dropdown-arrow rotate"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
             </div>
-            <ul class="collapse list-unstyled" id="pageSubmenu{{CatID}}">
+            <ul class="collapse show list-unstyled" id="pageSubmenu{{CatID}}">
               {{#each LanguegeList}}
                 <li><a href="/categories/{{../CatName}}/{{LanguegeName}}"><span
                       class="fa fa-chevron-right mr-2"
@@ -60,21 +60,39 @@
       </div>
     {{/each}}
     <!-- Pagination  -->
-    <nav aria-label="...">
-      <ul class="pagination justify-content-center">
+    {{#if havePagination}}
+    <ul class="pagination justify-content-center">
+      {{#if firstPage}}
         <li class="page-item disabled">
           <span class="page-link">Previous</span>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
-          <span class="page-link">2</span>
+        {{else}}
+      <li class="page-item">
+          <a class="page-link" href="{{prevPage}}">Previous</a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#">Next</a>
+        {{/if}}
+        {{#each this.pageNumbers}}
+          {{#if isCurrent}}
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">{{value}}</span>
+            </li>
+          {{else}}
+            <li class="page-item">
+              <a class="page-link" href="{{value}}">{{value}}</a>
+            </li>
+          {{/if}}
+        {{/each}}
+        {{#if lastPage}}
+        <li class="page-item disabled">
+          <span class="page-link">Next</span>
         </li>
+        {{else}}
+      <li class="page-item">
+          <a class="page-link" href="{{nextPage}}">Next</a>
+        </li>
+        {{/if}}
       </ul>
-    </nav>
+      {{/if}}
 
   </div>
 </div>
