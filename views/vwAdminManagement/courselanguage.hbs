@@ -75,7 +75,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">ID</th>
+                <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Category</th>
                 <th class="text-center" scope="col">Number Courses</th>
@@ -85,7 +85,7 @@
             <tbody>
               {{#each languages}}
                 <tr>
-                  <th scope="row">{{_id}}</th>
+                  <th scope="row">{{math @index "+" 1}}</th>
                   <td>{{name}}</td>
                   <td>{{categoryName}}</td>
                   <td class="text-center">{{courseList.length}}</td>
