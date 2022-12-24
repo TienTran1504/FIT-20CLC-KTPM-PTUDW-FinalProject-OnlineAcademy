@@ -6,6 +6,7 @@ import teacherRouter from "./teacher.route";
 import userRouter from "./user.route";
 import accountRouter from "./account.route";
 import categoriesRouter from "./categories.route";
+import homeRouter from "./home.route";
 
 function route(app) {
   // app.use('/api/v1/auth', authRouter);
@@ -17,12 +18,7 @@ function route(app) {
   app.use("/account", accountRouter);
   app.use("/categories", categoriesRouter);
 
-  app.use("/", (req, res, next) => {
-    res.render("home", {
-      style: "home.css",
-      js: "home.js",
-    });
-  });
+  app.use("/", homeRouter);
 
   app.use(async function (req, res, next) {
     if (typeof req.session.auth === "undefined") {

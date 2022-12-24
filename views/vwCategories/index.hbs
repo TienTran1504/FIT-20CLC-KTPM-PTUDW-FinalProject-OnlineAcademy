@@ -30,6 +30,9 @@
   </nav>
 
   <!-- Page Content  -->
+  {{#if noData}}
+    <img class="no-data" src="../../../public/assets/images/nodata.png" alt="">
+  {{else}}
   <div id="content" class="p-4 p-md-5 pt-5">
     {{#if language}}
       <h2>{{category}} - {{language}}</h2>
@@ -44,7 +47,12 @@
           <div class="course-info">
             <b style="font-size: 20px;">{{CourseName}}</b>
             <p style="margin-bottom: 5px;">{{CourseDescription}}</p>
-            <p style="font-size: 12px; margin-bottom: 0px; color: rgb(109, 107, 107);">{{CourseAuthor}}</p>
+            <div class="sub-info-container">
+              <p class="sub-info-item">{{CourseAuthor}}</p>
+              <p class="sub-info-item">{{CourseViews}} views</p>
+              <p class="sub-info-item">Posting date:
+                {{PostingDate}}</p>
+            </div>
             <div class="rate">
               <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
               {{#each fullStar}}
@@ -103,7 +111,7 @@
         {{/if}}
       </ul>
     {{/if}}
-
+{{/if}}
   </div>
 </div>
 
