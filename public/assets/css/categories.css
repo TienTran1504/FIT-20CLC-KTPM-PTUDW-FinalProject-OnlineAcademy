@@ -154,3 +154,7 @@ a:hover {
   width: auto;
   margin: auto;
 }
+
+.pagination {
+  margin-top: 20px;
+}
