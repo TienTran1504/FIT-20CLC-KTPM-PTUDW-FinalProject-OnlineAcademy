@@ -6,9 +6,15 @@
       <ul class="list-unstyled components mb-5">
         {{#each CatList}}
           <li>
-            <div class="category-container" href="#pageSubmenu{{CatID}}" data-toggle="collapse" aria-expanded="false">
-              <a class="category">{{CatName}}</a>
-              <div class="dropdown-arrow rotate"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+            <div class="category-container">
+              <a class="category" href="/categories/{{CatName}}/1">{{CatName}}</a>
+              <div class="dropdown-arrow rotate"><i
+                  class="fa fa-angle-down"
+                  aria-hidden="true"
+                  data-toggle="collapse"
+                  aria-expanded="false"
+                  href="#pageSubmenu{{CatID}}"
+                ></i></div>
             </div>
             <ul class="collapse show list-unstyled" id="pageSubmenu{{CatID}}">
               {{#each LanguegeList}}
@@ -25,7 +31,11 @@
 
   <!-- Page Content  -->
   <div id="content" class="p-4 p-md-5 pt-5">
-    <h2 class="mb-4">{{category}} - {{language}}</h2>
+    {{#if language}}
+      <h2>{{category}} - {{language}}</h2>
+    {{else}}
+      <h2>{{category}}</h2>
+    {{/if}}
 
     {{#each courses}}
       <div class="course-container">
@@ -61,15 +71,15 @@
     {{/each}}
     <!-- Pagination  -->
     {{#if havePagination}}
-    <ul class="pagination justify-content-center">
-      {{#if firstPage}}
-        <li class="page-item disabled">
-          <span class="page-link">Previous</span>
-        </li>
+      <ul class="pagination justify-content-center">
+        {{#if firstPage}}
+          <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+          </li>
         {{else}}
-      <li class="page-item">
-          <a class="page-link" href="{{prevPage}}">Previous</a>
-        </li>
+          <li class="page-item">
+            <a class="page-link" href="{{prevPage}}">Previous</a>
+          </li>
         {{/if}}
         {{#each this.pageNumbers}}
           {{#if isCurrentPage}}
@@ -83,21 +93,21 @@
           {{/if}}
         {{/each}}
         {{#if lastPage}}
-        <li class="page-item disabled">
-          <span class="page-link">Next</span>
-        </li>
+          <li class="page-item disabled">
+            <span class="page-link">Next</span>
+          </li>
         {{else}}
-      <li class="page-item">
-          <a class="page-link" href="{{nextPage}}">Next</a>
-        </li>
+          <li class="page-item">
+            <a class="page-link" href="{{nextPage}}">Next</a>
+          </li>
         {{/if}}
       </ul>
-      {{/if}}
+    {{/if}}
 
   </div>
 </div>
 
-{{! <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script>
   $(".rotate").click(function () { $(this).toggleClass("down"); })
-</script> }}
+</script>

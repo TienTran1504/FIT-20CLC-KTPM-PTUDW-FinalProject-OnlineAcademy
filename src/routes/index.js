@@ -23,9 +23,9 @@ function route(app) {
       js: "home.js",
     });
   });
-  
+
   app.use(async function (req, res, next) {
-    if (typeof req.session.auth === 'undefined') {
+    if (typeof req.session.auth === "undefined") {
       req.session.auth = false;
     }
 

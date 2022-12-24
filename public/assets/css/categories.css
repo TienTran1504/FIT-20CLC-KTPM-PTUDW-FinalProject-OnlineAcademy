@@ -49,7 +49,7 @@ a:hover {
   font-size: 20px;
 }
 
-/* .rotate {
+.rotate {
   -moz-transition: all 0.3s linear;
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
@@ -58,13 +58,13 @@ a:hover {
   -moz-transform: rotate(-180deg);
   -webkit-transform: rotate(-180deg);
   transform: rotate(-180deg);
-} */
+}
 
 .course-container {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
+  padding: 30px 0;
   transition: opacity 0.3s;
 }
 
@@ -80,10 +80,10 @@ a:hover {
 
 .course-img {
   width: 250px;
-  height: 150px;
+  height: auto;
   object-fit: cover;
   border-radius: 12px;
-  margin-right: 20px;
+  margin-right: 25px;
 }
 
 .rate {
@@ -128,10 +128,12 @@ a:hover {
   align-items: center;
 }
 
-.language {
+.language,
+.category {
   transition: opacity 0.15s;
 }
 
-.language:hover {
+.language:hover,
+.category:hover {
   opacity: 0.3;
 }
