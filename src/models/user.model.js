@@ -62,6 +62,9 @@ const UserSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+    },
+    headline: {
+      type: String,
     }
   },
 
