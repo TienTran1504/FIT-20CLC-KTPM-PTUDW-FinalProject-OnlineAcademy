@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import connectDB from "./src/config/connect.js";
 import route from "./src/routes";
 import hbs_sections from "express-handlebars-sections";
+import session from 'express-session';
 dotenv.config();
 
 const app = express();
@@ -40,6 +41,18 @@ app.engine(
     }
   })
 );
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    //store: store,
+    cookie: {
+        //secure: true
+    }
+}))
+
 app.set("view engine", "hbs");
 app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));
