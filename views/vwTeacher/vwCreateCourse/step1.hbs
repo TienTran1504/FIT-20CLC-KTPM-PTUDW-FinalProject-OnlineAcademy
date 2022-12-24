@@ -1,0 +1,26 @@
+<div class="container-fluid" style="margin-top: 80px;">
+  <div class="container">
+        <div class="card text-center">
+          <div class="card-header">
+            <h3>What category best fits the knowledge you'll share?</h3>
+            <p>If you're not sure about the right category, you can change it later.</p>
+          </div>
+
+          <div class="card-body">
+              <div class="pl-5 pr-5 d-flex justify-content-center">
+                  <div class="input-group mb-3" style="width: 50%;">
+                    <select
+                      class="custom-select"
+                      id="category-input"
+                      name="CategoryName"
+                    >
+                      {{#each categories}}
+                        <option value="{{name}}">{{name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+              </div>
+          </div>
+    </div>
+  </div>
+</div>

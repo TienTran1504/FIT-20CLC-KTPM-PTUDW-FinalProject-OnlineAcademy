@@ -1,4 +1,5 @@
 import createError from "http-errors";
+import multer from "multer";
 import CourseCategory from "../models/coursecategory.model";
 import CourseLanguage from "../models/courselanguage.model";
 
@@ -8,6 +9,27 @@ const getInfo = (req, res) => {
 
 const getPhoto = (req, res) => {
   res.render("vwTeacher/photo");
+};
+
+const uploadPhoto = (req, res) => {
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "./public/assets/images");
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    },
+  });
+
+  const upload = multer({ storage: storage });
+  upload.single("teacher-avatar")(req, res, function (err) {
+    console.log(req.body);
+    if (err) {
+      console.error(err);
+    } else {
+      res.render("vwTeacher/photo");
+    }
+  });
 };
 
 const getAccountSecurity = (req, res) => {
@@ -47,29 +69,54 @@ const getOwnerCourses = async (req, res) => {
   res.render("vwTeacher/my_course");
 };
 
-const newCourse = async (req, res) => {
+const createCourse1 = async (req, res) => {
   const courseCategories = await CourseCategory.find({})
     .sort("createdAt")
     .lean();
   const sortedCourseCategories = [...courseCategories];
 
-  res.render("vwTeacher/create_course", {
+  res.render("vwTeacher/vwCreateCourse/step1", {
     categories: sortedCourseCategories,
+    layout: "createCourseStep1",
+  });
+};
+
+const createCourse2 = async (req, res) => {
+  const courseCategories = await CourseCategory.find({})
+    .sort("createdAt")
+    .lean();
+  const sortedCourseCategories = [...courseCategories];
+
+  res.render("vwTeacher/vwCreateCourse/step2", {
+    categories: sortedCourseCategories,
+    layout: "createCourseStep2",
+  });
+};
+
+const createCourse3 = async (req, res) => {
+  const courseCategories = await CourseCategory.find({})
+    .sort("createdAt")
+    .lean();
+  const sortedCourseCategories = [...courseCategories];
+
+  res.render("vwTeacher/vwCreateCourse/step3", {
+    categories: sortedCourseCategories,
+    layout: "createCourseStep3",
   });
 };
 
 //{{URL}}/courses/create
 const createCourse = async (req, res) => {
-  const userCheck = await User.findOne({ _id: req.user.userId });
-  if (userCheck.permission === "teacher") {
-    req.body.createdBy = req.user.userId;
-    const course = await Course.create({ ...req.body });
-    res.status(StatusCodes.CREATED).json({
-      course,
-    });
-  } else {
-    throw createError.Unauthorized("User have no permission");
-  }
+  // const userCheck = await User.findOne({ _id: req.user.userId });
+  // if (userCheck.permission === "teacher") {
+  //   req.body.createdBy = req.user.userId;
+  //   const course = await Course.create({ ...req.body });
+  //   res.status(StatusCodes.CREATED).json({
+  //     course,
+  //   });
+  // } else {
+  //   throw createError.Unauthorized("User have no permission");
+  // }
 };
 // {{URL}}/courses/:id
 const updateCourse = async (req, res) => {
@@ -132,9 +179,12 @@ const deleteCourse = async (req, res) => {
 export {
   getInfo,
   getPhoto,
+  uploadPhoto,
   getAccountSecurity,
   getOwnerCourses,
-  newCourse,
+  createCourse1,
+  createCourse2,
+  createCourse3,
   createCourse,
   updateCourse,
   deleteCourse,

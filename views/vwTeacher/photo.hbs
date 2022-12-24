@@ -4,7 +4,25 @@
     type="text/css"
     href="../../public/assets/css/teacher/teacher_profile.css"
   />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
 {{/section}}
+{{#section 'js'}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
+  <script>
+    $('#teacher-avatar').fileinput({
+      dropZoneEnabled: false,
+      maxFileCount: 1,
+      theme: 'fa4',
+      allowedFileExtensions: ['jpg', 'png', 'gif'],
+    });
+  </script>
+{{/section}}
+
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="container">
     <div class="row">
@@ -86,16 +104,8 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="" class="d-flex h6">Add/Change Image</label>
-                <div class="custom-file">
-                  <input
-                    type="file"
-                    class="custom-file-input"
-                    id="inputGroupFile01"
-                  />
-                  <label class="custom-file-label" for="inputGroupFile01">Choose
-                    file</label>
-                </div>
+                <label for="teacher-avatar" class="d-flex h6">Add/Change Image</label>
+                <input type="file" id="teacher-avatar" name="teacher-avatar">
               </div>
               <button
                 type="submit"
