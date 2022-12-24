@@ -107,7 +107,7 @@ const getCategory = async (req, res) => {
   });
 
   const curPage = parseInt(page) || 1;
-  const limit = 1;
+  const limit = 6;
   const offset = (curPage - 1) * limit;
 
   const total = courses.length;
