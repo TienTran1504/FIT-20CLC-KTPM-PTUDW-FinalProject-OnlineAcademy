@@ -1,14 +1,25 @@
 import createError from "http-errors";
 import multer from "multer";
+import User from "../models/user.model";
+import { mongooseToObject } from "../middleware/convertToObject.mdw";
 import CourseCategory from "../models/coursecategory.model";
 import CourseLanguage from "../models/courselanguage.model";
 
-const getInfo = (req, res) => {
-  res.render("vwTeacher/profile");
+const getInfo = async (req, res, next) => {
+  req.session.authUser = await User.findOne({
+    _id: "63a6c10fe930ca09e8b4d4d0",
+  });
+
+  res.render("vwTeacher/profile", {
+    user: mongooseToObject(req.session.authUser),
+  });
 };
 
 const getPhoto = (req, res) => {
-  res.render("vwTeacher/photo");
+  console.log(req.session.authUser);
+  res.render("vwTeacher/photo", {
+    user: mongooseToObject(req.session.authUser),
+  });
 };
 
 const uploadPhoto = (req, res) => {

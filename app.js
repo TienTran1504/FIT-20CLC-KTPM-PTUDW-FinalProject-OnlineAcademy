@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 import express from "express";
 import { engine } from "express-handlebars";
 import morgan from "morgan";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 import connectDB from "./src/config/connect.js";
 import route from "./src/routes";
 import hbs_sections from "express-handlebars-sections";
+import activate_session from "./src/middleware/session.mdw";
+
 dotenv.config();
 
 const app = express();
@@ -30,6 +30,8 @@ app.set("view engine", "hbs");
 app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+activate_session(app);
 
 route(app);
 

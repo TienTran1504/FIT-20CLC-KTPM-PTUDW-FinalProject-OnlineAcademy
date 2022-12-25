@@ -6,7 +6,7 @@ import teacherRouter from "./teacher.route";
 import userRouter from "./user.route";
 import categoriesRouter from "./categories.route";
 
-function route(app) {
+export default function (app) {
   // app.use('/api/v1/auth', authRouter);
   app.use("/admin", adminRouter);
   app.use("/courses", coursesRouter);
@@ -33,5 +33,3 @@ function route(app) {
     });
   });
 }
-
-export default route;
