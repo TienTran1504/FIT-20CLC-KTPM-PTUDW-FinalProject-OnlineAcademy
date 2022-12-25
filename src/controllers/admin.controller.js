@@ -4,12 +4,10 @@ import CourseCategory from "../models/coursecategory.model.js";
 import CourseLanguage from "../models/courselanguage.model";
 import createError from "http-errors";
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
   if (!firstName || !lastName || !email || !password) {
-    throw new BadRequestError(
-      "Please provide first name, last name, email, password"
-    );
+    return next(createError(400, "Please provide complete information "));
   } else {
     const user = await User.create({ ...req.body });
     res.status(200).json({
@@ -61,7 +59,6 @@ const getAllStudents = async (req, res, next) => {
     .lean();
   let sortedUsers = [...users];
 
-  // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
   res.render("vwAdminManagement/students", {
     users: sortedUsers,
     empty: sortedUsers.length === 0,
@@ -80,7 +77,6 @@ const getAllTeachers = async (req, res, next) => {
     .lean();
   let sortedUsers = [...users];
 
-  // res.status(StatusCodes.OK).json({ sortedUsers, count: sortedUsers.length });
   res.render("vwAdminManagement/teachers", {
     users: sortedUsers,
     empty: sortedUsers.length === 0,
@@ -111,7 +107,6 @@ const getAllCourses = async (req, res, next) => {
     })
   }
 
-  // res.status(StatusCodes.OK).json({ sortedCourses, count: sortedCourses.length });
   res.render("vwAdminManagement/courses", {
     courses: sortedCourses,
     empty: sortedCourses.length === 0,
@@ -133,7 +128,6 @@ const getAllCourseCategories = async (req, res, next) => {
     .lean();
   let sortedCourseCategories = [...courseCategories];
 
-  // res.status(StatusCodes.OK).json({ sortedCourseCategories, count: sortedCourseCategories.length });
   res.render("vwAdminManagement/coursecategory", {
     categories: sortedCourseCategories,
     empty: sortedCourseCategories.length === 0,
@@ -153,7 +147,6 @@ const getAllCourseLanguages = async (req, res, next) => {
     .lean();
   let sortedCourseLanguages = [...courseLanguages];
 
-  // res.status(StatusCodes.OK).json({ sortedCourseLanguages, count: sortedCourseLanguages.length });
   res.render("vwAdminManagement/courselanguage", {
     languages: sortedCourseLanguages,
     empty: sortedCourseLanguages.length === 0,
@@ -383,7 +376,6 @@ const createLanguage = async function (req, res, next) {
     });
     newLanguage = { _id: createLanguage._id, name: createLanguage.name };
     category.languageList.push(newLanguage);
-    console.log(category.languageList);
     const updateCategory = await CourseCategory.findOneAndUpdate(
       {
         name: req.body.CategoryName,
@@ -393,7 +385,7 @@ const createLanguage = async function (req, res, next) {
       },
       { new: true, runValidators: true }
     );
-    console.log(updateCategory);
+
   }
   res.redirect("/admin/managelanguage");
   // } else {
@@ -552,76 +544,7 @@ const deleteCourseLanguage = async function (req, res, next) {
   // }
 };
 
-// {{URL}}/admin/:id
-// const getUser = async (req, res, next) => {
-//   const userCheck = await User.findOne({ _id: req.user.userId });
-//   if (userCheck.permission === "Admin") {
-//     const {
-//       params: { id: userId },
-//     } = req; // req.user.userId, req.params.id
 
-//     const user = await User.findOne({
-//       _id: userId,
-//     });
-//     if (!user) {
-//       throw new NotFoundError(`No user with id ${userId}`);
-//     }
-//     res.status(StatusCodes.OK).json({ user });
-//   } else {
-//     throw createError.Unauthorized();
-//   }
-// };
-// // {{URL}}/admin/:id
-// const deleteUser = async (req, res) => {
-//   const userCheck = await User.findOne({ _id: req.user.userId });
-//   if (userCheck.permission === "Admin") {
-//     const {
-//       params: { id: userId },
-//     } = req;
-
-//     const user = await User.findByIdAndRemove({
-//       _id: userId,
-//     });
-
-//     if (!user) {
-//       throw createError.NotFound();
-//     }
-//     res
-//       .status(StatusCodes.OK)
-//       .json({ msg: `Delete user ID: ${userId} successfully ` });
-//   } else {
-//     throw createError.Unauthorized();
-//   }
-// };
-// // {{URL}}/admin/:id
-// const updateUser = async (req, res) => {
-//   const userCheck = await User.findOne({ _id: req.user.userId });
-//   if (userCheck.permission === "Admin") {
-//     const {
-//       body: { permission },
-//       params: { id: userId },
-//     } = req;
-
-//     if (permission === "") {
-//       throw createError.BadRequest();
-//     }
-//     const user = await User.findByIdAndUpdate(
-//       {
-//         _id: userId,
-//         permission: permission,
-//       },
-//       req.body,
-//       { new: true, runValidators: true }
-//     );
-
-//     if (!user) {
-//       throw createError.NotFound();
-//     }
-//     res.status(StatusCodes.OK).json({ user });
-//   } else {
-//     throw createError.Unauthorized();
-//   }
-// };
 
 export {
   register,

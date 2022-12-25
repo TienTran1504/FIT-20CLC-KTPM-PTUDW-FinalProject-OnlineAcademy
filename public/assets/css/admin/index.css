@@ -1,0 +1,28 @@
+.adding {
+  color: #fff;
+  border-color: #fff;
+}
+.adding:hover {
+  background-color: #2b6777;
+  border-color: transparent;
+}
+.adding:active {
+  background-color: #2b6777 !important;
+}
+
+.editPencil {
+  background-color: #52ab98;
+  border-color: transparent;
+}
+.editPencil:hover {
+  background-color: #2b6777;
+}
+
+.view {
+  background-color: #52ab98;
+  border-color: transparent;
+}
+
+.view:hover {
+  background-color: #2b6777;
+}

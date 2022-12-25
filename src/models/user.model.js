@@ -37,8 +37,8 @@ const UserSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["Nam", "Nữ"],
-      default: "Nam",
+      enum: ["Male", "Female"],
+      default: "Male",
     },
     permission: {
       type: String,

@@ -1,3 +1,10 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/admin/index.css"
+  />
+{{/section}}
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="row" style="margin-bottom:16px">
     <div class="col-sm-3">
@@ -57,10 +64,9 @@
           Course Categories Management
           <div>
             <a
-              class="btn btn-sm btn-outline-primary"
+              class="btn btn-sm btn-outline-primary adding"
               href="/admin/addcategory"
               role="button"
-              style="color:#fff; border-color:#fff;"
             >
               <i class="fa fa-plus" aria-hidden="true"></i>
               Add Category
@@ -89,14 +95,14 @@
                   <td class="text-center">{{languageList.length}}</td>
                   <td class="text-right">
                     <a
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-primary view"
                       href="/admin/managecategoryid?id={{_id}}"
                       role="button"
                     >
                       <i class="fa fa-eye" aria-hidden="true"></i>
                     </a>
                     <a
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-primary editPencil"
                       href="/admin/editcategory?id={{_id}}"
                       role="button"
                     >
