@@ -32,6 +32,10 @@ const CourseSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    viewList: {
+      type: Array,
+      default: [],
+    },
     ratingList: {
       type: Array,
       default: [],

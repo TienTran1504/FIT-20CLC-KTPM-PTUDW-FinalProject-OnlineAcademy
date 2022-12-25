@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 const corsOptions = { origin: "*" };
 
-app.use(morgan("combined"));
+// app.use(morgan("combined"));
 app.use(cors(corsOptions));
 app.use("/public", express.static("public"));
 app.engine(
@@ -23,10 +23,8 @@ app.engine(
     // defaultLayout: 'main.hbs'
     extname: "hbs",
     helpers: {
-      section: hbs_sections(),
-    },
-    helpers: {
       // Function to do basic mathematical operation in handlebar
+      section: hbs_sections(),
       math: function (lvalue, operator, rvalue) {
         lvalue = parseFloat(lvalue);
         rvalue = parseFloat(rvalue);

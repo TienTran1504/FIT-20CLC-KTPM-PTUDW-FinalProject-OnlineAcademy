@@ -1,5 +1,8 @@
 <form method="post" style="margin-top: 80px">
-  <div class="card">
+  <div
+    class="card col-md-9"
+    style="margin-left: auto; margin-right:auto; padding:0"
+  >
     <h4
       class="card-header d-flex justify-content-between"
       style="background-color:#52ab98; color:#fff"
@@ -15,6 +18,16 @@
           type="text"
           class="form-control"
           id="txtLanguageName"
+        />
+      </div>
+      <div class="form-group">
+        <label for="txtLanguageImage" style="font-weight:bold">Enter New
+          Language's Image Link</label>
+        <input
+          name="LanguageImage"
+          type="text"
+          class="form-control"
+          id="txtLanguageImage"
         />
       </div>
       <div class="form-group">
@@ -35,7 +48,7 @@
         </div>
       </div>
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer d-flex text-muted justify-content-between">
       <a
         class="btn btn-outline-success"
         href="/admin/managelanguage"

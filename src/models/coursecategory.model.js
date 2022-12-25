@@ -18,6 +18,9 @@ const CourseCategorySchema = new mongoose.Schema(
       ref: "User",
       // required: [true, 'Please provide user']
     },
+    image: {
+      type: String,
+    }
   },
   { timestamps: true }
 ); // timestamps -> key createdAt, updatedAt
