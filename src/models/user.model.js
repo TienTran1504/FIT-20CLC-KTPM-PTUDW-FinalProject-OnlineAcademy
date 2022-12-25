@@ -57,7 +57,17 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    dob: {
+      type: Date,
+    },
+    description: {
+      type: String,
+    },
+    headline: {
+      type: String,
+    },
   },
+
   { timestamps: true }
 );
 

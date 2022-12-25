@@ -6,6 +6,7 @@ import morgan from "morgan";
 import connectDB from "./src/config/connect.js";
 import route from "./src/routes";
 import hbs_sections from "express-handlebars-sections";
+import session from "express-session";
 import activate_session from "./src/middleware/session.mdw";
 
 dotenv.config();
@@ -24,8 +25,36 @@ app.engine(
     helpers: {
       section: hbs_sections(),
     },
+    helpers: {
+      // Function to do basic mathematical operation in handlebar
+      math: function (lvalue, operator, rvalue) {
+        lvalue = parseFloat(lvalue);
+        rvalue = parseFloat(rvalue);
+        return {
+          "+": lvalue + rvalue,
+          "-": lvalue - rvalue,
+          "*": lvalue * rvalue,
+          "/": lvalue / rvalue,
+          "%": lvalue % rvalue,
+        }[operator];
+      },
+    },
   })
 );
+
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    //store: store,
+    cookie: {
+      //secure: true
+    },
+  })
+);
+
 app.set("view engine", "hbs");
 app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));

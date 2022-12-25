@@ -1,15 +1,11 @@
 <div>
   <div class="swiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <img class="slider-img" src="https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg" alt="" />
-      </div>
-      <div class="swiper-slide">
-        <img class="slider-img" src="https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg" alt="" />
-      </div>
-      <div class="swiper-slide">
-        <img class="slider-img" src="https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg" alt="" />
-      </div>
+      {{#each SliderList}}
+        <div class="swiper-slide">
+          <img class="slider-img" src="{{SliderImage}}" alt="" />
+        </div>
+      {{/each}}
     </div>
     <div class="swiper-pagination"></div>
 
@@ -20,511 +16,158 @@
   <br />
   <div class="info-container">
     <div class="info-item">
-      <div class="info-item-icon"><i class="fa fa-play" aria-hidden="true"></i></div>
-      <b>Học các kỹ năng có nhu cầu lớn với hơn 213000 khóa học video</b>
+      <div class="info-item-icon"><i
+          class="fa fa-play"
+          aria-hidden="true"
+        ></i></div>
+      <b>Learn in-demand skills with over 213,000 video courses</b>
     </div>
     <div class="info-item">
-      <div class="info-item-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
-      <b>Chọn khóa học do chuyên gia trong thế giới thực giảng dạy</b>
+      <div class="info-item-icon"><i
+          class="fa fa-star"
+          aria-hidden="true"
+        ></i></div>
+      <b>Choose courses taught by real-world experts</b>
     </div>
     <div class="info-item">
-      <div class="info-item-icon"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></div>
-      <b>Học theo tốc độ phù hợp với bạn, với quyền truy cập suốt đời trên thiết bị di động và máy tính để bàn</b>
+      <div class="info-item-icon"><i
+          class="fa fa-thumbs-o-up"
+          aria-hidden="true"
+        ></i></div>
+      <b>Learn at your own pace, with lifetime access on mobile and desktop</b>
     </div>
   </div>
 
   <div class="card text-left mx-auto border-0" style="width: 90%">
     <div class="card-body">
-      <h3 class="card-title"><b>Các lĩnh vực hàng đầu</b></h3>
+      <h3 class="card-title"><b>Top categories</b></h3>
       <div class="menu-container">
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://www.incimages.com/uploaded_files/image/1920x1080/getty_537311951_100178.jpg"
-            alt=""
-          />
-          <b>Thiết kế</b>
-        </div>
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://kinhnghiemlaptrinh.com/wp-content/uploads/2020/03/image1.jpg"
-            alt=""
-          />
-          <b>Phát triển</b>
-        </div>
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://img-cdn.inc.com/image/upload/w_1920,h_1080,c_fill/images/panoramic/GettyImages-1218421190_472791_dz1c6d.jpg"
-            alt=""
-          />
-          <b>Tiếp thị</b>
-        </div>
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://cdn.boxhoidap.com/information-technology-co-nghia-la-gi--14a84f45d41dfb3762c0c9ddb224691c.wepb"
-            alt=""
-          />
-          <b>CNTT và phần mềm</b>
-        </div>
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://rinconpsicologia.com/wp-content/uploads/2021/11/Etapas-del-crecimiento-personal.jpg"
-            alt=""
-          />
-          <b>Phát triển cá nhân</b>
-        </div>
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://www.investopedia.com/thmb/Pk6uNfDE1m-3UDl3E-htLoZGYCQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/businessplan_v1_0725-cd245eeb11d643c081fa4654d5ad75cc.png"
-            alt=""
-          />
-          <b>Kinh doanh</b>
-        </div>
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://shootq.com/wp-content/uploads/2017/05/Fotolia_150026021_Subscription_Monthly_M.jpg"
-            alt=""
-          />
-          <b>Nhiếp ảnh</b>
-        </div>
-        <div class="menu-item">
-          <img
-            class="menu-category-image"
-            src="https://live-production.wcms.abc-cdn.net.au/df497cd4d6f290bd222de75d5bbdf0d1?impolicy=wcms_crop_resize&cropH=394&cropW=700&xPos=0&yPos=0&width=862&height=485"
-            alt=""
-          />
-          <b>Âm nhạc</b>
-        </div>
+        {{#each CatList}}
+          <a class="menu-item" href="/categories/{{CatName}}/1">
+            <img class="menu-category-image" src="{{CatImage}}" alt="" />
+            <p class="category-name">{{CatName}}</p>
+          </a>
+        {{/each}}
       </div>
     </div>
   </div>
 
   <div class="card text-left mx-auto border-0" style="width: 90%">
     <div class="card-body">
-      <h3 class="card-title"><b>Khóa học nổi bật</b></h3>
+      <h3 class="card-title"><b>Featured courses</b></h3>
       <div class="menu-container">
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
+        {{#each featuredCourses}}
+          <div class="menu-item">
+            <img class="menu-item-image" src="{{CourseImage}}" alt="" />
+            <b>{{CourseName}}</b>
+            <p class="sub-info-item">{{CourseAuthor}}</p>
+            <p class="sub-info-item">{{CourseViews}} views</p>
+            <p class="sub-info-item">Posting date:
+              {{PostingDate}}</p>
+            <div class="rate">
+              <span
+                style="font-weight: bold; color: #CE810E;"
+              >{{CourseRatingPoint}}</span>
+              {{#each fullStar}}
+                <span class="fa fa-star star"></span>
+              {{/each}}
+              {{#each halfStar}}
+                <span class="fa fa-star-half-o star"></span>
+              {{/each}}
+              {{#each blankStar}}
+                <span class="fa fa-star-o star"></span>
+              {{/each}}
+              <span
+                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+              >({{CourseRatingVote}})</span>
+            </div>
+            <b style="margin-bottom: 5px;">{{CoursePrice}}đ</b>
+            <div class="category-lable-container">
+              <p class="category-lable category-level-I">{{CourseCategory}}</p>
+              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+            </div>
           </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
+        {{/each}}
       </div>
     </div>
   </div>
 
   <div class="card text-left mx-auto border-0" style="width: 90%">
     <div class="card-body">
-      <h3 class="card-title"><b>Khóa học được xem nhiều nhất</b></h3>
+      <h3 class="card-title"><b>Most viewed courses</b></h3>
       <div class="menu-container">
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
+        {{#each featuredCourses}}
+          <div class="menu-item">
+            <img class="menu-item-image" src="{{CourseImage}}" alt="" />
+            <b>{{CourseName}}</b>
+            <p class="sub-info-item">{{CourseAuthor}}</p>
+            <p class="sub-info-item">{{CourseViews}} views</p>
+            <p class="sub-info-item">Posting date:
+              {{PostingDate}}</p>
+            <div class="rate">
+              <span
+                style="font-weight: bold; color: #CE810E;"
+              >{{CourseRatingPoint}}</span>
+              {{#each fullStar}}
+                <span class="fa fa-star star"></span>
+              {{/each}}
+              {{#each halfStar}}
+                <span class="fa fa-star-half-o star"></span>
+              {{/each}}
+              {{#each blankStar}}
+                <span class="fa fa-star-o star"></span>
+              {{/each}}
+              <span
+                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+              >({{CourseRatingVote}})</span>
+            </div>
+            <b style="margin-bottom: 5px;">{{CoursePrice}}đ</b>
+            <div class="category-lable-container">
+              <p class="category-lable category-level-I">{{CourseCategory}}</p>
+              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+            </div>
           </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
+        {{/each}}
       </div>
     </div>
   </div>
 
   <div class="card text-left mx-auto border-0" style="width: 90%">
     <div class="card-body">
-      <h3 class="card-title"><b>Khóa học mới nhất</b></h3>
+      <h3 class="card-title"><b>Latest course</b></h3>
       <div class="menu-container">
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
+        {{#each featuredCourses}}
+          <div class="menu-item">
+            <img class="menu-item-image" src="{{CourseImage}}" alt="" />
+            <b>{{CourseName}}</b>
+            <p class="sub-info-item">{{CourseAuthor}}</p>
+            <p class="sub-info-item">{{CourseViews}} views</p>
+            <p class="sub-info-item">Posting date:
+              {{PostingDate}}</p>
+            <div class="rate">
+              <span
+                style="font-weight: bold; color: #CE810E;"
+              >{{CourseRatingPoint}}</span>
+              {{#each fullStar}}
+                <span class="fa fa-star star"></span>
+              {{/each}}
+              {{#each halfStar}}
+                <span class="fa fa-star-half-o star"></span>
+              {{/each}}
+              {{#each blankStar}}
+                <span class="fa fa-star-o star"></span>
+              {{/each}}
+              <span
+                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+              >({{CourseRatingVote}})</span>
+            </div>
+            <b style="margin-bottom: 5px;">{{CoursePrice}}đ</b>
+            <div class="category-lable-container">
+              <p class="category-lable category-level-I">{{CourseCategory}}</p>
+              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+            </div>
           </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
-        <div class="menu-item">
-          <img class="menu-item-image" src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" alt="" />
-          <b>ReactJS cho người mới bắt đầu</b>
-          <p style="font-size: 12px; margin-bottom: 3px; color: rgb(109, 107, 107);">Hau Nguyen</p>
-          <div class="rate">
-            <span style="font-weight: bold; color: #CE810E;">4,2</span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
-          </div>
-          <b>999.000đ</b>
-          <p class="category-lable">CNTT và phần mềm</p>
-        </div>
+        {{/each}}
       </div>
     </div>
   </div>
