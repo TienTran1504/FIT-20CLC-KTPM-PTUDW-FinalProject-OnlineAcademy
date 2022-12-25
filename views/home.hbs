@@ -1,3 +1,13 @@
+{{#section "css"}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../public/assets/css/home.css" />
+{{/section}}
+
+{{#section "js"}}
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="../../public/assets/js/home.js"></script>
+{{/section}}
+
 <div>
   <div class="swiper">
     <div class="swiper-wrapper">
@@ -16,24 +26,15 @@
   <br />
   <div class="info-container">
     <div class="info-item">
-      <div class="info-item-icon"><i
-          class="fa fa-play"
-          aria-hidden="true"
-        ></i></div>
+      <div class="info-item-icon"><i class="fa fa-play" aria-hidden="true"></i></div>
       <b>Learn in-demand skills with over 213,000 video courses</b>
     </div>
     <div class="info-item">
-      <div class="info-item-icon"><i
-          class="fa fa-star"
-          aria-hidden="true"
-        ></i></div>
+      <div class="info-item-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
       <b>Choose courses taught by real-world experts</b>
     </div>
     <div class="info-item">
-      <div class="info-item-icon"><i
-          class="fa fa-thumbs-o-up"
-          aria-hidden="true"
-        ></i></div>
+      <div class="info-item-icon"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></div>
       <b>Learn at your own pace, with lifetime access on mobile and desktop</b>
     </div>
   </div>
@@ -65,9 +66,7 @@
             <p class="sub-info-item">Posting date:
               {{PostingDate}}</p>
             <div class="rate">
-              <span
-                style="font-weight: bold; color: #CE810E;"
-              >{{CourseRatingPoint}}</span>
+              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
               {{#each fullStar}}
                 <span class="fa fa-star star"></span>
               {{/each}}
@@ -105,9 +104,7 @@
             <p class="sub-info-item">Posting date:
               {{PostingDate}}</p>
             <div class="rate">
-              <span
-                style="font-weight: bold; color: #CE810E;"
-              >{{CourseRatingPoint}}</span>
+              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
               {{#each fullStar}}
                 <span class="fa fa-star star"></span>
               {{/each}}
@@ -145,9 +142,7 @@
             <p class="sub-info-item">Posting date:
               {{PostingDate}}</p>
             <div class="rate">
-              <span
-                style="font-weight: bold; color: #CE810E;"
-              >{{CourseRatingPoint}}</span>
+              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
               {{#each fullStar}}
                 <span class="fa fa-star star"></span>
               {{/each}}
