@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import Topic from "./topic.model"
 const CourseSchema = new mongoose.Schema(
   {
-    //required: name, typeOf, price
+    //required: name, typeOf
     name: {
       type: String,
-      required: [true, "Please provide Course name"],
+      required: [true, "Please provide course title"],
       maxlength: 100,
       trim: true,
       unique: true,
@@ -26,7 +26,7 @@ const CourseSchema = new mongoose.Schema(
     // },
     image: {
       type: String,
-      default: "./default.png",
+      default: "",
     },
     studentList: {
       type: Array,
@@ -45,7 +45,7 @@ const CourseSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: [true, "Please provide price of Course"],
+      default: 0,
     },
     //mỗi khi feedback sẽ lưu một object có id ,name, content
     feedback: {

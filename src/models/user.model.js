@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const UserSchema = new mongoose.Schema(
-  {
+{
     //required: name, email, password
     // register: name, email, password
     // login: email, password
@@ -62,9 +62,11 @@ const UserSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      default: ""
     },
     headline: {
       type: String,
+      default: ""
     },
   },
 

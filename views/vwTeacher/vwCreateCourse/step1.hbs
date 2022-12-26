@@ -1,3 +1,11 @@
+{{#section 'js'}}
+<script>
+  $('#step1').click(function() {
+    $('#form-step1').submit();
+  })
+</script>
+{{/section}}
+
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="container">
         <div class="card text-center">
@@ -7,12 +15,13 @@
           </div>
 
           <div class="card-body">
+            <form id="form-step1" action="">
               <div class="pl-5 pr-5 d-flex justify-content-center">
-                  <div class="input-group mb-3" style="width: 50%;">
+                  <div class="input-group mb-5 mt-5" style="width: 60%;">
                     <select
                       class="custom-select"
                       id="category-input"
-                      name="CategoryName"
+                      name="category"
                     >
                       {{#each categories}}
                         <option value="{{name}}">{{name}}</option>
@@ -20,6 +29,7 @@
                     </select>
                   </div>
               </div>
+            </form>
           </div>
     </div>
   </div>

@@ -1,22 +1,34 @@
+{{#section 'js'}}
+<script>
+  $('#step2').click(function() {
+    $('#form-step2').submit();
+  })
+</script>
+{{/section}}
+
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="container">
         <div class="card text-center">
           <div class="card-header">
-            <h3>How about a working title?</h3>
-            <p>It's ok if you can't think of a good title now. You can change it later.</p>
+            <h3>What language best fits the knowledge you'll share?</h3>
           </div>
-
-          <div class="card-body">
-              <div class="pl-5 pr-5 d-flex justify-content-center">
-                  <div class="input-group mb-5 mt-5" style="width:60%">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="e.g. Learn basic Javascript"
-                    />
+          <form id="form-step2">
+            <div class="card-body">
+                <div class="pl-5 pr-5 d-flex justify-content-center">
+                  <div class="input-group mb-5 mt-5" style="width: 60%;">
+                    <select
+                      class="custom-select"
+                      id="category-input"
+                      name="language"
+                    >
+                      {{#each languages}}
+                        <option value="{{name}}">{{name}}</option>
+                      {{/each}}
+                    </select>
                   </div>
               </div>
-          </div>
+            </div>
+          </form>
     </div>
   </div>
 </div>

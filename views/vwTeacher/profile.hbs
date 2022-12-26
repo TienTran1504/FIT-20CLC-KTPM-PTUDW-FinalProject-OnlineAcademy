@@ -10,19 +10,20 @@
 
 {{#section "js"}}
   {{! <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> }}
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="https://cdn.tiny.cloud/1/dhym75o8q7p25h4vk3ps6ixfp187x91lij9utf6fedskb069/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
-    var quill = new Quill('#editor', { theme: 'snow' });
-
-    {{! $('#dob').datetimepicker({
-      timepicker: false,
-      format: 'd/m/Y',
-      mask: true,
-      maxDate:'0'
-    }); }}
+    tinymce.init({
+      selector: 'textarea',
+      menubar: false,
+      plugins: 'paste image link autolink lists table media',
+      toolbar: [
+        'undo redo | bold italic underline | numlist bullist | alignleft aligncenter alignright | forecolor backcolor table link',
+      ],
+    });
   </script>
 
 {{/section}}
+
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="container">
     <div class="row">
@@ -31,13 +32,17 @@
           <li>
             <div class="img-profile">
               <img
-                class="rounded-circle img-thumbnail"
-                src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
-                alt="none"
+                class="rounded-circle img-thumbnail img-avt"
+                {{#if (isEmpty this.user.image) }}
+                src="../../public/assets/images/no_avt_male.png"
+                {{else}}
+                src="../../public/assets/images/{{this.user.image}}"
+                {{/if}}
+                alt="avatar"
               />
             </div>
             <div>
-              <p class="h6 img-name">Lê Đông Đông</p>
+              <p class="h6 img-name">{{this.user.firstName}} {{this.user.lastName}}</p>
             </div>
           </li>
           <li class="nav-item">
@@ -91,7 +96,7 @@
           </div>
 
           <div class="card-body">
-            <form method="post" action="/profile">
+            <form method="post" id="form-update">
               <div class="pl-5 pr-5">
                 <div class="input-group form-group">
                   <input
@@ -126,8 +131,12 @@
                   <input
                     type="text"
                     class="form-control border border-dark"
+                    {{#if (isEmpty this.user.headline) }}
                     placeholder="Headline"
-                    name="description"
+                    {{else}}
+                    value="{{this.user.headline}}"
+                    {{/if}}
+                    name="headline"
                     style="height: 3.0rem;"
                   />
                 </div>
@@ -139,8 +148,13 @@
 
                 <!-- Create the editor container -->
                 <div style="margin-bottom: 2px;">
-                  <div id="editor">
-                  </div>
+                  <textarea id="desc" name="description">
+                    {{#if (isEmpty this.user.description)}}
+                    
+                    {{else}}
+                    {{{this.user.description}}}
+                    {{/if}}
+                  </textarea>
                 </div>
                 <p
                   class="form-group"
@@ -150,7 +164,7 @@
                 <button
                   type="submit"
                   class="btn btn-primary d-flex px-4"
-                >SAVE</button>
+                >Save</button>
               </div>
             </form>
           </div>

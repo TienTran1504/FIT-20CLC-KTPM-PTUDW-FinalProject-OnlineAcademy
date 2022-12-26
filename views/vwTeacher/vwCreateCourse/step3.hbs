@@ -1,3 +1,11 @@
+{{#section 'js'}}
+<script>
+  $('#step3').click(function() {
+    $('#form-step3').submit();
+  })
+</script>
+{{/section}}
+
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="container">
         <div class="card text-center">
@@ -6,17 +14,20 @@
             <p>It's ok if you can't think of a good title now. You can change it later.</p>
           </div>
 
-          <div class="card-body">
+          <form method="post" id="form-step3">
+            <div class="card-body">
               <div class="pl-5 pr-5 d-flex justify-content-center">
-                  <div class="input-group mb-5 mt-5" style="width:60%">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="e.g. Learn basic Javascript"
-                    />
-                  </div>
+                <div class="input-group mb-5 mt-5" style="width:60%">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="e.g. Learn basic Javascript"
+                    name="name"
+                  />
+                </div>
               </div>
-          </div>
+            </div>
+          </form>
     </div>
   </div>
 </div>

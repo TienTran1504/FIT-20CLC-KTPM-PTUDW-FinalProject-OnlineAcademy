@@ -13,13 +13,17 @@
           <li>
             <div class="img-profile">
               <img
-                class="rounded-circle img-thumbnail"
-                src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
-                alt="none"
+                class="rounded-circle img-thumbnail img-avt"
+                {{#if (isEmpty this.user.image) }}
+                src="../../public/assets/images/no_avt_male.png"
+                {{else}}
+                src="../../public/assets/images/{{this.user.image}}"
+                {{/if}}
+                alt="avatar"
               />
             </div>
             <div>
-              <p class="h6 img-name">Lê Đông Đông</p>
+              <p class="h6 img-name">{{this.user.firstName}} {{this.user.lastName}}</p>
             </div>
           </li>
           <li class="nav-item">
@@ -81,14 +85,8 @@
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Your email"
+                      value="{{this.user.email}}"
                     />
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="button"><i
-                          class="fa fa-pencil"
-                          aria-hidden="true"
-                        ></i></button>
-                    </div>
                   </div>
 
                 </div>
@@ -117,8 +115,7 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary d-flex px-4">Change
-                  password</button>
+                <button type="submit" class="btn btn-primary d-flex px-4">Save</button>
               </div>
             </form>
           </div>

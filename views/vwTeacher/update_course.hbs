@@ -4,25 +4,7 @@
     type="text/css"
     href="../../public/assets/css/teacher/teacher_profile.css"
   />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
 {{/section}}
-{{#section 'js'}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
-  <script>
-    $('#teacher-avatar').fileinput({
-      dropZoneEnabled: false,
-      maxFileCount: 1,
-      theme: 'fa4',
-      allowedFileExtensions: ['jpg', 'png', 'gif'],
-    });
-  </script>
-{{/section}}
-
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="container">
     <div class="row">
@@ -50,14 +32,14 @@
               Profile
             </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link active" href="/teacher/photo">
+          <li class="nav-item">
+            <a class="nav-link" href="/teacher/profile/photo">
               <span data-feather="file"></span>
               Photo
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/teacher/profile/account_security">
+            <a class="nav-link active" href="#">
               <span data-feather="shopping-cart"></span>
               Account Security
             </a>
@@ -90,35 +72,51 @@
       <div class="col-9 h-100">
         <div class="card text-center">
           <div class="card-header">
-            <h3>Photo</h3>
-            <p>Add a nice photo of yourself for your profile</p>
+            <h3>Course</h3>
+            <p>Update your course here.</p>
           </div>
-          <div class="card-body ml-5 mr-5">
-            <form method="post" enctype="multipart/form-data">
-              <div class="form-group">
-                <label for="" class="d-flex h6">Image preview</label>
-                <div class="bg-light border">
-                  <div class="mx-auto col-6 p-3">
-                    <img
-                      {{#if (isEmpty this.user.image) }}
-                      src="../../public/assets/images/no_avt_male.png"
-                      {{else}}
-                      src="../../public/assets/images/{{this.user.image}}"
-                      {{/if}}
-                      class="img-fluid"
-                      alt="Avatar"
+
+          <div class="card-body">
+            <form method="post" action="/profile">
+              <div class="pl-5 pr-5">
+                <div class="input-group form-group">
+                  <label class="h6" for="">Email:</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{this.user.email}}"
+                    />
+                  </div>
+
+                </div>
+                <div class="input-group form-group">
+                  <label class="h6" for="">Password:</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter current password"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter new password"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Re-type new password"
                     />
                   </div>
                 </div>
+
+                <button type="submit" class="btn btn-primary d-flex px-4">Save</button>
               </div>
-              <div class="form-group">
-                <label for="teacher-avatar" class="d-flex h6">Add/Change Image</label>
-                <input type="file" id="teacher-avatar" name="teacher-avatar">
-              </div>
-              <button
-                type="submit"
-                class="btn btn-primary d-flex px-4 course-btn"
-              >Save</button>
             </form>
           </div>
         </div>

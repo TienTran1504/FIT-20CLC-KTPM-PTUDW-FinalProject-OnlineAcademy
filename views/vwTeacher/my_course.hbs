@@ -18,14 +18,18 @@
         <ul class="nav flex-column">
           <li>
             <div class="img-profile">
-              <img
-                class="rounded-circle img-thumbnail"
-                src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
-                alt="none"
+               <img
+                class="rounded-circle img-thumbnail img-avt"
+                {{#if (isEmpty this.user.image) }}
+                src="../../public/assets/images/no_avt_male.png"
+                {{else}}
+                src="../../public/assets/images/{{this.user.image}}"
+                {{/if}}
+                alt="avatar"
               />
             </div>
             <div>
-              <p class="h6 img-name">Lê Đông Đông</p>
+              <p class="h6 img-name">{{this.user.firstName}} {{this.user.lastName}}</p>
             </div>
           </li>
           <li class="nav-item">
@@ -111,10 +115,8 @@
           </div>
         </div>
         <div class="card-body">
-          <div
-            class="menu-item row border"
-            style="padding-top: 10px; position:relative;"
-          >
+          {{#each courses}}
+          <div class="menu-item row border" style="padding-top: 10px; position:relative;">
             <div class="col-3">
               <img
                 class="img-thumbnail"
@@ -124,17 +126,15 @@
               />
             </div>
             <div class="col-7">
-              <b>ReactJS cho người mới bắt đầu</b>
+              <b>{{name}}</b>
               <div class="r">
-                <span style="font-weight: bold; color: #CE810E;">4,2</span>
+                <span style="font-weight: bold; color: #CE810E;">{{rating}}</span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star"></span>
-                <span
-                  style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
-                >(621)</span>
+                <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
               </div>
               <b>999.000đ</b>
               <p class="category-label">CNTT và phần mềm</p>
@@ -146,6 +146,7 @@
               <a href="/" class="heading-lg">Edit / manage course</a>
             </div>
           </div>
+          {{/each}}
           <div class="menu-item row border" style="padding-top: 10px">
             <div class="col-3">
               <img
@@ -178,6 +179,9 @@
               <a href="/" class="heading-lg">Edit / manage course</a>
             </div>
           </div>
+
+
+
           <div class="row mx-auto" style="width:20%;">
             <ul class="pagination">
               <li class="page-item">

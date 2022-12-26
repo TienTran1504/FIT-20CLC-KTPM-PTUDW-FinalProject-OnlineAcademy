@@ -31,7 +31,7 @@ export default function (app) {
   });
 
   app.use((req, res, next) => {
-    next(next(createError.NotFound("This route does not exist.")));
+    next(createError.NotFound("This route does not exist."));
   });
 
   app.use((err, req, res, next) => {
