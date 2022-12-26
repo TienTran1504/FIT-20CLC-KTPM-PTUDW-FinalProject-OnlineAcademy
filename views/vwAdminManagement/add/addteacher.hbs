@@ -1,10 +1,20 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../../public/assets/css/admin/add.css"
+  />
+{{/section}}
 <form method="post" style="margin-top: 80px">
-  <div class="card">
+  <div
+    class="card col-md-9"
+    style="margin-left: auto; margin-right:auto; padding:0"
+  >
     <h4
       class="card-header d-flex justify-content-between"
       style="background-color:#52ab98; color:#fff"
     >
-      Add Course Category
+      Add User Teacher
     </h4>
     <div class="card-body">
       <div class="form-group">
@@ -42,7 +52,7 @@
         />
       </div>
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer d-flex text-muted justify-content-between">
       <a
         class="btn btn-outline-success"
         href="/admin/manageteachers"
@@ -53,9 +63,8 @@
       </a>
       <button
         type="submit"
-        class="btn btn-primary"
+        class="btn btn-primary btn-add"
         formaction="/admin/addteacher/post"
-        style="background-color:#52ab98"
       >
         <i class="fa fa-check" aria-hidden="true"></i>
         Add New

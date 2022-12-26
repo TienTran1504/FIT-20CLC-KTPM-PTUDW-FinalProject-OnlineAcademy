@@ -1,13 +1,13 @@
 <div class="container-fluid" style="margin-top: 80px;">
-  <div class="row">
+  <div class="row" style="margin-bottom:16px">
     <div class="card" style="width:100%">
       <h4
         class="card-header d-flex justify-content-between"
         style="background-color:#52ab98; color:#fff"
       >
+        {{this.language.categoryName}}'s
         {{this.language.name}}
-        Course Management
-
+        Management
       </h4>
       {{#if this.empty}}
         <div class="card-body text-muted">
@@ -21,7 +21,7 @@
               <th scope="col">Name</th>
               <th scope="col">Language</th>
               <th class="text-center" scope="col">Number Student</th>
-              <th scope="col">&nbsp;</th>
+              {{! <th scope="col">&nbsp;</th>  }}
             </tr>
           </thead>
           <tbody>
@@ -31,14 +31,14 @@
                 <td>{{name}}</td>
                 <td>{{type}}</td>
                 <td class="text-center">{{studentList.length}}</td>
-                <td class="text-right">
+                {{! <td class="text-right">
                   <a class="btn btn-sm btn-primary" href="#" role="button">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                   </a>
                   <a class="btn btn-sm btn-primary" href="#" role="button">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </a>
-                </td>
+                </td> }}
 
               </tr>
             {{/each}}

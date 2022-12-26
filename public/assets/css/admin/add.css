@@ -1,0 +1,8 @@
+.btn-add {
+  background-color: #52ab98;
+  border-color: transparent;
+}
+.btn-add:hover {
+  background-color: #2b6777;
+  border-color: transparent;
+}

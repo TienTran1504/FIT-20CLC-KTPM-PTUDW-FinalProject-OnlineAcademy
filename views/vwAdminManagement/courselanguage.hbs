@@ -1,5 +1,12 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/admin/index.css"
+  />
+{{/section}}
 <div class="container-fluid" style="margin-top: 80px;">
-  <div class="row">
+  <div class="row" style="margin-bottom:16px">
     <div class="col-sm-3">
       <div class="card mb-3">
         <h4
@@ -33,7 +40,7 @@
             href="/admin/managelanguage"
             class="list-group-item list-group-item-action active"
             aria-current="true"
-            style="background-color:#2b6777; color:#000; font-weight:bold"
+            style="background-color:#2b6777; color:#fff; font-weight:bold"
           >Languages</a>
           <a
             href="/admin/managecourses"
@@ -54,13 +61,12 @@
           class="card-header d-flex justify-content-between"
           style="background-color:#52ab98; color:#fff"
         >
-          Course Categories Management
+          Languages Management
           <div>
             <a
-              class="btn btn-sm btn-outline-primary"
+              class="btn btn-sm btn-outline-primary adding"
               href="/admin/addlanguage"
               role="button"
-              style="color:#fff; border-color:#fff"
             >
               <i class="fa fa-plus" aria-hidden="true"></i>
               Add Language
@@ -91,14 +97,14 @@
                   <td class="text-center">{{courseList.length}}</td>
                   <td class="text-right">
                     <a
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-primary view"
                       href="/admin/managelanguageid?id={{_id}}"
                       role="button"
                     >
                       <i class="fa fa-eye" aria-hidden="true"></i>
                     </a>
                     <a
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-primary editPencil"
                       href="/admin/editlanguage?id={{_id}}"
                       role="button"
                     >

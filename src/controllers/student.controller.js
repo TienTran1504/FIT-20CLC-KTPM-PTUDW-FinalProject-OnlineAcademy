@@ -4,34 +4,44 @@ import Course from "../models/course.model";
 import User from "../models/user.model";
 
 const getProfile = async (req, res) => {
+  const id = "639e89b562592a4ee3446354";
+  const user = await User.findById({ _id: id }).lean();
+
   res.render("vwStudentProfile/profile", {
-    custom_style: "student_profile.css",
+    user,
+    name: user.firstName + " " + user.lastName,
   });
+};
+
+const updateProfile = async (req, res) => {
+  const id = "639e89b562592a4ee3446354";
+  console.log(req);
+  const { firstname, lastname, gender } = req.body;
+  const updateUser = await User.findByIdAndUpdate(
+    { _id: id },
+    { firstName: firstname, lastName: lastname, gender: gender },
+    { new: true, runValidators: true }
+  );
+  res.redirect("/student");
+  console.log(updateUser);
 };
 
 const getPhoto = async (req, res) => {
-  res.render("vwStudentProfile/photo", {
-    custom_style: "student_profile.css",
-  });
+  res.render("vwStudentProfile/photo");
 };
 
 const getAccountSecurity = async (req, res) => {
-  res.render("vwStudentProfile/accountSecurity", {
-    custom_style: "student_profile.css",
-  });
+  res.render("vwStudentProfile/account_security");
 };
 
 const getCourseLearn = async (req, res) => {
-  res.render("vwStudentProfile/coursesLearn", {
-    custom_style: "student_profile.css",
-  });
+  res.render("vwStudentProfile/courses_learn");
 };
 
 const getFavoriteCourse = async (req, res) => {
-  res.render("vwStudentProfile/favoriteCourses", {
-    custom_style: "student_profile.css",
-  });
+  res.render("vwStudentProfile/favorite_courses");
 };
+
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
   // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
@@ -164,6 +174,7 @@ export {
   getAccountSecurity,
   getCourseLearn,
   getFavoriteCourse,
+  updateProfile,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

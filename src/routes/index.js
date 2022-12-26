@@ -30,14 +30,24 @@ export default function (app) {
     next();
   });
 
-  app.use((req, res, next) => {
-    next(createError.NotFound("This route does not exist."));
+  // app.use((req, res, next) => {
+  //   next(createError.NotFound("This route does not exist."));
+  // });
+
+  // app.use((err, req, res, next) => {
+  //   res.json({
+  //     status: err.status || 500,
+  //     message: err.message,
+  //   });
+  // });
+  app.use(function (req, res, next) {
+    res.render('404', { layout: false });
   });
 
-  app.use((err, req, res, next) => {
-    res.json({
-      status: err.status || 500,
-      message: err.message,
+  app.use(function (err, req, res, next) {
+    res.status(500).render('500', {
+      stack: err.stack,
+      layout: false
     });
   });
 }

@@ -27,17 +27,18 @@ const getAllCourses = async (req, res) => {
 };
 // {{URL}}/courses/:id
 const getCourse = async (req, res) => {
-  const {
-    params: { id: courseId },
-  } = req; // req.user.userId, req.params.id
+  res.render("vwCourseDetails/course_details");
 
-  const course = await Course.findOne({
-    _id: courseId,
-  });
-  if (!course) {
-    throw createError.NotFound();
-  }
-  res.status(StatusCodes.OK).json({ course });
+  // const {
+  //   params: { id: courseId },
+  // } = req; // req.user.userId, req.params.id
+  // const course = await Course.findOne({
+  //   _id: courseId,
+  // });
+  // if (!course) {
+  //   throw createError.NotFound();
+  // }
+  // res.status(StatusCodes.OK).json({ course });
 };
 // {{URL}}/courses
 

@@ -1,160 +1,152 @@
-<div style="margin-top: 80px;">
-  <div class="main-content-student">
-    <div class="container">
-      <div class="row">
-        <div
-          class="col-md-2 d-none d-md-block bg-light sidebar"
-          style="height: 100%;"
-        >
-          <div class="list-group" id="list-tab" role="tablist">
-            <div class="card text-center" style="background-color: #F2F2F2;">
-              <div class="img-profile">
-                <img
-                  class="img-fluid rounded-circle img-thumbnail img-responsive"
-                  src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
-                  alt="none"
-                />
-              </div>
-              <div>
-                <p>Name</p>
-              </div>
-            </div>
-            <a
-              href="/student"
-              class="list-group-item list-group-item-action active"
-              id="list-profile-list"
-            >Profile</a>
-            <a
-              href="/student/photo"
-              class="list-group-item list-group-item-action"
-              id="list-photo-list"
-            >Photo</a>
-            <a
-              href="/student/accountSecurity"
-              class="list-group-item list-group-item-action"
-              id="list-password-list"
-            >Account Security</a>
-            <a
-              href="/student/courseLearn"
-              class="list-group-item list-group-item-action"
-              id="list-courses-list"
-            >My learning</a>
-            <a
-              href="/student/favoriteCourse"
-              class="list-group-item list-group-item-action"
-              id="list-favorite-list"
-            >Favorite course</a>
-          </div>
-        </div>
-        <div class="col-9 h-100">
-          <div class="tab-content" id="nav-tabContent">
-            <div
-              class="tab-pane fade show active"
-              id="list-profile"
-              role="tabpanel"
-              aria-labelledby="list-profile-list"
-            >
-              <div>
-                <div
-                  class="card text-center card-header"
-                  style="background-color: #2b6777; color: #ffffff;"
-                >
-                  <h3>Public profile</h3>
-                  <p>Add information about yourself</p>
+{{#section "css"}}
+  <link rel="stylesheet" href="../../public/assets/css/student_profile.css" />
+{{/section}}
+<form method="post">
+  <div style="margin-top: 80px;">
+    <div class="main-content-student">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-md-2 d-none d-md-block bg-light sidebar"
+            style="height: 100%;"
+          >
+            <div class="list-group" id="list-tab" role="tablist">
+              <div class="card text-center" style="background-color: #F2F2F2;">
+                <div class="img-profile">
+                  <img
+                    class="img-fluid rounded-circle img-thumbnail img-responsive"
+                    src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
+                    alt="none"
+                  />
                 </div>
-                <div class="card-body" style="background-color: #f2f2f2;">
-                  <form>
-                    <div class="form-group">
-                      <label class="px-2" for="email">Email address:</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        value="Long123@gmail.com"
-                        placeholder="name@example.com"
-                        readonly
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label class="px-2" for="firstname">First Name:</label>
-                      <input
-                        type="text"
-                        aria-label="First name"
-                        class="form-control"
-                        value="Long"
-                        placeholder="First Name"
-                        readonly
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label class="px-2" for="Lastname">Last Name:</label>
-                      <input
-                        type="text"
-                        aria-label="Last name"
-                        class="form-control"
-                        value="Tran Bao"
-                        placeholder="Last Name"
-                        readonly
-                      />
-                    </div>
-
-                    <div class="form-group">
-                      <label class="px-2" for="Gender">Gender:</label>
-                      <input
-                        type="text"
-                        aria-label="Gender"
-                        class="form-control"
-                        value="Male"
-                        placeholder="Gender"
-                        readonly
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label class="px-2" for="hometown">Hometown:</label>
-                      <input
-                        type="text"
-                        aria-label="Hometown"
-                        class="form-control"
-                        value="Viet Nam"
-                        placeholder="Hometown"
-                        readonly
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary course-btn"
-                      data-toggle="modal"
-                      data-target="#form-update-modal"
-                    >Change profile</button>
-                    <div
-                      class="modal fade"
-                      id="form-update-modal"
-                      tabindex="-1"
-                      aria-hidden="true"
-                    >
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div
-                            class="modal-header"
-                            style="background-color: #2b6777; color: #ffffff;"
-                          >
-                            <h5
-                              class="modal-title"
-                              id="form-update-modalLabel"
-                            >Update your information</h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
+                <div>
+                  <p>{{name}}</p>
+                </div>
+              </div>
+              <a
+                href="/student"
+                class="list-group-item list-group-item-action active"
+                id="list-profile-list"
+              >Profile</a>
+              <a
+                href="/student/photo"
+                class="list-group-item list-group-item-action"
+                id="list-photo-list"
+              >Photo</a>
+              <a
+                href="/student/account_security"
+                class="list-group-item list-group-item-action"
+                id="list-password-list"
+              >Account Security</a>
+              <a
+                href="/student/course_learn"
+                class="list-group-item list-group-item-action"
+                id="list-courses-list"
+              >My learning</a>
+              <a
+                href="/student/favorite_course"
+                class="list-group-item list-group-item-action"
+                id="list-favorite-list"
+              >Favorite course</a>
+            </div>
+          </div>
+          <div class="col-9 h-100">
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="list-profile"
+                role="tabpanel"
+                aria-labelledby="list-profile-list"
+              >
+                <div>
+                  <div
+                    class="card text-center card-header"
+                    style="background-color: #2b6777; color: #ffffff;"
+                  >
+                    <h3>Public profile</h3>
+                    <p>Add information about yourself</p>
+                  </div>
+                  <div class="card-body" style="background-color: #f2f2f2;">
+                    <form>
+                      <div class="form-group">
+                        <label class="px-2" for="email">Email address:</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          value={{user.email}}
+                          placeholder="name@example.com"
+                          readonly
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="px-2" for="firstname">First Name:</label>
+                        <input
+                          type="text"
+                          aria-label="First name"
+                          class="form-control"
+                          value={{user.firstName}}
+                          placeholder="First Name"
+                          readonly
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="px-2" for="Lastname">Last Name:</label>
+                        <input
+                          type="text"
+                          aria-label="Last name"
+                          class="form-control"
+                          value={{user.lastName}}
+                          placeholder="Last Name"
+                          readonly
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label class="px-2" for="Gender">Gender:</label>
+                        <input
+                          type="text"
+                          aria-label="Gender"
+                          class="form-control"
+                          value={{user.gender}}
+                          placeholder="Gender"
+                          readonly
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-primary course-btn"
+                        data-toggle="modal"
+                        data-target="#form-update-modal"
+                      >Change profile</button>
+                      <div
+                        class="modal fade"
+                        id="form-update-modal"
+                        tabindex="-1"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div
+                              class="modal-header"
+                              style="background-color: #2b6777; color: #ffffff;"
                             >
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form>
+                              <h5
+                                class="modal-title"
+                                id="form-update-modalLabel"
+                              >Update your information</h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                              </button>
+                            </div>
+                            <div class="modal-body">
                               <div class="form-row">
                                 <div class="col">
                                   <input
                                     type="text"
+                                    name="firstname"
                                     class="form-control"
                                     placeholder="First name"
                                   />
@@ -162,43 +154,36 @@
                                 <div class="col">
                                   <input
                                     type="text"
+                                    name="lastname"
                                     class="form-control"
                                     placeholder="Last name"
                                   />
                                 </div>
                               </div>
                               <div class="form-group pt-3">
-                                <select class="custom-select">
-                                  <option selected>Gender</option>
-                                  <option value="1">Male</option>
-                                  <option value="2">Female</option>
-                                  <option value="3">Other</option>
+                                <select class="custom-select" name="gender">
+                                  <option selected value="Male">Male</option>
+                                  <option value="Female">Female</option>
                                 </select>
                               </div>
-                              <div class="form-group">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Hometown"
-                                />
+                              <div class="modal-footer">
+                                <button
+                                  type="button"
+                                  class="btn btn-secondary"
+                                  data-dismiss="modal"
+                                >Close</button>
+                                <button
+                                  type="submit"
+                                  class="btn btn-primary course-btn"
+                                  formaction="/student/update_profile/post"
+                                >Save</button>
                               </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                            >Close</button>
-                            <button
-                              type="button"
-                              class="btn btn-primary course-btn"
-                            >Save</button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -207,4 +192,4 @@
       </div>
     </div>
   </div>
-</div>
+</form>

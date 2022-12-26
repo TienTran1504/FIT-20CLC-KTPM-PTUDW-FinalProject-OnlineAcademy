@@ -1,5 +1,15 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../../public/assets/css/admin/add.css"
+  />
+{{/section}}
 <form method="post" style="margin-top: 80px">
-  <div class="card">
+  <div
+    class="card col-md-9"
+    style="margin-left: auto; margin-right:auto; padding:0"
+  >
     <h4
       class="card-header d-flex justify-content-between"
       style="background-color:#52ab98; color:#fff"
@@ -17,8 +27,18 @@
           id="txtCategoryName"
         />
       </div>
+      <div class="form-group">
+        <label for="txtCategoryImage" style="font-weight:bold">Enter New
+          Category's Image Link</label>
+        <input
+          name="CategoryImage"
+          type="text"
+          class="form-control"
+          id="txtCategoryImage"
+        />
+      </div>
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer d-flex text-muted justify-content-between">
       <a
         class="btn btn-outline-success"
         href="/admin/managecategory"
@@ -29,9 +49,8 @@
       </a>
       <button
         type="submit"
-        class="btn btn-primary"
+        class="btn btn-primary btn-add"
         formaction="/admin/addcategory/post"
-        style="background-color:#52ab98"
       >
         <i class="fa fa-check" aria-hidden="true"></i>
         Add New

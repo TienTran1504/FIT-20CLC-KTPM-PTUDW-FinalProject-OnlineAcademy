@@ -1,5 +1,15 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../../public/assets/css/admin/edit.css"
+  />
+{{/section}}
 <form method="post" style="margin-top: 80px">
-  <div class="card">
+  <div
+    class="card col-md-9"
+    style="margin-left: auto; margin-right:auto; padding:0"
+  >
     <h4
       class="card-header d-flex justify-content-between"
       style="background-color:#52ab98; color:#fff"
@@ -55,69 +65,71 @@
         </div>
       </div>
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer d-flex text-muted justify-content-between">
       <a class="btn btn-outline-success" href="/admin" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         Back
       </a>
 
-      <button
-        type="button"
-        class="btn btn-danger"
-        data-toggle="modal"
-        data-target="#exampleModal"
-      >
-        <i class="fa fa-trash" aria-hidden="true"></i>
-        Delete
-      </button>
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Are you sure want to delete this user?
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >Close</button>
-              <button
-                type="submit"
-                class="btn btn-danger"
-                formaction="/admin/edituser/del"
-              >Delete</button>
+      <div>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          <i class="fa fa-trash" aria-hidden="true"></i>
+          Delete
+        </button>
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure want to delete this user?
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >Close</button>
+                <button
+                  type="submit"
+                  class="btn btn-danger"
+                  formaction="/admin/edituser/del"
+                >Delete</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <button
-        type="submit"
-        class="btn btn-primary"
-        formaction="/admin/edituser/patch"
-      >
-        <i class="fa fa-check" aria-hidden="true"></i>
-        Save
-      </button>
+        <button
+          type="submit"
+          class="btn btn-primary btn-save"
+          formaction="/admin/edituser/patch"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Save
+        </button>
+      </div>
     </div>
   </div>
 </form>
