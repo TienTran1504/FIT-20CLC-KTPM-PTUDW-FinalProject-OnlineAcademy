@@ -402,20 +402,26 @@ const createTeacherAccount = async function (req, res, next) {
     !req.body.TeacherFirstName ||
     !req.body.TeacherLastName ||
     !req.body.TeacherEmail ||
-    !req.body.TeacherPassword
+    !req.body.TeacherPassword ||
+    !req.body.Gender
   ) {
     return next(
       createError(
-        400,
-        "Please provide teacher's necessary information (first name, last name, email, password)"
+        500,
+        "Please provide teacher's necessary information (first name, last name, email, password, gender)"
       )
     );
   } else {
+    const checkUser = await User.findOne({ email: req.body.TeacherEmail })
+    if (checkUser) {
+      return next(createError(500, "The email has already existed"))
+    }
     const createTeacher = await User.create({
       firstName: req.body.TeacherFirstName,
       lastName: req.body.TeacherLastName,
       email: req.body.TeacherEmail,
       password: req.body.TeacherPassword,
+      gender: req.body.Gender,
       permission: "Teacher",
     });
   }

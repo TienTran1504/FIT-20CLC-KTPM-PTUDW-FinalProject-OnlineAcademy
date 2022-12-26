@@ -1,3 +1,10 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/admin/index.css"
+  />
+{{/section}}
 <div class="container-fluid" style="margin-top: 80px;">
   <div class="row" style="margin-bottom:16px">
     <div class="col-sm-3">
@@ -66,8 +73,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Language</th>
+                <th scope="col">Category</th>
                 <th class="text-center" scope="col">Number Students</th>
-                <th scope="col">&nbsp;</th>
               </tr>
             </thead>
             <tbody>
@@ -75,8 +82,8 @@
                 <tr>
                   <th scope="row">{{math @index "+" 1}}</th>
                   <td>{{name}}</td>
-                  <td>{{type}}</td>
-                  {{!-- <td>{{languageName}}</td> --}}
+                  <td>{{languageName}}</td>
+                  <td>{{categoryName}}</td>
                   <td class="text-center">{{studentList.length}}</td>
                   {{! <td class="text-right">
                     <a class="btn btn-sm btn-primary" href="#" role="button">

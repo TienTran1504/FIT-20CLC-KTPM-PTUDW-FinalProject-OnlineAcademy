@@ -8,7 +8,7 @@ import Course from "../models/course.model";
 const getInfo = async (req, res, next) => {
   req.session.authUser = await User.findOne({
     // _id: "63a6c10fe930ca09e8b4d4d0",
-    _id:"63a88e96fa8ed14a442f5064"
+    _id: "63a88e96fa8ed14a442f5064"
   }).lean();
 
   res.render("vwTeacher/profile", {
@@ -23,8 +23,8 @@ const updateInfo = async (req, res, next) => {
     req.session.authUser.headline = req.body.headline;
     req.session.authUser.description = req.body.description;
 
-    await User.findByIdAndUpdate({_id: req.session.authUser._id}, req.session.authUser);
-    
+    await User.findByIdAndUpdate({ _id: req.session.authUser._id }, req.session.authUser);
+
     res.redirect("/teacher/profile");
   } catch (err) {
     throw createError.InternalServerError(err.message);
@@ -37,9 +37,10 @@ const getPhoto = (req, res) => {
   });
 };
 
-const uploadPhoto = (req, res, next) => {console.log(req.session.authUser);
+const uploadPhoto = (req, res, next) => {
+  console.log(req.session.authUser);
   let fileName;
-  
+
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, "./public/assets/images");
@@ -57,7 +58,7 @@ const uploadPhoto = (req, res, next) => {console.log(req.session.authUser);
     } else {
       req.session.authUser.image = fileName;
 
-      await User.findByIdAndUpdate({_id: req.session.authUser._id}, req.session.authUser);
+      await User.findByIdAndUpdate({ _id: req.session.authUser._id }, req.session.authUser);
 
       res.redirect("/teacher/profile/photo");
     }
@@ -113,7 +114,7 @@ const createCourse1 = async (req, res) => {
 
 const createCourse2 = async (req, res) => {
   if (!req.query.language) {
-    const languages = await CourseLanguage.find({ categoryName: req.session.createCourse.cat})
+    const languages = await CourseLanguage.find({ categoryName: req.session.createCourse.cat })
       .sort("createdAt")
       .lean();
 
@@ -127,7 +128,7 @@ const createCourse2 = async (req, res) => {
     req.session.createCourse.lang = req.query.language;
     res.redirect("/teacher/course/3");
   }
-  
+
 };
 
 const createCourse3 = async (req, res) => {
@@ -150,13 +151,14 @@ const createCourse = async (req, res, next) => {
   // }
   try {
     const cat = await CourseCategory.findOne({ name: req.session.createCourse.cat }).lean();
-    const lang = await CourseLanguage.findOne({ 
+    const lang = await CourseLanguage.findOne({
       name: req.session.createCourse.lang,
       categoryName: cat.name
     }).lean();
-    
+
     // const courses = await Course.find({}).lean();
     // console.log(courses); 
+    // console.log(req.body);
     const createdCourse = await Course.create({
       createdBy: req.session.authUser._id,
       name: req.body.name,
@@ -170,7 +172,7 @@ const createCourse = async (req, res, next) => {
     delete req.session.createCourse;
 
     res.redirect("/teacher/profile/my_course");
-  } catch(err) {
+  } catch (err) {
     next(createError.InternalServerError(err.message));
   }
 

@@ -26,3 +26,17 @@
 .view:hover {
   background-color: #2b6777;
 }
+td {
+  font-weight: bold;
+}
+
+.page-link {
+  color: #52ab98;
+}
+.page-link:hover {
+  color: #2b6777;
+}
+.page-item.active .page-link {
+  background-color: #52ab98;
+  border-color: transparent;
+}
