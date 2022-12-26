@@ -7,13 +7,16 @@ import {
   getAccountSecurity,
   getCourseLearn,
   getFavoriteCourse,
+  updateProfile,
 } from "../controllers/student.controller";
 
 studentRouter.route("/").get(getProfile);
 studentRouter.route("/photo").get(getPhoto);
-studentRouter.route("/accountSecurity").get(getAccountSecurity);
-studentRouter.route("/courseLearn").get(getCourseLearn);
-studentRouter.route("/favoriteCourse").get(getFavoriteCourse);
+studentRouter.route("/account_security").get(getAccountSecurity);
+studentRouter.route("/course_learn").get(getCourseLearn);
+studentRouter.route("/favorite_course").get(getFavoriteCourse);
+studentRouter.route("/update_profile/post").post(updateProfile);
+// studentRouter.route("/updateprofile").post(updateProfile);
 // studentRouter
 //   .route("/courses/:courseId")
 //   .patch(updateStatusCourse)
