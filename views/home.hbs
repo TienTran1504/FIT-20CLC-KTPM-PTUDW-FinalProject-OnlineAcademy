@@ -44,9 +44,9 @@
       <h3 class="card-title"><b>Categories</b></h3>
       <div class="menu-container">
         {{#each CatList}}
-          <a class="menu-item" href="/categories?category={{CatName}}">
-            <img class="menu-category-image" src="{{CatImage}}" alt="" />
-            <p class="category-name">{{CatName}}</p>
+          <a class="menu-item" href="/categories?category={{name}}">
+            <img class="menu-category-image" src="{{image}}" alt="" />
+            <p class="category-name">{{name}}</p>
           </a>
         {{/each}}
       </div>
@@ -58,9 +58,9 @@
       <h3 class="card-title"><b>Top languages in this week</b></h3>
       <div class="menu-container">
         {{#each LanguageList}}
-          <a class="menu-item" href="/categories?language={{LanguageName}}">
-            <img class="menu-category-image" src="{{LanguageImage}}" alt="" />
-            <p class="category-name">{{CatName}}</p>
+          <a class="menu-item" href="/categories?language={{name}}">
+            <img class="menu-category-image" src="{{image}}" alt="" />
+            <p class="category-name">{{name}}</p>
           </a>
         {{/each}}
       </div>
@@ -73,12 +73,12 @@
       <div class="menu-container">
         {{#each featuredCourses}}
           <div class="menu-item">
-            <img class="menu-item-image" src="{{CourseImage}}" alt="" />
-            <b>{{CourseName}}</b>
-            <p class="sub-info-item">{{CourseAuthor}}</p>
+            <img class="menu-item-image" src="{{image}}" alt="" />
+            <b>{{name}}</b>
+            <p class="sub-info-item">{{createdBy}}</p>
             <p class="sub-info-item">{{CourseViews}} views</p>
             <p class="sub-info-item">Posting date:
-              {{PostingDate}}</p>
+              {{createdAt}}</p>
             <div class="rate">
               <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
               {{#each fullStar}}
@@ -94,10 +94,10 @@
                 style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
               >({{CourseRatingVote}})</span>
             </div>
-            <b style="margin-bottom: 5px;">{{CoursePrice}}đ</b>
+            <b style="margin-bottom: 5px;">{{price}}đ</b>
             <div class="category-lable-container">
-              <p class="category-lable category-level-I">{{CourseCategory}}</p>
-              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+              <p class="category-lable category-level-I">{{categoryName}}</p>
+              <p class="category-lable category-level-II">{{languageName}}</p>
             </div>
           </div>
         {{/each}}
@@ -109,14 +109,14 @@
     <div class="card-body">
       <h3 class="card-title"><b>Most viewed courses</b></h3>
       <div class="menu-container">
-        {{#each featuredCourses}}
+        {{#each mostViewedCourses}}
           <div class="menu-item">
-            <img class="menu-item-image" src="{{CourseImage}}" alt="" />
-            <b>{{CourseName}}</b>
-            <p class="sub-info-item">{{CourseAuthor}}</p>
+            <img class="menu-item-image" src="{{image}}" alt="" />
+            <b>{{name}}</b>
+            <p class="sub-info-item">{{createdBy}}</p>
             <p class="sub-info-item">{{CourseViews}} views</p>
             <p class="sub-info-item">Posting date:
-              {{PostingDate}}</p>
+              {{createdAt}}</p>
             <div class="rate">
               <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
               {{#each fullStar}}
@@ -132,10 +132,10 @@
                 style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
               >({{CourseRatingVote}})</span>
             </div>
-            <b style="margin-bottom: 5px;">{{CoursePrice}}đ</b>
+            <b style="margin-bottom: 5px;">{{price}}đ</b>
             <div class="category-lable-container">
-              <p class="category-lable category-level-I">{{CourseCategory}}</p>
-              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+              <p class="category-lable category-level-I">{{categoryName}}</p>
+              <p class="category-lable category-level-II">{{languageName}}</p>
             </div>
           </div>
         {{/each}}
@@ -147,14 +147,14 @@
     <div class="card-body">
       <h3 class="card-title"><b>Latest course</b></h3>
       <div class="menu-container">
-        {{#each featuredCourses}}
+        {{#each latestCourses}}
           <div class="menu-item">
-            <img class="menu-item-image" src="{{CourseImage}}" alt="" />
-            <b>{{CourseName}}</b>
-            <p class="sub-info-item">{{CourseAuthor}}</p>
+            <img class="menu-item-image" src="{{image}}" alt="" />
+            <b>{{name}}</b>
+            <p class="sub-info-item">{{createdBy}}</p>
             <p class="sub-info-item">{{CourseViews}} views</p>
             <p class="sub-info-item">Posting date:
-              {{PostingDate}}</p>
+              {{createdAt}}</p>
             <div class="rate">
               <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
               {{#each fullStar}}
@@ -170,10 +170,10 @@
                 style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
               >({{CourseRatingVote}})</span>
             </div>
-            <b style="margin-bottom: 5px;">{{CoursePrice}}đ</b>
+            <b style="margin-bottom: 5px;">{{price}}đ</b>
             <div class="category-lable-container">
-              <p class="category-lable category-level-I">{{CourseCategory}}</p>
-              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+              <p class="category-lable category-level-I">{{categoryName}}</p>
+              <p class="category-lable category-level-II">{{languageName}}</p>
             </div>
           </div>
         {{/each}}

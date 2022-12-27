@@ -341,7 +341,6 @@ const getCategory = async (req, res) => {
   var currentPageURL = "categories?category=" + category + "&language=" + language + "&page=";
 
   res.render("vwCategories/index", {
-    style: "categories.css",
     CatList: CatList,
     category: category,
     language: language,
