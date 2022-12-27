@@ -171,3 +171,8 @@ a:hover {
   font-weight: 600;
   font-size: 28px;
 }
+
+.title-sort-contaner {
+  display: flex;
+  justify-content: space-between;
+}

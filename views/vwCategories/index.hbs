@@ -11,20 +11,20 @@
         {{#each CatList}}
           <li>
             <div class="category-container">
-              <a class="category" href="/categories?category={{CatName}}">{{CatName}}</a>
+              <a class="category" href="/categories?category={{name}}">{{name}}</a>
               <div class="dropdown-arrow rotate"><i
                   class="fa fa-angle-down"
                   aria-hidden="true"
                   data-toggle="collapse"
                   aria-expanded="false"
-                  href="#pageSubmenu{{CatID}}"
+                  href="#pageSubmenu{{_id}}"
                 ></i></div>
             </div>
-            <ul class="collapse show list-unstyled" id="pageSubmenu{{CatID}}">
-              {{#each LanguageList}}
-                <li><a class="language" href="/categories?category={{../CatName}}&language={{LanguageName}}"><span
+            <ul class="collapse show list-unstyled" id="pageSubmenu{{_id}}">
+              {{#each languageList}}
+                <li><a class="language" href="/categories?category={{../name}}&language={{name}}"><span
                       class="fa fa-chevron-right mr-2 language"
-                    ></span>{{LanguageName}}</a></li>
+                    ></span>{{name}}</a></li>
               {{/each}}
             </ul>
           </li>
@@ -36,36 +36,61 @@
   <!-- Page Content  -->
 
   <div id="content" class="p-4 p-md-5 pt-5">
-    {{#if category}}
-      {{#if language}}
-        <h2>{{category}} - {{language}}</h2>
-      {{else}}
+    <div class="title-sort-contaner">
+    {{#if key}}
+      <h2>{{results}} results for &quot;{{key}}&quot;</h2>
+    {{else}}
+      {{#if category}}
+        {{#if language}}
+          <h2>{{category}} - {{language}}</h2>
+        {{else}}
         <h2>{{category}}</h2>
       {{/if}}
-    {{else}}
-      <h2>{{language}}</h2>
-    {{/if}}
-
-    {{#if name}}
-      <h2>{{results}} results for &quot;{{name}}&quot;</h2>
+      {{else}}
+        <h2>{{language}}</h2>
+      {{/if}}
     {{/if}}
 
     {{#if noData}}
       <img class="no-data" src="../../../public/assets/images/nodata.png" alt="" />
 
     {{else}}
+      <div class="dropdown">
+        <a
+          class="btn dropdown-toggle"
+          href="#"
+          role="button"
+          data-toggle="dropdown"
+          aria-expanded="false"
+            style="border: 1px solid"
+        >
+        {{#if hasSort}}
+          {{sort}}
+        {{else}}
+          Most relevant
+        {{/if}}
+        </a>
+
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{currentURL}}&sort=highest-rated">Highest rated</a>
+          <a class="dropdown-item" href="{{currentURL}}&sort=lowest-price">Lowest price</a>
+          <a class="dropdown-item" href="{{currentURL}}&sort=most-relevant">Most relevant</a>
+        </div>
+      </div>
+      </div>
+
       {{#each courses}}
         <div class="course-container">
           <div class="course">
-            <img class="course-img" src="{{CourseImage}}" alt="" />
+            <img class="course-img" src="{{image}}" alt="" />
             <div class="course-info">
-              <b style="font-size: 20px;">{{CourseName}}</b>
-              <p style="margin-bottom: 5px;">{{CourseDescription}}</p>
+              <b style="font-size: 20px;">{{name}}</b>
+              <p style="margin-bottom: 5px;">{{briefDescription}}</p>
               <div class="sub-info-container">
-                <p class="sub-info-item">{{CourseAuthor}}</p>
+                <p class="sub-info-item">{{createdBy}}</p>
                 <p class="sub-info-item">{{CourseViews}} views</p>
                 <p class="sub-info-item">Posting date:
-                  {{PostingDate}}</p>
+                  {{createdAt}}</p>
               </div>
               <div class="rate">
                 <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
@@ -83,12 +108,12 @@
                 >({{CourseRatingVote}})</span>
               </div>
               <div class="category-lable-container">
-                <p class="category-lable category-level-I">{{CourseCategory}}</p>
-                <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+                <p class="category-lable category-level-I">{{categoryName}}</p>
+                <p class="category-lable category-level-II">{{languageName}}</p>
               </div>
             </div>
           </div>
-          <p class="price">{{CoursePrice}}đ</p>
+          <p class="price">{{price}}đ</p>
         </div>
       {{/each}}
       <!-- Pagination  -->

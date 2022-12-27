@@ -1,20 +1,23 @@
+import CourseCategory from "../models/coursecategory.model";
+import Course from "../models/course.model";
+
 const CatList = [
   {
-    CatID: 1,
-    CatName: "Web",
-    LanguageList: [
-      { LanguageID: 1, LanguageName: "ReactJS" },
-      { LanguageID: 2, LanguageName: "AngularJS" },
-      { LanguageID: 3, LanguageName: "VueJS" },
+    _id: 1,
+    name: "Web",
+    languageList: [
+      { _id: 1, name: "ReactJS" },
+      { _id: 2, name: "AngularJS" },
+      { _id: 3, name: "VueJS" },
     ],
   },
   {
-    CatID: 2,
-    CatName: "Mobile",
-    LanguageList: [
-      { LanguageID: 1, LanguageName: "React Native" },
-      { LanguageID: 2, LanguageName: "Flutter" },
-      { LanguageID: 3, LanguageName: "Kotlin" },
+    _id: 2,
+    name: "Mobile",
+    languageList: [
+      { _id: 1, name: "React Native" },
+      { _id: 2, name: "Flutter" },
+      { _id: 3, name: "Kotlin" },
     ],
   },
 ];
@@ -22,171 +25,171 @@ const CatList = [
 const CourseList = [
   {
     CourseID: 1,
-    CourseName: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    CourseDescription:
+    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+    briefDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    CourseAuthor: "Hau Nguyen",
-    CourseRating: [5, 5, 4, 3, 5, 1, 2, 1],
-    CourseCategory: "Web",
-    CourseLanguage: "ReactJS",
-    CoursePrice: 549000,
-    CourseImage: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    CourseViews: 123,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Hau Nguyen",
+    ratingList: [5, 5, 4, 3, 5, 1, 2, 1],
+    categoryName: "Web",
+    languageName: "ReactJS",
+    price: 549000,
+    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 2,
-    CourseName: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    CourseDescription:
+    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+    briefDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    CourseAuthor: "Hau Nguyen",
-    CourseRating: [5, 5, 4, 3, 5],
-    CourseCategory: "Web",
-    CourseLanguage: "ReactJS",
-    CoursePrice: 549000,
-    CourseImage: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    CourseViews: 123,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Hau Nguyen",
+    ratingList: [5, 5, 4, 3, 5],
+    categoryName: "Web",
+    languageName: "ReactJS",
+    price: 349000,
+    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 3,
-    CourseName: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    CourseDescription:
+    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+    briefDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    CourseAuthor: "Hau Nguyen",
-    CourseRating: [5, 5, 4, 5, 5, 5, 5],
-    CourseCategory: "Web",
-    CourseLanguage: "ReactJS",
-    CoursePrice: 549000,
-    CourseImage: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    CourseViews: 123,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Hau Nguyen",
+    ratingList: [5, 5, 4, 5, 5, 5, 5],
+    categoryName: "Web",
+    languageName: "ReactJS",
+    price: 229000,
+    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 4,
-    CourseName: "React Native - The Practical Guide [2023]",
-    CourseDescription:
+    name: "React Native - The Practical Guide [2023]",
+    briefDescription:
       "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
-    CourseAuthor: "Phuoc Dinh",
-    CourseRating: [5, 5, 4, 3, 5],
-    CourseCategory: "Mobile",
-    CourseLanguage: "React Native",
-    CoursePrice: 600000,
-    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    CourseViews: 34656,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Phuoc Dinh",
+    ratingList: [5, 5, 4, 3, 5],
+    categoryName: "Mobile",
+    languageName: "React Native",
+    price: 600000,
+    image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 5,
-    CourseName: "React Native - The Practical Guide [2023]",
-    CourseDescription:
+    name: "React Native - The Practical Guide [2023]",
+    briefDescription:
       "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
-    CourseAuthor: "Phuoc Dinh",
-    CourseRating: [5, 5, 4, 3, 5],
-    CourseCategory: "Mobile",
-    CourseLanguage: "React Native",
-    CoursePrice: 600000,
-    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    CourseViews: 34656,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Phuoc Dinh",
+    ratingList: [5, 5, 4, 3, 5],
+    categoryName: "Mobile",
+    languageName: "React Native",
+    price: 800000,
+    image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 6,
-    CourseName: "Angular - The Complete Guide (2023 Edition)",
-    CourseDescription:
+    name: "Angular - The Complete Guide (2023 Edition)",
+    briefDescription:
       "Master Angular (formerly Angular 2) and build awesome, reactive web apps with the successor of Angular.js",
-    CourseAuthor: "Phuoc Dinh",
-    CourseRating: [5, 5, 4, 3, 5, 5],
-    CourseCategory: "Web",
-    CourseLanguage: "AngularJS",
-    CoursePrice: 500000,
-    CourseImage: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
-    CourseViews: 67887,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Phuoc Dinh",
+    ratingList: [5, 5, 4, 3, 5, 5],
+    categoryName: "Web",
+    languageName: "AngularJS",
+    price: 700000,
+    image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 7,
-    CourseName: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    CourseDescription:
+    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+    briefDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    CourseAuthor: "Hau Nguyen",
-    CourseRating: [5, 5, 4, 3, 5, 1, 2, 1],
-    CourseCategory: "Web",
-    CourseLanguage: "ReactJS",
-    CoursePrice: 549000,
-    CourseImage: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    CourseViews: 123,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Hau Nguyen",
+    ratingList: [5, 5, 4, 3, 5, 1, 2, 1],
+    categoryName: "Web",
+    languageName: "ReactJS",
+    price: 519000,
+    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 8,
-    CourseName: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    CourseDescription:
+    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+    briefDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    CourseAuthor: "Hau Nguyen",
-    CourseRating: [5, 5, 4, 3, 5],
-    CourseCategory: "Web",
-    CourseLanguage: "ReactJS",
-    CoursePrice: 549000,
-    CourseImage: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    CourseViews: 123,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Hau Nguyen",
+    ratingList: [5, 5, 4, 3, 5],
+    categoryName: "Web",
+    languageName: "ReactJS",
+    price: 149000,
+    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 9,
-    CourseName: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    CourseDescription:
+    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+    briefDescription:
       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    CourseAuthor: "Hau Nguyen",
-    CourseRating: [5, 5, 4, 5, 5, 5, 5],
-    CourseCategory: "Web",
-    CourseLanguage: "ReactJS",
-    CoursePrice: 549000,
-    CourseImage: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    CourseViews: 123,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Phuoc Dinh",
+    ratingList: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    categoryName: "Web",
+    languageName: "ReactJS",
+    price: 349000,
+    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 10,
-    CourseName: "React Native - The Practical Guide [2023]",
-    CourseDescription:
+    name: "React Native - The Practical Guide [2023]",
+    briefDescription:
       "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
-    CourseAuthor: "Phuoc Dinh",
-    CourseRating: [5, 5, 4, 3, 5],
-    CourseCategory: "Mobile",
-    CourseLanguage: "React Native",
-    CoursePrice: 600000,
-    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    CourseViews: 34656,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Phuoc Dinh",
+    ratingList: [5, 5, 4, 3, 5],
+    categoryName: "Mobile",
+    languageName: "React Native",
+    price: 650000,
+    image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 11,
-    CourseName: "React Native - The Practical Guide [2023]",
-    CourseDescription:
+    name: "React Native - The Practical Guide [2023]",
+    briefDescription:
       "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
-    CourseAuthor: "Phuoc Dinh",
-    CourseRating: [5, 5, 4, 3, 5],
-    CourseCategory: "Mobile",
-    CourseLanguage: "React Native",
-    CoursePrice: 600000,
-    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    CourseViews: 34656,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Phuoc Dinh",
+    ratingList: [5, 5, 5, 5, 5],
+    categoryName: "Mobile",
+    languageName: "React Native",
+    price: 620000,
+    image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 12,
-    CourseName: "Angular - The Complete Guide (2023 Edition)",
-    CourseDescription:
+    name: "Angular - The Complete Guide (2023 Edition)",
+    briefDescription:
       "Master Angular (formerly Angular 2) and build awesome, reactive web apps with the successor of Angular.js",
-    CourseAuthor: "Phuoc Dinh",
-    CourseRating: [5, 5, 4, 3, 5, 5],
-    CourseCategory: "Web",
-    CourseLanguage: "AngularJS",
-    CoursePrice: 500000,
-    CourseImage: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
-    CourseViews: 67887,
-    PostingDate: Date("2022-03-25"),
+    createdBy: "Phuoc Dinh",
+    ratingList: [5, 5, 5, 5, 5, 5],
+    categoryName: "Web",
+    languageName: "AngularJS",
+    price: 520000,
+    image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+    createdAt: Date("2022-03-25"),
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
 ];
 
@@ -239,12 +242,20 @@ function formatDate(date) {
 }
 
 const search = async (req, res) => {
-  const name = req.query.name || "";
+  const key = req.query.key || "";
   const page = req.query.page || 1;
+  const sort = req.query.sort || "";
+
+  // const CatList = await CourseCategory.find().lean();
+  // const CourseList = await Course.find().lean();
 
   var courses = [];
   CourseList.forEach((course) => {
-    if (course.CourseName.toLowerCase().includes(name.toLowerCase())) {
+    if (
+      course.name.toLowerCase().includes(key.toLowerCase()) ||
+      course.languageName.toLowerCase().includes(key.toLowerCase()) ||
+      course.categoryName.toLowerCase().includes(key.toLowerCase())
+    ) {
       courses.push(course);
     }
   });
@@ -264,13 +275,27 @@ const search = async (req, res) => {
     });
   }
 
+  if (sort === "highest-rated")
+    courses.sort(function (a, b) {
+      return (
+        b.ratingList.reduce((a, b) => a + b, 0) / b.ratingList.length -
+          a.ratingList.reduce((a, b) => a + b, 0) / a.ratingList.length || b.ratingList.length - a.ratingList.length
+      );
+    });
+  else if (sort === "lowest-price")
+    courses.sort(function (a, b) {
+      return a.price - b.price;
+    });
+
+  var currentURL = "?key=" + key;
+
   res.render("vwCategories/index", {
     style: "categories.css",
     CatList: CatList,
     courses: courses
       .map((course) => {
-        var CourseRatingVote = course.CourseRating.length;
-        var CourseRatingPoint = course.CourseRating.reduce((a, b) => a + b, 0) / course.CourseRating.length;
+        var CourseRatingVote = course.ratingList.length;
+        var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
 
         return {
           ...course,
@@ -279,9 +304,9 @@ const search = async (req, res) => {
           fullStar: fullStar(CourseRatingPoint),
           halfStar: halfStar(CourseRatingPoint),
           blankStar: blankStar(CourseRatingPoint),
-          CoursePrice: numberWithCommas(course.CoursePrice),
-          CourseViews: numberWithCommas(course.CourseViews),
-          PostingDate: formatDate(course.PostingDate),
+          price: numberWithCommas(course.price),
+          CourseViews: numberWithCommas(course.viewList.length),
+          createdAt: formatDate(course.createdAt),
         };
       })
       .slice(offset, offset + limit),
@@ -289,11 +314,14 @@ const search = async (req, res) => {
     pageNumbers: pageNumbers,
     firstPage: curPage === 1 ? true : false,
     lastPage: curPage === nPages ? true : false,
-    prevPage: "search?name=" + name + "&page=" + Number(curPage - 1),
-    nextPage: "search?name=" + name + "&page=" + Number(curPage + 1),
+    prevPage: "search?key=" + key + "&sort=" + sort + "&page=" + Number(curPage - 1),
+    nextPage: "search?key=" + key + "&sort=" + sort + "&page=" + Number(curPage + 1),
     noData: courses.length === 0 || curPage > nPages ? true : false,
     results: numberWithCommas(courses.length),
-    name: name,
+    key: key,
+    currentURL: currentURL,
+    hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
+    sort: sort === "highest-rated" ? "Highest rated" : "Lowest price",
   });
 };
 
@@ -301,26 +329,42 @@ const getCategory = async (req, res) => {
   const category = req.query.category || "";
   const language = req.query.language || "";
   const page = req.query.page || 1;
+  const sort = req.query.sort || "";
+
+  // const CatList = await CourseCategory.find().lean();
+  // const CourseList = await Course.find().lean();
 
   var courses = [];
-  if (!category && !language) courses = CourseList;
+  if (!category && !language) courses = [...CourseList];
   else if (!language)
     CourseList.forEach((course) => {
-      if (course.CourseCategory === category) {
+      if (course.categoryName === category) {
         courses.push(course);
       }
     });
   else if (!category)
     CourseList.forEach((course) => {
-      if (course.CourseLanguage === language) {
+      if (course.languageName === language) {
         courses.push(course);
       }
     });
   else
     CourseList.forEach((course) => {
-      if (course.CourseCategory === category && course.CourseLanguage === language) {
+      if (course.categoryName === category && course.languageName === language) {
         courses.push(course);
       }
+    });
+
+  if (sort === "highest-rated")
+    courses.sort(function (a, b) {
+      return (
+        b.ratingList.reduce((a, b) => a + b, 0) / b.ratingList.length -
+          a.ratingList.reduce((a, b) => a + b, 0) / a.ratingList.length || b.ratingList.length - a.ratingList.length
+      );
+    });
+  else if (sort === "lowest-price")
+    courses.sort(function (a, b) {
+      return a.price - b.price;
     });
 
   const curPage = parseInt(page) || 1;
@@ -338,7 +382,8 @@ const getCategory = async (req, res) => {
     });
   }
 
-  var currentPageURL = "categories?category=" + category + "&language=" + language + "&page=";
+  var currentPageURL = "categories?category=" + category + "&language=" + language + "&sort=" + sort + "&page=";
+  var currentURL = "categories?category=" + category + "&language=" + language;
 
   res.render("vwCategories/index", {
     CatList: CatList,
@@ -346,8 +391,8 @@ const getCategory = async (req, res) => {
     language: language,
     courses: courses
       .map((course) => {
-        var CourseRatingVote = course.CourseRating.length;
-        var CourseRatingPoint = course.CourseRating.reduce((a, b) => a + b, 0) / course.CourseRating.length;
+        var CourseRatingVote = course.ratingList.length;
+        var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
 
         return {
           ...course,
@@ -356,9 +401,9 @@ const getCategory = async (req, res) => {
           fullStar: fullStar(CourseRatingPoint),
           halfStar: halfStar(CourseRatingPoint),
           blankStar: blankStar(CourseRatingPoint),
-          CoursePrice: numberWithCommas(course.CoursePrice),
-          CourseViews: numberWithCommas(course.CourseViews),
-          PostingDate: formatDate(course.PostingDate),
+          price: numberWithCommas(course.price),
+          CourseViews: numberWithCommas(course.viewList.length),
+          createdAt: formatDate(course.createdAt),
         };
       })
       .slice(offset, offset + limit),
@@ -369,6 +414,9 @@ const getCategory = async (req, res) => {
     prevPage: currentPageURL + Number(curPage - 1),
     nextPage: currentPageURL + Number(curPage + 1),
     noData: courses.length === 0 || curPage > nPages ? true : false,
+    currentURL: currentURL,
+    hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
+    sort: sort === "highest-rated" ? "Highest rated" : "Lowest price",
   });
 };
 
