@@ -2,19 +2,19 @@ const CatList = [
   {
     CatID: 1,
     CatName: "Web",
-    LanguegeList: [
-      { LanguegeID: 1, LanguegeName: "ReactJS" },
-      { LanguegeID: 2, LanguegeName: "AngularJS" },
-      { LanguegeID: 3, LanguegeName: "VueJS" },
+    LanguageList: [
+      { LanguageID: 1, LanguageName: "ReactJS" },
+      { LanguageID: 2, LanguageName: "AngularJS" },
+      { LanguageID: 3, LanguageName: "VueJS" },
     ],
   },
   {
     CatID: 2,
     CatName: "Mobile",
-    LanguegeList: [
-      { LanguegeID: 1, LanguegeName: "React Native" },
-      { LanguegeID: 2, LanguegeName: "Flutter" },
-      { LanguegeID: 3, LanguegeName: "Kotlin" },
+    LanguageList: [
+      { LanguageID: 1, LanguageName: "React Native" },
+      { LanguageID: 2, LanguageName: "Flutter" },
+      { LanguageID: 3, LanguageName: "Kotlin" },
     ],
   },
 ];
@@ -244,7 +244,7 @@ const search = async (req, res) => {
 
   var courses = [];
   CourseList.forEach((course) => {
-    if (course.CourseName.includes(name)) {
+    if (course.CourseName.toLowerCase().includes(name.toLowerCase())) {
       courses.push(course);
     }
   });
@@ -267,32 +267,52 @@ const search = async (req, res) => {
   res.render("vwCategories/index", {
     style: "categories.css",
     CatList: CatList,
-    courses: courses,
+    courses: courses
+      .map((course) => {
+        var CourseRatingVote = course.CourseRating.length;
+        var CourseRatingPoint = course.CourseRating.reduce((a, b) => a + b, 0) / course.CourseRating.length;
+
+        return {
+          ...course,
+          CourseRatingVote: CourseRatingVote,
+          CourseRatingPoint: CourseRatingPoint.toFixed(1),
+          fullStar: fullStar(CourseRatingPoint),
+          halfStar: halfStar(CourseRatingPoint),
+          blankStar: blankStar(CourseRatingPoint),
+          CoursePrice: numberWithCommas(course.CoursePrice),
+          CourseViews: numberWithCommas(course.CourseViews),
+          PostingDate: formatDate(course.PostingDate),
+        };
+      })
+      .slice(offset, offset + limit),
     havePagination: courses.length > limit ? true : false,
     pageNumbers: pageNumbers,
     firstPage: curPage === 1 ? true : false,
     lastPage: curPage === nPages ? true : false,
-    prevPage: curPage - 1,
-    nextPage: curPage + 1,
+    prevPage: "search?name=" + name + "&page=" + Number(curPage - 1),
+    nextPage: "search?name=" + name + "&page=" + Number(curPage + 1),
     noData: courses.length === 0 || curPage > nPages ? true : false,
+    results: numberWithCommas(courses.length),
+    name: name,
   });
 };
 
 const getCategory = async (req, res) => {
-  // const {
-  //   params: { category: category, language: language, page: page },
-  // } = req;
-
-  const name = req.query.name || "";
   const category = req.query.category || "";
   const language = req.query.language || "";
   const page = req.query.page || 1;
 
   var courses = [];
-  if (!category) courses = CourseList;
+  if (!category && !language) courses = CourseList;
   else if (!language)
     CourseList.forEach((course) => {
       if (course.CourseCategory === category) {
+        courses.push(course);
+      }
+    });
+  else if (!category)
+    CourseList.forEach((course) => {
+      if (course.CourseLanguage === language) {
         courses.push(course);
       }
     });

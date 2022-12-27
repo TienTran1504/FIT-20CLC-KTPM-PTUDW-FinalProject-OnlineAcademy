@@ -6,12 +6,12 @@
   <!-- Sidebar  -->
   <nav id="sidebar">
     <div class="p-5 pt-5">
-      <a class="categories" href="?">Categories</a>
+      <a class="categories" href="/categories">Categories</a>
       <ul class="list-unstyled components mb-5">
         {{#each CatList}}
           <li>
             <div class="category-container">
-              <a class="category" href="?category={{CatName}}">{{CatName}}</a>
+              <a class="category" href="/categories?category={{CatName}}">{{CatName}}</a>
               <div class="dropdown-arrow rotate"><i
                   class="fa fa-angle-down"
                   aria-hidden="true"
@@ -21,10 +21,10 @@
                 ></i></div>
             </div>
             <ul class="collapse show list-unstyled" id="pageSubmenu{{CatID}}">
-              {{#each LanguegeList}}
-                <li><a class="language" href="?category={{../CatName}}&language={{LanguegeName}}"><span
+              {{#each LanguageList}}
+                <li><a class="language" href="/categories?category={{../CatName}}&language={{LanguageName}}"><span
                       class="fa fa-chevron-right mr-2 language"
-                    ></span>{{LanguegeName}}</a></li>
+                    ></span>{{LanguageName}}</a></li>
               {{/each}}
             </ul>
           </li>
@@ -36,10 +36,18 @@
   <!-- Page Content  -->
 
   <div id="content" class="p-4 p-md-5 pt-5">
-    {{#if language}}
-      <h2>{{category}} - {{language}}</h2>
+    {{#if category}}
+      {{#if language}}
+        <h2>{{category}} - {{language}}</h2>
+      {{else}}
+        <h2>{{category}}</h2>
+      {{/if}}
     {{else}}
-      <h2>{{category}}</h2>
+      <h2>{{language}}</h2>
+    {{/if}}
+
+    {{#if name}}
+      <h2>{{results}} results for &quot;{{name}}&quot;</h2>
     {{/if}}
 
     {{#if noData}}

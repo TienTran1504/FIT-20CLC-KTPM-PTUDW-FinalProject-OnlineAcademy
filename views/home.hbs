@@ -41,11 +41,25 @@
 
   <div class="card text-left mx-auto border-0" style="width: 90%">
     <div class="card-body">
-      <h3 class="card-title"><b>Top categories</b></h3>
+      <h3 class="card-title"><b>Categories</b></h3>
       <div class="menu-container">
         {{#each CatList}}
-          <a class="menu-item" href="/categories/{{CatName}}/1">
+          <a class="menu-item" href="/categories?category={{CatName}}">
             <img class="menu-category-image" src="{{CatImage}}" alt="" />
+            <p class="category-name">{{CatName}}</p>
+          </a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div class="card text-left mx-auto border-0" style="width: 90%">
+    <div class="card-body">
+      <h3 class="card-title"><b>Top languages in this week</b></h3>
+      <div class="menu-container">
+        {{#each LanguageList}}
+          <a class="menu-item" href="/categories?language={{LanguageName}}">
+            <img class="menu-category-image" src="{{LanguageImage}}" alt="" />
             <p class="category-name">{{CatName}}</p>
           </a>
         {{/each}}

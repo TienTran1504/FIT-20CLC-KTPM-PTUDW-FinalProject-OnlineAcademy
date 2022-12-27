@@ -1,15 +1,12 @@
 const SliderList = [
   {
-    SliderImage:
-      "https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg",
+    SliderImage: "https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg",
   },
   {
-    SliderImage:
-      "http://logoman.ca/wp-content/uploads/2018/01/Slider-Banner-Programming-Image-.jpg",
+    SliderImage: "http://logoman.ca/wp-content/uploads/2018/01/Slider-Banner-Programming-Image-.jpg",
   },
   {
-    SliderImage:
-      "https://www.wonderplugin.com/wp-content/uploads/2019/05/tutorial-computer-900x288.jpg",
+    SliderImage: "https://www.wonderplugin.com/wp-content/uploads/2019/05/tutorial-computer-900x288.jpg",
   },
 ];
 
@@ -17,24 +14,74 @@ const CatList = [
   {
     CatID: 1,
     CatName: "Web",
-    LanguegeList: [
-      { LanguegeID: 1, LanguegeName: "ReactJS" },
-      { LanguegeID: 2, LanguegeName: "AngularJS" },
-      { LanguegeID: 3, LanguegeName: "VueJS" },
+    LanguageList: [
+      {
+        LanguageID: 1,
+        LanguageName: "ReactJS",
+        LanguageImage: "https://codelearn.io/Upload/Blog/react-js-co-ban-phan-1-63738082145.3856.jpg",
+      },
+      {
+        LanguageID: 2,
+        LanguageName: "AngularJS",
+        LanguageImage: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+      },
+      {
+        LanguageID: 3,
+        LanguageName: "VueJS",
+        LanguageImage: "https://images.viblo.asia/94f4ac67-bebd-4d2e-9a39-2562525e74c3.jpeg",
+      },
     ],
-    CatImage:
-      "https://www.codeimmersives.com/wp-content/uploads/2021/04/term1.png",
+    CatImage: "https://www.codeimmersives.com/wp-content/uploads/2021/04/term1.png",
   },
   {
     CatID: 2,
     CatName: "Mobile",
-    LanguegeList: [
-      { LanguegeID: 1, LanguegeName: "React Native" },
-      { LanguegeID: 2, LanguegeName: "Flutter" },
-      { LanguegeID: 3, LanguegeName: "Kotlin" },
+    LanguageList: [
+      {
+        LanguageID: 1,
+        LanguageName: "React Native",
+        LanguageImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+      },
+      {
+        LanguageID: 2,
+        LanguageName: "Flutter",
+        Language: "https://storage.googleapis.com/cms-storage-bucket/70760bf1e88b184bb1bc.png",
+      },
+      {
+        LanguageID: 3,
+        LanguageName: "Kotlin",
+        LanguageImage: "https://images.viblo.asia/2185d41e-6e40-42ba-8464-201b818bee58.png",
+      },
     ],
-    CatImage:
-      "https://spelltech4ever.com/wp-content/uploads/2021/08/mobileprogramming.jpg",
+    CatImage: "https://spelltech4ever.com/wp-content/uploads/2021/08/mobileprogramming.jpg",
+  },
+];
+
+const LanguageList = [
+  {
+    LanguageName: "ReactJS",
+    LanguageImage: "https://codelearn.io/Upload/Blog/react-js-co-ban-phan-1-63738082145.3856.jpg",
+  },
+  {
+    LanguageName: "AngularJS",
+    LanguageImage: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+  },
+  {
+    LanguageName: "VueJS",
+    LanguageImage: "https://segwitz.com/wp-content/uploads/2021/06/vuejs-development-malaysia.jpeg",
+  },
+  {
+    LanguageName: "React Native",
+    LanguageImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+  },
+  {
+    LanguageName: "Flutter",
+    LanguageImage:
+      "https://dailysmarty-production.s3.amazonaws.com/uploads/post/img/7974/flutter-use-cases-mobile-app-development.jpeg",
+  },
+  {
+    LanguageName: "Kotlin",
+    LanguageImage: "https://images.viblo.asia/2185d41e-6e40-42ba-8464-201b818bee58.png",
   },
 ];
 
@@ -77,8 +124,7 @@ const CourseList = [
     CourseCategory: "Mobile",
     CourseLanguage: "React Native",
     CoursePrice: 600000,
-    CourseImage:
-      "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
     CourseViews: 34656,
     PostingDate: Date("2022-03-25"),
   },
@@ -92,8 +138,7 @@ const CourseList = [
     CourseCategory: "Mobile",
     CourseLanguage: "React Native",
     CoursePrice: 600000,
-    CourseImage:
-      "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+    CourseImage: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
     CourseViews: 34656,
     PostingDate: Date("2022-03-25"),
   },
@@ -107,8 +152,7 @@ const CourseList = [
     CourseCategory: "Web",
     CourseLanguage: "AngularJS",
     CoursePrice: 500000,
-    CourseImage:
-      "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+    CourseImage: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
     CourseViews: 67887,
     PostingDate: Date("2022-03-25"),
   },
@@ -117,10 +161,7 @@ const CourseList = [
 const renderHome = async (req, res) => {
   function fullStar(ratingPoint) {
     var fullStar = [];
-    var stars =
-      ratingPoint - parseInt(ratingPoint) >= 0.75
-        ? parseInt(ratingPoint) + 1
-        : parseInt(ratingPoint);
+    var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
     console.log(stars);
     for (let i = 0; i < stars; i++) {
       fullStar.push(stars);
@@ -171,11 +212,10 @@ const renderHome = async (req, res) => {
     js: "home.js",
     SliderList: SliderList,
     CatList: CatList,
+    LanguageList: LanguageList,
     featuredCourses: CourseList.map((course) => {
       var CourseRatingVote = course.CourseRating.length;
-      var CourseRatingPoint =
-        course.CourseRating.reduce((a, b) => a + b, 0) /
-        course.CourseRating.length;
+      var CourseRatingPoint = course.CourseRating.reduce((a, b) => a + b, 0) / course.CourseRating.length;
 
       return {
         ...course,
