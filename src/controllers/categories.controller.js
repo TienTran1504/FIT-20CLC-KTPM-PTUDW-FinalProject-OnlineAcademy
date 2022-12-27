@@ -287,6 +287,7 @@ const search = async (req, res) => {
       return a.price - b.price;
     });
 
+  var currentPageURL = "?key=" + key + "&sort=" + sort + "&page=";
   var currentURL = "?key=" + key;
 
   res.render("vwCategories/index", {
@@ -320,6 +321,7 @@ const search = async (req, res) => {
     results: numberWithCommas(courses.length),
     key: key,
     currentURL: currentURL,
+    currentPageURL: currentPageURL,
     hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
     sort: sort === "highest-rated" ? "Highest rated" : "Lowest price",
   });
@@ -413,6 +415,7 @@ const getCategory = async (req, res) => {
     lastPage: curPage === nPages ? true : false,
     prevPage: currentPageURL + Number(curPage - 1),
     nextPage: currentPageURL + Number(curPage + 1),
+    currentPageURL: currentPageURL,
     noData: courses.length === 0 || curPage > nPages ? true : false,
     currentURL: currentURL,
     hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
