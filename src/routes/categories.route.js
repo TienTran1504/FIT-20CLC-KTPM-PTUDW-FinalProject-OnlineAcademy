@@ -3,10 +3,8 @@ import * as categories from "../controllers/categories.controller";
 
 const categoriesRouter = express.Router();
 
-categoriesRouter
-  .route("/:category/:language/:page")
-  .get(categories.getCategory);
+categoriesRouter.route("/").get(categories.getCategory);
 
-categoriesRouter.route("/:category/:page").get(categories.getCategory);
+categoriesRouter.route("/search").get(categories.search);
 
 export default categoriesRouter;

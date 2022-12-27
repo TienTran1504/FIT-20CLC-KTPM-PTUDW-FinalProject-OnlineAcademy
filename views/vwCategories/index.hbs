@@ -6,12 +6,12 @@
   <!-- Sidebar  -->
   <nav id="sidebar">
     <div class="p-5 pt-5">
-      <h3 style="font-weight: 600;">Categories</h3>
+      <a class="categories" href="?">Categories</a>
       <ul class="list-unstyled components mb-5">
         {{#each CatList}}
           <li>
             <div class="category-container">
-              <a class="category" href="/categories/{{CatName}}/1">{{CatName}}</a>
+              <a class="category" href="?category={{CatName}}">{{CatName}}</a>
               <div class="dropdown-arrow rotate"><i
                   class="fa fa-angle-down"
                   aria-hidden="true"
@@ -22,7 +22,7 @@
             </div>
             <ul class="collapse show list-unstyled" id="pageSubmenu{{CatID}}">
               {{#each LanguegeList}}
-                <li><a class="language" href="/categories/{{../CatName}}/{{LanguegeName}}/1"><span
+                <li><a class="language" href="?category={{../CatName}}&language={{LanguegeName}}"><span
                       class="fa fa-chevron-right mr-2 language"
                     ></span>{{LanguegeName}}</a></li>
               {{/each}}
