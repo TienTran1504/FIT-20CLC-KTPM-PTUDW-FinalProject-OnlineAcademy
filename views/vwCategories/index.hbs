@@ -34,9 +34,7 @@
   </nav>
 
   <!-- Page Content  -->
-  {{#if noData}}
-    <img class="no-data" src="../../../public/assets/images/nodata.png" alt="">
-  {{else}}
+
   <div id="content" class="p-4 p-md-5 pt-5">
     {{#if language}}
       <h2>{{category}} - {{language}}</h2>
@@ -44,78 +42,82 @@
       <h2>{{category}}</h2>
     {{/if}}
 
-    {{#each courses}}
-      <div class="course-container">
-        <div class="course">
-          <img class="course-img" src="{{CourseImage}}" alt="" />
-          <div class="course-info">
-            <b style="font-size: 20px;">{{CourseName}}</b>
-            <p style="margin-bottom: 5px;">{{CourseDescription}}</p>
-            <div class="sub-info-container">
-              <p class="sub-info-item">{{CourseAuthor}}</p>
-              <p class="sub-info-item">{{CourseViews}} views</p>
-              <p class="sub-info-item">Posting date:
-                {{PostingDate}}</p>
-            </div>
-            <div class="rate">
-              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
-              {{#each fullStar}}
-                <span class="fa fa-star star"></span>
-              {{/each}}
-              {{#each halfStar}}
-                <span class="fa fa-star-half-o star"></span>
-              {{/each}}
-              {{#each blankStar}}
-                <span class="fa fa-star-o star"></span>
-              {{/each}}
-              <span
-                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
-              >({{CourseRatingVote}})</span>
-            </div>
-            <div class="category-lable-container">
-              <p class="category-lable category-level-I">{{CourseCategory}}</p>
-              <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+    {{#if noData}}
+      <img class="no-data" src="../../../public/assets/images/nodata.png" alt="" />
+
+    {{else}}
+      {{#each courses}}
+        <div class="course-container">
+          <div class="course">
+            <img class="course-img" src="{{CourseImage}}" alt="" />
+            <div class="course-info">
+              <b style="font-size: 20px;">{{CourseName}}</b>
+              <p style="margin-bottom: 5px;">{{CourseDescription}}</p>
+              <div class="sub-info-container">
+                <p class="sub-info-item">{{CourseAuthor}}</p>
+                <p class="sub-info-item">{{CourseViews}} views</p>
+                <p class="sub-info-item">Posting date:
+                  {{PostingDate}}</p>
+              </div>
+              <div class="rate">
+                <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
+                {{#each fullStar}}
+                  <span class="fa fa-star star"></span>
+                {{/each}}
+                {{#each halfStar}}
+                  <span class="fa fa-star-half-o star"></span>
+                {{/each}}
+                {{#each blankStar}}
+                  <span class="fa fa-star-o star"></span>
+                {{/each}}
+                <span
+                  style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                >({{CourseRatingVote}})</span>
+              </div>
+              <div class="category-lable-container">
+                <p class="category-lable category-level-I">{{CourseCategory}}</p>
+                <p class="category-lable category-level-II">{{CourseLanguage}}</p>
+              </div>
             </div>
           </div>
+          <p class="price">{{CoursePrice}}đ</p>
         </div>
-        <p class="price">{{CoursePrice}}đ</p>
-      </div>
-    {{/each}}
-    <!-- Pagination  -->
-    {{#if havePagination}}
-      <ul class="pagination justify-content-center">
-        {{#if firstPage}}
-          <li class="page-item disabled">
-            <span class="page-link">Previous</span>
-          </li>
-        {{else}}
-          <li class="page-item">
-            <a class="page-link" href="{{prevPage}}">Previous</a>
-          </li>
-        {{/if}}
-        {{#each this.pageNumbers}}
-          {{#if isCurrentPage}}
-            <li class="page-item active" aria-current="page">
-              <span class="page-link">{{value}}</span>
+      {{/each}}
+      <!-- Pagination  -->
+      {{#if havePagination}}
+        <ul class="pagination justify-content-center">
+          {{#if firstPage}}
+            <li class="page-item disabled">
+              <span class="page-link">Previous</span>
             </li>
           {{else}}
             <li class="page-item">
-              <a class="page-link" href="{{value}}">{{value}}</a>
+              <a class="page-link" href="{{prevPage}}">Previous</a>
             </li>
           {{/if}}
-        {{/each}}
-        {{#if lastPage}}
-          <li class="page-item disabled">
-            <span class="page-link">Next</span>
-          </li>
-        {{else}}
-          <li class="page-item">
-            <a class="page-link" href="{{nextPage}}">Next</a>
-          </li>
-        {{/if}}
-      </ul>
+          {{#each this.pageNumbers}}
+            {{#if isCurrentPage}}
+              <li class="page-item active" aria-current="page">
+                <span class="page-link">{{value}}</span>
+              </li>
+            {{else}}
+              <li class="page-item">
+                <a class="page-link" href="{{value}}">{{value}}</a>
+              </li>
+            {{/if}}
+          {{/each}}
+          {{#if lastPage}}
+            <li class="page-item disabled">
+              <span class="page-link">Next</span>
+            </li>
+          {{else}}
+            <li class="page-item">
+              <a class="page-link" href="{{nextPage}}">Next</a>
+            </li>
+          {{/if}}
+        </ul>
+      {{/if}}
     {{/if}}
-{{/if}}
   </div>
 </div>
 

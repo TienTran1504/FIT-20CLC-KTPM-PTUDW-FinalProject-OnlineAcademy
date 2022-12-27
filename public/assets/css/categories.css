@@ -152,7 +152,8 @@ a:hover {
 .no-data {
   height: 200px;
   width: auto;
-  margin: auto;
+  display: block;
+  margin: 15vh auto;
 }
 
 .pagination {
