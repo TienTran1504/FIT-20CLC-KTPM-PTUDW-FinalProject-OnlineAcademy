@@ -3,8 +3,9 @@ import createError from "http-errors";
 import Course from "../models/course.model";
 import User from "../models/user.model";
 
+const id = "63aaaf7dbe355f57283b0600";
+
 const getProfile = async (req, res) => {
-  const id = "639e89b562592a4ee3446354";
   const user = await User.findById({ _id: id }).lean();
 
   res.render("vwStudentProfile/profile", {
@@ -14,8 +15,6 @@ const getProfile = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
-  const id = "639e89b562592a4ee3446354";
-  console.log(req);
   const { firstname, lastname, gender } = req.body;
   const updateUser = await User.findByIdAndUpdate(
     { _id: id },
@@ -55,7 +54,7 @@ const addCourse = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
   const { courseId } = req.params;
   const course = await Course.findOne({ _id: courseId });
-  const checkCourseExist = user.courseList.some((course) => {
+  const checkCourseExist = user.courseList.some(course => {
     return course.course._id == courseId;
   });
 
@@ -90,7 +89,7 @@ const removeCourse = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
   const { courseId } = req.params;
   const course = await Course.findOne({ _id: courseId });
-  const checkCourseExist = user.courseList.some((course) => {
+  const checkCourseExist = user.courseList.some(course => {
     return course.course._id == courseId;
   });
   if (!checkCourseExist) {
@@ -133,7 +132,7 @@ const updateStatusCourse = async (req, res) => {
   const { status } = req.body;
   const { courseId } = req.params;
   const course = await Course.findOne({ _id: courseId });
-  const checkCourseExist = user.courseList.some((course) => {
+  const checkCourseExist = user.courseList.some(course => {
     return course.course._id == courseId;
   });
   if (!status) {
@@ -145,7 +144,7 @@ const updateStatusCourse = async (req, res) => {
       `Dont exist course with id ${courseId} in student course's list`
     );
   } else {
-    const newCourseList = user.courseList.map((course) => {
+    const newCourseList = user.courseList.map(course => {
       if (course.course._id == courseId) {
         course.course.status = status;
       }

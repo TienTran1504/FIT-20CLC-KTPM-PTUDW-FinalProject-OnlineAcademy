@@ -17,53 +17,75 @@
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
     <link rel="stylesheet" href="../../public/assets/css/{{{custom_style}}}" />
-</head>
-<body>
-<div class="container">
-        <form class="form-horizontal" method="post" id="frmRegister">
-            <h4 class="card-header">
-                Account Registration
-            </h4>
-                <label for="txtName">Name</label>
-                <input name="name" type="text" class="form-control" id="txtName" placeholder="Enter name" autofocus required/>
-                <label for="txtPassword">Password</label>
-                <input name="password" type="password" class="form-control" id="txtPassword" placeholder="Enter Password" required>
+  </head>
+  <body>
+    <div class="container">
+      <form class="form-horizontal" method="post" id="frmRegister">
+        <h4 class="card-header">
+          Account Registration
+        </h4>
+        <label for="txtName">Name</label>
+        <input
+          name="name"
+          type="text"
+          class="form-control"
+          id="txtName"
+          placeholder="Enter name"
+          autofocus
+          required
+        />
+        <label for="txtPassword">Password</label>
+        <input
+          name="password"
+          type="password"
+          class="form-control"
+          id="txtPassword"
+          placeholder="Enter Password"
+          required
+        />
 
-                <label for="txtConfirm">Confirm Password</label>
-                <input type="password" class="form-control" id="txtConfirm" placeholder="Enter Confirm Password" required>
+        <label for="txtConfirm">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="txtConfirm"
+          placeholder="Enter Confirm Password"
+          required
+        />
 
-                <label for="txtEmail">Email</label>
-                <input name="email" type="text" class="form-control" id="txtEmail" placeholder="Enter Email">
+        <label for="txtEmail">Email</label>
+        <input
+          name="email"
+          type="text"
+          class="form-control"
+          id="txtEmail"
+          placeholder="Enter Email"
+        />
 
-                <label for="txtGender">Gender</label>
-                <input name="gender" type="text" class="form-control" id="txtGender" placeholder="Enter Gender">
+        <label for="txtGender">Gender</label>
+        <input
+          name="gender"
+          type="text"
+          class="form-control"
+          id="txtGender"
+          placeholder="Enter Gender"
+        />
 
-                <div class="clearfix">
-                    <button type="submit" class="signupbtn">Sign Up</button>
-                </div>
-        </form>
-</div>
+        <div class="clearfix">
+          <button type="submit" class="signupbtn">Sign Up</button>
+        </div>
+      </form>
+    </div>
 
-<script>
-    document.getElementById("frmRegister").on('submit', function (e) {
-        e.preventDefault();
-
-        const Name = document.getElementById("txtName").value;
-        if (Name.length === 0) {
-            alert('Please input a valid username.');
-            return;
-        }
-
-        const pass = document.getElementById("txtPassword").value;
-        const confirmPass = document.getElementById("txtConfirm").value;
-
-        if (pass != confirmPass) {
-            alert('Password and Confirm password are not same.');
-            return;
-        }
-        document.getElementById("frmRegister").off('submit').submit();
-    });
-</script>
-</body>
+    <script>
+      document.getElementById("frmRegister").on('submit', function (e) {
+      e.preventDefault(); const Name = document.getElementById("txtName").value;
+      if (Name.length === 0) { alert('Please input a valid username.'); return;
+      } const pass = document.getElementById("txtPassword").value; const
+      confirmPass = document.getElementById("txtConfirm").value; if (pass !=
+      confirmPass) { alert('Password and Confirm password are not same.');
+      return; } document.getElementById("frmRegister").off('submit').submit();
+      });
+    </script>
+  </body>
 </html>
-
