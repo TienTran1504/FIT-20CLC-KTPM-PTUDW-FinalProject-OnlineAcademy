@@ -11,7 +11,11 @@
         {{#each CatList}}
           <li>
             <div class="category-container">
-              <a class="category" href="/categories?category={{name}}">{{name}}</a>
+              {{#if isActive}}
+                <a class="category isActive" href="/categories?category={{name}}">{{name}}</a>
+              {{else}}
+                <a class="category" href="/categories?category={{name}}">{{name}}</a>
+              {{/if}}
               <div class="dropdown-arrow rotate"><i
                   class="fa fa-angle-down"
                   aria-hidden="true"
@@ -22,9 +26,18 @@
             </div>
             <ul class="collapse show list-unstyled" id="pageSubmenu{{_id}}">
               {{#each languageList}}
-                <li><a class="language" href="/categories?category={{../name}}&language={{name}}"><span
-                      class="fa fa-chevron-right mr-2 language"
-                    ></span>{{name}}</a></li>
+                <li class="language-container">
+                  {{#if isActive}}
+                      <a class="language isActive" href="/categories?category={{../name}}&language={{name}}"><span
+                        class="fa fa-chevron-right mr-2 language isActive"
+                      ></span>{{name}}</a>
+                    {{else}}
+                      <a class="language" href="/categories?category={{../name}}&language={{name}}"><span
+                        class="fa fa-chevron-right mr-2 language"
+                      ></span>{{name}}</a>
+                    {{/if}}
+                    <p class="course-number">({{courseQuantity}})</p>
+                    </li>
               {{/each}}
             </ul>
           </li>
@@ -67,14 +80,14 @@
         {{#if hasSort}}
           {{sort}}
         {{else}}
-          Most relevant
+          Most Relevant
         {{/if}}
         </a>
 
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="{{currentURL}}&sort=highest-rated">Highest rated</a>
-          <a class="dropdown-item" href="{{currentURL}}&sort=lowest-price">Lowest price</a>
-          <a class="dropdown-item" href="{{currentURL}}&sort=most-relevant">Most relevant</a>
+          <a class="dropdown-item" href="{{currentURL}}&sort=highest-rated">Highest Rated</a>
+          <a class="dropdown-item" href="{{currentURL}}&sort=lowest-price">Lowest Price</a>
+          <a class="dropdown-item" href="{{currentURL}}&sort=most-relevant">Most Relevant</a>
         </div>
       </div>
       </div>
@@ -115,7 +128,7 @@
                     <span class="fa fa-star-o star"></span>
                   {{/each}}
                   <span
-                    style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                    style="font-size: 14px; margin-bottom: 3px; color: gray; vertical-align: text-top"
                   >({{CourseRatingVote}})</span>
                 </div>
                 <div class="category-lable-container">

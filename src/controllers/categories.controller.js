@@ -6,21 +6,54 @@ const CatList = [
     _id: 1,
     name: "Web",
     languageList: [
-      { _id: 1, name: "ReactJS" },
-      { _id: 2, name: "AngularJS" },
-      { _id: 3, name: "VueJS" },
+      { _id: 1, name: "ReactJS", courseList: [1, 1, 1, 1, 1, 1] },
+      { _id: 2, name: "AngularJS", courseList: [1, 1] },
+      { _id: 3, name: "VueJS", courseList: [] },
     ],
   },
   {
     _id: 2,
     name: "Mobile",
     languageList: [
-      { _id: 1, name: "React Native" },
-      { _id: 2, name: "Flutter" },
-      { _id: 3, name: "Kotlin" },
+      { _id: 1, name: "React Native", courseList: [1, 1, 1, 1] },
+      { _id: 2, name: "Flutter", courseList: [] },
+      { _id: 3, name: "Kotlin", courseList: [] },
     ],
   },
 ];
+
+// const LangList = [
+//   {
+//     _id: 1,
+//     name: "ReactJS",
+//     courseList: [1, 1, 1, 1, 1, 1],
+//   },
+//   {
+//     _id: 2,
+//     name: "AngularJS",
+//     courseList: [1, 1],
+//   },
+//   {
+//     _id: 3,
+//     name: "VueJS",
+//     courseList: [],
+//   },
+//   {
+//     _id: 4,
+//     name: "React Native",
+//     courseList: [1, 1, 1, 1],
+//   },
+//   {
+//     _id: 5,
+//     name: "Flutter",
+//     courseList: [],
+//   },
+//   {
+//     _id: 6,
+//     name: "Kotlin",
+//     courseList: [],
+//   },
+// ];
 
 const CourseList = [
   {
@@ -320,8 +353,17 @@ const search = async (req, res) => {
   var currentURL = "?key=" + key;
 
   res.render("vwCategories/index", {
-    style: "categories.css",
-    CatList: CatList,
+    CatList: CatList.map((cat) => {
+      return {
+        ...cat,
+        languageList: cat.languageList.map((lang) => {
+          return {
+            ...lang,
+            courseQuantity: numberWithCommas(lang.courseList.length),
+          };
+        }),
+      };
+    }),
     courses: courses
       .map((course) => {
         var CourseRatingVote = course.ratingList.length;
@@ -355,7 +397,7 @@ const search = async (req, res) => {
     currentURL: currentURL,
     currentPageURL: currentPageURL,
     hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
-    sort: sort === "highest-rated" ? "Highest rated" : "Lowest price",
+    sort: sort === "highest-rated" ? "Highest Rated" : "Lowest Price",
   });
 };
 
@@ -433,7 +475,19 @@ const getCategory = async (req, res) => {
   var currentURL = "categories?category=" + category + "&language=" + language;
 
   res.render("vwCategories/index", {
-    CatList: CatList,
+    CatList: CatList.map((cat) => {
+      return {
+        ...cat,
+        isActive: cat.name === category && language === "" ? true : false,
+        languageList: cat.languageList.map((lang) => {
+          return {
+            ...lang,
+            courseQuantity: numberWithCommas(lang.courseList.length),
+            isActive: lang.name === language ? true : false,
+          };
+        }),
+      };
+    }),
     category: category,
     language: language,
     courses: courses
@@ -467,7 +521,7 @@ const getCategory = async (req, res) => {
     noData: courses.length === 0 || curPage > nPages ? true : false,
     currentURL: currentURL,
     hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
-    sort: sort === "highest-rated" ? "Highest rated" : "Lowest price",
+    sort: sort === "highest-rated" ? "Highest Rated" : "Lowest Price",
   });
 };
 
