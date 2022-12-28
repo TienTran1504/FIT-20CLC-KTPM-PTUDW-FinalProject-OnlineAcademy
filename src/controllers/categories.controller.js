@@ -265,6 +265,19 @@ const search = async (req, res) => {
   // const CatList = await CourseCategory.find().lean();
   // const CourseList = await Course.find().lean();
 
+  var tmp = [...CourseList];
+  var bestSellerCourse = tmp
+    .sort(function (a, b) {
+      return b.studentList.length - a.studentList.length;
+    })
+    .slice(0, 5);
+
+  var newCourses = [];
+  tmp.forEach((course) => {
+    if (dateDiffInDays(course.createdAt, new Date()) <= 7) newCourses.push(course);
+  });
+  newCourses = newCourses.slice(0, 5);
+
   var courses = [];
   CourseList.forEach((course) => {
     if (
@@ -325,6 +338,8 @@ const search = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
+          bestSeller: bestSellerCourse.includes(course) ? true : false,
+          new: newCourses.includes(course) ? true : false,
         };
       })
       .slice(offset, offset + limit),
