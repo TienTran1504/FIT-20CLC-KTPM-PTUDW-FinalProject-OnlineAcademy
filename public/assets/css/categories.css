@@ -1,3 +1,7 @@
+.main-container {
+  min-width: 900px;
+}
+
 #sidebar {
   min-width: 270px;
   max-width: 270px;
@@ -13,6 +17,12 @@
   padding: 10px 0;
   display: block;
   color: black;
+}
+
+@media only screen and (max-width: 1100px) {
+  #sidebar {
+    display: none;
+  }
 }
 
 a {
@@ -85,10 +95,26 @@ a:hover {
 
 .course-img {
   width: 250px;
-  height: auto;
+  height: 170px;
   object-fit: cover;
   border-radius: 12px;
-  margin-right: 25px;
+  position: relative;
+}
+
+.course-info {
+  margin-left: 25px;
+}
+
+.parent-image {
+  position: relative;
+}
+
+.bestseller {
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 
 .rate {
@@ -112,12 +138,16 @@ a:hover {
   border-radius: 3px;
 }
 
-.category-level-I {
+.label1 {
   background-color: #acd2cc;
 }
 
-.category-level-II {
+.label2 {
   background-color: #e996fb;
+}
+
+.label3 {
+  background-color: #a0cbf9;
 }
 
 .price {
@@ -148,6 +178,7 @@ a:hover {
 .sub-info-container {
   display: flex;
   justify-content: left;
+  flex-wrap: wrap;
 }
 
 .sub-info-item {

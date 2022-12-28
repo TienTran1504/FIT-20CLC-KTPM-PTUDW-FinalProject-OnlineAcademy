@@ -56,6 +56,7 @@ const CourseList = [
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
     createdAt: new Date("2022-05-21"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 2,
@@ -70,6 +71,7 @@ const CourseList = [
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
     createdAt: new Date("2022-08-19"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1],
   },
   {
     CourseID: 3,
@@ -84,6 +86,7 @@ const CourseList = [
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
     createdAt: new Date("2021-04-01"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1],
   },
   {
     CourseID: 4,
@@ -97,7 +100,8 @@ const CourseList = [
     price: 600000,
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
     createdAt: new Date("2022-12-26"),
-    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 5,
@@ -112,6 +116,7 @@ const CourseList = [
     image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
     createdAt: new Date("2022-12-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
 ];
 
@@ -172,23 +177,29 @@ const renderHome = async (req, res) => {
   // const LanguageList = await CourseLanguage.find().lean();
   // const CourseList = await Course.find().lean();
 
+  const bestSellerCourse = [
+    ...CourseList.sort(function (a, b) {
+      return b.studentList.length - a.studentList.length;
+    }).slice(0, 5),
+  ];
+
   const featuredCourses = [];
 
   CourseList.forEach((course) => {
     if (dateDiffInDays(course.createdAt, new Date()) <= 7) featuredCourses.push(course);
   });
 
-  featuredCourses.sort(function (a, b) {
-    return b.ratingList.length - a.ratingList.length;
-  });
+  const mostViewedCourses = [
+    ...CourseList.sort(function (a, b) {
+      return b.viewList.length - a.viewList.length;
+    }),
+  ];
 
-  const mostViewedCourses = CourseList.sort(function (a, b) {
-    return b.viewList.length - a.viewList.length;
-  });
-
-  const latestCourses = CourseList.sort(function (a, b) {
-    return b.createdAt - a.createdAt;
-  });
+  const latestCourses = [
+    ...CourseList.sort(function (a, b) {
+      return b.createdAt - a.createdAt;
+    }),
+  ];
 
   res.render("home", {
     SliderList: SliderList,
@@ -209,6 +220,9 @@ const renderHome = async (req, res) => {
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
+          Students: numberWithCommas(course.studentList.length),
+          bestSeller: bestSellerCourse.includes(course) ? true : false,
+          new: featuredCourses.includes(course) ? true : false,
         };
       })
       .slice(0, 5),
@@ -227,6 +241,9 @@ const renderHome = async (req, res) => {
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
+          Students: numberWithCommas(course.studentList.length),
+          bestSeller: bestSellerCourse.includes(course) ? true : false,
+          new: featuredCourses.includes(course) ? true : false,
         };
       })
       .slice(0, 10),
@@ -245,6 +262,9 @@ const renderHome = async (req, res) => {
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
+          Students: numberWithCommas(course.studentList.length),
+          bestSeller: bestSellerCourse.includes(course) ? true : false,
+          new: featuredCourses.includes(course) ? true : false,
         };
       })
       .slice(0, 10),

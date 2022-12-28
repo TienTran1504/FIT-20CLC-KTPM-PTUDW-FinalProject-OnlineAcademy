@@ -62,7 +62,7 @@
           role="button"
           data-toggle="dropdown"
           aria-expanded="false"
-            style="border: 1px solid"
+            style="border: 1px solid rgba(0, 0, 0, 0.2)"
         >
         {{#if hasSort}}
           {{sort}}
@@ -82,34 +82,49 @@
       {{#each courses}}
         <div class="course-container">
           <div class="course">
+            <div class="parent-image">
             <img class="course-img" src="{{image}}" alt="" />
+            {{#if bestSeller}}
+                <img
+                  src="https://www.pngkey.com/png/full/62-621219_best-seller-icon-sign.png"
+                  alt=""
+                  class="bestseller"
+                />
+              {{/if}}
+            </div>
             <div class="course-info">
-              <b style="font-size: 20px;">{{name}}</b>
-              <p style="margin-bottom: 5px;">{{briefDescription}}</p>
-              <div class="sub-info-container">
-                <p class="sub-info-item">{{createdBy}}</p>
-                <p class="sub-info-item">{{CourseViews}} views</p>
-                <p class="sub-info-item">Posting date:
-                  {{createdAt}}</p>
-              </div>
-              <div class="rate">
-                <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
-                {{#each fullStar}}
-                  <span class="fa fa-star star"></span>
-                {{/each}}
-                {{#each halfStar}}
-                  <span class="fa fa-star-half-o star"></span>
-                {{/each}}
-                {{#each blankStar}}
-                  <span class="fa fa-star-o star"></span>
-                {{/each}}
-                <span
-                  style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
-                >({{CourseRatingVote}})</span>
-              </div>
-              <div class="category-lable-container">
-                <p class="category-lable category-level-I">{{categoryName}}</p>
-                <p class="category-lable category-level-II">{{languageName}}</p>
+              <div>
+                <b style="font-size: 20px;">{{name}}</b>
+                <p style="margin-bottom: 5px;">{{briefDescription}}</p>
+                <div class="sub-info-container">
+                  <p class="sub-info-item">{{createdBy}}</p>
+                  <p class="sub-info-item">{{CourseViews}} views</p>
+                  <p class="sub-info-item">{{students}} students</p>
+                  <p class="sub-info-item">Posting date:
+                    {{createdAt}}</p>
+                </div>
+                <div class="rate">
+                  <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
+                  {{#each fullStar}}
+                    <span class="fa fa-star star"></span>
+                  {{/each}}
+                  {{#each halfStar}}
+                    <span class="fa fa-star-half-o star"></span>
+                  {{/each}}
+                  {{#each blankStar}}
+                    <span class="fa fa-star-o star"></span>
+                  {{/each}}
+                  <span
+                    style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                  >({{CourseRatingVote}})</span>
+                </div>
+                <div class="category-lable-container">
+                  <p class="category-lable label1">{{categoryName}}</p>
+                  <p class="category-lable label2">{{languageName}}</p>
+                  {{#if new}}
+                    <p class="category-lable label3">New</p>
+                  {{/if}}
+                </div>
               </div>
             </div>
           </div>

@@ -48,30 +48,49 @@
   height: 150px;
   object-fit: cover;
   border-radius: 12px;
+  position: relative;
 }
+
+.parent-image {
+  position: relative;
+}
+
+.bestseller {
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
 .menu-container {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
 }
+
 .menu-item {
   display: flex;
   flex-direction: column;
   margin: 15px 15px 15px 0;
   transition: opacity 0.2s, transform 0.2s;
-  flex: 0.2;
+  flex: 0;
 }
+
 .menu-item:hover {
   cursor: pointer;
   opacity: 0.9;
   transform: scale(1.05);
 }
+
 .rate {
   display: inline-block;
 }
+
 .checked {
   color: orange;
 }
+
 .menu-category-image {
   width: 310px;
   height: 190px;
@@ -85,6 +104,7 @@
 
 .category-lable-container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .category-lable {
@@ -96,13 +116,21 @@
   border-radius: 3px;
 }
 
-.category-level-I {
+.label1 {
   background-color: #acd2cc;
 }
 
-.category-level-II {
+.label2 {
   background-color: #e996fb;
 }
+
+.label3 {
+  background-color: #a0cbf9;
+}
+
+/* .label4 {
+  background-color: #eceb98;
+} */
 
 /* Shine */
 .menu-item:after {

@@ -73,10 +73,22 @@
       <div class="menu-container">
         {{#each featuredCourses}}
           <div class="menu-item">
-            <img class="menu-item-image" src="{{image}}" alt="" />
+            <div class="parent-image">
+              <img class="menu-item-image" src="{{image}}" alt="" />
+              {{#if bestSeller}}
+                <img
+                  src="https://www.pngkey.com/png/full/62-621219_best-seller-icon-sign.png"
+                  alt=""
+                  class="bestseller"
+                />
+              {{/if}}
+            </div>
             <b>{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
-            <p class="sub-info-item">{{CourseViews}} views</p>
+            <div style="display: flex;">
+              <p class="sub-info-item">{{CourseViews}} views</p>
+              <p class="sub-info-item">{{Students}} students</p>
+            </div>
             <p class="sub-info-item">Posting date:
               {{createdAt}}</p>
             <div class="rate">
@@ -96,8 +108,11 @@
             </div>
             <b style="margin-bottom: 5px;">{{price}}đ</b>
             <div class="category-lable-container">
-              <p class="category-lable category-level-I">{{categoryName}}</p>
-              <p class="category-lable category-level-II">{{languageName}}</p>
+              <p class="category-lable label1">{{categoryName}}</p>
+              <p class="category-lable label2">{{languageName}}</p>
+              {{#if new}}
+                <p class="category-lable label3">New</p>
+              {{/if}}
             </div>
           </div>
         {{/each}}
@@ -111,10 +126,22 @@
       <div class="menu-container">
         {{#each mostViewedCourses}}
           <div class="menu-item">
-            <img class="menu-item-image" src="{{image}}" alt="" />
+            <div class="parent-image">
+              <img class="menu-item-image" src="{{image}}" alt="" />
+              {{#if bestSeller}}
+                <img
+                  src="https://www.pngkey.com/png/full/62-621219_best-seller-icon-sign.png"
+                  alt=""
+                  class="bestseller"
+                />
+              {{/if}}
+            </div>
             <b>{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
-            <p class="sub-info-item">{{CourseViews}} views</p>
+            <div style="display: flex;">
+              <p class="sub-info-item">{{CourseViews}} views</p>
+              <p class="sub-info-item">{{Students}} students</p>
+            </div>
             <p class="sub-info-item">Posting date:
               {{createdAt}}</p>
             <div class="rate">
@@ -134,8 +161,11 @@
             </div>
             <b style="margin-bottom: 5px;">{{price}}đ</b>
             <div class="category-lable-container">
-              <p class="category-lable category-level-I">{{categoryName}}</p>
-              <p class="category-lable category-level-II">{{languageName}}</p>
+              <p class="category-lable label1">{{categoryName}}</p>
+              <p class="category-lable label2">{{languageName}}</p>
+              {{#if new}}
+                <p class="category-lable label3">New</p>
+              {{/if}}
             </div>
           </div>
         {{/each}}
@@ -149,10 +179,22 @@
       <div class="menu-container">
         {{#each latestCourses}}
           <div class="menu-item">
-            <img class="menu-item-image" src="{{image}}" alt="" />
+            <div class="parent-image">
+              <img class="menu-item-image" src="{{image}}" alt="" />
+              {{#if bestSeller}}
+                <img
+                  src="https://www.pngkey.com/png/full/62-621219_best-seller-icon-sign.png"
+                  alt=""
+                  class="bestseller"
+                />
+              {{/if}}
+            </div>
             <b>{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
-            <p class="sub-info-item">{{CourseViews}} views</p>
+            <div style="display: flex;">
+              <p class="sub-info-item">{{CourseViews}} views</p>
+              <p class="sub-info-item">{{Students}} students</p>
+            </div>
             <p class="sub-info-item">Posting date:
               {{createdAt}}</p>
             <div class="rate">
@@ -172,8 +214,11 @@
             </div>
             <b style="margin-bottom: 5px;">{{price}}đ</b>
             <div class="category-lable-container">
-              <p class="category-lable category-level-I">{{categoryName}}</p>
-              <p class="category-lable category-level-II">{{languageName}}</p>
+              <p class="category-lable label1">{{categoryName}}</p>
+              <p class="category-lable label2">{{languageName}}</p>
+              {{#if new}}
+                <p class="category-lable label3">New</p>
+              {{/if}}
             </div>
           </div>
         {{/each}}

@@ -34,8 +34,9 @@ const CourseList = [
     languageName: "ReactJS",
     price: 549000,
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 2,
@@ -48,8 +49,9 @@ const CourseList = [
     languageName: "ReactJS",
     price: 349000,
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-12-28"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 3,
@@ -62,8 +64,9 @@ const CourseList = [
     languageName: "ReactJS",
     price: 229000,
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1],
   },
   {
     CourseID: 4,
@@ -76,8 +79,9 @@ const CourseList = [
     languageName: "React Native",
     price: 600000,
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 5,
@@ -90,8 +94,9 @@ const CourseList = [
     languageName: "React Native",
     price: 800000,
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 6,
@@ -104,8 +109,9 @@ const CourseList = [
     languageName: "AngularJS",
     price: 700000,
     image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 7,
@@ -118,8 +124,9 @@ const CourseList = [
     languageName: "ReactJS",
     price: 519000,
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1],
   },
   {
     CourseID: 8,
@@ -132,8 +139,9 @@ const CourseList = [
     languageName: "ReactJS",
     price: 149000,
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-12-28"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 9,
@@ -146,8 +154,9 @@ const CourseList = [
     languageName: "ReactJS",
     price: 349000,
     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 10,
@@ -160,8 +169,9 @@ const CourseList = [
     languageName: "React Native",
     price: 650000,
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-03-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 11,
@@ -174,8 +184,9 @@ const CourseList = [
     languageName: "React Native",
     price: 620000,
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-12-25"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1],
   },
   {
     CourseID: 12,
@@ -188,8 +199,9 @@ const CourseList = [
     languageName: "AngularJS",
     price: 520000,
     image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
-    createdAt: Date("2022-03-25"),
+    createdAt: new Date("2022-12-27"),
     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
 ];
 
@@ -239,6 +251,10 @@ function formatDate(date) {
   if (day.length < 2) day = "0" + day;
 
   return [month, day, year].join("-");
+}
+
+function dateDiffInDays(a, b) {
+  return ((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24)).toFixed(0);
 }
 
 const search = async (req, res) => {
@@ -307,6 +323,7 @@ const search = async (req, res) => {
           blankStar: blankStar(CourseRatingPoint),
           price: numberWithCommas(course.price),
           CourseViews: numberWithCommas(course.viewList.length),
+          students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
         };
       })
@@ -335,6 +352,19 @@ const getCategory = async (req, res) => {
 
   // const CatList = await CourseCategory.find().lean();
   // const CourseList = await Course.find().lean();
+
+  var tmp = [...CourseList];
+  var bestSellerCourse = tmp
+    .sort(function (a, b) {
+      return b.studentList.length - a.studentList.length;
+    })
+    .slice(0, 5);
+
+  var newCourses = [];
+  tmp.forEach((course) => {
+    if (dateDiffInDays(course.createdAt, new Date()) <= 7) newCourses.push(course);
+  });
+  newCourses = newCourses.slice(0, 5);
 
   var courses = [];
   if (!category && !language) courses = [...CourseList];
@@ -405,7 +435,10 @@ const getCategory = async (req, res) => {
           blankStar: blankStar(CourseRatingPoint),
           price: numberWithCommas(course.price),
           CourseViews: numberWithCommas(course.viewList.length),
+          students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
+          bestSeller: bestSellerCourse.includes(course) ? true : false,
+          new: newCourses.includes(course) ? true : false,
         };
       })
       .slice(offset, offset + limit),
