@@ -1,3 +1,8 @@
+:root {
+  --language-width: 300px;
+  --course-width: 250px;
+}
+
 .swiper {
   width: 100%;
   margin-top: 80px;
@@ -44,7 +49,7 @@
   margin-right: 20px;
 }
 .menu-item-image {
-  width: 250px;
+  width: var(--course-width);
   height: 150px;
   object-fit: cover;
   border-radius: 12px;
@@ -75,12 +80,39 @@
   margin: 15px 15px 15px 0;
   transition: opacity 0.2s, transform 0.2s;
   flex: 0;
+  /* word-break: break-all; */
+  width: var(--language-width);
+  word-wrap: break-word;
+}
+
+p.language-name {
+  width: var(--language-width);
+  word-wrap: break-word;
+}
+
+b.course-name {
+  width: var(--course-width);
+  word-wrap: break-word;
 }
 
 .menu-item:hover {
   cursor: pointer;
   opacity: 0.9;
   transform: scale(1.05);
+}
+
+.language-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-bottom: 0;
+  word-wrap: break-word;
+}
+
+.language-student {
+  font-size: 16px;
+  color: gray;
+  font-weight: 100;
 }
 
 .rate {
@@ -92,7 +124,7 @@
 }
 
 .menu-category-image {
-  width: 310px;
+  width: var(--language-width);
   height: 190px;
   object-fit: cover;
   border-radius: 12px;
