@@ -20,8 +20,9 @@ const register = async (req, res, next) => {
 const getAllUsers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const limit = 2;
-  const curPage = req.query.page || 1;
+  const limit = 7;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
 
   const users = await User.find({}).sort('createdAt').lean();
@@ -29,21 +30,25 @@ const getAllUsers = async (req, res, next) => {
 
   const total = sortedUsers.length;
   const nPages = Math.ceil(total / limit);
-  // sortedUsers = sortedUsers.slice(offset, offset + limit);
-  // console.log(sortedUsers);
+  sortedUsers = sortedUsers.slice(offset, offset + limit);
 
   const pageNumbers = [];
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push({
       value: i,
-      isCurrent: i === +curPage
+      isCurrent: i === Number(+curPage)
     })
   }
-
   res.render('vwAdminManagement/index', {
+    length: users.length,
     users: sortedUsers,
     empty: sortedUsers.length === 0,
-    pageNumbers: pageNumbers
+    havePagination: users.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
@@ -53,15 +58,36 @@ const getAllUsers = async (req, res, next) => {
 const getAllStudents = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-
+  const limit = 7;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
   const users = await User.find({ permission: "Student" })
     .sort("createdAt")
     .lean();
   let sortedUsers = [...users];
 
+  const total = sortedUsers.length;
+  const nPages = Math.ceil(total / limit);
+  sortedUsers = sortedUsers.slice(offset, offset + limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage)
+    })
+  }
   res.render("vwAdminManagement/students", {
+    length: users.length,
     users: sortedUsers,
     empty: sortedUsers.length === 0,
+    havePagination: users.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
@@ -71,15 +97,35 @@ const getAllStudents = async (req, res, next) => {
 const getAllTeachers = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-
+  const limit = 7;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
   const users = await User.find({ permission: "Teacher" })
     .sort("createdAt")
     .lean();
   let sortedUsers = [...users];
+  const total = sortedUsers.length;
+  const nPages = Math.ceil(total / limit);
+  sortedUsers = sortedUsers.slice(offset, offset + limit);
 
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage)
+    })
+  }
   res.render("vwAdminManagement/teachers", {
+    length: users.length,
     users: sortedUsers,
     empty: sortedUsers.length === 0,
+    havePagination: users.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
@@ -90,7 +136,8 @@ const getAllCourses = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
   const limit = 7;
-  const curPage = req.query.page || 1;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
   const courses = await Course.find({}).sort("createdAt").lean();
   let sortedCourses = [...courses];
@@ -103,14 +150,20 @@ const getAllCourses = async (req, res, next) => {
   for (let i = 1; i <= nPages; i++) {
     pageNumbers.push({
       value: i,
-      isCurrent: i === +curPage
+      isCurrent: i === Number(+curPage)
     })
   }
 
   res.render("vwAdminManagement/courses", {
+    length: courses.length,
     courses: sortedCourses,
     empty: sortedCourses.length === 0,
-    pageNumbers: pageNumbers
+    havePagination: courses.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
@@ -122,15 +175,36 @@ const getAllCourses = async (req, res, next) => {
 const getAllCourseCategories = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-
+  const limit = 7;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
   const courseCategories = await CourseCategory.find({})
     .sort("createdAt")
     .lean();
   let sortedCourseCategories = [...courseCategories];
 
+  const total = sortedCourseCategories.length;
+  const nPages = Math.ceil(total / limit);
+  sortedCourseCategories = sortedCourseCategories.slice(offset, offset + limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage)
+    })
+  }
   res.render("vwAdminManagement/coursecategory", {
+    length: courseCategories.length,
     categories: sortedCourseCategories,
     empty: sortedCourseCategories.length === 0,
+    havePagination: courseCategories.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
@@ -141,15 +215,35 @@ const getAllCourseCategories = async (req, res, next) => {
 const getAllCourseLanguages = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-
+  const limit = 7;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
   const courseLanguages = await CourseLanguage.find({})
     .sort("createdAt")
     .lean();
   let sortedCourseLanguages = [...courseLanguages];
+  const total = sortedCourseLanguages.length;
+  const nPages = Math.ceil(total / limit);
+  sortedCourseLanguages = sortedCourseLanguages.slice(offset, offset + limit);
 
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage)
+    })
+  }
   res.render("vwAdminManagement/courselanguage", {
+    length: courseLanguages.length,
     languages: sortedCourseLanguages,
     empty: sortedCourseLanguages.length === 0,
+    havePagination: courseLanguages.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
