@@ -50,6 +50,7 @@
               >Favorite course</a>
             </div>
           </div>
+          {{log notif}}
           <div class="col-9 h-100">
             <div class="tab-content" id="nav-tabContent">
               <div
@@ -70,13 +71,83 @@
                     <form>
                       <div class="form-group">
                         <label class="px-2" for="email">Email address:</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          value={{user.email}}
-                          placeholder="name@example.com"
-                          readonly
-                        />
+                        <div class="email-input-block">
+                          <input
+                            type="email"
+                            class="form-control"
+                            value="{{user.email}}"
+                            readonly
+                          />
+                          <button
+                            class="btn btn-primary fa fa-pencil-square btn-email"
+                            type="button"
+                            data-toggle="modal"
+                            data-target="#form-update-modal2"
+                          >
+                          </button>
+                          <div
+                            class="modal fade"
+                            id="form-update-modal2"
+                            tabindex="-1"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div
+                                  class="modal-header"
+                                  style="background-color: #2b6777; color: #ffffff;"
+                                >
+                                  <h5
+                                    class="modal-title"
+                                    id="form-update-modalLabel2"
+                                  >Change your email</h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="form-row">
+                                    <div class="col">
+                                      <input
+                                        type="text"
+                                        name="email"
+                                        class="form-control"
+                                        value={{user.email}}
+                                        placeholder="Your email address"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="form-row">
+                                    <div class="col">
+                                      <input
+                                        type="password"
+                                        name="password"
+                                        class="form-control"
+                                        placeholder="Password"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button
+                                      type="button"
+                                      class="btn btn-secondary"
+                                      data-dismiss="modal"
+                                    >Close</button>
+                                    <button
+                                      type="submit"
+                                      class="btn btn-primary course-btn"
+                                      formaction="/student/change_email/post"
+                                    >Save</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label class="px-2" for="firstname">First Name:</label>
@@ -84,9 +155,8 @@
                           type="text"
                           aria-label="First name"
                           class="form-control"
-                          value={{user.firstName}}
-                          placeholder="First Name"
-                          readonly
+                          value="{{user.firstName}}"
+                          readonly="/"
                         />
                       </div>
                       <div class="form-group">
@@ -95,8 +165,7 @@
                           type="text"
                           aria-label="Last name"
                           class="form-control"
-                          value={{user.lastName}}
-                          placeholder="Last Name"
+                          value="{{user.lastName}}"
                           readonly
                         />
                       </div>
@@ -106,9 +175,8 @@
                           type="text"
                           aria-label="Gender"
                           class="form-control"
-                          value={{user.gender}}
-                          placeholder="Gender"
-                          readonly
+                          value="{{user.gender}}"
+                          readonly="/"
                         />
                       </div>
                       <button

@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import createError from "http-errors";
 import Course from "../models/course.model";
 import User from "../models/user.model";
+import bcrypt from "bcryptjs";
 
 const id = "63aaaf7dbe355f57283b0600";
 
@@ -39,6 +40,97 @@ const getCourseLearn = async (req, res) => {
 
 const getFavoriteCourse = async (req, res) => {
   res.render("vwStudentProfile/favorite_courses");
+};
+
+const updatePassword = async (req, res, next) => {
+  const id = "63aaaf7dbe355f57283b0600";
+  // const user = await User.findOne({ _id: req.user.userId });
+
+  const user = await User.findById({ _id: id }).lean();
+  const { currentPassword, newPassword, rePassword } = req.body;
+
+  console.log(currentPassword, newPassword, rePassword);
+  if (!newPassword || !currentPassword) {
+    res.render("vwStudentProfile/account_security", {
+      notif: "Input validation failed",
+    });
+  } else {
+    //compare password
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isPasswordCorrect) {
+      res.render("vwStudentProfile/account_security", {
+        notif: "Wrong current password ",
+      });
+    } else if (newPassword !== rePassword) {
+      res.render("vwStudentProfile/account_security", {
+        notif: "Re-type password incorrect",
+      });
+    } else {
+      //Hashing password
+      const salt = await bcrypt.genSalt(10);
+      const passwordHashed = await bcrypt.hash(newPassword, salt);
+      const updatePassword = {
+        password: passwordHashed,
+      };
+      const userUpdate = await User.findByIdAndUpdate(
+        {
+          _id: user._id,
+        },
+        updatePassword,
+        { new: true, runValidators: true }
+      );
+      res.redirect("/student/account_security");
+    }
+  }
+};
+
+const changeEmail = async (req, res) => {
+  const id = "63aaaf7dbe355f57283b0600";
+  // const user = await User.findOne({ _id: req.user.userId });
+  const user = await User.findById({ _id: id }).lean();
+
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.render("vwStudentProfile/profile", {
+      notif: "Input validation failed",
+      user,
+      name: user.firstName + " " + user.lastName,
+    });
+  } else {
+    //compare password
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      res.render("vwStudentProfile/profile", {
+        notif: "Wrong current password ",
+        user,
+        name: user.firstName + " " + user.lastName,
+      });
+    } else {
+      const changeEmail = {
+        email: email,
+      };
+      console.log(changeEmail);
+      const userUpdate = await User.findByIdAndUpdate(
+        {
+          _id: user._id,
+        },
+        changeEmail,
+        { new: true, runValidators: true }
+      );
+
+      res.render("vwStudentProfile/profile", {
+        notif: "Complete",
+        user: userUpdate,
+        name: userUpdate.firstName + " " + userUpdate.lastName,
+      });
+
+      console.log(userUpdate);
+    }
+  }
 };
 
 // {{URL}}/student/courses
@@ -174,6 +266,8 @@ export {
   getCourseLearn,
   getFavoriteCourse,
   updateProfile,
+  updatePassword,
+  changeEmail,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

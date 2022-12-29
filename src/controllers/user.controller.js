@@ -17,9 +17,7 @@ const updatePassword = async (req, res) => {
   // const user = await User.findOne({ _id: req.user.userId });
   const user = await User.findById({ _id: id }).lean();
   const { currentPassword, newPassword } = req.body;
-
   console.log(currentPassword, newPassword);
-
   if (!newPassword || !currentPassword) {
     throw createError.BadRequest("Please enter new password, current password");
     console.log("Bad request");
@@ -27,8 +25,8 @@ const updatePassword = async (req, res) => {
     //compare password
     const isPasswordCorrect = await user.comparePassword(currentPassword);
     if (!isPasswordCorrect) {
-      console.log("invalid");
       throw create.Unauthorized("Invalid password credentials");
+      console.log("invalid");
     } else {
       console.log("valid");
       //Hashing password
