@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Topic from "./topic.model"
+import Topic from "./topic.model";
 const CourseSchema = new mongoose.Schema(
   {
     //required: name, typeOf
@@ -18,12 +18,12 @@ const CourseSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    // status: {
-    //     type: String,
-    //     enum: ['in progress', 'completed'],
-    //     default: 'in progress',
-    //     trim: true,
-    // },
+    status: {
+      type: String,
+      enum: ["in progress", "completed"],
+      default: "in progress",
+      trim: true,
+    },
     image: {
       type: String,
       default: "",
@@ -45,7 +45,7 @@ const CourseSchema = new mongoose.Schema(
       default: 0,
       min: [0, "Rating must be above 0.0"],
       max: [5, "Rating must be below 5.0"],
-      set: (val) => Math.round(val * 10) / 10,
+      set: val => Math.round(val * 10) / 10,
     },
     price: {
       type: Number,
@@ -102,8 +102,8 @@ CourseSchema.pre("deleteOne", function (next) {
       next(err);
     }
     next();
-  })
-})
+  });
+});
 export default mongoose.model("Course", CourseSchema);
 
 /*

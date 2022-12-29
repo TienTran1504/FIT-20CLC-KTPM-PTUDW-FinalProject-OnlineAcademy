@@ -122,23 +122,87 @@ const changeEmail = async (req, res) => {
         { new: true, runValidators: true }
       );
 
-      res.render("vwStudentProfile/profile", {
-        notif: "Complete",
-        user: userUpdate,
-        name: userUpdate.firstName + " " + userUpdate.lastName,
-      });
+      const userCheck = await User.findById({ _id: id }).lean();
 
-      console.log(userUpdate);
+      res.render("vwStudentProfile/profile", {
+        notif: "Successfully updated",
+        user: userCheck,
+        name: userCheck.firstName + " " + userCheck.lastName,
+      });
     }
+  }
+};
+
+const addWatchList = async (req, res, next) => {
+  const getUser = await User.findById({ _id: req.user.userId });
+  const { courseId } = req.params;
+  const course = await Course.findOne({ _id: courseId });
+  const checkCourseExists = getUser.watchList.some(watch => {
+    return watch._id === courseId;
+  });
+
+  if (course === null) {
+    return next(createError(404, "Not found this course with id " + courseId));
+  } else if (checkCourseExists) {
+    return next(
+      createError(
+        406,
+        `Already have a course with id ${courseId} in the student favorite course's list`
+      )
+    );
+  } else {
+    getUser.watchList.push(courseId);
+
+    const userUpdate = await User.findByIdAndUpdate(
+      {
+        _id: getUser._id,
+      },
+      {
+        watchList: getUser.watchList,
+      },
+      { new: true, runValidators: true }
+    );
+  }
+};
+
+const addCourseList = async (req, res, next) => {
+  const getUser = await User.findById({ _id: req.user.userId });
+  const { courseId } = req.params;
+  const course = await Course.findOne({ _id: courseId });
+  const checkCourseExists = getUser.courseList.some(watch => {
+    return watch._id === courseId;
+  });
+
+  if (course === null) {
+    return next(createError(404, "Not found this course with id " + courseId));
+  } else if (checkCourseExists) {
+    return next(
+      createError(
+        406,
+        `Already have a course with id ${courseId} in the student course's list`
+      )
+    );
+  } else {
+    getUser.courseList.push(courseId);
+
+    const userUpdate = await User.findByIdAndUpdate(
+      {
+        _id: getUser._id,
+      },
+      {
+        courseList: getUser.courseList,
+      },
+      { new: true, runValidators: true }
+    );
   }
 };
 
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
   // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
-  // res
-  //   .status(StatusCodes.OK)
-  //   .json({ id: user._id, name: user.name, courseList: user.courseList });
+
+  const id = "63aaaf7dbe355f57283b0600";
+  const user = await User.findById({ _id: id }).lean(); // lấy ra đúng user đang login
 };
 
 // {{URL}}/student/courses/:courseId

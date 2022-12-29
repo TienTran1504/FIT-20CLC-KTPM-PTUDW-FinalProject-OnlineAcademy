@@ -25,8 +25,8 @@ const updatePassword = async (req, res) => {
     //compare password
     const isPasswordCorrect = await user.comparePassword(currentPassword);
     if (!isPasswordCorrect) {
-      throw create.Unauthorized("Invalid password credentials");
       console.log("invalid");
+      throw create.Unauthorized("Invalid password credentials");
     } else {
       console.log("valid");
       //Hashing password

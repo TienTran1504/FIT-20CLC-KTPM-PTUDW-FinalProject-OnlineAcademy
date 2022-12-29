@@ -50,6 +50,7 @@
               >Favorite course</a>
             </div>
           </div>
+          {{log user}}
           {{log notif}}
           <div class="col-9 h-100">
             <div class="tab-content" id="nav-tabContent">
@@ -116,7 +117,7 @@
                                         type="text"
                                         name="email"
                                         class="form-control"
-                                        value={{user.email}}
+                                        value="{{user.email}}"
                                         placeholder="Your email address"
                                       />
                                     </div>
