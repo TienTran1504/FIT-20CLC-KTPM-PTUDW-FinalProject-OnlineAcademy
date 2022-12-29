@@ -9,7 +9,7 @@ const getAllCourses = async (req, res) => {
   const courses = await Course.find({}).sort("createdAt");
   let sortedCourses = [...courses];
   if (search) {
-    sortedCourses = sortedCourses.filter((course) => {
+    sortedCourses = sortedCourses.filter(course => {
       return course.name.startsWith(search);
     });
   }
@@ -42,7 +42,10 @@ const getCourse = async (req, res) => {
 };
 // {{URL}}/courses
 
-export { getAllCourses, getCourse };
+const viewLecture = async (req, res) => {
+  res.render("vwLectureContent/content");
+};
+export { getAllCourses, getCourse, viewLecture };
 
 /* 
 main flow:

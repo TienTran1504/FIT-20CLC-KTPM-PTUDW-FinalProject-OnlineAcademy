@@ -1,10 +1,15 @@
 import express from "express";
 const coursesRouter = express.Router();
 
-import { getAllCourses, getCourse } from "../controllers/course.controller";
+import {
+  getAllCourses,
+  getCourse,
+  viewLecture,
+} from "../controllers/course.controller";
 
 coursesRouter.route("/").get(getAllCourses);
 // coursesRouter.route("/:id").get(getCourse);
 coursesRouter.route("/test").get(getCourse);
+coursesRouter.route("/learn/lecture/test").get(viewLecture);
 
 export default coursesRouter;

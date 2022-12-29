@@ -1,0 +1,320 @@
+.main-lecture-content {
+    margin-top: 5rem;
+}
+
+.heading-lecture .navbar {
+    padding: 0.3rem 1rem;
+}
+
+.heading-lecture .name-course {
+    border-left: 1px solid #3E4143;
+    margin: 1rem 0;
+    padding-left: 1rem;
+}
+
+.container-lecture .main-content {
+    display: flex;
+}
+
+.main-content .block-video .heading-lecture {
+    padding: 2rem 5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.accordion-panel .sticky-panel {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    right: 0;
+    /* height: 100%; */
+}
+
+.accordion-panel .card div:hover {
+    cursor: pointer;
+}
+
+.accordion-panel .header-course {
+    padding: 1rem;
+    border: 2px solid #F7F7F7;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.accordion-panel .card-content {
+    display: block;
+}
+
+.accordion-panel .accordion-course {
+    display: flex;
+    font-size: 1rem;
+}
+
+.accordion-panel .accordion-course .icon {
+    margin: auto;
+    font-size: 0.8rem;
+}
+
+.accordion-panel .block-title {
+    width: 100%;
+    padding-left: 0.3rem;
+}
+
+.btn-list-course {
+    width: 100%;
+    border: 0;
+    background-color: #f7f7f7;
+}
+
+.accordion-panel .course-title {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 0.5rem 1.25rem !important;
+}
+
+.card-body .block-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.card-body .block-list li {
+    margin: 0.5rem 0;
+}
+
+.card-body .section-previewable {
+    display: flex;
+}
+
+.card-body .section-previewable .icon-item-content {
+    margin: auto;
+}
+
+.card-body .section-previewable .block-list-item-content {
+    width: 100%;
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    font-weight: 490;
+}
+
+.section-previewable input:hover {
+    cursor: pointer;
+}
+
+.block-list-item-content .name-content {
+    padding-bottom: 0.75rem;
+}
+
+.btn-item-course {
+    width: 100%;
+    border: 0;
+    background-color: #fff;
+}
+
+.link-course {
+    color: darkslateblue;
+    text-decoration: underline;
+}
+
+.block-list-item-content .btn-hidden:hover {
+    cursor: default;
+}
+
+.block-list-item-content .review-time span {
+    padding-right: 0.5rem;
+}
+
+.main-rating {
+    margin-left: 5rem;
+    margin-top: 5rem;
+}
+
+.main-rating .main-title span {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.main-rating .main-title .fa-star {
+    font-size: 1.2rem;
+    color: #e59819;
+}
+
+.main-rating .main-title .fa-circle {
+    font-size: 0.5rem;
+    color: #6a6f73;
+}
+
+.content-rating .review-container {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #d1d7dc;
+    padding-bottom: 2rem;
+}
+
+/* @media (min-width: 37.56em) {
+    .content-rating .review-container {
+      width: calc(50% - (1rem / 2));
+    }
+  } */
+
+.review-container .review-heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.review-heading .review-profile {
+    display: flex;
+}
+
+.review-profile .block-img {
+    margin: auto;
+}
+
+.review-profile .block-img img {
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.review-profile .review-infomation {
+    padding-left: 1rem;
+}
+
+.review-profile .review-infomation h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.review-profile .review-infomation i {
+    font-size: 0.8rem !important;
+}
+
+.review-profile .review-infomation span {
+    font-size: 0.9rem;
+}
+
+.review-infomation .week {
+    color: #6a6f73;
+}
+
+.review-heading .popper .btn {
+    background-color: #52ab98;
+    border: 1px solid #fff;
+}
+
+.popper .dropdown-menu {
+    min-width: 5rem;
+}
+
+.popper .dropdown-item {
+    padding: 0 1rem;
+    font-weight: bold;
+}
+
+.content-rating .rewiew-rating {
+    display: flex;
+    justify-content: space-between;
+    width: 9rem;
+    margin-top: 1rem;
+}
+
+.rewiew-rating .help {
+    font-size: 0.8rem;
+    color: #6a6f73;
+}
+
+.rewiew-rating i {
+    font-size: 1.3rem;
+    margin-top: 0.2rem;
+}
+
+.rewiew-rating i:hover {
+    cursor: pointer;
+}
+
+.rating_circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 70px;
+    border: 1px none;
+    font-size: 35px;
+}
+
+.rating_text {
+    margin-top: 38px;
+}
+
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+    font-size: 20px;
+    letter-spacing: 5px;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #000000;
+}
+
+.dark {
+    background-color: #000000;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+}
+
+
+.rating>input {
+    display: none;
+}
+
+.rating>label {
+    position: relative;
+    width: 1.1em;
+    font-size: 2rem;
+    color: #FFD700;
+    cursor: pointer;
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0;
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important;
+}
+
+.rating>input:checked~label:before {
+    opacity: 1;
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4;
+}

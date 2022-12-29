@@ -45,3 +45,20 @@
 .main-content-student .list-group-item {
   background-color: #f2f2f2;
 }
+
+.email-input-block {
+  display: flex;
+}
+
+.email-input-block .btn-email {
+  padding: 0 0.1rem;
+  margin: 0;
+  border-color: #52ab98;
+  font-size: 2.4rem;
+  color: #fff;
+  background-color: #52ab98;
+}
+
+.email-input-block .form-row {
+  margin-bottom: 1rem;
+}
