@@ -11,7 +11,7 @@ import {
 accountRouter.route("/register").get(formRegister);
 accountRouter.route("/register").post(addAccount);
 accountRouter.route("/login").get(formLogin);
-accountRouter.route("/register").post(checkLogin);
+accountRouter.route("/login").post(checkLogin);
 accountRouter.route("/logout").get(logout);
 
 export default accountRouter;

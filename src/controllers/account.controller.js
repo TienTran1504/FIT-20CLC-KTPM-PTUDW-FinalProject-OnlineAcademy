@@ -48,8 +48,7 @@ const addAccount = async (req, res) => {
 
 const checkLogin = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username }).lean();
-
+  const user = await User.findOne({ email: username }).lean();
   if (!user) {
     res.render("vwAccount/login", {
       custom_style: "login.css",
@@ -57,20 +56,20 @@ const checkLogin = async (req, res) => {
       err_message: "Invalid username or password",
     });
   }
-  if (await bcrypt.compare(password, user.password)) {
+  const checkLogin = await bcrypt.compare(password, user.password)
+  if (!checkLogin) {
     res.render("vwAccount/login", {
       custom_style: "login.css",
       layout: false,
       err_message: "Invalid username or password",
     });
   }
-
-  req.session.auth = true;
-  req.session.authUser = user;
-
-  res.redirect("/");
-
-  //res.redirect("vwStudentProfile/profile")
+  else {
+    req.session.auth = true;
+    req.session.authUser = user;
+    console.log("login success")
+    res.redirect("/");
+  }
 };
 
 const logout = async (req, res) => {
