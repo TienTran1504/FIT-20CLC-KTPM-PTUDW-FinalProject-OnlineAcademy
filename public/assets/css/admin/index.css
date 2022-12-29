@@ -40,3 +40,7 @@ td {
   background-color: #52ab98;
   border-color: transparent;
 }
+
+#btn-back-to-top {
+  display: none !important;
+}

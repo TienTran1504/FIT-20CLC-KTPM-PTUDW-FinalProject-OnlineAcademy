@@ -6,3 +6,6 @@
   background-color: #2b6777;
   border-color: transparent;
 }
+#btn-back-to-top {
+  display: none !important;
+}

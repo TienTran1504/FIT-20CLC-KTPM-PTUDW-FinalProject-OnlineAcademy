@@ -60,7 +60,8 @@
         {{#each LanguageList}}
           <a class="menu-item" href="/categories?language={{name}}">
             <img class="menu-category-image" src="{{image}}" alt="" />
-            <p class="category-name">{{name}}</p>
+            <p class="language-name">{{name}}</p>
+            <p class="language-student">({{numOfStudents}} students)</p>
           </a>
         {{/each}}
       </div>
@@ -79,7 +80,7 @@
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
             </div>
-            <b>{{name}}</b>
+            <b class="course-name">{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
             <div style="display: flex;">
               <p class="sub-info-item">{{CourseViews}} views</p>
@@ -128,7 +129,7 @@
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
             </div>
-            <b>{{name}}</b>
+            <b class="course-name">{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
             <div style="display: flex;">
               <p class="sub-info-item">{{CourseViews}} views</p>
@@ -177,7 +178,7 @@
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
             </div>
-            <b>{{name}}</b>
+            <b class="course-name">{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
             <div style="display: flex;">
               <p class="sub-info-item">{{CourseViews}} views</p>
