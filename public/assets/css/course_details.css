@@ -317,3 +317,88 @@
 .rewiew-rating i:hover {
   cursor: pointer;
 }
+
+.sidebar-container-model {
+  position: absolute;
+  top: 8rem;
+  right: 7rem;
+  width: 24.2rem;
+  z-index: 1;
+  border-bottom: 1px solid #d1d7dc;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+  background-color: #fff;
+}
+
+.sidebar-container-model .main-content-model {
+  padding: 0.1rem;
+}
+
+.sidebar-container-model .block-img img {
+  width: 24rem;
+  height: 13.5rem;
+}
+
+.sidebar-container-model .block-content {
+  margin-left: 1rem;
+}
+
+.sidebar-container-model .title-course {
+  width: 21rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.sidebar-container-model .btn-course button:hover {
+  background-color: #C8D8E4;
+}
+
+.sidebar-container-model .btn-course .btn-buy {
+  height: 3rem;
+  width: 18.5rem;
+  padding: 0;
+  background-color: #52AB98;
+  border-color: #52AB98;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.sidebar-container-model .btn-course .btn-like {
+  height: 3rem;
+  width: 3rem;
+  background-color: #52AB98;
+  border-color: #52AB98;
+}
+
+.sidebar-container-model .desciption-course {
+  margin-top: 1rem;
+}
+
+.sidebar-container-model .desciption-course .title-des {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sidebar-container-model .desciption-course ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.block-list-items {
+  display: flex;
+  font-size: 1rem;
+  padding-left: 0.1rem;
+}
+
+.block-list-items .item-icon {
+  width: 1rem;
+  text-align: center;
+  padding-top: 0.3rem;
+}
+
+.block-list-items .item-content {
+  padding-left: 1rem;
+  font-size: 0.9rem;
+}

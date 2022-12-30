@@ -5,8 +5,8 @@ import {
   getProfile,
   getPhoto,
   getAccountSecurity,
-  getCourseLearn,
-  getFavoriteCourse,
+  getCourseList,
+  getCourseFavorite,
   updateProfile,
   updatePassword,
   changeEmail,
@@ -18,8 +18,8 @@ studentRouter
   .route("/account_security")
   .get(getAccountSecurity)
   .post(updatePassword);
-studentRouter.route("/course_learn").get(getCourseLearn);
-studentRouter.route("/favorite_course").get(getFavoriteCourse);
+studentRouter.route("/course_learn").get(getCourseList);
+studentRouter.route("/favorite_course").get(getCourseFavorite);
 studentRouter.route("/update_profile/post").post(updateProfile);
 studentRouter.route("/change_email/post").post(changeEmail);
 // studentRouter.route("/updateprofile").post(updateProfile);

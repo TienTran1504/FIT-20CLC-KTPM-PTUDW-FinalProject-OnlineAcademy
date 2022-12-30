@@ -171,7 +171,47 @@
                         <button class="btn course-btn">Learn course</button>
                       </div>
                     </div>
-                    <div class=""></div>
+                  </div>
+                  <div class="block-pagination">
+                    {{#if havePagination}}
+                      <ul class="pagination">
+                        {{#if firstPage}}
+                          <li class="page-item disabled">
+                            <span class="page-link">Previous</span>
+                          </li>
+                        {{else}}
+                          <li class="page-item">
+                            <a
+                              class="page-link"
+                              href="{{prevPage}}"
+                            >Previous</a>
+                          </li>
+                        {{/if}}
+                        {{#each this.pageNumbers}}
+                          {{#if isCurrent}}
+                            <li class="page-item active" aria-current="page">
+                              <span class="page-link">{{value}}</span>
+                            </li>
+                          {{else}}
+                            <li class="page-item">
+                              <a
+                                class="page-link"
+                                href="?page={{value}}"
+                              >{{value}}</a>
+                            </li>
+                          {{/if}}
+                        {{/each}}
+                        {{#if lastPage}}
+                          <li class="page-item disabled">
+                            <span class="page-link">Next</span>
+                          </li>
+                        {{else}}
+                          <li class="page-item">
+                            <a class="page-link" href="{{nextPage}}">Next</a>
+                          </li>
+                        {{/if}}
+                      </ul>
+                    {{/if}}
                   </div>
                 </div>
               </div>

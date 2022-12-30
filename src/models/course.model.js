@@ -71,7 +71,6 @@ const CourseSchema = new mongoose.Schema(
       ref: "CourseLanguage",
       required: [true, "Please provide language name"],
     },
-
     categoryId: {
       type: mongoose.Types.ObjectId,
       ref: "CourseCategory",

@@ -15,31 +15,37 @@ const getProfile = async (req, res) => {
   });
 };
 
-const updateProfile = async (req, res) => {
-  const { firstname, lastname, gender } = req.body;
-  const updateUser = await User.findByIdAndUpdate(
-    { _id: id },
-    { firstName: firstname, lastName: lastname, gender: gender },
-    { new: true, runValidators: true }
-  );
+const updateProfile = async (req, res, next) => {
+  const { firstname, lastname, gender, password } = req.body;
+  const getUser = await User.findById({ _id: id });
+
+  if (!firstname || !lastname || !gender || !password) {
+    return next(createError(400, "Invalid input information"));
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, getUser.password);
+  if (!isPasswordCorrect) {
+    return next(createError(400, "Incorrect password"));
+  } else {
+    const updateUser = await User.findByIdAndUpdate(
+      { _id: id },
+      { firstName: firstname, lastName: lastname, gender: gender },
+      { new: true, runValidators: true }
+    );
+  }
   res.redirect("/student");
-  console.log(updateUser);
 };
 
 const getPhoto = async (req, res) => {
-  res.render("vwStudentProfile/photo");
+  const getUser = await User.findById({ _id: id });
+
+  res.render("vwStudentProfile/photo", {
+    image: getUser.image,
+  });
 };
 
 const getAccountSecurity = async (req, res) => {
   res.render("vwStudentProfile/account_security");
-};
-
-const getCourseLearn = async (req, res) => {
-  res.render("vwStudentProfile/courses_learn");
-};
-
-const getFavoriteCourse = async (req, res) => {
-  res.render("vwStudentProfile/favorite_courses");
 };
 
 const updatePassword = async (req, res, next) => {
@@ -49,7 +55,6 @@ const updatePassword = async (req, res, next) => {
   const user = await User.findById({ _id: id }).lean();
   const { currentPassword, newPassword, rePassword } = req.body;
 
-  console.log(currentPassword, newPassword, rePassword);
   if (!newPassword || !currentPassword) {
     res.render("vwStudentProfile/account_security", {
       notif: "Input validation failed",
@@ -142,7 +147,7 @@ const addWatchList = async (req, res, next) => {
   });
 
   if (course === null) {
-    return next(createError(404, "Not found this course with id " + courseId));
+    return next(createError(400, "Not found this course with id " + courseId));
   } else if (checkCourseExists) {
     return next(
       createError(
@@ -165,6 +170,68 @@ const addWatchList = async (req, res, next) => {
   }
 };
 
+// {{URL}}/student/courses
+const getCourseFavorite = async (req, res) => {
+  // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+
+  const id = "63aaaf7dbe355f57283b0600";
+  const user = await User.findById({ _id: id }).lean(); // lấy ra đúng user đang login
+  const getCoursesId = user.watchList;
+  const limit = 6;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
+
+  let listCourses = [];
+  getCoursesId.forEach(async idCourse => {
+    var course = await Course.findById(idCourse);
+    if (course !== null) {
+      listCourses = [...listCourses, course];
+    }
+  });
+  const total = listCourses.length;
+  const nPages = Math.ceil(total / limit);
+  listCourses = listCourses.slice(offset, offset + limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage),
+    });
+  }
+
+  res.render("vwStudentProfile/favorite_courses", {
+    length: getCoursesId.length,
+    courses: listCourses,
+    empty: listCourses.length === 0,
+    havePagination: getCoursesId.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
+  });
+};
+
+const removeCourseInWatchList = async (req, res, next) => {
+  const getUser = await User.findById({ _id: id });
+  let watchList = getUser.watchList;
+  const idCourse = req.body.id;
+  const index = watchList.findIndex(watchId => watchId === idCourse);
+  watchList.splice(index, 1);
+  const userUpdate = await User.findByIdAndUpdate(
+    {
+      _id: getUser._id,
+    },
+    {
+      watchList,
+    },
+    { new: true, runValidators: true }
+  );
+  res.redirect("/student/favorite_course");
+};
+
 const addCourseList = async (req, res, next) => {
   const getUser = await User.findById({ _id: req.user.userId });
   const { courseId } = req.params;
@@ -174,7 +241,7 @@ const addCourseList = async (req, res, next) => {
   });
 
   if (course === null) {
-    return next(createError(404, "Not found this course with id " + courseId));
+    return next(createError(400, "Not found this course with id " + courseId));
   } else if (checkCourseExists) {
     return next(
       createError(
@@ -203,8 +270,43 @@ const getCourseList = async (req, res) => {
 
   const id = "63aaaf7dbe355f57283b0600";
   const user = await User.findById({ _id: id }).lean(); // lấy ra đúng user đang login
-};
+  const getCoursesId = user.courseList;
+  const limit = 6;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
 
+  let listCourses = [];
+  getCoursesId.forEach(async idCourse => {
+    var course = await Course.findById(idCourse);
+    if (course !== null) {
+      listCourses = [...listCourses, course];
+    }
+  });
+  const total = listCourses.length;
+  const nPages = Math.ceil(total / limit);
+  listCourses = listCourses.slice(offset, offset + limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage),
+    });
+  }
+
+  res.render("vwStudentProfile/courses_learn", {
+    length: getCoursesId.length,
+    courses: listCourses,
+    empty: listCourses.length === 0,
+    havePagination: getCoursesId.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
+  });
+};
 // {{URL}}/student/courses/:courseId
 const addCourse = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
@@ -327,8 +429,8 @@ export {
   getProfile,
   getPhoto,
   getAccountSecurity,
-  getCourseLearn,
-  getFavoriteCourse,
+  getCourseList,
+  getCourseFavorite,
   updateProfile,
   updatePassword,
   changeEmail,
