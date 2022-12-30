@@ -8,10 +8,10 @@ import {
   logout,
 } from "../controllers/account.controller.js";
 
-accountRouter.route("/register").get(formRegister);
-accountRouter.route("/register").post(addAccount);
-accountRouter.route("/login").get(formLogin);
-accountRouter.route("/login").post(checkLogin);
+accountRouter.route("/register").get(formRegister).post(addAccount);
+//accountRouter.route("/register");
+accountRouter.route("/login").get(formLogin).post(checkLogin);
+//accountRouter.route("/login").post(checkLogin);
 accountRouter.route("/logout").get(logout);
 
 export default accountRouter;
