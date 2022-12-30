@@ -18,12 +18,20 @@ const LanguageList = [
   {
     name: "ReactJS",
     image: "https://codelearn.io/Upload/Blog/react-js-co-ban-phan-1-63738082145.3856.jpg",
-    courseList: [{ studentList: [1, 1, 1, 1, 1, 1, 1, 1] }, { studentList: [1, 1, 1] }],
+    courseList: [
+      {
+        studentList: [
+          { id: 1, createdAt: new Date("2022-03-25") },
+          { id: 2, createdAt: new Date("2022-12-29") },
+        ],
+      },
+      { studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] },
+    ],
   },
   {
     name: "AngularJS",
     image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
-    courseList: [{ studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] }],
+    courseList: [{ studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] }],
   },
   {
     name: "VueJS",
@@ -34,8 +42,13 @@ const LanguageList = [
     name: "React Native",
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
     courseList: [
-      { studentList: [1, 1, 1, 1, 1] },
-      { studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
+      { studentList: [{ id: 1, createdAt: new Date("2022-12-30") }] },
+      {
+        studentList: [
+          { id: 1, createdAt: new Date("2022-12-29") },
+          { id: 2, createdAt: new Date("2022-12-29") },
+        ],
+      },
     ],
   },
   {
@@ -189,14 +202,16 @@ const renderHome = async (req, res) => {
   var sortedLangList = [];
 
   sortedLangList = LanguageList.map((lang) => {
-    var sum = 0;
+    var sumOfStudents = 0;
     lang.courseList.forEach((course) => {
-      sum += course.studentList.length;
+      course.studentList.forEach((student) => {
+        if (dateDiffInDays(student.createdAt, new Date()) <= 7) sumOfStudents++;
+      });
     });
 
     return {
       ...lang,
-      numOfStudents: numberWithCommas(sum),
+      numOfStudents: numberWithCommas(sumOfStudents),
     };
   });
 
@@ -231,7 +246,7 @@ const renderHome = async (req, res) => {
   res.render("home", {
     SliderList: SliderList,
     CatList: CatList,
-    LanguageList: sortedLangList,
+    LanguageList: sortedLangList.slice(0, 8),
     featuredCourses: featuredCourses
       .map((course) => {
         var CourseRatingVote = course.ratingList.length;

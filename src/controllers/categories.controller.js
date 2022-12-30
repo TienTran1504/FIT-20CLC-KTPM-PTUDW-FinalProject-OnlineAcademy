@@ -296,7 +296,8 @@ const search = async (req, res) => {
   const sort = req.query.sort || "";
 
   // const CatList = await CourseCategory.find().lean();
-  // const CourseList = await Course.find().lean();
+  // db.Course.createIndex({ name: "key", languageName: "key", categoryName: "key" });
+  // const CourseList = await Course.find({ $key: { $search: key } }).lean();
 
   var tmp = [...CourseList];
   var bestSellerCourse = tmp
@@ -328,14 +329,30 @@ const search = async (req, res) => {
 
   const total = courses.length;
   const nPages = Math.ceil(total / limit);
+  const pageLimit = 5;
 
   const pageNumbers = [];
-  for (let i = 1; i <= nPages; i++) {
-    pageNumbers.push({
-      value: i,
-      isCurrentPage: i === +curPage,
-    });
-  }
+  if (curPage < pageLimit - 1)
+    for (let i = 1; i <= nPages && i <= pageLimit; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else if (curPage <= nPages - parseInt(pageLimit / 2))
+    for (let i = curPage - parseInt(pageLimit / 2); i <= nPages && i <= curPage + parseInt(pageLimit / 2); i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else
+    for (let i = nPages - (pageLimit - 1); i <= nPages; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
 
   if (sort === "highest-rated")
     courses.sort(function (a, b) {
@@ -462,14 +479,30 @@ const getCategory = async (req, res) => {
 
   const total = courses.length;
   const nPages = Math.ceil(total / limit);
+  const pageLimit = 5;
 
   const pageNumbers = [];
-  for (let i = 1; i <= nPages; i++) {
-    pageNumbers.push({
-      value: i,
-      isCurrentPage: i === +curPage,
-    });
-  }
+  if (curPage < pageLimit - 1)
+    for (let i = 1; i <= nPages && i <= pageLimit; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else if (curPage <= nPages - parseInt(pageLimit / 2))
+    for (let i = curPage - parseInt(pageLimit / 2); i <= nPages && i <= curPage + parseInt(pageLimit / 2); i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else
+    for (let i = nPages - (pageLimit - 1); i <= nPages; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
 
   var currentPageURL = "categories?category=" + category + "&language=" + language + "&sort=" + sort + "&page=";
   var currentURL = "categories?category=" + category + "&language=" + language;
