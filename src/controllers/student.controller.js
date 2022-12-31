@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import createError from "http-errors";
 import Course from "../models/course.model";
 import User from "../models/user.model";
+import bcrypt from "bcryptjs";
 
 const id = "63aaaf7dbe355f57283b0600";
 
@@ -14,41 +15,298 @@ const getProfile = async (req, res) => {
   });
 };
 
-const updateProfile = async (req, res) => {
-  const { firstname, lastname, gender } = req.body;
-  const updateUser = await User.findByIdAndUpdate(
-    { _id: id },
-    { firstName: firstname, lastName: lastname, gender: gender },
-    { new: true, runValidators: true }
-  );
+const updateProfile = async (req, res, next) => {
+  const { firstname, lastname, gender, password } = req.body;
+  const getUser = await User.findById({ _id: id });
+
+  if (!firstname || !lastname || !gender || !password) {
+    return next(createError(400, "Invalid input information"));
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, getUser.password);
+  if (!isPasswordCorrect) {
+    return next(createError(400, "Incorrect password"));
+  } else {
+    const updateUser = await User.findByIdAndUpdate(
+      { _id: id },
+      { firstName: firstname, lastName: lastname, gender: gender },
+      { new: true, runValidators: true }
+    );
+  }
   res.redirect("/student");
-  console.log(updateUser);
 };
 
 const getPhoto = async (req, res) => {
-  res.render("vwStudentProfile/photo");
+  const getUser = await User.findById({ _id: id });
+
+  res.render("vwStudentProfile/photo", {
+    image: getUser.image,
+  });
 };
 
 const getAccountSecurity = async (req, res) => {
   res.render("vwStudentProfile/account_security");
 };
 
-const getCourseLearn = async (req, res) => {
-  res.render("vwStudentProfile/courses_learn");
+const updatePassword = async (req, res, next) => {
+  const id = "63aaaf7dbe355f57283b0600";
+  // const user = await User.findOne({ _id: req.user.userId });
+
+  const user = await User.findById({ _id: id }).lean();
+  const { currentPassword, newPassword, rePassword } = req.body;
+
+  if (!newPassword || !currentPassword) {
+    res.render("vwStudentProfile/account_security", {
+      notif: "Input validation failed",
+    });
+  } else {
+    //compare password
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isPasswordCorrect) {
+      res.render("vwStudentProfile/account_security", {
+        notif: "Wrong current password ",
+      });
+    } else if (newPassword !== rePassword) {
+      res.render("vwStudentProfile/account_security", {
+        notif: "Re-type password incorrect",
+      });
+    } else {
+      //Hashing password
+      const salt = await bcrypt.genSalt(10);
+      const passwordHashed = await bcrypt.hash(newPassword, salt);
+      const updatePassword = {
+        password: passwordHashed,
+      };
+      const userUpdate = await User.findByIdAndUpdate(
+        {
+          _id: user._id,
+        },
+        updatePassword,
+        { new: true, runValidators: true }
+      );
+      res.redirect("/student/account_security");
+    }
+  }
 };
 
-const getFavoriteCourse = async (req, res) => {
-  res.render("vwStudentProfile/favorite_courses");
+const changeEmail = async (req, res) => {
+  const id = "63aaaf7dbe355f57283b0600";
+  // const user = await User.findOne({ _id: req.user.userId });
+  const user = await User.findById({ _id: id }).lean();
+
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.render("vwStudentProfile/profile", {
+      notif: "Input validation failed",
+      user,
+      name: user.firstName + " " + user.lastName,
+    });
+  } else {
+    //compare password
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      res.render("vwStudentProfile/profile", {
+        notif: "Wrong current password ",
+        user,
+        name: user.firstName + " " + user.lastName,
+      });
+    } else {
+      const changeEmail = {
+        email: email,
+      };
+      console.log(changeEmail);
+      const userUpdate = await User.findByIdAndUpdate(
+        {
+          _id: user._id,
+        },
+        changeEmail,
+        { new: true, runValidators: true }
+      );
+
+      const userCheck = await User.findById({ _id: id }).lean();
+
+      res.render("vwStudentProfile/profile", {
+        notif: "Successfully updated",
+        user: userCheck,
+        name: userCheck.firstName + " " + userCheck.lastName,
+      });
+    }
+  }
+};
+
+const addWatchList = async (req, res, next) => {
+  const getUser = await User.findById({ _id: req.user.userId });
+  const { courseId } = req.params;
+  const course = await Course.findOne({ _id: courseId });
+  const checkCourseExists = getUser.watchList.some(watch => {
+    return watch._id === courseId;
+  });
+
+  if (course === null) {
+    return next(createError(400, "Not found this course with id " + courseId));
+  } else if (checkCourseExists) {
+    return next(
+      createError(
+        406,
+        `Already have a course with id ${courseId} in the student favorite course's list`
+      )
+    );
+  } else {
+    getUser.watchList.push(courseId);
+
+    const userUpdate = await User.findByIdAndUpdate(
+      {
+        _id: getUser._id,
+      },
+      {
+        watchList: getUser.watchList,
+      },
+      { new: true, runValidators: true }
+    );
+  }
+};
+
+// {{URL}}/student/courses
+const getCourseFavorite = async (req, res) => {
+  // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+
+  const id = "63aaaf7dbe355f57283b0600";
+  const user = await User.findById({ _id: id }).lean(); // lấy ra đúng user đang login
+  const getCoursesId = user.watchList;
+  const limit = 6;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
+
+  let listCourses = [];
+  getCoursesId.forEach(async idCourse => {
+    var course = await Course.findById(idCourse);
+    if (course !== null) {
+      listCourses = [...listCourses, course];
+    }
+  });
+  const total = listCourses.length;
+  const nPages = Math.ceil(total / limit);
+  listCourses = listCourses.slice(offset, offset + limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage),
+    });
+  }
+
+  res.render("vwStudentProfile/favorite_courses", {
+    length: getCoursesId.length,
+    courses: listCourses,
+    empty: listCourses.length === 0,
+    havePagination: getCoursesId.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
+  });
+};
+
+const removeCourseInWatchList = async (req, res, next) => {
+  const getUser = await User.findById({ _id: id });
+  let watchList = getUser.watchList;
+  const idCourse = req.body.id;
+  const index = watchList.findIndex(watchId => watchId === idCourse);
+  watchList.splice(index, 1);
+  const userUpdate = await User.findByIdAndUpdate(
+    {
+      _id: getUser._id,
+    },
+    {
+      watchList,
+    },
+    { new: true, runValidators: true }
+  );
+  res.redirect("/student/favorite_course");
+};
+
+const addCourseList = async (req, res, next) => {
+  const getUser = await User.findById({ _id: req.user.userId });
+  const { courseId } = req.params;
+  const course = await Course.findOne({ _id: courseId });
+  const checkCourseExists = getUser.courseList.some(watch => {
+    return watch._id === courseId;
+  });
+
+  if (course === null) {
+    return next(createError(400, "Not found this course with id " + courseId));
+  } else if (checkCourseExists) {
+    return next(
+      createError(
+        406,
+        `Already have a course with id ${courseId} in the student course's list`
+      )
+    );
+  } else {
+    getUser.courseList.push(courseId);
+
+    const userUpdate = await User.findByIdAndUpdate(
+      {
+        _id: getUser._id,
+      },
+      {
+        courseList: getUser.courseList,
+      },
+      { new: true, runValidators: true }
+    );
+  }
 };
 
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
   // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
-  // res
-  //   .status(StatusCodes.OK)
-  //   .json({ id: user._id, name: user.name, courseList: user.courseList });
-};
 
+  const id = "63aaaf7dbe355f57283b0600";
+  const user = await User.findById({ _id: id }).lean(); // lấy ra đúng user đang login
+  const getCoursesId = user.courseList;
+  const limit = 6;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
+
+  let listCourses = [];
+  getCoursesId.forEach(async idCourse => {
+    var course = await Course.findById(idCourse);
+    if (course !== null) {
+      listCourses = [...listCourses, course];
+    }
+  });
+  const total = listCourses.length;
+  const nPages = Math.ceil(total / limit);
+  listCourses = listCourses.slice(offset, offset + limit);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage),
+    });
+  }
+
+  res.render("vwStudentProfile/courses_learn", {
+    length: getCoursesId.length,
+    courses: listCourses,
+    empty: listCourses.length === 0,
+    havePagination: getCoursesId.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
+  });
+};
 // {{URL}}/student/courses/:courseId
 const addCourse = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
@@ -171,9 +429,11 @@ export {
   getProfile,
   getPhoto,
   getAccountSecurity,
-  getCourseLearn,
-  getFavoriteCourse,
+  getCourseList,
+  getCourseFavorite,
   updateProfile,
+  updatePassword,
+  changeEmail,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

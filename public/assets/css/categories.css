@@ -13,11 +13,11 @@
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-#sidebar ul li a {
+/* #sidebar ul li a {
   padding: 10px 0;
   display: block;
   color: black;
-}
+} */
 
 @media only screen and (max-width: 1100px) {
   #sidebar {
@@ -206,4 +206,32 @@ a:hover {
 .title-sort-contaner {
   display: flex;
   justify-content: space-between;
+}
+
+.language-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.course-number {
+  /* font-weight: 500;
+  background-color: rgb(191, 186, 186);
+  padding: 0 7px;
+  border-radius: 100%; */
+  color: gray;
+}
+
+.category,
+.category-container,
+.language-container {
+  margin-bottom: 10px;
+}
+
+ul {
+  margin-top: 10px;
+}
+
+.isActive {
+  color: #52ab98;
+  font-weight: bold;
 }

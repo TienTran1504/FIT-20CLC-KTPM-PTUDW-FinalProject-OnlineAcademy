@@ -60,7 +60,8 @@
         {{#each LanguageList}}
           <a class="menu-item" href="/categories?language={{name}}">
             <img class="menu-category-image" src="{{image}}" alt="" />
-            <p class="category-name">{{name}}</p>
+            <p class="language-name">{{name}}</p>
+            <p class="language-student">({{numOfStudents}} students registered in this week)</p>
           </a>
         {{/each}}
       </div>
@@ -69,7 +70,7 @@
 
   <div class="card text-left mx-auto border-0" style="width: 90%">
     <div class="card-body">
-      <h3 class="card-title"><b>Featured courses</b></h3>
+      <h3 class="card-title"><b>Most featured courses in this week</b></h3>
       <div class="menu-container">
         {{#each featuredCourses}}
           <div class="menu-item">
@@ -79,7 +80,7 @@
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
             </div>
-            <b>{{name}}</b>
+            <b class="course-name">{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
             <div style="display: flex;">
               <p class="sub-info-item">{{CourseViews}} views</p>
@@ -99,7 +100,7 @@
                 <span class="fa fa-star-o star"></span>
               {{/each}}
               <span
-                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                style="font-size: 14px; margin-bottom: 3px; color: gray; vertical-align: text-top"
               >({{CourseRatingVote}})</span>
             </div>
             <b style="margin-bottom: 5px;">{{price}}đ</b>
@@ -128,7 +129,7 @@
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
             </div>
-            <b>{{name}}</b>
+            <b class="course-name">{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
             <div style="display: flex;">
               <p class="sub-info-item">{{CourseViews}} views</p>
@@ -148,7 +149,7 @@
                 <span class="fa fa-star-o star"></span>
               {{/each}}
               <span
-                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                style="font-size: 14px; margin-bottom: 3px; color: gray; vertical-align: text-top"
               >({{CourseRatingVote}})</span>
             </div>
             <b style="margin-bottom: 5px;">{{price}}đ</b>
@@ -177,7 +178,7 @@
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
             </div>
-            <b>{{name}}</b>
+            <b class="course-name">{{name}}</b>
             <p class="sub-info-item">{{createdBy}}</p>
             <div style="display: flex;">
               <p class="sub-info-item">{{CourseViews}} views</p>
@@ -197,7 +198,7 @@
                 <span class="fa fa-star-o star"></span>
               {{/each}}
               <span
-                style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);"
+                style="font-size: 14px; margin-bottom: 3px; color: gray; vertical-align: text-top"
               >({{CourseRatingVote}})</span>
             </div>
             <b style="margin-bottom: 5px;">{{price}}đ</b>

@@ -18,27 +18,49 @@ const LanguageList = [
   {
     name: "ReactJS",
     image: "https://codelearn.io/Upload/Blog/react-js-co-ban-phan-1-63738082145.3856.jpg",
+    courseList: [
+      {
+        studentList: [
+          { id: 1, createdAt: new Date("2022-03-25") },
+          { id: 2, createdAt: new Date("2022-12-29") },
+        ],
+      },
+      { studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] },
+    ],
   },
   {
     name: "AngularJS",
     image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+    courseList: [{ studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] }],
   },
   {
     name: "VueJS",
     image: "https://segwitz.com/wp-content/uploads/2021/06/vuejs-development-malaysia.jpeg",
+    courseList: [],
   },
   {
     name: "React Native",
     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+    courseList: [
+      { studentList: [{ id: 1, createdAt: new Date("2022-12-30") }] },
+      {
+        studentList: [
+          { id: 1, createdAt: new Date("2022-12-29") },
+          { id: 2, createdAt: new Date("2022-12-29") },
+        ],
+      },
+    ],
   },
   {
     name: "Flutter",
     image:
       "https://dailysmarty-production.s3.amazonaws.com/uploads/post/img/7974/flutter-use-cases-mobile-app-development.jpeg",
+    courseList: [],
   },
   {
     name: "Kotlin",
     image: "https://images.viblo.asia/2185d41e-6e40-42ba-8464-201b818bee58.png",
+    courseList: [],
   },
 ];
 
@@ -177,6 +199,26 @@ const renderHome = async (req, res) => {
   // const LanguageList = await CourseLanguage.find().lean();
   // const CourseList = await Course.find().lean();
 
+  var sortedLangList = [];
+
+  sortedLangList = LanguageList.map((lang) => {
+    var sumOfStudents = 0;
+    lang.courseList.forEach((course) => {
+      course.studentList.forEach((student) => {
+        if (dateDiffInDays(student.createdAt, new Date()) <= 7) sumOfStudents++;
+      });
+    });
+
+    return {
+      ...lang,
+      numOfStudents: numberWithCommas(sumOfStudents),
+    };
+  });
+
+  sortedLangList.sort((a, b) => {
+    return b.numOfStudents - a.numOfStudents;
+  });
+
   const bestSellerCourse = [
     ...CourseList.sort(function (a, b) {
       return b.studentList.length - a.studentList.length;
@@ -204,7 +246,7 @@ const renderHome = async (req, res) => {
   res.render("home", {
     SliderList: SliderList,
     CatList: CatList,
-    LanguageList: LanguageList,
+    LanguageList: sortedLangList.slice(0, 8),
     featuredCourses: featuredCourses
       .map((course) => {
         var CourseRatingVote = course.ratingList.length;

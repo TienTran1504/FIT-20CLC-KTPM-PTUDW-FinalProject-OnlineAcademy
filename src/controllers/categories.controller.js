@@ -6,21 +6,54 @@ const CatList = [
     _id: 1,
     name: "Web",
     languageList: [
-      { _id: 1, name: "ReactJS" },
-      { _id: 2, name: "AngularJS" },
-      { _id: 3, name: "VueJS" },
+      { _id: 1, name: "ReactJS", courseList: [1, 1, 1, 1, 1, 1] },
+      { _id: 2, name: "AngularJS", courseList: [1, 1] },
+      { _id: 3, name: "VueJS", courseList: [] },
     ],
   },
   {
     _id: 2,
     name: "Mobile",
     languageList: [
-      { _id: 1, name: "React Native" },
-      { _id: 2, name: "Flutter" },
-      { _id: 3, name: "Kotlin" },
+      { _id: 1, name: "React Native", courseList: [1, 1, 1, 1] },
+      { _id: 2, name: "Flutter", courseList: [] },
+      { _id: 3, name: "Kotlin", courseList: [] },
     ],
   },
 ];
+
+// const LangList = [
+//   {
+//     _id: 1,
+//     name: "ReactJS",
+//     courseList: [1, 1, 1, 1, 1, 1],
+//   },
+//   {
+//     _id: 2,
+//     name: "AngularJS",
+//     courseList: [1, 1],
+//   },
+//   {
+//     _id: 3,
+//     name: "VueJS",
+//     courseList: [],
+//   },
+//   {
+//     _id: 4,
+//     name: "React Native",
+//     courseList: [1, 1, 1, 1],
+//   },
+//   {
+//     _id: 5,
+//     name: "Flutter",
+//     courseList: [],
+//   },
+//   {
+//     _id: 6,
+//     name: "Kotlin",
+//     courseList: [],
+//   },
+// ];
 
 const CourseList = [
   {
@@ -263,7 +296,8 @@ const search = async (req, res) => {
   const sort = req.query.sort || "";
 
   // const CatList = await CourseCategory.find().lean();
-  // const CourseList = await Course.find().lean();
+  // db.Course.createIndex({ name: "key", languageName: "key", categoryName: "key" });
+  // const CourseList = await Course.find({ $key: { $search: key } }).lean();
 
   var tmp = [...CourseList];
   var bestSellerCourse = tmp
@@ -295,14 +329,30 @@ const search = async (req, res) => {
 
   const total = courses.length;
   const nPages = Math.ceil(total / limit);
+  const pageLimit = 5;
 
   const pageNumbers = [];
-  for (let i = 1; i <= nPages; i++) {
-    pageNumbers.push({
-      value: i,
-      isCurrentPage: i === +curPage,
-    });
-  }
+  if (curPage < pageLimit - 1)
+    for (let i = 1; i <= nPages && i <= pageLimit; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else if (curPage <= nPages - parseInt(pageLimit / 2))
+    for (let i = curPage - parseInt(pageLimit / 2); i <= nPages && i <= curPage + parseInt(pageLimit / 2); i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else
+    for (let i = nPages - (pageLimit - 1); i <= nPages; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
 
   if (sort === "highest-rated")
     courses.sort(function (a, b) {
@@ -320,8 +370,17 @@ const search = async (req, res) => {
   var currentURL = "?key=" + key;
 
   res.render("vwCategories/index", {
-    style: "categories.css",
-    CatList: CatList,
+    CatList: CatList.map((cat) => {
+      return {
+        ...cat,
+        languageList: cat.languageList.map((lang) => {
+          return {
+            ...lang,
+            courseQuantity: numberWithCommas(lang.courseList.length),
+          };
+        }),
+      };
+    }),
     courses: courses
       .map((course) => {
         var CourseRatingVote = course.ratingList.length;
@@ -355,7 +414,7 @@ const search = async (req, res) => {
     currentURL: currentURL,
     currentPageURL: currentPageURL,
     hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
-    sort: sort === "highest-rated" ? "Highest rated" : "Lowest price",
+    sort: sort === "highest-rated" ? "Highest Rated" : "Lowest Price",
   });
 };
 
@@ -420,20 +479,48 @@ const getCategory = async (req, res) => {
 
   const total = courses.length;
   const nPages = Math.ceil(total / limit);
+  const pageLimit = 5;
 
   const pageNumbers = [];
-  for (let i = 1; i <= nPages; i++) {
-    pageNumbers.push({
-      value: i,
-      isCurrentPage: i === +curPage,
-    });
-  }
+  if (curPage < pageLimit - 1)
+    for (let i = 1; i <= nPages && i <= pageLimit; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else if (curPage <= nPages - parseInt(pageLimit / 2))
+    for (let i = curPage - parseInt(pageLimit / 2); i <= nPages && i <= curPage + parseInt(pageLimit / 2); i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
+  else
+    for (let i = nPages - (pageLimit - 1); i <= nPages; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrentPage: i === +curPage,
+      });
+    }
 
   var currentPageURL = "categories?category=" + category + "&language=" + language + "&sort=" + sort + "&page=";
   var currentURL = "categories?category=" + category + "&language=" + language;
 
   res.render("vwCategories/index", {
-    CatList: CatList,
+    CatList: CatList.map((cat) => {
+      return {
+        ...cat,
+        isActive: cat.name === category && language === "" ? true : false,
+        languageList: cat.languageList.map((lang) => {
+          return {
+            ...lang,
+            courseQuantity: numberWithCommas(lang.courseList.length),
+            isActive: lang.name === language ? true : false,
+          };
+        }),
+      };
+    }),
     category: category,
     language: language,
     courses: courses
@@ -467,7 +554,7 @@ const getCategory = async (req, res) => {
     noData: courses.length === 0 || curPage > nPages ? true : false,
     currentURL: currentURL,
     hasSort: sort === "highest-rated" || sort === "lowest-price" ? true : false,
-    sort: sort === "highest-rated" ? "Highest rated" : "Lowest price",
+    sort: sort === "highest-rated" ? "Highest Rated" : "Lowest Price",
   });
 };
 
