@@ -13,10 +13,12 @@ const CourseSchema = new mongoose.Schema(
     briefDescription: {
       type: String,
       trim: true,
+      default: ""
     },
     detailDescription: {
       type: String,
       trim: true,
+      default: ""
     },
     // status: {
     //     type: String,
@@ -71,7 +73,6 @@ const CourseSchema = new mongoose.Schema(
       ref: "CourseLanguage",
       required: [true, "Please provide language name"],
     },
-
     categoryId: {
       type: mongoose.Types.ObjectId,
       ref: "CourseCategory",
