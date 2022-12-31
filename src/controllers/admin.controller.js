@@ -432,10 +432,16 @@ const createCourseCategory = async function (req, res, next) {
   if (!req.body.CategoryName || !req.body.CategoryImage) {
     return next(createError(400, "Please provide category name, image"));
   } else {
-    const createCategory = await CourseCategory.create({
-      name: req.body.CategoryName,
-      image: req.body.CategoryImage,
-    });
+    const checkExistCategory = await CourseCategory.findOne({ name: req.body.CategoryName });
+    if (checkExistCategory) {
+      return next(createError(400, `Already have ${req.body.CategoryName} in database`));
+    }
+    else {
+      await CourseCategory.create({
+        name: req.body.CategoryName,
+        image: req.body.CategoryImage,
+      });
+    }
   }
   res.redirect("/admin/managecategory");
   // } else {
