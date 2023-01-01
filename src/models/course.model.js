@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Topic from "./topic.model";
+import Lecture from "./lecture.model";
 const CourseSchema = new mongoose.Schema(
   {
     //required: name, typeOf
@@ -83,7 +83,7 @@ const CourseSchema = new mongoose.Schema(
       ref: "CourseLanguage",
       required: [true, "Please provide category's id"],
     },
-    topic: {
+    lecture: {
       type: Array,
       default: [],
     },
@@ -98,7 +98,7 @@ const CourseSchema = new mongoose.Schema(
 
 CourseSchema.pre("deleteOne", function (next) {
   const courseID = this.getQuery()["_id"];
-  Topic.deleteMany({ createdIn: courseID }, function (err, result) {
+  Lecture.deleteMany({ createdIn: courseID }, function (err, result) {
     if (err) {
       next(err);
     }

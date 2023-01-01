@@ -4,6 +4,7 @@ import User from "../models/user.model";
 import CourseCategory from "../models/coursecategory.model";
 import CourseLanguage from "../models/courselanguage.model";
 import Course from "../models/course.model";
+import Lecture from "../models/lecture.model";
 
 const getInfo = async (req, res, next) => {
   req.session.authUser = await User.findOne({
@@ -139,16 +140,6 @@ const createCourse3 = async (req, res) => {
 
 //{{URL}}/courses
 const createCourse = async (req, res, next) => {
-  // const userCheck = await User.findOne({ _id: req.user.userId });
-  // if (userCheck.permission === "teacher") {
-  //   req.body.createdBy = req.user.userId;
-  //   const course = await Course.create({ ...req.body });
-  //   res.status(StatusCodes.CREATED).json({
-  //     course,
-  //   });
-  // } else {
-  //   throw createError.Unauthorized("User have no permission");
-  // }
   try {
     const cat = await CourseCategory.findOne({ name: req.session.createCourse.cat }).lean();
     const lang = await CourseLanguage.findOne({
@@ -197,28 +188,8 @@ const checkCourse = (req, res, next) => {
         req.session.currentCourse.image !== "") {
       req.session.currentCourse.info = true;
     }
-    if (req.session.currentCourse.pricing )
     next();  
   } catch (err) {
-    next(createError.InternalServerError(err.message));
-  }
-}
-
-const getCoursePricing = async (req, res, next) => {
-  try {
-    res.render("vwTeacher/vwUpdateCourse/pricing", {
-      course: req.session.currentCourse,
-      layout: "update_course",
-    })
-  } catch(err) {
-    next(createError.InternalServerError(err.message));
-  }
-}
-
-const updateCoursePricing = async (req, res, next) => {
-  try {
-
-  } catch(err) {
     next(createError.InternalServerError(err.message));
   }
 }
@@ -251,14 +222,26 @@ const updateCourseInfo = (req, res, next) => {
       if (err) {
         next(createError.InternalServerError(err.message));
       } else {
-        const updatedCourse = await Course.findOneAndUpdate({_id: req.body._id}, {
-          name: req.body.name,
-          briefDescription: req.body.briefDescription,
-          detailDescription: req.body.detailDescription,
-          image: fileName
-        }).lean();
-
-        req.session.currentCourse = updatedCourse;
+        if (fileName !== null) {
+          await Course.findOneAndUpdate({_id: req.body._id}, {
+            name: req.body.name,
+            briefDescription: req.body.briefDescription,
+            detailDescription: req.body.detailDescription,
+            price: parseInt(req.body.price),
+            image: fileName
+          }).lean();
+        }
+        else {
+          await Course.findOneAndUpdate({_id: req.body._id}, {
+            name: req.body.name,
+            briefDescription: req.body.briefDescription,
+            detailDescription: req.body.detailDescription,
+            price: parseInt(req.body.price),
+            image: fileName
+          }).lean();
+        }
+        
+        req.session.currentCourse = await Course.findById({_id: req.body._id});
 
         res.redirect('info');
       }
@@ -268,6 +251,50 @@ const updateCourseInfo = (req, res, next) => {
   }
 }
 
+const getCourseCurriculum = async (req, res, next) => {
+  const lectures = await Lecture.find({createdIn: req.session.currentCourse._id}).lean();
+  console.log(lectures);
+  res.render('vwTeacher/vwUpdateCourse/curriculum', {
+    user: req.session.authUser,
+    course: req.session.currentCourse,
+    lectures,
+    layout: "update_course",
+  })
+}
+
+const getViewCreateLecture = (req, res, next) => {
+  try {
+    res.render('vwTeacher/vwUpdateCourse/create_lecture', {
+      user: req.session.authUser,
+      course: req.session.currentCourse,
+      layout: "update_course",
+    });
+  } catch (err) {
+    next(createError.InternalServerError(err.message));
+  }
+}
+
+const createLecture = async (req, res, next) => {
+  try {
+    const lecture = await Lecture.create({
+      name: req.body.name,
+      description: req.body.description,
+      video: req.body.video,
+      createdIn: req.session.currentCourse._id,
+      createdBy: req.session.authUser._id
+    })
+
+    if (lecture) {
+      res.redirect('curriculum');
+    }
+    else {
+      next(createError.InternalServerError("Cannot create lecture"));
+      res.redirect('curriculum');
+    }
+  } catch (err) {
+    next(createError.InternalServerError(err.message));
+  }
+}
 // {{URL}}/courses/:id
 const updateCourse = async (req, res) => {
   const userCheck = await User.findOne({ _id: req.user.userId });
@@ -340,8 +367,9 @@ export {
   checkCourse,
   getCourseInfo,
   updateCourseInfo,
-  getCoursePricing,
-  updateCoursePricing,
+  getCourseCurriculum,
+  getViewCreateLecture,
+  createLecture,
   updateCourse,
   deleteCourse,
 };

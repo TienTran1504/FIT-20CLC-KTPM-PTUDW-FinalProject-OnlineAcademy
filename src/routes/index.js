@@ -14,7 +14,7 @@ export default function (app) {
   app.use("/admin", adminRouter);
   app.use("/courses", coursesRouter);
   app.use("/student", studentRouter);
-  app.use("/teacher", checkTeacher, teacherRouter);
+  app.use("/teacher", teacherRouter);
   app.use("/user", userRouter);
   app.use("/account", accountRouter);
   app.use("/categories", categoriesRouter);

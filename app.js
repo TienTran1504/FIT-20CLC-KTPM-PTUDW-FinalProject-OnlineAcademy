@@ -39,6 +39,9 @@ app.engine(
       isEmpty: function(value) {
         return value === "";
       },
+      isFree: function(value) {
+        return value === 0;
+      },
       checkTeacher: function (value) {
         return value === "Teacher"
       }

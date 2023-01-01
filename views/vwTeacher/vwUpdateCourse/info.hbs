@@ -41,35 +41,23 @@
     });
   </script>
 {{/section}}
-<div class="container-fluid" style="margin-top: 100px; margin-bottom: 10%;">
+<div class="container-fluid" style="margin-top: 100px; margin-bottom: 1%;">
   <div class="container">
     <div class="row">
       <nav class="col-2 bg-light sidebar">
         <ul class="nav flex-column">
           <li class="pt-5 nav-item">
             <a class="nav-link active" href="">
-              {{#if course.info}}
-              <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-              {{else}}
-              <i class="fa fa-circle-thin" aria-hidden="true"></i>
-              {{/if}} Infomation
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/teacher/course/{{course._id}}/pricing">
-              <i class="fa fa-circle-thin" aria-hidden="true"></i> 
-              Pricing
+              Infomation
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/teacher/course/{{course._id}}/curriculum">
-              <i class="fa fa-circle-thin" aria-hidden="true"></i> 
               Curriculum
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/teacher/course/{{course._id}}/rating_review">
-              <i class="fa fa-circle-thin" aria-hidden="true"></i> 
               Rating & Review
             </a>
           </li>
@@ -111,6 +99,23 @@
                       name="briefDescription"
                     />
                   </div>
+                </div>
+                
+                <div class="input-group form-group">
+                  <label class="h6" for="">Course pricing</label>
+                  <div class="input-group mb-3">
+                     <input
+                      type="number"
+                      class="form-control"
+                      min="0"
+                      max="1000"
+                      value="{{this.course.price}}"
+                      name="price"
+                    />
+                    <div class="input-group-append">
+                      <label class="input-group-text" for="pricing">$</label>
+                  </div>
+                </div>
                 </div>
                 <div class="input-group form-group">
                   <label class="h6" for="desc">Course description</label>
