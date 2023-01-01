@@ -56,7 +56,7 @@ const CourseSchema = new mongoose.Schema(
       default: 0,
     },
     //mỗi khi feedback sẽ lưu một object có id ,name, content
-    feedback: {
+    feedbackList: {
       type: Array,
       default: [],
     },

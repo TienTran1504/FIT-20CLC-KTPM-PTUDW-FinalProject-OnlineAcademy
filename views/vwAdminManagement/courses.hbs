@@ -74,7 +74,9 @@
                 <th scope="col">Name</th>
                 <th scope="col">Language</th>
                 <th scope="col">Category</th>
-                <th class="text-center" scope="col">Number Students</th>
+                <th class="text-center" scope="col">Students</th>
+                <th class="text-center" scope="col">Views</th>
+                <th class="text-center" scope="col">Rating</th>
               </tr>
             </thead>
             <tbody>
@@ -85,14 +87,17 @@
                   <td>{{languageName}}</td>
                   <td>{{categoryName}}</td>
                   <td class="text-center">{{studentList.length}}</td>
-                  {{! <td class="text-right">
-                    <a class="btn btn-sm btn-primary" href="#" role="button">
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <td class="text-center">{{viewList.length}}</td>
+                  <td class="text-center">{{rating}}</td>
+                  <td class="text-right">
+                    <a
+                      class="btn btn-sm btn-primary view"
+                      href="/admin/managefeedbacksid?id={{_id}}"
+                      role="button"
+                    >
+                      <i class="fa fa-eye" aria-hidden="true"></i>
                     </a>
-                    <a class="btn btn-sm btn-primary" href="#" role="button">
-                      <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </a>
-                  </td> }}
+                  </td>
 
                 </tr>
               {{/each}}
