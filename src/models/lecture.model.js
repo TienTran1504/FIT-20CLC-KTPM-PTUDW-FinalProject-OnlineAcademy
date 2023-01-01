@@ -4,10 +4,9 @@ const LectureSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: [true, "Please provide Course name"],
+            required: [true, "Please provide Lecture name"],
             maxlength: 100,
             trim: true,
-            unique: true,
         },
         description: {
             type: String,

@@ -5,7 +5,7 @@
     href="../../../public/assets/css/admin/edit.css"
   />
 {{/section}}
-<form method="post" style="margin-top: 80px">
+<form method="post" class="form-submit">
   <div
     class="card col-md-9"
     style="margin-left: auto; margin-right:auto; padding:0"
@@ -62,6 +62,8 @@
           type="text"
           class="form-control"
           id="txtCategoryName"
+          value="{{category.name}}"
+          placeholder="Enter new category's name"
         />
       </div>
       <div class="form-group mb-3">
@@ -72,6 +74,8 @@
           type="text"
           class="form-control"
           id="txtCategoryImage"
+          value="{{category.image}}"
+          placeholder="Enter new category's link image"
         />
       </div>
 

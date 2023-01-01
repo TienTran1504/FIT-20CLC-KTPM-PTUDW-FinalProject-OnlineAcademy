@@ -9,3 +9,7 @@
 #btn-back-to-top {
   display: none !important;
 }
+.form-submit {
+  margin-top: 80px;
+  margin-bottom: 20px;
+}

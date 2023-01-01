@@ -5,7 +5,7 @@
     href="../../../public/assets/css/admin/edit.css"
   />
 {{/section}}
-<form method="post" style="margin-top: 80px">
+<form method="post" class="form-submit">
   <div
     class="card col-md-9"
     style="margin-left: auto; margin-right:auto; padding:0"
@@ -72,6 +72,8 @@
           type="text"
           class="form-control"
           id="txtLanguageName"
+          value="{{language.name}}"
+          placeholder="Enter new language's name"
         />
       </div>
       <div class="form-group mb-3">
@@ -82,6 +84,8 @@
           type="text"
           class="form-control"
           id="txtLanguageImage"
+          value="{{language.image}}"
+          placeholder="Enter new language's link image"
         />
       </div>
       <div class="form-group mb-3">
