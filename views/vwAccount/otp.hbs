@@ -1,0 +1,22 @@
+{{#section "css"}}
+    <link rel="stylesheet" type="text/css" href="../../../public/assets/css/register.css" />
+{{/section}}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" style="margin: 5cm 10cm">
+            <form class="form-horizontal" method="post" id="frmOTP">
+                <h4 class="card-header" align="center">
+                    OTP in your Mailbox
+                </h4>
+                <label for="txtOtp">OTP</label>
+                <input name="otp" type="text" class="form-control" id="txtOtp" placeholder="Enter OTP..." autofocus required/>
+
+                <div class="clearfix">
+                    <button type="submit" class="signupbtn" formaction="/account/otp" >Confirm</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>

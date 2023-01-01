@@ -41,6 +41,9 @@ app.engine(
       },
       checkTeacher: function (value) {
         return value === "Teacher"
+      },
+      ifEqualString: function (obj, value) {
+        return (obj === value);
       }
     },
   })
