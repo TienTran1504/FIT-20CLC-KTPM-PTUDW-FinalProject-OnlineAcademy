@@ -10,10 +10,11 @@ import {
   updateProfile,
   updatePassword,
   changeEmail,
+  uploadPhoto,
 } from "../controllers/student.controller";
 
 studentRouter.route("/").get(getProfile);
-studentRouter.route("/photo").get(getPhoto);
+studentRouter.route("/photo").get(getPhoto).post(uploadPhoto);
 studentRouter
   .route("/account_security")
   .get(getAccountSecurity)

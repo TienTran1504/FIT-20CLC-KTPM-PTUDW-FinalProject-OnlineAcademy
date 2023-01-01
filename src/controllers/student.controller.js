@@ -38,10 +38,14 @@ const updateProfile = async (req, res, next) => {
 
 const getPhoto = async (req, res) => {
   const getUser = await User.findById({ _id: id });
-
   res.render("vwStudentProfile/photo", {
     image: getUser.image,
   });
+};
+
+const uploadPhoto = async (req, res) => {
+  console.log("Upload", req);
+  const getUser = await User.findById({ _id: id });
 };
 
 const getAccountSecurity = async (req, res) => {
@@ -434,6 +438,7 @@ export {
   updateProfile,
   updatePassword,
   changeEmail,
+  uploadPhoto,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

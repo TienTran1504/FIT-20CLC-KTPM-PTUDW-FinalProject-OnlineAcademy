@@ -8,10 +8,19 @@
   box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
 }
 
+.main-content-student .sidebar .card {
+  border: 0;
+}
+
 .main-content-student .sidebar .img-profile {
   display: flex;
   justify-content: center;
   padding: 0.8rem 1.2rem;
+}
+
+.main-content-student .sidebar .img-profile img {
+  width: 7rem;
+  height: 7rem;
 }
 
 .main-content-student .more-courses-container {
@@ -38,12 +47,14 @@
 
 .main-content-student .list-group-item.active {
   z-index: 2;
-  color: #fff;
-  background-color: #52ab98;
+  color: #52ab98;
+  background-color: #F2F2F2;
+  border: 0;
 }
 
 .main-content-student .list-group-item {
   background-color: #f2f2f2;
+  border: 0;
 }
 
 .email-input-block {
