@@ -180,6 +180,8 @@ const createCourse = async (req, res, next) => {
     });
 
     lang.courseList.push(createdCourse);
+    await CourseLanguage.findOneAndUpdate({_id: lang._id}, {courseList: lang.courseList});
+
     delete req.session.createCourse;
 
     res.redirect("/teacher/profile/my_course");
