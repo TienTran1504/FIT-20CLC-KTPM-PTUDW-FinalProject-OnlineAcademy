@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import Course from "../models/course.model.js";
 import CourseCategory from "../models/coursecategory.model.js";
 import CourseLanguage from "../models/courselanguage.model";
+import Feedback from "../models/feedback.model";
 import createError from "http-errors";
 
 const register = async (req, res, next) => {
@@ -383,6 +384,22 @@ const viewCoursesByID = async function (req, res, next) {
   //    return next(createError(500, "User has no permission "));
   // }
 };
+// {{ URL }}/admin/manageclanguageid?id
+const viewFeedBacksByID = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
+  const id = req.query.id || 0;
+  const course = await Course.findOne({ _id: id }).lean();
+  const feedbacks = await Feedback.find({ createdIn: id }).lean();
+  res.render("vwAdminManagement/feedbacks", {
+    course,
+    feedbacks,
+    empty: feedbacks.length === 0,
+  });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
+};
 
 //{{URL}}/admin/edituser/patch
 const updateUserPermission = async function (req, res, next) {
@@ -573,22 +590,61 @@ const updateCourseCategory = async function (req, res, next) {
 const updateLanguageCategory = async function (req, res, next) {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { LanguageID, LanguageName, CategoryName } = req.body;
-
-  const languageUpdate = await CourseLanguage.findByIdAndUpdate(
-    {
-      _id: LanguageID,
-    },
-    {
-      name: LanguageName,
-      categoryName: CategoryName,
-    },
-    { new: true, runValidators: true }
-  );
-  if (!languageUpdate) {
-    return next(createError(400, "Please provide a language"));
+  const { CurrentLanguageName, CurrentCategoryName, LanguageID, LanguageName, CategoryName, LanguageImage } = req.body;
+  //thêm language vào category mới
+  const findNewCategory = await CourseCategory.findOne({ name: CategoryName });
+  const objLanguage = { _id: LanguageID, name: LanguageName };
+  const checkLanguageExist = findNewCategory.languageList.some(language => {
+    return language.name === objLanguage.name;
+  });
+  if (checkLanguageExist) {
+    return next(
+      createError(500, `Already have this language in ${findNewCategory.name}`)
+    );
   }
-  res.redirect("/admin/managelanguage");
+  else {
+    // xoá language trong category cũ
+    const findCurrentCategory = await CourseCategory.findOne({ name: CurrentCategoryName });
+    const indexOf = findCurrentCategory.languageList.findIndex(language => {
+      return language._id === LanguageID;
+    });
+    findCurrentCategory.languageList.splice(indexOf, 1);
+    await CourseCategory.findByIdAndUpdate(
+      {
+        _id: findCurrentCategory._id
+      },
+      {
+        languageList: findCurrentCategory.languageList,
+      },
+      { new: true, runValidators: true }
+    )
+    findNewCategory.languageList.push(objLanguage);
+    await CourseCategory.findByIdAndUpdate(
+      {
+        _id: findNewCategory._id
+      },
+      {
+        languageList: findNewCategory.languageList,
+      },
+      { new: true, runValidators: true }
+    )
+    const languageUpdate = await CourseLanguage.findByIdAndUpdate(
+      {
+        _id: LanguageID,
+      },
+      {
+        name: LanguageName,
+        image: LanguageImage,
+        categoryName: CategoryName,
+        categoryId: findNewCategory._id
+      },
+      { new: true, runValidators: true }
+    );
+    if (!languageUpdate) {
+      return next(createError(400, "Please provide a language"));
+    }
+    res.redirect("/admin/managelanguage");
+  }
   // } else {
   //    return next(createError(500, "User has no permission "));
   // }
@@ -672,6 +728,7 @@ export {
   getAddTeacherPage,
   viewLanguagesByID,
   viewCoursesByID,
+  viewFeedBacksByID,
   updateUserPermission,
   deleteUser,
   createCourseCategory,

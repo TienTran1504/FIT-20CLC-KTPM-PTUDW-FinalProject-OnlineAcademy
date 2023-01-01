@@ -27,6 +27,7 @@ import {
   getEditLanguagePage,
   updateLanguageCategory,
   deleteCourseLanguage,
+  viewFeedBacksByID,
 } from '../controllers/admin.controller'
 adminRouter.route('/register').post(register)
 adminRouter.route('/edituser').get(getEditUserPage)
@@ -49,6 +50,7 @@ adminRouter.route('/addlanguage').get(getAddLanguagePage)
 adminRouter.route('/addteacher').get(getAddTeacherPage)
 adminRouter.route('/managecategoryid').get(viewLanguagesByID)
 adminRouter.route('/managelanguageid').get(viewCoursesByID)
+adminRouter.route('/managefeedbacksid').get(viewFeedBacksByID)
 adminRouter.route('/addcategory/post').post(createCourseCategory)
 adminRouter.route('/addlanguage/post').post(createLanguage)
 
