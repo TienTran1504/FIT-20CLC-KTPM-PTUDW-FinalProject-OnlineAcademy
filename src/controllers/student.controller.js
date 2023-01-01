@@ -3,32 +3,42 @@ import createError from "http-errors";
 import Course from "../models/course.model";
 import User from "../models/user.model";
 import bcrypt from "bcryptjs";
+import multer from "multer";
 
-const id = "63aaaf7dbe355f57283b0600";
+const checkGender = gender => {
+  if (gender === "Male") return true;
+  return false;
+};
 
 const getProfile = async (req, res) => {
-  const user = await User.findById({ _id: id }).lean();
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
 
   res.render("vwStudentProfile/profile", {
-    user,
-    name: user.firstName + " " + user.lastName,
+    user: getUser,
+    name: getUser.firstName + " " + getUser.lastName,
+    gender: checkGender(getUser.gender),
   });
 };
 
 const updateProfile = async (req, res, next) => {
-  const { firstname, lastname, gender, password } = req.body;
-  const getUser = await User.findById({ _id: id });
+  const { firstname, lastname, gender, password_profile } = req.body;
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
 
-  if (!firstname || !lastname || !gender || !password) {
+  if (!firstname || !lastname || !gender || !password_profile) {
     return next(createError(400, "Invalid input information"));
   }
 
-  const isPasswordCorrect = await bcrypt.compare(password, getUser.password);
+  const isPasswordCorrect = await bcrypt.compare(
+    password_profile,
+    getUser.password
+  );
   if (!isPasswordCorrect) {
     return next(createError(400, "Incorrect password"));
   } else {
     const updateUser = await User.findByIdAndUpdate(
-      { _id: id },
+      { _id: getUser._id },
       { firstName: firstname, lastName: lastname, gender: gender },
       { new: true, runValidators: true }
     );
@@ -37,37 +47,72 @@ const updateProfile = async (req, res, next) => {
 };
 
 const getPhoto = async (req, res) => {
-  const getUser = await User.findById({ _id: id });
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
+
   res.render("vwStudentProfile/photo", {
-    image: getUser.image,
+    user: getUser,
+    gender: checkGender(getUser.gender),
   });
 };
 
 const uploadPhoto = async (req, res) => {
-  console.log("Upload", req);
-  const getUser = await User.findById({ _id: id });
+  let fileName;
+
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "./public/assets/images");
+    },
+    filename: function (req, file, cb) {
+      fileName = file.originalname;
+      cb(null, file.originalname);
+    },
+  });
+
+  const upload = multer({ storage: storage });
+  upload.single("student-avatar")(req, res, async function (err) {
+    if (err) {
+      next(err);
+    } else {
+      req.session.authUser.image = fileName;
+
+      await User.findByIdAndUpdate(
+        { _id: req.session.authUser._id },
+        req.session.authUser
+      );
+
+      res.redirect("/student/photo");
+    }
+  });
 };
 
 const getAccountSecurity = async (req, res) => {
-  res.render("vwStudentProfile/account_security");
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
+
+  res.render("vwStudentProfile/account_security", {
+    user: getUser,
+    gender: checkGender(getUser.gender),
+  });
 };
 
 const updatePassword = async (req, res, next) => {
-  const id = "63aaaf7dbe355f57283b0600";
-  // const user = await User.findOne({ _id: req.user.userId });
-
-  const user = await User.findById({ _id: id }).lean();
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
   const { currentPassword, newPassword, rePassword } = req.body;
+  res.jsonp({ success: true });
 
   if (!newPassword || !currentPassword) {
     res.render("vwStudentProfile/account_security", {
-      notif: "Input validation failed",
+      notif: true,
     });
+    // alert("Input validation failed");
+    return;
   } else {
     //compare password
     const isPasswordCorrect = await bcrypt.compare(
       currentPassword,
-      user.password
+      getUser.password
     );
 
     if (!isPasswordCorrect) {
@@ -85,9 +130,9 @@ const updatePassword = async (req, res, next) => {
       const updatePassword = {
         password: passwordHashed,
       };
-      const userUpdate = await User.findByIdAndUpdate(
+      const getUserUpdate = await User.findByIdAndUpdate(
         {
-          _id: user._id,
+          _id: getUser._id,
         },
         updatePassword,
         { new: true, runValidators: true }
@@ -98,34 +143,33 @@ const updatePassword = async (req, res, next) => {
 };
 
 const changeEmail = async (req, res) => {
-  const id = "63aaaf7dbe355f57283b0600";
-  // const user = await User.findOne({ _id: req.user.userId });
-  const user = await User.findById({ _id: id }).lean();
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
 
   const { email, password } = req.body;
+
   if (!email || !password) {
     res.render("vwStudentProfile/profile", {
       notif: "Input validation failed",
-      user,
-      name: user.firstName + " " + user.lastName,
+      user: getUser,
+      name: getUser.firstName + " " + getUser.lastName,
     });
   } else {
     //compare password
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    const isPasswordCorrect = await bcrypt.compare(password, getUser.password);
     if (!isPasswordCorrect) {
       res.render("vwStudentProfile/profile", {
         notif: "Wrong current password ",
-        user,
-        name: user.firstName + " " + user.lastName,
+        user: getUser,
+        name: getUser.firstName + " " + getUser.lastName,
       });
     } else {
       const changeEmail = {
         email: email,
       };
-      console.log(changeEmail);
       const userUpdate = await User.findByIdAndUpdate(
         {
-          _id: user._id,
+          _id: getUser._id,
         },
         changeEmail,
         { new: true, runValidators: true }
@@ -137,6 +181,7 @@ const changeEmail = async (req, res) => {
         notif: "Successfully updated",
         user: userCheck,
         name: userCheck.firstName + " " + userCheck.lastName,
+        gender: checkGender(getUser.gender),
       });
     }
   }
@@ -176,11 +221,10 @@ const addWatchList = async (req, res, next) => {
 
 // {{URL}}/student/courses
 const getCourseFavorite = async (req, res) => {
-  // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
 
-  const id = "63aaaf7dbe355f57283b0600";
-  const user = await User.findById({ _id: id }).lean(); // lấy ra đúng user đang login
-  const getCoursesId = user.watchList;
+  const getCoursesId = getUser.watchList;
   const limit = 6;
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
@@ -206,6 +250,8 @@ const getCourseFavorite = async (req, res) => {
   }
 
   res.render("vwStudentProfile/favorite_courses", {
+    user: getUser,
+    gender: checkGender(getUser.gender),
     length: getCoursesId.length,
     courses: listCourses,
     empty: listCourses.length === 0,
@@ -219,7 +265,9 @@ const getCourseFavorite = async (req, res) => {
 };
 
 const removeCourseInWatchList = async (req, res, next) => {
-  const getUser = await User.findById({ _id: id });
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
+
   let watchList = getUser.watchList;
   const idCourse = req.body.id;
   const index = watchList.findIndex(watchId => watchId === idCourse);
@@ -237,7 +285,9 @@ const removeCourseInWatchList = async (req, res, next) => {
 };
 
 const addCourseList = async (req, res, next) => {
-  const getUser = await User.findById({ _id: req.user.userId });
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
+
   const { courseId } = req.params;
   const course = await Course.findOne({ _id: courseId });
   const checkCourseExists = getUser.courseList.some(watch => {
@@ -270,11 +320,10 @@ const addCourseList = async (req, res, next) => {
 
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
-  // const user = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
 
-  const id = "63aaaf7dbe355f57283b0600";
-  const user = await User.findById({ _id: id }).lean(); // lấy ra đúng user đang login
-  const getCoursesId = user.courseList;
+  const getCoursesId = getUser.courseList;
   const limit = 6;
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
@@ -300,6 +349,8 @@ const getCourseList = async (req, res) => {
   }
 
   res.render("vwStudentProfile/courses_learn", {
+    user: getUser,
+    gender: checkGender(getUser.gender),
     length: getCoursesId.length,
     courses: listCourses,
     empty: listCourses.length === 0,
@@ -313,7 +364,9 @@ const getCourseList = async (req, res) => {
 };
 // {{URL}}/student/courses/:courseId
 const addCourse = async (req, res) => {
-  const user = await User.findOne({ _id: req.user.userId });
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id }).lean();
+
   const { courseId } = req.params;
   const course = await Course.findOne({ _id: courseId });
   const checkCourseExist = user.courseList.some(course => {
@@ -339,89 +392,6 @@ const addCourse = async (req, res) => {
     );
     res.status(StatusCodes.OK).json({
       msg: `Add ${course.name} successfully`,
-      name: userUpdate.name,
-      courseList: userUpdate.courseList,
-      courseLength: userUpdate.courseList.length,
-    });
-  }
-};
-
-// {{URL}}/student/courses/:courseId
-const removeCourse = async (req, res) => {
-  const user = await User.findOne({ _id: req.user.userId });
-  const { courseId } = req.params;
-  const course = await Course.findOne({ _id: courseId });
-  const checkCourseExist = user.courseList.some(course => {
-    return course.course._id == courseId;
-  });
-  if (!checkCourseExist) {
-    throw createError.BadRequest(
-      `Dont exist course with id ${courseId} in student course's list`
-    );
-  }
-  const indexDelete = user.courseList.map((course, index) => {
-    if (course.course._id == courseId) {
-      return index;
-    }
-  });
-  for (let i = 0; i < indexDelete.length; i++) {
-    if (indexDelete[i] || indexDelete[i] === 0) {
-      let index = indexDelete[i];
-      user.courseList.splice(index, 1);
-    }
-  }
-
-  req.body.courseList = user.courseList;
-  const userUpdate = await User.findByIdAndUpdate(
-    {
-      _id: user._id,
-    },
-    req.body,
-    { new: true, runValidators: true }
-  );
-  res.status(StatusCodes.OK).json({
-    msg: `Delete course: ${course.name} from student course's list successfully`,
-    _id: userUpdate._id,
-    name: userUpdate.name,
-    courseList: userUpdate.courseList,
-    courseLength: userUpdate.courseList.length,
-  });
-};
-
-// {{URL}}/student/courses/:courseId
-const updateStatusCourse = async (req, res) => {
-  const user = await User.findOne({ _id: req.user.userId });
-  const { status } = req.body;
-  const { courseId } = req.params;
-  const course = await Course.findOne({ _id: courseId });
-  const checkCourseExist = user.courseList.some(course => {
-    return course.course._id == courseId;
-  });
-  if (!status) {
-    throw createError.BadRequest("Status field can not be empty");
-  } else if (status !== "in progress" && status !== "completed") {
-    throw createError.BadRequest("Status field is completed or in progres");
-  } else if (!checkCourseExist) {
-    throw createError.BadRequest(
-      `Dont exist course with id ${courseId} in student course's list`
-    );
-  } else {
-    const newCourseList = user.courseList.map(course => {
-      if (course.course._id == courseId) {
-        course.course.status = status;
-      }
-      return course;
-    });
-    req.body.courseList = newCourseList;
-    const userUpdate = await User.findByIdAndUpdate(
-      {
-        _id: user._id,
-      },
-      req.body,
-      { new: true, runValidators: true }
-    );
-    res.status(StatusCodes.OK).json({
-      msg: `Update quantity ${courseId} successfully`,
       name: userUpdate.name,
       courseList: userUpdate.courseList,
       courseLength: userUpdate.courseList.length,

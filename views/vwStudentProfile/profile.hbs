@@ -1,6 +1,11 @@
 {{#section "css"}}
   <link rel="stylesheet" href="../../public/assets/css/student_profile.css" />
 {{/section}}
+{{#section "css"}}
+  <script>
+    console.log(notif)
+  </script>
+{{/section}}
 <form method="post">
   <div style="margin-top: 80px;">
     <div class="main-content-student">
@@ -13,11 +18,27 @@
             <div class="list-group" id="list-tab" role="tablist">
               <div class="card text-center" style="background-color: #F2F2F2;">
                 <div class="img-profile">
-                  <img
-                    class="img-fluid rounded-circle img-thumbnail img-responsive"
-                    src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
-                    alt="none"
-                  />
+                  {{#if (isEmpty user.image)}}
+                    {{#if gender}}
+                      <img
+                        class="img-fluid rounded-circle img-thumbnail img-responsive"
+                        src="../../public/assets/images/no_avt_male.png"
+                        alt="avatar"
+                      />
+                    {{else}}
+                      <img
+                        class="img-fluid rounded-circle img-thumbnail img-responsive"
+                        src="../../public/assets/images/no_avt_female.png"
+                        alt="avatar"
+                      />
+                    {{/if}}
+                  {{else}}
+                    <img
+                      class="img-fluid rounded-circle img-thumbnail img-responsive"
+                      src="../../public/assets/images/{{user.image}}"
+                      alt="avatar"
+                    />
+                  {{/if}}
                 </div>
                 <div>
                   <p>{{name}}</p>
@@ -50,8 +71,6 @@
               >Favorite course</a>
             </div>
           </div>
-          {{log user}}
-          {{log notif}}
           <div class="col-9 h-100">
             <div class="tab-content" id="nav-tabContent">
               <div
@@ -126,7 +145,7 @@
                                     <div class="col">
                                       <input
                                         type="password"
-                                        name="password"
+                                        name="password_email"
                                         class="form-control"
                                         placeholder="Password"
                                       />
@@ -239,7 +258,7 @@
                                 <div class="col">
                                   <input
                                     type="password"
-                                    name="password"
+                                    name="password_profile"
                                     class="form-control"
                                     placeholder="Password"
                                   />

@@ -9,7 +9,7 @@ import Lecture from "../models/lecture.model";
 const getInfo = async (req, res, next) => {
   req.session.authUser = await User.findOne({
     // _id: "63a6c10fe930ca09e8b4d4d0",
-    _id: "63a88e96fa8ed14a442f5064"
+    _id: "63a88e96fa8ed14a442f5064",
   }).lean();
 
   res.render("vwTeacher/profile", {
@@ -24,13 +24,16 @@ const updateInfo = async (req, res, next) => {
     req.session.authUser.headline = req.body.headline;
     req.session.authUser.description = req.body.description;
 
-    await User.findByIdAndUpdate({ _id: req.session.authUser._id }, req.session.authUser);
+    await User.findByIdAndUpdate(
+      { _id: req.session.authUser._id },
+      req.session.authUser
+    );
 
     res.redirect("/teacher/profile");
   } catch (err) {
     throw createError.InternalServerError(err.message);
   }
-}
+};
 
 const getPhoto = (req, res) => {
   res.render("vwTeacher/photo", {
@@ -58,7 +61,10 @@ const uploadPhoto = (req, res, next) => {
     } else {
       req.session.authUser.image = fileName;
 
-      await User.findByIdAndUpdate({ _id: req.session.authUser._id }, req.session.authUser);
+      await User.findByIdAndUpdate(
+        { _id: req.session.authUser._id },
+        req.session.authUser
+      );
 
       res.redirect("/teacher/profile/photo");
     }
@@ -67,21 +73,21 @@ const uploadPhoto = (req, res, next) => {
 
 const getAccountSecurity = (req, res) => {
   res.render("vwTeacher/account_security", {
-    user: req.session.authUser
+    user: req.session.authUser,
   });
 };
 
 //{{URL}}/teacher/my_course
 const getOwnerCourses = async (req, res, next) => {
-  const courses = await Course.find({ createdBy: req.session.authUser._id }).sort(
-    "createdAt"
-  ).lean();
-  
+  const courses = await Course.find({ createdBy: req.session.authUser._id })
+    .sort("createdAt")
+    .lean();
+
   req.session.courses = courses;
-    
+
   res.render("vwTeacher/my_course", {
     user: req.session.authUser,
-    courses
+    courses,
   });
 };
 
@@ -96,8 +102,7 @@ const createCourse1 = async (req, res) => {
       categories: sortedCourseCategories,
       layout: "create_course",
     });
-  }
-  else {
+  } else {
     const cat = req.query.category;
     req.session.createCourse = {};
     req.session.createCourse.cat = cat;
@@ -108,7 +113,9 @@ const createCourse1 = async (req, res) => {
 const createCourse2 = async (req, res) => {
   if (!req.query.language) {
     console.log(req.session.createCourse.cat);
-    const languages = await CourseLanguage.find({ categoryName: req.session.createCourse.cat })
+    const languages = await CourseLanguage.find({
+      categoryName: req.session.createCourse.cat,
+    })
       .sort("createdAt")
       .lean();
 
@@ -121,7 +128,6 @@ const createCourse2 = async (req, res) => {
     req.session.createCourse.lang = req.query.language;
     res.redirect("/teacher/course/s3");
   }
-
 };
 
 const createCourse3 = async (req, res) => {
@@ -133,14 +139,16 @@ const createCourse3 = async (req, res) => {
 //{{URL}}/courses
 const createCourse = async (req, res, next) => {
   try {
-    const cat = await CourseCategory.findOne({ name: req.session.createCourse.cat }).lean();
+    const cat = await CourseCategory.findOne({
+      name: req.session.createCourse.cat,
+    }).lean();
     const lang = await CourseLanguage.findOne({
       name: req.session.createCourse.lang,
-      categoryName: cat.name
+      categoryName: cat.name,
     }).lean();
 
     // const courses = await Course.find({}).lean();
-    // console.log(courses); 
+    // console.log(courses);
     // console.log(req.body);
     const createdCourse = await Course.create({
       createdBy: req.session.authUser._id,
@@ -148,7 +156,7 @@ const createCourse = async (req, res, next) => {
       languageId: lang._id,
       languageName: lang.name,
       categoryId: cat._id,
-      categoryName: cat.name
+      categoryName: cat.name,
     });
 
     lang.courseList.push(createdCourse);
@@ -158,26 +166,25 @@ const createCourse = async (req, res, next) => {
   } catch (err) {
     next(createError.InternalServerError(err.message));
   }
-
 };
 
 const deleteCourse = async (req, res, next) => {
   try {
     const deletedCourse = await Course.findByIdAndDelete({
-      _id: req.params.id
+      _id: req.params.id,
     });
-    
-    delete req.session.currentCourse
-    res.redirect("/teacher/profile/my_course")
-  } catch(err) {
+
+    delete req.session.currentCourse;
+    res.redirect("/teacher/profile/my_course");
+  } catch (err) {
     next(createError.InternalServerError(err.message));
   }
-}
+};
 
 const checkCourse = (req, res, next) => {
-  try {    
+  try {
     const id = req.params.id;
-  
+
     const course = req.session.courses.filter(course => {
       return course._id.toString() === id;
     })[0];
@@ -188,7 +195,7 @@ const checkCourse = (req, res, next) => {
   } catch (err) {
     next(createError.InternalServerError(err.message));
   }
-}
+};
 
 //{{URL}}/courses/:id/info
 const getCourseInfo = async (req, res, next) => {
@@ -197,7 +204,7 @@ const getCourseInfo = async (req, res, next) => {
     course: req.session.currentCourse,
     layout: "update_course",
   });
-}
+};
 
 const updateCourseInfo = (req, res, next) => {
   try {
@@ -211,7 +218,7 @@ const updateCourseInfo = (req, res, next) => {
         fileName = file.originalname;
         cb(null, file.originalname);
       },
-    }); 
+    });
 
     const upload = multer({ storage: storage });
     upload.single("image")(req, res, async function (err) {
@@ -219,48 +226,57 @@ const updateCourseInfo = (req, res, next) => {
         next(createError.InternalServerError(err.message));
       } else {
         if (fileName !== null) {
-          await Course.findOneAndUpdate({_id: req.body._id}, {
-            name: req.body.name,
-            briefDescription: req.body.briefDescription,
-            detailDescription: req.body.detailDescription,
-            price: parseInt(req.body.price),
-            image: fileName
-          }).lean();
+          await Course.findOneAndUpdate(
+            { _id: req.body._id },
+            {
+              name: req.body.name,
+              briefDescription: req.body.briefDescription,
+              detailDescription: req.body.detailDescription,
+              price: parseInt(req.body.price),
+              image: fileName,
+            }
+          ).lean();
+        } else {
+          await Course.findOneAndUpdate(
+            { _id: req.body._id },
+            {
+              name: req.body.name,
+              briefDescription: req.body.briefDescription,
+              detailDescription: req.body.detailDescription,
+              price: parseInt(req.body.price),
+              image: fileName,
+            }
+          ).lean();
         }
-        else {
-          await Course.findOneAndUpdate({_id: req.body._id}, {
-            name: req.body.name,
-            briefDescription: req.body.briefDescription,
-            detailDescription: req.body.detailDescription,
-            price: parseInt(req.body.price),
-            image: fileName
-          }).lean();
-        }
-        
-        req.session.currentCourse = await Course.findById({_id: req.body._id});
 
-        res.redirect('info');
+        req.session.currentCourse = await Course.findById({
+          _id: req.body._id,
+        });
+
+        res.redirect("info");
       }
     });
-  } catch(err) {
+  } catch (err) {
     next(createError.InternalServerError(err.message));
   }
-}
+};
 
 const getCourseCurriculum = async (req, res, next) => {
-  const lectures = await Lecture.find({createdIn: req.session.currentCourse._id}).lean();
-  
-  res.render('vwTeacher/vwUpdateCourse/curriculum', {
+  const lectures = await Lecture.find({
+    createdIn: req.session.currentCourse._id,
+  }).lean();
+
+  res.render("vwTeacher/vwUpdateCourse/curriculum", {
     user: req.session.authUser,
     course: req.session.currentCourse,
     lectures,
     layout: "update_course",
-  })
-}
+  });
+};
 
 const getViewCreateLecture = (req, res, next) => {
   try {
-    res.render('vwTeacher/vwUpdateCourse/create_lecture', {
+    res.render("vwTeacher/vwUpdateCourse/create_lecture", {
       user: req.session.authUser,
       course: req.session.currentCourse,
       layout: "update_course",
@@ -268,7 +284,7 @@ const getViewCreateLecture = (req, res, next) => {
   } catch (err) {
     next(createError.InternalServerError(err.message));
   }
-}
+};
 
 const createLecture = async (req, res, next) => {
   try {
@@ -277,20 +293,19 @@ const createLecture = async (req, res, next) => {
       description: req.body.description,
       video: req.body.video,
       createdIn: req.session.currentCourse._id,
-      createdBy: req.session.authUser._id
-    })
+      createdBy: req.session.authUser._id,
+    });
 
     if (lecture) {
-      res.redirect('curriculum');
-    }
-    else {
+      res.redirect("curriculum");
+    } else {
       next(createError.InternalServerError("Cannot create lecture"));
-      res.redirect('curriculum');
+      res.redirect("curriculum");
     }
   } catch (err) {
     next(createError.InternalServerError(err.message));
   }
-}
+};
 // {{URL}}/courses/:id
 const updateCourse = async (req, res) => {
   const userCheck = await User.findOne({ _id: req.user.userId });
@@ -320,7 +335,6 @@ const updateCourse = async (req, res) => {
     throw createError.Unauthorized(`User have no permission`);
   }
 };
-
 
 export {
   getInfo,

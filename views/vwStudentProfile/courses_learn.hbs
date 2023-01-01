@@ -12,11 +12,27 @@
           <div class="list-group" id="list-tab" role="tablist">
             <div class="card text-center" style="background-color: #F2F2F2;">
               <div class="img-profile">
-                <img
-                  class="img-fluid rounded-circle img-thumbnail img-responsive"
-                  src="https://media.npr.org/assets/img/2022/05/25/gettyimages-917452888-edit_custom-c656c35e4e40bf22799195af846379af6538810c-s1100-c50.jpg"
-                  alt="none"
-                />
+                {{#if (isEmpty user.image)}}
+                  {{#if gender}}
+                    <img
+                      class="img-fluid rounded-circle img-thumbnail img-responsive"
+                      src="../../public/assets/images/no_avt_male.png"
+                      alt="avatar"
+                    />
+                  {{else}}
+                    <img
+                      class="img-fluid rounded-circle img-thumbnail img-responsive"
+                      src="../../public/assets/images/no_avt_female.png"
+                      alt="avatar"
+                    />
+                  {{/if}}
+                {{else}}
+                  <img
+                    class="img-fluid rounded-circle img-thumbnail img-responsive"
+                    src="../../public/assets/images/{{user.image}}"
+                    alt="avatar"
+                  />
+                {{/if}}
               </div>
               <div>
                 <p>Name</p>
