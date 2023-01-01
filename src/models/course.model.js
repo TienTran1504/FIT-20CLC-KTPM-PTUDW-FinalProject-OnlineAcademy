@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Lecture from "./lecture.model";
+import FeedBack from "./feedback.model";
+
 const CourseSchema = new mongoose.Schema(
   {
     //required: name, typeOf
@@ -93,6 +95,12 @@ const CourseSchema = new mongoose.Schema(
 CourseSchema.pre("deleteOne", function (next) {
   const courseID = this.getQuery()["_id"];
   Lecture.deleteMany({ createdIn: courseID }, function (err, result) {
+    if (err) {
+      next(err);
+    }
+    next();
+  });
+  FeedBack.deleteMany({ createdIn: courseID }, function (err, result) {
     if (err) {
       next(err);
     }
