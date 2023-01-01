@@ -7,6 +7,7 @@ import userRouter from "./user.route";
 import accountRouter from "./account.route";
 import categoriesRouter from "./categories.route";
 import homeRouter from "./home.route";
+import { checkTeacher } from "../middleware/checkPermission.mdw";
 
 export default function (app) {
   // app.use('/api/v1/auth', authRouter);
@@ -19,16 +20,6 @@ export default function (app) {
   app.use("/categories", categoriesRouter);
 
   app.use("/", homeRouter);
-
-  app.use(async function (req, res, next) {
-    if (typeof req.session.auth === "undefined") {
-      req.session.auth = false;
-    }
-
-    res.locals.auth = req.session.auth;
-    res.locals.authUser = req.session.authUser;
-    next();
-  });
 
   // app.use((req, res, next) => {
   //   next(createError.NotFound("This route does not exist."));

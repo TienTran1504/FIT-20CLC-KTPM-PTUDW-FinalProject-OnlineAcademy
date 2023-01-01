@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
-const TopicSchema = new mongoose.Schema(
+const LectureSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: [true, "Please provide Course name"],
+            required: [true, "Please provide Lecture name"],
             maxlength: 100,
             trim: true,
-            unique: true,
         },
         description: {
             type: String,
@@ -30,6 +29,6 @@ const TopicSchema = new mongoose.Schema(
     { timestamps: true }
 ); // timestamps -> key createdAt, updatedAt
 
-export default mongoose.model("Topic", TopicSchema);
+export default mongoose.model("Lecture", LectureSchema);
 
 

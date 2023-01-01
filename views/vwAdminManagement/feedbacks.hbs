@@ -15,43 +15,22 @@
         >Management</h4>
         <div class="list-group list-group-flush">
           <a
-            href="/admin"
-            class="list-group-item list-group-item-action"
-            style="font-weight:bold"
-          >
-            All User
-          </a>
-          <a
-            href="/admin/managestudents"
-            class="list-group-item list-group-item-action"
-            style="font-weight:bold"
-          >Student</a>
-          <a
-            href="/admin/manageteachers"
+            href="/admin/managefeedbacksid?id={{course._id}}"
             class="list-group-item list-group-item-action active"
             aria-current="true"
-            style="background-color:#2b6777; color:#fff; font-weight:bold"
-          >Teacher</a>
+            style="background-color:#2b6777; color:#fff; font-weight: bold"
+          >
+            FeedBacks
+          </a>
           <a
-            href="/admin/managecategory"
-            class="list-group-item list-group-item-action"
-            aria-current="true"
-            style="font-weight:bold"
-          >Course Categories</a>
-          <a
-            href="/admin/managelanguage"
+            href="/admin/manageratingid?id={{course._id}}"
             class="list-group-item list-group-item-action"
             style="font-weight:bold"
-          >Languages</a>
-          <a
-            href="/admin/managecourses"
-            class="list-group-item list-group-item-action"
-            style="font-weight:bold"
-          >Courses</a>
+          >Rating</a>
         </div>
       </div>
       <div class="card">
-        <h4 class="card-header">Total Teachers: {{users.length}} </h4>
+        <h4 class="card-header">Total FeedBacks: {{listFeedBacks.length}} </h4>
       </div>
     </div>
     <div class="col-sm-9">
@@ -60,17 +39,8 @@
           class="card-header d-flex justify-content-between"
           style="background-color:#52ab98; color:#fff"
         >
-          Teachers Management
-          <a
-            class="btn btn-sm btn-outline-primary adding"
-            href="/admin/addteacher"
-            role="button"
-          >
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add Teacher
-          </a>
+          {{this.course.name}}'s Feedback
         </h4>
-
         {{#if this.empty}}
           <div class="card-body text-muted">
             Empty Data!!!
@@ -80,43 +50,21 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Gender</th>
-                {{! <th scope="col">DOB</th> }}
-                <th scope="col">Permission</th>
                 <th scope="col">Email</th>
-                <th scope="col">&nbsp;</th>
+                <th scope="col">Content</th>
               </tr>
             </thead>
             <tbody>
-              {{!-- {{log users}} --}}
-              {{#each users}}
-
+              {{#each listFeedBacks}}
                 <tr>
                   <th scope="row">{{math @index "+" 1}}</th>
-                  <td>{{this.firstName}}</td>
-                  <td>{{this.lastName}}</td>
-                  <td>{{this.gender}}</td>
-                  {{!-- <td>{{this.dob}}</td> --}}
-                  <td>{{this.permission}}</td>
-                  <td>{{this.email}}</td>
-                  <td class="text-right">
-                    <a
-                      class="btn btn-sm btn-primary editPencil"
-                      href="/admin/edituser?id={{this._id}}"
-                      role="button"
-                      title="Edit"
-                    >
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                  </td>
+                  <td>{{email}}</td>
+                  <td>{{content}}</td>
                 </tr>
               {{/each}}
             </tbody>
           </table>
         {{/if}}
-
         {{#if havePagination}}
           <ul class="pagination">
             {{#if firstPage}}
@@ -151,7 +99,14 @@
           </ul>
         {{/if}}
         <div class="card-footer text-muted">
-          Users Teacher
+          <a
+            class="btn btn-outline-success"
+            href="/admin/managecourses"
+            role="button"
+          >
+            <i class="fa fa-backward" aria-hidden="true"></i>
+            Back
+          </a>
         </div>
       </div>
     </div>

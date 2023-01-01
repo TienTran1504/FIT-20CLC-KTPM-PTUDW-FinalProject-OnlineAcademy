@@ -5,7 +5,7 @@
     href="../../../public/assets/css/admin/add.css"
   />
 {{/section}}
-<form method="post" style="margin-top: 80px">
+<form method="post" class="form-submit">
   <div
     class="card col-md-9"
     style="margin-left: auto; margin-right:auto; padding:0"
@@ -18,32 +18,32 @@
     </h4>
     <div class="card-body">
       <div class="form-group">
-        <label for="txtTeacherFirstName" style="font-weight:bold">Enter New
-          Teacher's First Name</label>
+        <label for="txtTeacherFirstName" style="font-weight:bold">
+          First Name</label>
         <input
           name="TeacherFirstName"
           type="text"
           class="form-control"
           id="txtTeacherFirstName"
         />
-        <label for="txtTeacherLastName" style="font-weight:bold">Enter New
-          Teacher's Last Name</label>
+        <label for="txtTeacherLastName" style="font-weight:bold">Last Name</label>
         <input
           name="TeacherLastName"
           type="text"
           class="form-control"
           id="txtTeacherLastName"
         />
-        <label for="txtTeacherEmail" style="font-weight:bold">Enter New
-          Teacher's Email</label>
+        <label for="txtTeacherEmail" style="font-weight:bold">Email</label>
         <input
           name="TeacherEmail"
           type="text"
           class="form-control"
           id="txtTeacherEmail"
         />
-        <label for="txtTeacherPassword" style="font-weight:bold">Enter New
-          Teacher's Password</label>
+        <label
+          for="txtTeacherPassword"
+          style="font-weight:bold"
+        >Password</label>
         <input
           name="TeacherPassword"
           type="password"
@@ -84,3 +84,6 @@
     </div>
   </div>
 </form>
+{{#section "js"}}
+  <script src="../../../public/assets/js/admin/addTeacher.js"></script>
+{{/section}}

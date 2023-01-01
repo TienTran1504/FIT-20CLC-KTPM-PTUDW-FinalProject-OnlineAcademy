@@ -234,4 +234,11 @@ ul {
 .isActive {
   color: #52ab98;
   font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+.isActive:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  color: #52ab98;
 }

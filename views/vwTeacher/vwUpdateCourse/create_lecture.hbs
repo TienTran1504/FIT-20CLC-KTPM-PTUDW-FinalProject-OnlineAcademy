@@ -1,0 +1,102 @@
+{{#section "css"}}
+    <link rel="stylesheet" type="text/css" href="../../../public/assets/css/teacher/teacher_profile.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../public/assets/css/teacher/my_course.css"/>
+    <link rel="stylesheet" href="../../../public/assets/css/teacher/update_course.css">
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="../../../public/assets/css/admin/index.css"
+    />
+    <link rel="stylesheet" type="text/css" href="../../../public/assets/css/validation/form.css"/>
+{{/section}}
+
+{{#section 'js'}}
+  <script src="../../../public/assets/js/validator.js"></script>
+  <script>
+      Validator({
+          form: '#form-1',
+          rules: [
+              Validator.isRequired('#title', "Please input lecture title"),
+              Validator.isRequired('#description', "Please input lecture description"),
+          ]
+      })
+  </script>
+{{/section}}
+<div class="container-fluid" style="margin-top: 100px; margin-bottom: 1%;">
+  <div class="container">
+    <div class="row">
+      <nav class="col-2 bg-light sidebar">
+        <ul class="nav flex-column">
+          <li class="pt-5 nav-item">
+            <a class="nav-link" href="">
+                Infomation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/teacher/course/{{course._id}}/curriculum">
+              Curriculum
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="col-10 h-100">
+        <div class="card text-center">
+            <div class="card-header">
+                <h3>Lecture</h3>
+                <p>Here’s where you create lecture content</p>
+            </div>
+            <div class="card-body">
+                <form method="post" id="form-1">
+                <div class="pl-5 pr-5">
+                    <div class="input-group form-group">
+                      <label class="h6" for="">Title</label>
+                      <div class="input-group">
+                          <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Insert lecture title"
+                          name="name"
+                          id="title"
+                          />
+                          
+                      </div>
+                      <span class="form-message"></span>
+                    </div>
+                    <div class="input-group form-group">
+                      <label class="h6" for="">Description</label>
+                      <div class="input-group">
+                          <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Insert lecture description"
+                          name="description"
+                          id="description"
+                          />
+                      </div>
+                      <span class="form-message"></span>
+                    </div>
+                    
+                    <div class="input-group form-group">
+                        <label class="h6" for="desc">Link video</label>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Insert link lecture video"
+                                name="video"
+                                id="video"
+                            />
+                            
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary d-flex px-4 mt-5">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

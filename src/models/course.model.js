@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
-import Topic from "./topic.model";
+import Lecture from "./lecture.model";
+import FeedBack from "./feedback.model";
+
 const CourseSchema = new mongoose.Schema(
   {
     //required: name, typeOf
@@ -13,10 +15,12 @@ const CourseSchema = new mongoose.Schema(
     briefDescription: {
       type: String,
       trim: true,
+      default: ""
     },
     detailDescription: {
       type: String,
       trim: true,
+      default: ""
     },
     status: {
       type: String,
@@ -40,19 +44,14 @@ const CourseSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    rating: {
-      type: Number,
-      default: 0,
-      min: [0, "Rating must be above 0.0"],
-      max: [5, "Rating must be below 5.0"],
-      set: val => Math.round(val * 10) / 10,
-    },
     price: {
       type: Number,
+      min: [0, "Price must be above 0"],
+      max: [1000, "Price must be below 1000"],
       default: 0,
     },
     //mỗi khi feedback sẽ lưu một object có id ,name, content
-    feedback: {
+    feedbackList: {
       type: Array,
       default: [],
     },
@@ -68,7 +67,6 @@ const CourseSchema = new mongoose.Schema(
     },
     languageName: {
       type: String,
-      ref: "CourseLanguage",
       required: [true, "Please provide language name"],
     },
     categoryId: {
@@ -81,7 +79,7 @@ const CourseSchema = new mongoose.Schema(
       ref: "CourseLanguage",
       required: [true, "Please provide category's id"],
     },
-    topic: {
+    lecture: {
       type: Array,
       default: [],
     },
@@ -96,7 +94,13 @@ const CourseSchema = new mongoose.Schema(
 
 CourseSchema.pre("deleteOne", function (next) {
   const courseID = this.getQuery()["_id"];
-  Topic.deleteMany({ createdIn: courseID }, function (err, result) {
+  Lecture.deleteMany({ createdIn: courseID }, function (err, result) {
+    if (err) {
+      next(err);
+    }
+    next();
+  });
+  FeedBack.deleteMany({ createdIn: courseID }, function (err, result) {
     if (err) {
       next(err);
     }
