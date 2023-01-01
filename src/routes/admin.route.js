@@ -13,6 +13,7 @@ import {
   getAddTeacherPage,
   updateUserPermission,
   deleteUser,
+  deleteCourse,
   createCourseCategory,
   createTeacherAccount,
   getEditCategoryPage,
@@ -39,6 +40,8 @@ adminRouter.route('/editlanguage/patch').post(updateLanguageCategory)
 adminRouter.route('/editcategory/del').post(deleteCourseCategory)
 adminRouter.route('/editlanguage/del').post(deleteCourseLanguage)
 adminRouter.route('/edituser/del').post(deleteUser)
+adminRouter.route('/admin/managecourses/delete').post(deleteCourse)
+
 adminRouter.route('/').get(getAllUsers)
 adminRouter.route('/managestudents').get(getAllStudents)
 adminRouter.route('/manageteachers').get(getAllTeachers)

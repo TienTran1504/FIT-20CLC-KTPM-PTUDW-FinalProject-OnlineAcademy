@@ -76,7 +76,6 @@
                 <th scope="col">Category</th>
                 <th class="text-center" scope="col">Students</th>
                 <th class="text-center" scope="col">Views</th>
-                <th class="text-center" scope="col">Rating</th>
               </tr>
             </thead>
             <tbody>
@@ -88,7 +87,6 @@
                   <td>{{categoryName}}</td>
                   <td class="text-center">{{studentList.length}}</td>
                   <td class="text-center">{{viewList.length}}</td>
-                  <td class="text-center">{{rating}}</td>
                   <td class="text-right">
                     <a
                       class="btn btn-sm btn-primary view"
@@ -97,8 +95,77 @@
                     >
                       <i class="fa fa-eye" aria-hidden="true"></i>
                     </a>
+                    <button
+                      class="btn btn-sm btn-primary view"
+                      type="button"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <form method="post" class="form-submit">
+                      <div
+                        class="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5
+                                class="modal-title"
+                                id="exampleModalLabel"
+                              >Notification</h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="form-group mb-3">
+                                <label
+                                  for="txtCourseID"
+                                  style="font-weight:bold"
+                                >Course ID</label>
+                                <input
+                                  name="CourseID"
+                                  type="text"
+                                  class="form-control"
+                                  id="txtCourseID"
+                                  value="{{_id}}"
+                                  readonly
+                                />
+                              </div>
+                              Are you sure want to delete this course?
+                            </div>
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                              >Close</button>
+                              <div class="form-group mb-3">
+                                <button
+                                  type="submit"
+                                  class="btn btn-danger"
+                                  formaction="/admin/managecourses/delete"
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </td>
-
                 </tr>
               {{/each}}
             </tbody>

@@ -215,7 +215,7 @@ const getAllCourseCategories = async (req, res, next) => {
 const getAllCourseLanguages = async (req, res, next) => {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const limit = 7;
+  const limit = 5;
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
@@ -391,10 +391,17 @@ const viewFeedBacksByID = async function (req, res, next) {
   const id = req.query.id || 0;
   const course = await Course.findOne({ _id: id }).lean();
   const feedbacks = await Feedback.find({ createdIn: id }).lean();
+  let listFeedBacks = [];
+  for (let i = 0; feedbacks.length; i++) {
+    const user = await User.findById({ _id: feedbacks[i].createdBy });
+
+    const objFeedBack = { content: feedbacks[i].content, email: user.email };
+    listFeedBacks.push(objFeedBack);
+  }
   res.render("vwAdminManagement/feedbacks", {
     course,
-    feedbacks,
-    empty: feedbacks.length === 0,
+    listFeedBacks,
+    empty: listFeedBacks.length === 0,
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
@@ -587,6 +594,7 @@ const updateCourseCategory = async function (req, res, next) {
 };
 
 //{{URL}}/admin/editLanguage/patch
+/*
 const updateLanguageCategory = async function (req, res, next) {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
@@ -648,8 +656,166 @@ const updateLanguageCategory = async function (req, res, next) {
   // } else {
   //    return next(createError(500, "User has no permission "));
   // }
-};
+};*/
 
+const updateLanguageCategory = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
+  const { CurrentLanguageName, CurrentCategoryName, LanguageID, LanguageName, CategoryName, LanguageImage } = req.body;
+  // xoá language trong category cũ
+  const findCurrentCategory = await CourseCategory.findOne({ name: CurrentCategoryName });
+  const findNewCategory = await CourseCategory.findOne({ name: CategoryName });
+
+
+  let currentLanguageList = findCurrentCategory.languageList;
+  let newLanguageList = findNewCategory.languageList;
+
+  // if (CurrentLanguageName !== LanguageName) {
+
+  //   const indexOf = currentLanguageList.findIndex(language => {
+  //     return language === LanguageID;
+  //   })
+  //   currentLanguageList.splice(indexOf, 1);
+
+  //   if (CurrentCategoryName === CategoryName) {
+  //     newLanguageList = currentLanguageList;
+  //   }
+  //   objLanguage = { _id: LanguageID, name: LanguageName };
+  //   const checkLanguageExist = newLanguageList.some(language => {
+  //     return language.name === objLanguage.name;
+  //   });
+  //   if (checkLanguageExist) {
+  //     return next(
+  //       createError(500, `Already have this language in ${findNewCategory.name}`)
+  //     );
+  //   }
+  //   else {
+  //     newLanguageList.push(objLanguage);
+
+  //     await CourseCategory.findByIdAndUpdate(
+  //       {
+  //         _id: findCurrentCategory._id
+  //       },
+  //       {
+  //         languageList: currentLanguageList
+  //       },
+  //       { new: true, runValidators: true }
+  //     )
+  //     await CourseCategory.findByIdAndUpdate(
+  //       {
+  //         _id: findNewCategory._id
+  //       },
+  //       {
+  //         languageList: newLanguageList
+  //       },
+  //       { new: true, runValidators: true }
+  //     )
+  //   }
+  // }
+  // else{
+  //   const indexOf = currentLanguageList.findIndex(language => {
+  //     return language === LanguageID;
+  //   })
+  //   currentLanguageList.splice(indexOf, 1);
+
+  //   if (CurrentCategoryName === CategoryName) {
+  //     newLanguageList = currentLanguageList;
+  //   }
+  //   objLanguage = { _id: LanguageID, name: LanguageName };
+  //   const checkLanguageExist = newLanguageList.some(language => {
+  //     return language.name === objLanguage.name;
+  //   });
+  //   if (checkLanguageExist) {
+  //     return next(
+  //       createError(500, `Already have this language in ${findNewCategory.name}`)
+  //     );
+  //   }
+  //   else {
+  //     newLanguageList.push(objLanguage);
+
+  //     await CourseCategory.findByIdAndUpdate(
+  //       {
+  //         _id: findCurrentCategory._id
+  //       },
+  //       {
+  //         languageList: currentLanguageList
+  //       },
+  //       { new: true, runValidators: true }
+  //     )
+  //     await CourseCategory.findByIdAndUpdate(
+  //       {
+  //         _id: findNewCategory._id
+  //       },
+  //       {
+  //         languageList: newLanguageList
+  //       },
+  //       { new: true, runValidators: true }
+  //     )
+  //   }
+  // }
+  const indexOf = currentLanguageList.findIndex(language => {
+    return language._id == LanguageID;
+  })
+  console.log(indexOf);
+  currentLanguageList.splice(indexOf, 1);
+  if (CurrentCategoryName === CategoryName) {
+    newLanguageList = currentLanguageList;
+  }
+  const objLanguage = { _id: LanguageID, name: LanguageName };
+  const checkLanguageExist = newLanguageList.some(language => {
+    return language.name === objLanguage.name;
+  });
+  if (checkLanguageExist) {
+    return next(
+      createError(500, `Already have this language in ${findNewCategory.name}`)
+    );
+  }
+  else {
+    newLanguageList.push(objLanguage);
+
+    await CourseCategory.findByIdAndUpdate(
+      {
+        _id: findCurrentCategory._id
+      },
+      {
+        languageList: currentLanguageList
+      },
+      { new: true, runValidators: true }
+    )
+    await CourseCategory.findByIdAndUpdate(
+      {
+        _id: findNewCategory._id
+      },
+      {
+        languageList: newLanguageList
+      },
+      { new: true, runValidators: true }
+    )
+  }
+
+
+
+
+  const languageUpdate = await CourseLanguage.findByIdAndUpdate(
+    {
+      _id: LanguageID,
+    },
+    {
+      name: LanguageName,
+      image: LanguageImage,
+      categoryName: CategoryName,
+      categoryId: findNewCategory._id
+    },
+    { new: true, runValidators: true }
+  );
+  if (!languageUpdate) {
+    return next(createError(400, "Please provide a language"));
+  }
+  res.redirect("/admin/managelanguage");
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
+};
 //{{URL}}/admin/editcategory/del
 const deleteCourseCategory = async function (req, res, next) {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
@@ -712,6 +878,14 @@ const deleteCourseLanguage = async function (req, res, next) {
   // }
 };
 
+//{{URL}}/admin/managecourses/delete?id
+const deleteCourse = async function (req, res, next) {
+  const { CourseID } = req.body;
+  console.log(CourseID);
+  await Course.deleteOne({ _id: CourseID });
+  res.redirect("/admin/managecourses");
+};
+
 export {
   register,
   getAllUsers,
@@ -738,6 +912,7 @@ export {
   updateLanguageCategory,
   deleteCourseCategory,
   deleteCourseLanguage,
+  deleteCourse,
 };
 
 //flow

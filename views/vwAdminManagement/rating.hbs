@@ -16,9 +16,8 @@
         <div class="list-group list-group-flush">
           <a
             href="/admin/managefeedbacksid?id={{course._id}}"
-            class="list-group-item list-group-item-action active"
-            aria-current="true"
-            style="background-color:#2b6777; color:#fff; font-weight: bold"
+            class="list-group-item list-group-item-action"
+            style="font-weight:bold"
           >
             FeedBacks
           </a>
@@ -26,11 +25,14 @@
             href="/admin/manageratingid?id={{course._id}}"
             class="list-group-item list-group-item-action"
             style="font-weight:bold"
+            class="list-group-item list-group-item-action active"
+            aria-current="true"
+            style="background-color:#2b6777; color:#fff; font-weight: bold"
           >Rating</a>
         </div>
       </div>
       <div class="card">
-        <h4 class="card-header">Total FeedBacks: {{listFeedBacks.length}} </h4>
+        <h4 class="card-header">Total Ratings: {{length}} </h4>
       </div>
     </div>
     <div class="col-sm-9">
@@ -51,15 +53,15 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Email</th>
-                <th scope="col">Content</th>
+                <th scope="col">Rated</th>
               </tr>
             </thead>
             <tbody>
-              {{#each listFeedBacks}}
+              {{#each listRatings}}
                 <tr>
                   <th scope="row">{{math @index "+" 1}}</th>
                   <td>{{email}}</td>
-                  <td>{{content}}</td>
+                  <td>{{numberRated}}</td>
                 </tr>
               {{/each}}
             </tbody>
