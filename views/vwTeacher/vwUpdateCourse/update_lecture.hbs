@@ -1,27 +1,14 @@
 {{#section "css"}}
-    <link rel="stylesheet" type="text/css" href="../../../public/assets/css/teacher/teacher_profile.css"/>
-    <link rel="stylesheet" type="text/css" href="../../../public/assets/css/teacher/my_course.css"/>
-    <link rel="stylesheet" href="../../../public/assets/css/teacher/update_course.css">
+    <link rel="stylesheet" type="text/css" href="../../../../public/assets/css/teacher/teacher_profile.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../public/assets/css/teacher/my_course.css"/>
+    <link rel="stylesheet" href="../../../../public/assets/css/teacher/update_course.css">
     <link
         rel="stylesheet"
         type="text/css"
-        href="../../../public/assets/css/admin/index.css"
+        href="../../../../public/assets/css/admin/index.css"
     />
-    {{!-- <link rel="stylesheet" type="text/css" href="../../../public/assets/css/validation/form.css"/> --}}
 {{/section}}
 
-{{#section 'js'}}
-  {{!-- <script src="../../../public/assets/js/validator.js"></script>
-  <script>
-      Validator({
-          form: '#form-1',
-          rules: [
-              Validator.isRequired('#title', "Please input lecture title"),
-              Validator.isRequired('#description', "Please input lecture description"),
-          ]
-      })
-  </script> --}}
-{{/section}}
 <div class="container-fluid" style="margin-top: 100px; margin-bottom: 1%;">
   <div class="container">
     <div class="row">
@@ -43,7 +30,7 @@
         <div class="card text-center">
             <div class="card-header">
                 <h3>Lecture</h3>
-                <p>Here’s where you create lecture content</p>
+                <p>Here’s where you update lecture content</p>
             </div>
             <div class="card-body">
                 <form method="post" id="form-1">
@@ -54,7 +41,7 @@
                           <input
                           type="text"
                           class="form-control"
-                          placeholder="Insert lecture title"
+                          value="{{this.lecture.name}}"
                           name="name"
                           id="title"
                           />
@@ -68,7 +55,11 @@
                           <input
                           type="text"
                           class="form-control"
+                          {{#if (isEmpty this.lecture.description) }}
                           placeholder="Insert lecture description"
+                          {{else}}
+                          value="{{this.lecture.description}}"
+                          {{/if}}
                           name="description"
                           id="description"
                           />
@@ -82,7 +73,11 @@
                             <input
                                 type="text"
                                 class="form-control"
+                                {{#if (isEmpty this.lecture.video) }}
                                 placeholder="Insert link lecture video"
+                                {{else}}
+                                value="{{this.lecture.video}}"
+                                {{/if}}
                                 name="video"
                                 id="video"
                             />
@@ -90,9 +85,11 @@
                         </div>
                         <span class="form-message"></span>
                     </div>
-                
-                    <button type="submit" class="btn btn-primary d-flex px-4 mt-5">Save</button>
-                </div>
+                    <div class="input-group form-group">
+                      <button type="submit" class="btn btn-primary d-flex px-4 mt-5 mr-3">Save</button>
+                      <a href="/teacher/course/{{this.course._id}}/lecture/{{this.lecture._id}}/del" class="btn btn-danger btn-primary d-flex px-4 mt-5">Delete</a>
+                    </div>
+                  </div>
                 </form>
             </div>
         </div>

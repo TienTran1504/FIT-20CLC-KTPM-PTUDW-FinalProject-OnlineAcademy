@@ -73,7 +73,7 @@ Validator.isEmail = (selector) => {
         selector,
         test: (value) => {
             const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-            return value.match(mailFormat) ? undefined : 'Vui lòng nhập đúng email.'
+            return value.match(mailFormat) ? undefined : 'Please input correct email format.'
         }
     }
 }
@@ -82,7 +82,7 @@ Validator.minLength = (selector, min) => {
     return {
         selector,
         test: (value) => {
-            return value.length >= min ? undefined : `Vui lòng nhập ít nhất ${min} kí tự.`
+            return value.length >= min ? undefined : `Please input at least ${min} length.`
         }
     }
 }

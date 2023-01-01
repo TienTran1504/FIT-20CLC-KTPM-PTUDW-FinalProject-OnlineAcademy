@@ -69,23 +69,6 @@
             </a>
           </li>
         </ul>
-
-        <h6
-          class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
-        >
-          <span>Last course</span>
-          <a class="d-flex align-items-center text-muted" href="#">
-            <span data-feather="plus-circle"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Course 1
-            </a>
-          </li>
-        </ul>
       </nav>
       <div class="col-9 h-100">
         <div class="card text-center">
@@ -100,43 +83,30 @@
                 <div class="input-group form-group">
                   <input
                     type="text"
-                    class="form-control border border-dark"
+                    class="form-control"
                     value="{{this.user.firstName}}"
                     name="firstName"
-                    style="height: 3.0rem;"
                   />
                 </div>
                 <div class="input-group form-group">
                   <input
                     type="text"
-                    class="form-control border border-dark"
+                    class="form-control"
                     value="{{this.user.lastName}}"
                     name="lastName"
-                    style="height: 3.0rem;"
                   />
                 </div>
-                {{! <div class="input-group form-group">
-                  <input
-                    type="text"
-                    class="form-control border border-dark"
-                    placeholder="Date of Birth"
-                    name="dob"
-                    id="dob"
-                    style="height: 3.0rem;"
-                  />
-                </div> }}
 
                 <div class="input-group form-group" style="margin-bottom: 2px;">
                   <input
                     type="text"
-                    class="form-control border border-dark"
+                    class="form-control"
                     {{#if (isEmpty this.user.headline) }}
                     placeholder="Headline"
                     {{else}}
                     value="{{this.user.headline}}"
                     {{/if}}
                     name="headline"
-                    style="height: 3.0rem;"
                   />
                 </div>
                 <p

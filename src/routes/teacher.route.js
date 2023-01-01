@@ -18,6 +18,9 @@ import {
   getCourseCurriculum,
   getViewCreateLecture,
   createLecture,
+  getViewUpdateLecture,
+  updateLecture,
+  deleteLecture,
   updateCourse,
   deleteCourse,
 } from "../controllers/teacher.controller";
@@ -32,5 +35,7 @@ teacherRouter.route("/course/s3").get(createCourse3).post(createCourse);
 teacherRouter.route("/course/:id/info").get(checkCourse, getCourseInfo).post(updateCourseInfo);
 teacherRouter.route("/course/:id/curriculum").get(getCourseCurriculum);
 teacherRouter.route("/course/:id/lecture").get(getViewCreateLecture).post(createLecture);
+teacherRouter.route("/course/:id/lecture/:lid").get(getViewUpdateLecture).post(updateLecture);
+teacherRouter.route("/course/:id/lecture/:lid/del").get(deleteLecture);
 teacherRouter.route("/course/:id").get(deleteCourse);
 export default teacherRouter;

@@ -8,8 +8,7 @@ import Lecture from "../models/lecture.model";
 
 const getInfo = async (req, res, next) => {
   req.session.authUser = await User.findOne({
-    // _id: "63a6c10fe930ca09e8b4d4d0",
-    _id: "63a88e96fa8ed14a442f5064"
+    _id: "63b199a2bb67b820d829de77"
   }).lean();
 
   res.render("vwTeacher/profile", {
@@ -73,15 +72,39 @@ const getAccountSecurity = (req, res) => {
 
 //{{URL}}/teacher/my_course
 const getOwnerCourses = async (req, res, next) => {
+  const limit = 4;
+  const page = req.query.page || 1;
+  const curPage = parseInt(page) || 1;
+  const offset = (curPage - 1) * limit;
+
   const courses = await Course.find({ createdBy: req.session.authUser._id }).sort(
     "createdAt"
   ).lean();
+
+  let coursesList = [...courses];
+
+  const total = coursesList.length;
+  const nPages = Math.ceil(total / limit);
+  coursesList = coursesList.slice(offset, offset + limit);
   
   req.session.courses = courses;
+  const pageNumbers = [];
+  for (let i = 1; i <= nPages; i++) {
+    pageNumbers.push({
+      value: i,
+      isCurrent: i === Number(+curPage),
+    });
+  }
     
   res.render("vwTeacher/my_course", {
     user: req.session.authUser,
-    courses
+    courses: coursesList,
+    havePagination: courses.length > limit ? true : false,
+    pageNumbers: pageNumbers,
+    firstPage: Number(curPage) === 1 ? true : false,
+    lastPage: Number(curPage) === nPages ? true : false,
+    prevPage: "?page=" + Number(curPage - 1),
+    nextPage: "?page=" + Number(curPage + 1),
   });
 };
 
@@ -105,21 +128,26 @@ const createCourse1 = async (req, res) => {
   }
 };
 
-const createCourse2 = async (req, res) => {
-  if (!req.query.language) {
-    console.log(req.session.createCourse.cat);
-    const languages = await CourseLanguage.find({ categoryName: req.session.createCourse.cat })
-      .sort("createdAt")
-      .lean();
+const createCourse2 = async (req, res, next) => {
+  try {
+    if (!req.query.language) {
+      console.log(req.session.createCourse.cat);
+      const languages = await CourseLanguage.find({ categoryName: req.session.createCourse.cat })
+        .sort("createdAt")
+        .lean();
 
-    const langList = [...languages];
-    res.render("vwTeacher/vwCreateCourse/step2", {
-      languages: langList,
-      layout: "create_course",
-    });
-  } else {
-    req.session.createCourse.lang = req.query.language;
-    res.redirect("/teacher/course/s3");
+      const langList = [...languages];
+      res.render("vwTeacher/vwCreateCourse/step2", {
+        languages: langList,
+        layout: "create_course",
+      });
+    } else {
+      req.session.createCourse.lang = req.query.language;
+      res.redirect("/teacher/course/s3");
+    }
+  } catch (err) {
+    console.log(err);
+    next(createError.InternalServerError(err.message));
   }
 
 };
@@ -156,6 +184,7 @@ const createCourse = async (req, res, next) => {
 
     res.redirect("/teacher/profile/my_course");
   } catch (err) {
+    console.log(err);
     next(createError.InternalServerError(err.message));
   }
 
@@ -163,10 +192,8 @@ const createCourse = async (req, res, next) => {
 
 const deleteCourse = async (req, res, next) => {
   try {
-    const deletedCourse = await Course.findByIdAndDelete({
-      _id: req.params.id
-    });
-    
+    await Course.deleteOne({_id: req.params.id})
+
     delete req.session.currentCourse
     res.redirect("/teacher/profile/my_course")
   } catch(err) {
@@ -192,6 +219,8 @@ const checkCourse = (req, res, next) => {
 
 //{{URL}}/courses/:id/info
 const getCourseInfo = async (req, res, next) => {
+  req.session.currentCourse = await Course.findOne({_id: req.session.currentCourse._id}).lean();
+
   res.render("vwTeacher/vwUpdateCourse/info", {
     user: req.session.authUser,
     course: req.session.currentCourse,
@@ -249,6 +278,7 @@ const updateCourseInfo = (req, res, next) => {
 
 const getCourseCurriculum = async (req, res, next) => {
   const lectures = await Lecture.find({createdIn: req.session.currentCourse._id}).lean();
+  req.session.currentCourse = await Course.findOne({_id: req.session.currentCourse._id}).lean();
   
   res.render('vwTeacher/vwUpdateCourse/curriculum', {
     user: req.session.authUser,
@@ -274,22 +304,87 @@ const createLecture = async (req, res, next) => {
   try {
     const lecture = await Lecture.create({
       name: req.body.name,
-      description: req.body.description,
-      video: req.body.video,
+      description: req.body.description || "",
+      video: req.body.video || "",
       createdIn: req.session.currentCourse._id,
       createdBy: req.session.authUser._id
     })
+    
+    await checkStatusOfCourse(req);
+    res.redirect('curriculum');
+  } catch (err) {
+    console.error(err);
+    next(createError.InternalServerError(err.message));
+  }
+}
 
-    if (lecture) {
-      res.redirect('curriculum');
-    }
-    else {
-      next(createError.InternalServerError("Cannot create lecture"));
-      res.redirect('curriculum');
-    }
+const getViewUpdateLecture = async (req, res, next) => {
+  try {
+    const lecture = await Lecture.findOne({_id: req.params.lid}).lean();
+
+    res.render('vwTeacher/vwUpdateCourse/update_lecture', {
+      user: req.session.authUser,
+      course: req.session.currentCourse,
+      lecture,
+      layout: "update_course",
+    });
   } catch (err) {
     next(createError.InternalServerError(err.message));
   }
+
+}
+
+const checkStatusOfCourse = async (req) => {
+  const courseId =  req.session.currentCourse._id;
+  const lectures = await Lecture.find({createdIn: courseId}).lean();
+
+  let isFinish = true;
+
+  if (lectures.length === 0) {
+    isFinish = false;
+  } else {
+    lectures.forEach(lecture => {
+      if (lecture.video === "" || lecture.description === "") {
+        isFinish = false;
+        return;
+      }
+    })
+  }
+  await Course.findByIdAndUpdate({_id: courseId}, { status: isFinish ? "completed" : "in progress"}).lean();
+}
+
+const updateLecture = async (req, res, next) => {
+  try {
+    const lecture = await Lecture.findByIdAndUpdate( 
+      {
+        _id: req.params.lid
+      },
+      {
+        name: req.body.name,
+        description: req.body.description || "",
+        video: req.body.video || "",
+        createdIn: req.session.currentCourse._id,
+        createdBy: req.session.authUser._id
+      });
+    
+    await checkStatusOfCourse(req);
+    res.redirect(`/teacher/course/${req.params.id}/curriculum`);
+  } catch (err) {
+    next(createError.InternalServerError(err.message));
+  }
+
+}
+
+const deleteLecture = async (req, res, next) => {
+  try {
+    const lecture = await Lecture.findByIdAndDelete({_id: req.params.lid});
+
+    await checkStatusOfCourse(req);
+    res.redirect(`/teacher/course/${req.params.id}/curriculum`);
+  } catch (err) {
+    next(createError.InternalServerError(err.message));
+  }
+
 }
 // {{URL}}/courses/:id
 const updateCourse = async (req, res) => {
@@ -339,6 +434,9 @@ export {
   getCourseCurriculum,
   getViewCreateLecture,
   createLecture,
+  getViewUpdateLecture,
+  updateLecture,
+  deleteLecture,
   updateCourse,
   deleteCourse,
 };

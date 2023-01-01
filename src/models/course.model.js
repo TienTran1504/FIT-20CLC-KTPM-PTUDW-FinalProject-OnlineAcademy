@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import Lecture from "./lecture.model";
+import Feedback from "./feedback.model";
+
+
 const CourseSchema = new mongoose.Schema(
   {
     //required: name, typeOf
