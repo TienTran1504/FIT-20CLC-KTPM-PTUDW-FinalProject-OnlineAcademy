@@ -11,9 +11,11 @@ const LectureSchema = new mongoose.Schema(
         description: {
             type: String,
             trim: true,
+            default: ""
         },
         video: {
             type: String,
+            default: ""
         },
         createdIn: {
             type: mongoose.Types.ObjectId,

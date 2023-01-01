@@ -58,22 +58,6 @@
           </li>
         </ul>
 
-        <h6
-          class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
-        >
-          <span>Last course</span>
-          <a class="d-flex align-items-center text-muted" href="#">
-            <span data-feather="plus-circle"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Course 1
-            </a>
-          </li>
-        </ul>
       </nav>
       <div class="col-9 h-100">
         <div class="card-body" style="display: flex;">
@@ -121,7 +105,7 @@
               <img
                 class="img-thumbnail"
                 style="padding: 0;"
-                src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg"
+                src="../../public/assets/images/{{image}}"
                 alt=""
               />
             </div>
@@ -140,7 +124,7 @@
               <p class="category-label">{{categoryName}}</p>
             </div>
             <div class="col-2">
-              <p class="category-label">Hoàn thành</p>
+              <p class="category-label">{{status}}</p>
             </div>
             <div class="edit-btn">
               <a href="/teacher/course/{{_id}}/info" class="heading-lg">Edit / manage course</a>
@@ -149,7 +133,7 @@
           {{/each}}
         </div>
         <div class="row mx-auto" style="width:20%;">
-          <ul class="pagination">
+          {{!-- <ul class="pagination">
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
@@ -168,8 +152,42 @@
                 <span class="sr-only">Next</span>
               </a>
             </li>
+          </ul> --}}
+           {{#if havePagination}}
+          <ul class="pagination">
+            {{#if firstPage}}
+              <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+              </li>
+            {{else}}
+              <li class="page-item">
+                <a class="page-link" href="{{prevPage}}">Previous</a>
+              </li>
+            {{/if}}
+            {{#each this.pageNumbers}}
+              {{#if isCurrent}}
+                <li class="page-item active" aria-current="page">
+                  <span class="page-link">{{value}}</span>
+                </li>
+              {{else}}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{value}}">{{value}}</a>
+                </li>
+              {{/if}}
+            {{/each}}
+            {{#if lastPage}}
+              <li class="page-item disabled">
+                <span class="page-link">Next</span>
+              </li>
+            {{else}}
+              <li class="page-item">
+                <a class="page-link" href="{{nextPage}}">Next</a>
+              </li>
+            {{/if}}
           </ul>
+        {{/if}}
         </div>
+        
 
         </div>
         <div>
