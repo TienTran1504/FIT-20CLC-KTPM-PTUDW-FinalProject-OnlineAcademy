@@ -78,14 +78,6 @@ const getOwnerCourses = async (req, res, next) => {
   ).lean();
   
   req.session.courses = courses;
-  // if (search) {
-  //   sortedCourses = sortedCourses.filter((course) => {
-  //     return course.name.startsWith(search);
-  //   });
-  // }
-  // if (limit) {
-  //   sortedCourses = sortedCourses.slice(0, Number(limit));
-  // }
     
   res.render("vwTeacher/my_course", {
     user: req.session.authUser,
@@ -159,7 +151,7 @@ const createCourse = async (req, res, next) => {
       categoryName: cat.name
     });
 
-    console.log(createdCourse);
+    lang.courseList.push(createdCourse);
     delete req.session.createCourse;
 
     res.redirect("/teacher/profile/my_course");
@@ -169,26 +161,30 @@ const createCourse = async (req, res, next) => {
 
 };
 
-const checkCourse = (req, res, next) => {
+const deleteCourse = async (req, res, next) => {
   try {
-    if (!req.session.currentCourse) {
-      const id = req.params.id;
+    const deletedCourse = await Course.findByIdAndDelete({
+      _id: req.params.id
+    });
     
-      const course = req.session.courses.filter(course => {
-        return course._id.toString() === id;
-      })[0];
+    delete req.session.currentCourse
+    res.redirect("/teacher/profile/my_course")
+  } catch(err) {
+    next(createError.InternalServerError(err.message));
+  }
+}
 
-      course._id = id;
+const checkCourse = (req, res, next) => {
+  try {    
+    const id = req.params.id;
   
-      req.session.currentCourse = course;
-    }
-   
-    if (req.session.currentCourse.briefDescription !== "" && 
-        req.session.currentCourse.detailDescription !== "" && 
-        req.session.currentCourse.image !== "") {
-      req.session.currentCourse.info = true;
-    }
-    next();  
+    const course = req.session.courses.filter(course => {
+      return course._id.toString() === id;
+    })[0];
+
+    course._id = id;
+    req.session.currentCourse = course;
+    next();
   } catch (err) {
     next(createError.InternalServerError(err.message));
   }
@@ -253,7 +249,7 @@ const updateCourseInfo = (req, res, next) => {
 
 const getCourseCurriculum = async (req, res, next) => {
   const lectures = await Lecture.find({createdIn: req.session.currentCourse._id}).lean();
-  console.log(lectures);
+  
   res.render('vwTeacher/vwUpdateCourse/curriculum', {
     user: req.session.authUser,
     course: req.session.currentCourse,
@@ -325,33 +321,6 @@ const updateCourse = async (req, res) => {
   }
 };
 
-// {{URL}}/courses/:id
-const deleteCourse = async (req, res) => {
-  const userCheck = await User.findOne({ _id: req.user.userId });
-  if (userCheck.permission === "teacher") {
-    const {
-      user: { userId },
-      params: { id: courseId },
-    } = req;
-    const courseCheck = await Course.findOne({ _id: courseId });
-    if (courseCheck.createdBy == userId) {
-      const course = await Course.findByIdAndRemove({
-        _id: courseId,
-        createdBy: userId,
-      });
-      if (!course) {
-        throw new NotFoundError(`No course with id ${courseId}`);
-      }
-      res
-        .status(StatusCodes.OK)
-        .json({ msg: `Delete course ID: ${courseId} successfully ` });
-    } else {
-      throw createError.Unauthorized("Teacher doesnt own this course");
-    }
-  } else {
-    throw createError.Unauthorized("User have no permission");
-  }
-};
 
 export {
   getInfo,

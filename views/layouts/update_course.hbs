@@ -11,6 +11,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <style>
+      #delete:hover {
+        opacity: 0.6;
+        background-color: #f8f9fa!important;
+      }
+    </style>
     {{{_sections.css}}}
   </head>
   <body>
@@ -24,7 +30,10 @@
             <p class="category-label" style="margin-bottom:0;">Hoàn thành</p>
         </div>
         <div class="col-4">
-            <a href="/teacher/profile/my_course" class="float-right pr-3 font-weight-bold" style="text-decoration:none; font-size:20px;">Save</a>
+          <a href="/teacher/profile/my_course" class="float-right pr-3 font-weight-bold" style="text-decoration:none; font-size:20px;">Save</a>
+          <form action="/teacher/course/{{course._id}}">
+            <button type="submit" id="delete" class="float-right pr-3 font-weight-bold bg-light" style="border:none; font-size:20px; color:red;">Delete</button>
+          </form>
         </div>
     </nav>  
     {{{body}}}
