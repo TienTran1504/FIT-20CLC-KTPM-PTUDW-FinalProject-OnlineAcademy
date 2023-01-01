@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import Lecture from "./lecture.model";
-import Feedback from "./feedback.model";
-
+import FeedBack from "./feedback.model";
 
 const CourseSchema = new mongoose.Schema(
   {
@@ -44,13 +43,6 @@ const CourseSchema = new mongoose.Schema(
     ratingList: {
       type: Array,
       default: [],
-    },
-    rating: {
-      type: Number,
-      default: 0,
-      min: [0, "Rating must be above 0.0"],
-      max: [5, "Rating must be below 5.0"],
-      set: val => Math.round(val * 10) / 10,
     },
     price: {
       type: Number,
@@ -103,6 +95,12 @@ const CourseSchema = new mongoose.Schema(
 CourseSchema.pre("deleteOne", function (next) {
   const courseID = this.getQuery()["_id"];
   Lecture.deleteMany({ createdIn: courseID }, function (err, result) {
+    if (err) {
+      next(err);
+    }
+    next();
+  });
+  FeedBack.deleteMany({ createdIn: courseID }, function (err, result) {
     if (err) {
       next(err);
     }
