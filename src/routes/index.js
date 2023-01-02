@@ -7,7 +7,11 @@ import userRouter from "./user.route";
 import accountRouter from "./account.route";
 import categoriesRouter from "./categories.route";
 import homeRouter from "./home.route";
-import { checkTeacher } from "../middleware/checkPermission.mdw";
+import {
+  checkTeacher,
+  checkAdmin,
+  checkStudent,
+} from "../middleware/checkPermission.mdw";
 
 export default function (app) {
   // app.use('/api/v1/auth', authRouter);
@@ -32,13 +36,13 @@ export default function (app) {
   //   });
   // });
   app.use(function (req, res, next) {
-    res.render('404', { layout: false });
+    res.render("404", { layout: false });
   });
 
   app.use(function (err, req, res, next) {
-    res.status(500).render('500', {
+    res.status(500).render("500", {
       stack: err.stack,
-      layout: false
+      layout: false,
     });
   });
 }

@@ -4,13 +4,17 @@ import Course from "../models/course.model";
 import User from "../models/user.model";
 import bcrypt from "bcryptjs";
 import multer from "multer";
+import alert from "alert";
 
 const checkGender = gender => {
   if (gender === "Male") return true;
   return false;
 };
 
-const getProfile = async (req, res) => {
+const getProfile = async (req, res, next) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -22,12 +26,17 @@ const getProfile = async (req, res) => {
 };
 
 const updateProfile = async (req, res, next) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const { firstname, lastname, gender, password_profile } = req.body;
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
   if (!firstname || !lastname || !gender || !password_profile) {
-    return next(createError(400, "Invalid input information"));
+    alert("Input information is empty");
+    res.redirect("/student");
+    return;
   }
 
   const isPasswordCorrect = await bcrypt.compare(
@@ -35,7 +44,7 @@ const updateProfile = async (req, res, next) => {
     getUser.password
   );
   if (!isPasswordCorrect) {
-    return next(createError(400, "Incorrect password"));
+    alert("Incorrect password");
   } else {
     const updateUser = await User.findByIdAndUpdate(
       { _id: getUser._id },
@@ -47,6 +56,9 @@ const updateProfile = async (req, res, next) => {
 };
 
 const getPhoto = async (req, res) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -57,6 +69,9 @@ const getPhoto = async (req, res) => {
 };
 
 const uploadPhoto = async (req, res) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   let fileName;
 
   const storage = multer.diskStorage({
@@ -87,6 +102,9 @@ const uploadPhoto = async (req, res) => {
 };
 
 const getAccountSecurity = async (req, res) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -97,17 +115,15 @@ const getAccountSecurity = async (req, res) => {
 };
 
 const updatePassword = async (req, res, next) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
   const { currentPassword, newPassword, rePassword } = req.body;
-  res.jsonp({ success: true });
 
   if (!newPassword || !currentPassword) {
-    res.render("vwStudentProfile/account_security", {
-      notif: true,
-    });
-    // alert("Input validation failed");
-    return;
+    alert("Input information is empty");
   } else {
     //compare password
     const isPasswordCorrect = await bcrypt.compare(
@@ -116,13 +132,11 @@ const updatePassword = async (req, res, next) => {
     );
 
     if (!isPasswordCorrect) {
-      res.render("vwStudentProfile/account_security", {
-        notif: "Wrong current password ",
-      });
+      alert("Incorrect password");
+    } else if (newPassword.length < 6) {
+      alert("New password must be at least 6 characters");
     } else if (newPassword !== rePassword) {
-      res.render("vwStudentProfile/account_security", {
-        notif: "Re-type password incorrect",
-      });
+      alert("Re-enter incorrect password");
     } else {
       //Hashing password
       const salt = await bcrypt.genSalt(10);
@@ -137,32 +151,37 @@ const updatePassword = async (req, res, next) => {
         updatePassword,
         { new: true, runValidators: true }
       );
-      res.redirect("/student/account_security");
+      alert("Change password successfully");
     }
   }
+  res.redirect("/student/account_security");
 };
 
 const changeEmail = async (req, res) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
-  const { email, password } = req.body;
+  const { email, password_email } = req.body;
 
-  if (!email || !password) {
-    res.render("vwStudentProfile/profile", {
-      notif: "Input validation failed",
-      user: getUser,
-      name: getUser.firstName + " " + getUser.lastName,
-    });
-  } else {
+  console.log(email, password_email);
+
+  if (!email || !password_email) {
+    alert("Please enter email and password");
+  }
+  // else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+  //   alert("Email invalid");
+  // }
+  else {
     //compare password
-    const isPasswordCorrect = await bcrypt.compare(password, getUser.password);
+    const isPasswordCorrect = await bcrypt.compare(
+      password_email,
+      getUser.password
+    );
     if (!isPasswordCorrect) {
-      res.render("vwStudentProfile/profile", {
-        notif: "Wrong current password ",
-        user: getUser,
-        name: getUser.firstName + " " + getUser.lastName,
-      });
+      alert("Incorrect password");
     } else {
       const changeEmail = {
         email: email,
@@ -176,18 +195,23 @@ const changeEmail = async (req, res) => {
       );
 
       const userCheck = await User.findById({ _id: id }).lean();
-
+      alert("Change email successfully");
       res.render("vwStudentProfile/profile", {
         notif: "Successfully updated",
         user: userCheck,
         name: userCheck.firstName + " " + userCheck.lastName,
         gender: checkGender(getUser.gender),
       });
+      return;
     }
   }
+  res.redirect("/student");
 };
 
 const addWatchList = async (req, res, next) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const getUser = await User.findById({ _id: req.user.userId });
   const { courseId } = req.params;
   const course = await Course.findOne({ _id: courseId });
@@ -221,6 +245,9 @@ const addWatchList = async (req, res, next) => {
 
 // {{URL}}/student/courses
 const getCourseFavorite = async (req, res) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -229,7 +256,7 @@ const getCourseFavorite = async (req, res) => {
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
-
+  console.log(getCoursesId);
   let listCourses = [];
   getCoursesId.forEach(async idCourse => {
     var course = await Course.findById(idCourse);
@@ -265,6 +292,9 @@ const getCourseFavorite = async (req, res) => {
 };
 
 const removeCourseInWatchList = async (req, res, next) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -285,6 +315,9 @@ const removeCourseInWatchList = async (req, res, next) => {
 };
 
 const addCourseList = async (req, res, next) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -320,6 +353,9 @@ const addCourseList = async (req, res, next) => {
 
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -364,6 +400,9 @@ const getCourseList = async (req, res) => {
 };
 // {{URL}}/student/courses/:courseId
 const addCourse = async (req, res) => {
+  if (req.session.authUser === null)
+    return next(createError(401, "Unauthorized"));
+
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 

@@ -48,7 +48,7 @@
           data-setup="{}"
         >
           <source
-            src="https://mp4-c.udemycdn.com/2020-04-24_13-27-46-070c1060ceb1bf4f7bffef781efaa787/WebHD_720p.mp4?Expires=1672466866&Signature=PI-8BYPNPuN5TzZFCpp-hLRxqVV5--r6XL7aSPNqt5X~m3ZfszX-Jr0e0WtxU5Q0wASORvHOyM6VEwygLLIe1MwUCqJPLvtc5T54ZvDm4OQx4TnqI1GjNbn7dgiFVlaPlIvkX9rvJXCsqQlIPpX2NQ2l5gq~9dm9Vajyrk1w~d-ZQTcCWR17YfvMSF1Cdch61x~yIRCd8JKOHO2P6oGWDpaatHdFi4Mb-eEyx5-1dVcS8qXW2qg0V5~G9csoL6NdOtGCkwPUhmQTqKmyT3KRaXYldO-NbTixwT7qUv8bqeHOc6RwGX4SYcX4b0UMVGthYJp05fjCpI0l1J6zQwOIqw__&Key-Pair-Id=APKAITJV77WS5ZT7262A"
+            src="https://mp4-c.udemycdn.com/2020-04-24_13-27-46-070c1060ceb1bf4f7bffef781efaa787/WebHD_720p.mp4?Expires=1672668014&Signature=LH75Mh7b-sQZ~Oh6sfiGMYghDQIMhRP4pblHsASm1WvWSZCF0N0xGI4zA8r1fSDGOLXarPqDtgOuGXXMwVQN9VKZwNZPo4HWb0G4o1tL3O1nkFjDbwGYu2QTMwlHYUYBuVIBc0kxXqOiZAsLVPC~dfuqVoworHbo-wtnlqZRqFYUmnXbfS8Jcsj2O4ig0zoFqXm0wv37pcuE68LcaMtwjlBcS~PI3rvLXjz4x3qPmFOZXd3o1D-1q6DzQ10kkS2N0eH7It3rEcOgi9Zro02Dyb64HWf61zAmJQzA7pHlk8PPDoGLk8D3Qhy2Rv0De9oeoGJNVXKRp78Z-le1ckgCcg__&Key-Pair-Id=APKAITJV77WS5ZT7262A"
             type="video/webm"
           />
           <p class="vjs-no-js">
@@ -129,36 +129,96 @@
             </div>
             <div>
               <form>
+
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Your feedback</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                  />
-                </div>
-                <div class="form-group">
-                  <label>Rating</label>
-                  <div class="rating">
-                    <input type="radio" name="rating" value="5" id="5" /><label
-                      for="5"
-                    >☆</label>
-                    <input type="radio" name="rating" value="4" id="4" /><label
-                      for="4"
-                    >☆</label>
-                    <input type="radio" name="rating" value="3" id="3" /><label
-                      for="3"
-                    >☆</label>
-                    <input type="radio" name="rating" value="2" id="2" /><label
-                      for="2"
-                    >☆</label>
-                    <input type="radio" name="rating" value="1" id="1" /><label
-                      for="1"
-                    >☆</label>
+                  <button
+                    type="button"
+                    class="btn btn-info btn-lg openmodal"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                  >Open Modal</button>
+
+                  <!--Division for Modal-->
+                  <div id="myModal" class="modal fade" role="dialog">
+
+                    <!--Modal-->
+                    <div class="modal-dialog">
+
+                      <!--Modal Content-->
+                      <div class="modal-content">
+
+                        <!-- Modal Header-->
+                        <div class="modal-header">
+                          <h3>Feedback Request</h3>
+
+                          <!--Close/Cross Button-->
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            style="color: white;"
+                          >&times;</button>
+                        </div>
+
+                        <!-- Modal Body-->
+                        <div class="modal-body text-center">
+                          <i
+                            class="far fa-file-alt fa-4x mb-3 animated rotateIn icon1"
+                          ></i>
+                          <h3>Your opinion matters</h3>
+                          <h5>Help us improve our product?
+                            <strong>Give us your feedback.</strong></h5>
+                          <hr />
+                          <h6>Your Rating</h6>
+                        </div>
+
+                        <!-- Radio Buttons for Rating-->
+                        <div class="form-check mb-4">
+                          <input name="feedback" type="radio" />
+                          <label class="ml-3">Very good</label>
+                        </div>
+                        <div class="form-check mb-4">
+                          <input name="feedback" type="radio" />
+                          <label class="ml-3">Good</label>
+                        </div>
+                        <div class="form-check mb-4">
+                          <input name="feedback" type="radio" />
+                          <label class="ml-3">Mediocre</label>
+                        </div>
+                        <div class="form-check mb-4">
+                          <input name="feedback" type="radio" />
+                          <label class="ml-3">Bad</label>
+                        </div>
+                        <div class="form-check mb-4">
+                          <input name="feedback" type="radio" />
+                          <label class="ml-3">Very Bad</label>
+                        </div>
+
+                        <!--Text Message-->
+                        <div class="text-center">
+                          <h4>What could we improve?</h4>
+                        </div>
+                        <textarea
+                          type="textarea"
+                          placeholder="Your Message"
+                          rows="3"
+                        ></textarea>
+
+                        <!-- Modal Footer-->
+                        <div class="modal-footer">
+                          <a href="" class="btn btn-primary">Send
+                            <i class="fa fa-paper-plane"></i>
+                          </a>
+                          <a
+                            href=""
+                            class="btn btn-outline-primary"
+                            data-dismiss="modal"
+                          >Cancel</a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
             <div class="content-rating">
