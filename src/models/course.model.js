@@ -15,12 +15,12 @@ const CourseSchema = new mongoose.Schema(
     briefDescription: {
       type: String,
       trim: true,
-      default: ""
+      default: "",
     },
     detailDescription: {
       type: String,
       trim: true,
-      default: ""
+      default: "",
     },
     status: {
       type: String,
@@ -37,10 +37,6 @@ const CourseSchema = new mongoose.Schema(
       default: [],
     },
     viewList: {
-      type: Array,
-      default: [],
-    },
-    ratingList: {
       type: Array,
       default: [],
     },
