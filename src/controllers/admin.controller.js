@@ -497,6 +497,7 @@ const createCourseCategory = async function (req, res, next) {
       await CourseCategory.create({
         name: req.body.CategoryName,
         image: req.body.CategoryImage,
+        createdBy: req.session.authUser._id,
       });
     }
   }
@@ -537,6 +538,7 @@ const createLanguage = async function (req, res, next) {
       image: req.body.LanguageImage,
       categoryId: category._id,
       categoryName: category.name,
+      createdBy: req.session.authUser._id,
     });
     newLanguage = { _id: createLanguage._id, name: createLanguage.name };
     category.languageList.push(newLanguage);
