@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <form class="form-horizontal" method="post" id="frmRegister">
-                <h4 class="card-header" align="center">
+            <form class="form-horizontal" method="post" id="frmRegister" onsubmit=" return checkData()">
+                <h2 class="card-header" align="center">
                     Account Registration
-                </h4>
+                </h2>
                 <label for="txtFirstName">First Name</label>
                 <input name="firstName" type="text" class="form-control" id="txtFirstName" placeholder="Enter first name" autofocus required/>
                 <label for="txtLastName">Last Name</label>
@@ -24,20 +24,21 @@
                 <input name="email" type="text" class="form-control" id="txtEmail" placeholder="Enter Email">
 
                 <label for="txtGender">Gender</label>
-                <select name="gender" class="form-control" id="txtGender">
+                <select name="gender" class="form-control" id="txtGender" style="border: 1px solid black">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
 
                 <div class="clearfix">
-                    <button type="submit" class="signupbtn" formaction="/account/register" >Sign Up</button>
+                    <button type="submit" class="signupbtn" formaction="/account/register">Sign Up</button>
                 </div>
 
                 <div class="d-flex justify-content-center links">
-                    Do have an account? <a href="/account/login"> Log in</a>
+                    Do have an account?&nbsp;<a href="/account/login">Log in</a>
                 </div>
             </form>
         </div>
+
         <div class="col-sm-4"></div>
     </div>
 
@@ -45,17 +46,21 @@
 
 {{#section "js"}}
 <script>
-    document.getElementById("frmRegister").on('submit', function (e) {
-        e.preventDefault();
-
+    function checkData(){
         const pass = document.getElementById("txtPassword").value;
-        const confirmPass = document.getElementById("txtConfirm").value;
-
-        if (pass != confirmPass) {
-            alert('Password and Confirm password are not same.');
-            return;
+        const confirm = document.getElementById("txtConfirm").value;
+        if (pass.length < 6 || pass.length > 10 || confirm.length < 6 || confirm.length > 10){
+            alert("Password must consist of 6 to 10 digits")
+            document.querySelector('#txtPassword').select();
+            return false;
         }
-        document.getElementById("frmRegister").off('submit').submit();
-    });
+
+        if (pass != confirm){
+            alert("Password and Confirm Password are not the same.")
+            document.querySelector('#txtPassword').select();
+            return false;
+        }
+    }
+
 </script>
 {{/section}}

@@ -57,9 +57,9 @@
               Explore
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Category 1</a>
-              <a class="dropdown-item" href="#">Category 2</a>
-              <a class="dropdown-item" href="#">Category 3</a>
+              {{#each CatList}}
+                  <a class=dropdown-item href="/categories/" role="button" data-toggle="dropdown dropright" aria-expanded="false">{{CatName}}</a>
+              {{/each}}
             </div>
           </div>
         </div>
@@ -78,7 +78,9 @@
         {{/if}}
       </div>
     </nav>
-    {{{body}}}
+    <div style="min-height: 100vh">
+        {{{body}}}
+    </div>
 
     <button
       type="button"

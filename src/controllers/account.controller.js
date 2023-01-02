@@ -55,7 +55,9 @@ const addAccount = async (req, res, next) => {
                         rejectUnauthorized: false
                     }
                 });
-                const content = OTP;
+                const content = "Welcome to Academy Online.\nACB sincerely thanks you for choosing our service and wishes you all the best.\n" +
+                    "And here is your OTP code: " + OTP + "\nYou do not provide the OTP code sent by ACB to your email to anyone.\nThank you!";
+
 
                 const mainOptions = { // thiết lập đối tượng, nội dung gửi mail
                     from: 'NQH-Test nodemailer',
