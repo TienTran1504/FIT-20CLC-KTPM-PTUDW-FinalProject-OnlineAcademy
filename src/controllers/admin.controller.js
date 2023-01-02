@@ -3,6 +3,7 @@ import Course from "../models/course.model.js";
 import CourseCategory from "../models/coursecategory.model.js";
 import CourseLanguage from "../models/courselanguage.model";
 import Feedback from "../models/feedback.model";
+import Rating from "../models/rating.model";
 import createError from "http-errors";
 
 const register = async (req, res, next) => {
@@ -384,7 +385,7 @@ const viewCoursesByID = async function (req, res, next) {
   //    return next(createError(500, "User has no permission "));
   // }
 };
-// {{ URL }}/admin/manageclanguageid?id
+// {{ URL }}/admin/managefeedbacksid?id
 const viewFeedBacksByID = async function (req, res, next) {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
@@ -402,6 +403,30 @@ const viewFeedBacksByID = async function (req, res, next) {
     course,
     listFeedBacks,
     empty: listFeedBacks.length === 0,
+  });
+  // } else {
+  //    return next(createError(500, "User has no permission "));
+  // }
+};
+
+// {{ URL }}/admin/manageratingid?id
+const viewRatingByID = async function (req, res, next) {
+  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+  // if (userCheck.permission === "Admin") {
+  const id = req.query.id || 0;
+  const course = await Course.findOne({ _id: id }).lean();
+  const ratings = await Rating.find({ createdIn: id }).lean();
+  let listRating = [];
+  for (let i = 0; ratings.length; i++) {
+    const user = await User.findById({ _id: ratings[i].createdBy });
+
+    const objRating = { numberRated: ratings[i].numberRated, email: user.email };
+    listRating.push(objRating);
+  }
+  res.render("vwAdminManagement/rating", {
+    course,
+    listRating,
+    empty: listRating.length === 0,
   });
   // } else {
   //    return next(createError(500, "User has no permission "));
@@ -903,6 +928,7 @@ export {
   viewLanguagesByID,
   viewCoursesByID,
   viewFeedBacksByID,
+  viewRatingByID,
   updateUserPermission,
   deleteUser,
   createCourseCategory,
