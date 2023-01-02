@@ -396,10 +396,18 @@ const viewFeedBacksByID = async function (req, res, next) {
   for (let i = 0; feedbacks.length; i++) {
     const user = await User.findById({ _id: feedbacks[i].createdBy });
 
-    const objFeedBack = { content: feedbacks[i].content, email: user.email };
+    const objFeedBack = { content: feedbacks[i].content, rating: feedbacks[i].numberRated || 0, email: user.email };
     listFeedBacks.push(objFeedBack);
   }
+  let rated = 0;
+  if (listFeedBacks.length !== 0) {
+    const totalFeedBacks = listFeedBacks.reduce((total, feedback) => {
+      return total + Number(feedback.rating);
+    }, 0);
+    rated = Number((totalFeedBacks / listFeedBacks.length));
+  }
   res.render("vwAdminManagement/feedbacks", {
+    rated,
     course,
     listFeedBacks,
     empty: listFeedBacks.length === 0,
@@ -410,28 +418,28 @@ const viewFeedBacksByID = async function (req, res, next) {
 };
 
 // {{ URL }}/admin/manageratingid?id
-const viewRatingByID = async function (req, res, next) {
-  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
-  // if (userCheck.permission === "Admin") {
-  const id = req.query.id || 0;
-  const course = await Course.findOne({ _id: id }).lean();
-  const ratings = await Rating.find({ createdIn: id }).lean();
-  let listRating = [];
-  for (let i = 0; ratings.length; i++) {
-    const user = await User.findById({ _id: ratings[i].createdBy });
+// const viewRatingByID = async function (req, res, next) {
+//   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
+//   // if (userCheck.permission === "Admin") {
+//   const id = req.query.id || 0;
+//   const course = await Course.findOne({ _id: id }).lean();
+//   const ratings = await Rating.find({ createdIn: id }).lean();
+//   let listRating = [];
+//   for (let i = 0; ratings.length; i++) {
+//     const user = await User.findById({ _id: ratings[i].createdBy });
 
-    const objRating = { numberRated: ratings[i].numberRated, email: user.email };
-    listRating.push(objRating);
-  }
-  res.render("vwAdminManagement/rating", {
-    course,
-    listRating,
-    empty: listRating.length === 0,
-  });
-  // } else {
-  //    return next(createError(500, "User has no permission "));
-  // }
-};
+//     const objRating = { numberRated: ratings[i].numberRated, email: user.email };
+//     listRating.push(objRating);
+//   }
+//   res.render("vwAdminManagement/rating", {
+//     course,
+//     listRating,
+//     empty: listRating.length === 0,
+//   });
+//   // } else {
+//   //    return next(createError(500, "User has no permission "));
+//   // }
+// };
 
 //{{URL}}/admin/edituser/patch
 const updateUserPermission = async function (req, res, next) {
@@ -618,70 +626,7 @@ const updateCourseCategory = async function (req, res, next) {
   // }
 };
 
-//{{URL}}/admin/editLanguage/patch
-/*
-const updateLanguageCategory = async function (req, res, next) {
-  // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
-  // if (userCheck.permission === "Admin") {
-  const { CurrentLanguageName, CurrentCategoryName, LanguageID, LanguageName, CategoryName, LanguageImage } = req.body;
-  //thêm language vào category mới
-  const findNewCategory = await CourseCategory.findOne({ name: CategoryName });
-  const objLanguage = { _id: LanguageID, name: LanguageName };
-  const checkLanguageExist = findNewCategory.languageList.some(language => {
-    return language.name === objLanguage.name;
-  });
-  if (checkLanguageExist) {
-    return next(
-      createError(500, `Already have this language in ${findNewCategory.name}`)
-    );
-  }
-  else {
-    // xoá language trong category cũ
-    const findCurrentCategory = await CourseCategory.findOne({ name: CurrentCategoryName });
-    const indexOf = findCurrentCategory.languageList.findIndex(language => {
-      return language._id === LanguageID;
-    });
-    findCurrentCategory.languageList.splice(indexOf, 1);
-    await CourseCategory.findByIdAndUpdate(
-      {
-        _id: findCurrentCategory._id
-      },
-      {
-        languageList: findCurrentCategory.languageList,
-      },
-      { new: true, runValidators: true }
-    )
-    findNewCategory.languageList.push(objLanguage);
-    await CourseCategory.findByIdAndUpdate(
-      {
-        _id: findNewCategory._id
-      },
-      {
-        languageList: findNewCategory.languageList,
-      },
-      { new: true, runValidators: true }
-    )
-    const languageUpdate = await CourseLanguage.findByIdAndUpdate(
-      {
-        _id: LanguageID,
-      },
-      {
-        name: LanguageName,
-        image: LanguageImage,
-        categoryName: CategoryName,
-        categoryId: findNewCategory._id
-      },
-      { new: true, runValidators: true }
-    );
-    if (!languageUpdate) {
-      return next(createError(400, "Please provide a language"));
-    }
-    res.redirect("/admin/managelanguage");
-  }
-  // } else {
-  //    return next(createError(500, "User has no permission "));
-  // }
-};*/
+
 
 const updateLanguageCategory = async function (req, res, next) {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
@@ -695,89 +640,6 @@ const updateLanguageCategory = async function (req, res, next) {
   let currentLanguageList = findCurrentCategory.languageList;
   let newLanguageList = findNewCategory.languageList;
 
-  // if (CurrentLanguageName !== LanguageName) {
-
-  //   const indexOf = currentLanguageList.findIndex(language => {
-  //     return language === LanguageID;
-  //   })
-  //   currentLanguageList.splice(indexOf, 1);
-
-  //   if (CurrentCategoryName === CategoryName) {
-  //     newLanguageList = currentLanguageList;
-  //   }
-  //   objLanguage = { _id: LanguageID, name: LanguageName };
-  //   const checkLanguageExist = newLanguageList.some(language => {
-  //     return language.name === objLanguage.name;
-  //   });
-  //   if (checkLanguageExist) {
-  //     return next(
-  //       createError(500, `Already have this language in ${findNewCategory.name}`)
-  //     );
-  //   }
-  //   else {
-  //     newLanguageList.push(objLanguage);
-
-  //     await CourseCategory.findByIdAndUpdate(
-  //       {
-  //         _id: findCurrentCategory._id
-  //       },
-  //       {
-  //         languageList: currentLanguageList
-  //       },
-  //       { new: true, runValidators: true }
-  //     )
-  //     await CourseCategory.findByIdAndUpdate(
-  //       {
-  //         _id: findNewCategory._id
-  //       },
-  //       {
-  //         languageList: newLanguageList
-  //       },
-  //       { new: true, runValidators: true }
-  //     )
-  //   }
-  // }
-  // else{
-  //   const indexOf = currentLanguageList.findIndex(language => {
-  //     return language === LanguageID;
-  //   })
-  //   currentLanguageList.splice(indexOf, 1);
-
-  //   if (CurrentCategoryName === CategoryName) {
-  //     newLanguageList = currentLanguageList;
-  //   }
-  //   objLanguage = { _id: LanguageID, name: LanguageName };
-  //   const checkLanguageExist = newLanguageList.some(language => {
-  //     return language.name === objLanguage.name;
-  //   });
-  //   if (checkLanguageExist) {
-  //     return next(
-  //       createError(500, `Already have this language in ${findNewCategory.name}`)
-  //     );
-  //   }
-  //   else {
-  //     newLanguageList.push(objLanguage);
-
-  //     await CourseCategory.findByIdAndUpdate(
-  //       {
-  //         _id: findCurrentCategory._id
-  //       },
-  //       {
-  //         languageList: currentLanguageList
-  //       },
-  //       { new: true, runValidators: true }
-  //     )
-  //     await CourseCategory.findByIdAndUpdate(
-  //       {
-  //         _id: findNewCategory._id
-  //       },
-  //       {
-  //         languageList: newLanguageList
-  //       },
-  //       { new: true, runValidators: true }
-  //     )
-  //   }
-  // }
   const indexOf = currentLanguageList.findIndex(language => {
     return language._id == LanguageID;
   })
@@ -928,7 +790,7 @@ export {
   viewLanguagesByID,
   viewCoursesByID,
   viewFeedBacksByID,
-  viewRatingByID,
+  // viewRatingByID,
   updateUserPermission,
   deleteUser,
   createCourseCategory,
