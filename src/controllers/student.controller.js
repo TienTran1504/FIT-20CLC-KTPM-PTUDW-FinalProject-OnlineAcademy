@@ -252,18 +252,36 @@ const getCourseFavorite = async (req, res) => {
   const getUser = await User.findById({ _id: id }).lean();
 
   const getCoursesId = getUser.watchList;
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
-  console.log(getCoursesId);
+
   let listCourses = [];
-  getCoursesId.forEach(async idCourse => {
-    var course = await Course.findById(idCourse);
-    if (course !== null) {
-      listCourses = [...listCourses, course];
+  for (let i = 0; i < getCoursesId.length; i++) {
+    const course = await Course.findById({ _id: getCoursesId[i] });
+    const feedbacks = course.feedbackList;
+    let averageRate = 0;
+    for (let j = 0; j < feedbacks.length; j++) {
+      averageRate += feedbacks[j].numberRated;
     }
-  });
+    if (averageRate > 0)
+      averageRate = (averageRate / feedbacks.length).toFixed(1);
+    else averageRate = 0;
+
+    const obj = {
+      name: course.name,
+      image: course.image,
+      des: course.briefDescription,
+      category: course.categoryName,
+      idCourse: course._id,
+      rate: averageRate,
+      numberRate: feedbacks.length,
+      numberLecture: course.lecture.length,
+      price: course.price,
+    };
+    listCourses = [...listCourses, obj];
+  }
   const total = listCourses.length;
   const nPages = Math.ceil(total / limit);
   listCourses = listCourses.slice(offset, offset + limit);
@@ -315,20 +333,22 @@ const removeCourseInWatchList = async (req, res, next) => {
 };
 
 const addCourseList = async (req, res, next) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
+  // if (req.session.authUser === null)
+  //   return next(createError(401, "Unauthorized"));
 
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
-  const { courseId } = req.params;
-  const course = await Course.findOne({ _id: courseId });
+  // const { courseId } = req.params;
+  const course = await Course.findById({ _id: courseId });
   const checkCourseExists = getUser.courseList.some(watch => {
-    return watch._id === courseId;
+    return watch == courseId;
   });
-
-  if (course === null) {
-    return next(createError(400, "Not found this course with id " + courseId));
+  console.log(course);
+  // console.log("checkCourseExists: " + checkCourseExists);
+  // console.log("courses List: " + getUser.courseList);
+  if (!course) {
+    return next(createError(400, `Not found this course with id ${courseId}`));
   } else if (checkCourseExists) {
     return next(
       createError(
@@ -348,6 +368,8 @@ const addCourseList = async (req, res, next) => {
       },
       { new: true, runValidators: true }
     );
+    alert("Complete");
+    res.redirect("/student/course_learn");
   }
 };
 
@@ -358,20 +380,26 @@ const getCourseList = async (req, res) => {
 
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
-
   const getCoursesId = getUser.courseList;
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
 
   let listCourses = [];
-  getCoursesId.forEach(async idCourse => {
-    var course = await Course.findById(idCourse);
-    if (course !== null) {
-      listCourses = [...listCourses, course];
-    }
-  });
+  for (let i = 0; i < getCoursesId.length; i++) {
+    const course = await Course.findById({ _id: getCoursesId[i] });
+    const obj = {
+      name: course.name,
+      image: course.image,
+      des: course.briefDescription,
+      category: course.categoryName,
+      status: course.status,
+      idCourse: course._id,
+    };
+    listCourses = [...listCourses, obj];
+  }
+
   const total = listCourses.length;
   const nPages = Math.ceil(total / limit);
   listCourses = listCourses.slice(offset, offset + limit);
@@ -383,7 +411,6 @@ const getCourseList = async (req, res) => {
       isCurrent: i === Number(+curPage),
     });
   }
-
   res.render("vwStudentProfile/courses_learn", {
     user: getUser,
     gender: checkGender(getUser.gender),
@@ -448,6 +475,7 @@ export {
   updatePassword,
   changeEmail,
   uploadPhoto,
+  addCourseList,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

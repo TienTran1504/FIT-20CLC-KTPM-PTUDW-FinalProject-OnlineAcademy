@@ -7,10 +7,6 @@ import Course from "../models/course.model";
 import Lecture from "../models/lecture.model";
 
 const getInfo = async (req, res, next) => {
-  req.session.authUser = await User.findOne({
-    _id: "63b199a2bb67b820d829de77",
-  }).lean();
-
   res.render("vwTeacher/profile", {
     user: req.session.authUser,
   });

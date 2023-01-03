@@ -16,10 +16,10 @@ import {
 export default function (app) {
   // app.use('/api/v1/auth', authRouter);
   app.use("/account", accountRouter);
-  app.use("/admin", checkAdmin, adminRouter);
+  app.use("/admin", adminRouter);
   app.use("/courses", coursesRouter);
-  app.use("/student", checkStudent, studentRouter);
-  app.use("/teacher", checkTeacher, teacherRouter);
+  app.use("/student", studentRouter);
+  app.use("/teacher", teacherRouter);
   app.use("/user", userRouter);
   app.use("/categories", categoriesRouter);
 
