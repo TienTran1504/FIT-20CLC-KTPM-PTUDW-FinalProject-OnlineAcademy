@@ -9,28 +9,15 @@
   <div class="row" style="margin-bottom:16px">
     <div class="col-sm-3">
       <div class="card mb-3">
-        <h4
-          class="card-header"
-          style="background-color:#52ab98; color:#fff"
-        >Management</h4>
-        <div class="list-group list-group-flush">
-          <a
-            href="/admin/managefeedbacksid?id={{course._id}}"
-            class="list-group-item list-group-item-action active"
-            aria-current="true"
-            style="background-color:#2b6777; color:#fff; font-weight: bold"
-          >
-            FeedBacks
-          </a>
-          <a
-            href="/admin/manageratingid?id={{course._id}}"
-            class="list-group-item list-group-item-action"
-            style="font-weight:bold"
-          >Rating</a>
-        </div>
-      </div>
-      <div class="card">
-        <h4 class="card-header">Total FeedBacks: {{listFeedBacks.length}} </h4>
+        <h4 class="card-header" style="background-color:#52ab98; color:#fff">
+          Rated:
+          {{rated}}
+
+          <br />
+          Total FeedBacks:
+          {{listFeedBacks.length}}
+        </h4>
+
       </div>
     </div>
     <div class="col-sm-9">
@@ -52,6 +39,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Email</th>
                 <th scope="col">Content</th>
+                <th class="text-center" scope="col">Rating</th>
               </tr>
             </thead>
             <tbody>
@@ -60,6 +48,7 @@
                   <th scope="row">{{math @index "+" 1}}</th>
                   <td>{{email}}</td>
                   <td>{{content}}</td>
+                  <td>{{rating}}</td>
                 </tr>
               {{/each}}
             </tbody>

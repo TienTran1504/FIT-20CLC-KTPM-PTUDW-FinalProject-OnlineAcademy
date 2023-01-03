@@ -1,7 +1,7 @@
 import createError from "http-errors";
-const checkTeacher = (res, req, next) => {
+const checkTeacher = (req, res, next) => {
     try {
-        if (req.authUser.permission === "Teacher"){
+        if (req.session.authUser.permission === "Teacher"){
             next();
         }
         else {
@@ -12,9 +12,9 @@ const checkTeacher = (res, req, next) => {
         throw createError.InternalServerError(err.message);
     }
 }
-const checkStudent = (res, req, next) => {
+const checkStudent = (req, res, next) => {
     try {
-        if (req.authUser.permission === "Student"){
+        if (req.session.authUser.permission === "Student"){
             next();
         }
         else {
@@ -25,9 +25,9 @@ const checkStudent = (res, req, next) => {
         throw createError.InternalServerError(err.message);
     }
 }
-const checkAdmin = (res, req, next) => {
+const checkAdmin = (req, res, next) => {
     try {
-        if (req.authUser.permission === "Admin"){
+        if (req.session.authUser.permission === "Admin"){
             next();
         }
         else {

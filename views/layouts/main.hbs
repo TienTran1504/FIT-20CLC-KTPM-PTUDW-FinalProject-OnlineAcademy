@@ -19,6 +19,7 @@
       }
       a.navbar1{
           color: black;
+          font-weight: bold;
           border: 1px solid #52ab98;
           margin: 0px 5px;
           text-align: center;
@@ -51,18 +52,18 @@
           </button>
         </div>
 
-        <div class="col-sm-1">
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle navbar1" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-              Explore
-            </a>
-            <div class="dropdown-menu">
-              {{#each CatList}}
-                  <a class=dropdown-item href="/categories/" role="button" data-toggle="dropdown dropright" aria-expanded="false">{{CatName}}</a>
-              {{/each}}
-            </div>
+          <div class="col-sm-1">
+              <div class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle navbar1" href="/categories" role="button" data-toggle="dropdown" aria-expanded="false">
+                      Explore
+                  </a>
+                  <div class="dropdown-menu">
+                      {{#each CatList}}
+                          <a class=dropdown-item href="/categories?category={{name}}" role="button" data-toggle="dropdown" aria-expanded="false">{{name}}</a>
+                      {{/each}}
+                  </div>
+              </div>
           </div>
-        </div>
         {{#if auth}}
             {{#if (ifEqualString authUser.permission "Student")}}
                 {{>header_student}}

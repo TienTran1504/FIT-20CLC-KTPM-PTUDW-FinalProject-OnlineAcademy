@@ -132,7 +132,7 @@ const createCourse1 = async (req, res) => {
 const createCourse2 = async (req, res, next) => {
   try {
     if (!req.query.language) {
-      console.log(req.session.createCourse.cat);
+      // console.log(req.session.createCourse.cat);
       const languages = await CourseLanguage.find({
         categoryName: req.session.createCourse.cat,
       })
