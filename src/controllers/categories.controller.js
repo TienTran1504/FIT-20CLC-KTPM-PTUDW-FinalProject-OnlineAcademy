@@ -1,6 +1,7 @@
 import CourseCategory from "../models/coursecategory.model";
 import Course from "../models/course.model";
 import User from "../models/user.model";
+import Feedback from "../models/feedback.model";
 
 // const CatList = [
 //   {
@@ -239,6 +240,27 @@ import User from "../models/user.model";
 //   },
 // ];
 
+// const feedback = [
+//   {
+//     content: "...",
+//     numberRated: 5,
+//     createdIn: "63b19ad71aa34d2d78b7232a",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+//   {
+//     content: "...",
+//     numberRated: 4,
+//     createdIn: "63b19ad71aa34d2d78b7232a",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+//   {
+//     content: "...",
+//     numberRated: 2,
+//     createdIn: "63b19ad71aa34d2d78b7232a",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+// ];
+
 function fullStar(ratingPoint) {
   var fullStar = [];
   var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
@@ -298,8 +320,9 @@ const search = async (req, res) => {
 
   const CatList = await CourseCategory.find().lean();
   const CourseList = await Course.find().lean();
-  const courses = await Course.find({ $text: { $search: key } }).lean();
+  var courses = await Course.find({ $text: { $search: key } }).lean();
   const users = await User.find().lean();
+  const feedback = await Feedback.find().lean();
 
   var tmp = [...CourseList];
   var bestSellerCourse = tmp
@@ -307,12 +330,6 @@ const search = async (req, res) => {
       return b.studentList.length - a.studentList.length;
     })
     .slice(0, 5);
-
-  var newCourses = [];
-  tmp.forEach((course) => {
-    if (dateDiffInDays(course.createdAt, new Date()) <= 7) newCourses.push(course);
-  });
-  newCourses = newCourses.slice(0, 5);
 
   // var courses = [];
   // CourseList.forEach((course) => {
@@ -324,6 +341,29 @@ const search = async (req, res) => {
   //     courses.push(course);
   //   }
   // });
+
+  courses = courses.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString());
+
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      createdBy: user.firstName + " " + user.lastName,
+    };
+  });
+
+  if (sort === "highest-rated")
+    courses.sort(function (a, b) {
+      return b.CourseRatingPoint - a.CourseRatingPoint || b.CourseRatingVote - a.CourseRatingVote;
+    });
+  else if (sort === "lowest-price")
+    courses.sort(function (a, b) {
+      return a.price - b.price;
+    });
 
   const curPage = parseInt(page) || 1;
   const limit = 6;
@@ -356,18 +396,6 @@ const search = async (req, res) => {
       });
     }
 
-  if (sort === "highest-rated")
-    courses.sort(function (a, b) {
-      return (
-        b.ratingList.reduce((a, b) => a + b, 0) / b.ratingList.length -
-          a.ratingList.reduce((a, b) => a + b, 0) / a.ratingList.length || b.ratingList.length - a.ratingList.length
-      );
-    });
-  else if (sort === "lowest-price")
-    courses.sort(function (a, b) {
-      return a.price - b.price;
-    });
-
   var currentPageURL = "?key=" + key + "&sort=" + sort + "&page=";
   var currentURL = "?key=" + key;
 
@@ -387,26 +415,17 @@ const search = async (req, res) => {
     }),
     courses: courses
       .map((course) => {
-        // var CourseRatingVote = course.ratingList.length;
-        // var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-        var CourseRatingVote = 1;
-        var CourseRatingPoint = 1;
-        var user = users.filter((u) => u._id == course.createdBy.toString());
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: newCourses.includes(course) ? true : false,
-          createdBy: user.length === 1 ? user[0].firstName + " " + user[0].lastName : "",
+          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
         };
       })
       .slice(offset, offset + limit),
@@ -435,6 +454,7 @@ const getCategory = async (req, res) => {
   const CatList = await CourseCategory.find().lean();
   const CourseList = await Course.find().lean();
   const users = await User.find().lean();
+  const feedback = await Feedback.find().lean();
 
   var tmp = [...CourseList];
   var bestSellerCourse = tmp
@@ -443,13 +463,8 @@ const getCategory = async (req, res) => {
     })
     .slice(0, 5);
 
-  var newCourses = [];
-  tmp.forEach((course) => {
-    if (dateDiffInDays(course.createdAt, new Date()) <= 7) newCourses.push(course);
-  });
-  newCourses = newCourses.slice(0, 5);
-
   var courses = [];
+
   if (!category && !language) courses = [...CourseList];
   else if (!language)
     CourseList.forEach((course) => {
@@ -470,12 +485,23 @@ const getCategory = async (req, res) => {
       }
     });
 
+  courses = courses.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString());
+
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      createdBy: user.firstName + " " + user.lastName,
+    };
+  });
+
   if (sort === "highest-rated")
     courses.sort(function (a, b) {
-      return (
-        b.ratingList.reduce((a, b) => a + b, 0) / b.ratingList.length -
-          a.ratingList.reduce((a, b) => a + b, 0) / a.ratingList.length || b.ratingList.length - a.ratingList.length
-      );
+      return b.CourseRatingPoint - a.CourseRatingPoint || b.CourseRatingVote - a.CourseRatingVote;
     });
   else if (sort === "lowest-price")
     courses.sort(function (a, b) {
@@ -536,27 +562,17 @@ const getCategory = async (req, res) => {
     language: language,
     courses: courses
       .map((course) => {
-        // var CourseRatingVote = course.ratingList.length;
-        // var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-
-        var CourseRatingVote = 1;
-        var CourseRatingPoint = 1;
-        var user = users.filter((u) => u._id == course.createdBy.toString());
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: newCourses.includes(course) ? true : false,
-          createdBy: user.length === 1 ? user[0].firstName + " " + user[0].lastName : "",
+          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
         };
       })
       .slice(offset, offset + limit),

@@ -2,6 +2,7 @@ import CourseCategory from "../models/coursecategory.model";
 import CourseLanguage from "../models/courselanguage.model";
 import Course from "../models/course.model";
 import User from "../models/user.model";
+import Feedback from "../models/feedback.model";
 
 const SliderList = [
   {
@@ -143,6 +144,27 @@ const SliderList = [
 //   },
 // ];
 
+// const feedback = [
+//   {
+//     content: "...",
+//     numberRated: 5,
+//     createdIn: "63b327fd2ee7895fa81c82ac",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+//   {
+//     content: "...",
+//     numberRated: 4,
+//     createdIn: "63b327fd2ee7895fa81c82ac",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+//   {
+//     content: "...",
+//     numberRated: 2,
+//     createdIn: "63b327fd2ee7895fa81c82ac",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+// ];
+
 function fullStar(ratingPoint) {
   var fullStar = [];
   var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
@@ -198,11 +220,26 @@ function dateDiffInDays(a, b) {
 const renderHome = async (req, res) => {
   const CatList = await CourseCategory.find().lean();
   const LanguageList = await CourseLanguage.find().lean();
-  const CourseList = await Course.find().lean();
+  var CourseList = await Course.find().lean();
   const users = await User.find().lean();
+  const feedback = await Feedback.find().lean();
+
+  CourseList = CourseList.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString());
+
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      createdBy: user.firstName + " " + user.lastName,
+      viewInWeek: course.viewList.filter((view) => dateDiffInDays(view.createdAt, new Date()) <= 7).length,
+    };
+  });
 
   var sortedLangList = [];
-
   sortedLangList = LanguageList.map((lang) => {
     var sumOfStudents = 0;
     lang.courseList.forEach((course) => {
@@ -227,11 +264,16 @@ const renderHome = async (req, res) => {
     }).slice(0, 5),
   ];
 
-  const featuredCourses = [];
-
-  CourseList.forEach((course) => {
-    if (dateDiffInDays(course.createdAt, new Date()) <= 7) featuredCourses.push(course);
-  });
+  const featuredCourses = [
+    ...CourseList.sort(function (a, b) {
+      return (
+        b.viewInWeek * 2 +
+        b.CourseRatingPoint +
+        b.CourseRatingVote -
+        (a.viewInWeek * 2 + a.CourseRatingPoint + a.CourseRatingVote)
+      );
+    }).slice(0, 5),
+  ];
 
   const mostViewedCourses = [
     ...CourseList.sort(function (a, b) {
@@ -251,79 +293,49 @@ const renderHome = async (req, res) => {
     LanguageList: sortedLangList.slice(0, 8),
     featuredCourses: featuredCourses
       .map((course) => {
-        // var CourseRatingVote = course.ratingList.length;
-        // var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-
-        var CourseRatingVote = 1;
-        var CourseRatingPoint = 1;
-        var user = users.filter((u) => u._id == course.createdBy.toString());
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
           new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
-          createdBy: user.length === 1 ? user[0].firstName + " " + user[0].lastName : "",
         };
       })
       .slice(0, 5),
     mostViewedCourses: mostViewedCourses
       .map((course) => {
-        // var CourseRatingVote = course.ratingList.length;
-        // var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-
-        var CourseRatingVote = 1;
-        var CourseRatingPoint = 1;
-        var user = users.filter((u) => u._id == course.createdBy.toString());
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
           new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
-          createdBy: user.length === 1 ? user[0].firstName + " " + user[0].lastName : "",
         };
       })
       .slice(0, 10),
     latestCourses: latestCourses
       .map((course) => {
-        // var CourseRatingVote = course.ratingList.length;
-        // var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-
-        var CourseRatingVote = 1;
-        var CourseRatingPoint = 1;
-        var user = users.filter((u) => u._id == course.createdBy.toString());
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
           new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
-          createdBy: user.length === 1 ? user[0].firstName + " " + user[0].lastName : "",
         };
       })
       .slice(0, 10),

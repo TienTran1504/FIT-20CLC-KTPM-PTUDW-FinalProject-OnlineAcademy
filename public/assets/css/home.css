@@ -70,14 +70,14 @@
 
 .menu-container {
   display: flex;
-  justify-content: left;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
 .menu-item {
   display: flex;
   flex-direction: column;
-  margin: 15px 15px 15px 0;
+  margin: 5px;
   transition: opacity 0.2s, transform 0.2s;
   flex: 0;
   /* word-break: break-all; */
@@ -215,4 +215,12 @@ a:hover {
   .info-container {
     display: none;
   }
+}
+
+.card-title {
+  background-color: #52ab98;
+  color: white;
+  padding: 10px 0;
+  text-indent: 15px;
+  border-radius: 4px;
 }
