@@ -5,6 +5,7 @@ import User from "../models/user.model";
 import bcrypt from "bcryptjs";
 import multer from "multer";
 import alert from "alert";
+import Feedback from "../models/feedback.model";
 
 const checkGender = gender => {
   if (gender === "Male") return true;
@@ -340,13 +341,12 @@ const addCourseList = async (req, res, next) => {
   const getUser = await User.findById({ _id: id }).lean();
 
   // const { courseId } = req.params;
+  const courseId = "63b19ad71aa34d2d78b7232a";
   const course = await Course.findById({ _id: courseId });
   const checkCourseExists = getUser.courseList.some(watch => {
-    return watch == courseId;
+    return watch.id == courseId;
   });
-  console.log(course);
-  // console.log("checkCourseExists: " + checkCourseExists);
-  // console.log("courses List: " + getUser.courseList);
+
   if (!course) {
     return next(createError(400, `Not found this course with id ${courseId}`));
   } else if (checkCourseExists) {
@@ -357,7 +357,11 @@ const addCourseList = async (req, res, next) => {
       )
     );
   } else {
-    getUser.courseList.push(courseId);
+    const addCourse = {
+      id: courseId,
+      process: 0,
+    };
+    getUser.courseList.push(addCourse);
 
     const userUpdate = await User.findByIdAndUpdate(
       {
@@ -369,7 +373,7 @@ const addCourseList = async (req, res, next) => {
       { new: true, runValidators: true }
     );
     alert("Complete");
-    res.redirect("/student/course_learn");
+    res.redirect("/courses/test");
   }
 };
 
@@ -388,14 +392,22 @@ const getCourseList = async (req, res) => {
 
   let listCourses = [];
   for (let i = 0; i < getCoursesId.length; i++) {
-    const course = await Course.findById({ _id: getCoursesId[i] });
+    const course = await Course.findById({ _id: getCoursesId[i].id });
+    const feedback = await Feedback.findOne({
+      createdBy: id,
+      createdIn: getCoursesId[i],
+    }).lean;
+
+    const rateNumber = feedback.numberRated || 0;
+
     const obj = {
       name: course.name,
       image: course.image,
       des: course.briefDescription,
       category: course.categoryName,
-      status: course.status,
       idCourse: course._id,
+      process: getCoursesId[i].process,
+      rate: rateNumber,
     };
     listCourses = [...listCourses, obj];
   }
@@ -425,45 +437,6 @@ const getCourseList = async (req, res) => {
     nextPage: "?page=" + Number(curPage + 1),
   });
 };
-// {{URL}}/student/courses/:courseId
-const addCourse = async (req, res) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
-  const id = req.session.authUser._id;
-  const getUser = await User.findById({ _id: id }).lean();
-
-  const { courseId } = req.params;
-  const course = await Course.findOne({ _id: courseId });
-  const checkCourseExist = user.courseList.some(course => {
-    return course.course._id == courseId;
-  });
-
-  if (course === null) {
-    throw createError.NotFound();
-  } else if (checkCourseExist) {
-    throw createError.BadRequest(
-      `Already have course with id ${courseId} in student course's list`
-    );
-  } else {
-    const item = { course };
-    user.courseList.push(item);
-    req.body.courseList = user.courseList;
-    const userUpdate = await User.findByIdAndUpdate(
-      {
-        _id: user._id,
-      },
-      req.body,
-      { new: true, runValidators: true }
-    );
-    res.status(StatusCodes.OK).json({
-      msg: `Add ${course.name} successfully`,
-      name: userUpdate.name,
-      courseList: userUpdate.courseList,
-      courseLength: userUpdate.courseList.length,
-    });
-  }
-};
 
 export {
   getProfile,
@@ -476,6 +449,7 @@ export {
   changeEmail,
   uploadPhoto,
   addCourseList,
+  addWatchList,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

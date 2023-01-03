@@ -23,10 +23,6 @@
   height: 7rem;
 }
 
-.main-content-student .more-courses-container .course {
-  padding: 1rem;
-}
-
 .main-content-student .course-btn {
   margin-top: 4px;
   background-color: #52ab98 !important;
@@ -76,12 +72,17 @@
 .more-courses-container {
   display: flex;
   flex-direction: column;
-  height: 24rem;
+  height: 28rem;
 }
 
 .more-courses-container .course {
+  position: relative;
   display: flex;
   text-align: left;
+  border: 1px solid #C8D8E4;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  background-color: #fff;
 }
 
 .more-courses-container .course .img-block {
@@ -114,6 +115,25 @@
   padding-left: 1rem;
 }
 
+.more-courses-container .course-body a::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.more-courses-container .course-body .progress {
+  height: 0.2rem;
+}
+
+.more-courses-container .course-body .block-review {
+  display: flex;
+  justify-content: space-between;
+}
+
 .course-categoty {
   font-size: 0.9rem;
   font-weight: 700;
@@ -140,6 +160,8 @@
 .course-title {
   font-size: 0.75rem;
   font-weight: 400;
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.2rem;
 }
 
 .no-courses {

@@ -328,65 +328,86 @@
         </div>
       </div>
     </div>
-    <div class="sidebar-container-model">
-      <div class="main-content-model">
-        <div class="block-img">
-          <img
-            src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-            alt=""
-          />
-        </div>
-        <div class="block-content">
-          <div class="title-course">Free 0₫</div>
-          <div class="btn-course">
-            <button class="btn btn-primary btn-buy">Buy now</button>
-            <button class="fa fa-heart-o btn btn-primary btn-like"></button>
-            {{! <button class="fa fa-heart btn btn-primary btn-like"></button> }}
+
+    {{! Model sibar }}
+    <form method="post">
+      <div class="sidebar-container-model">
+        <div class="main-content-model">
+          <div class="block-img">
+            <img
+              src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
+              alt=""
+            />
           </div>
-          <div class="desciption-course">
-            <div class="title-des">This course includes:</div>
-            <ul>
-              <li>
-                <div class="block-list-items">
-                  <div
-                    class="fa fa-television item-icon"
-                    aria-hidden="true"
-                  ></div>
-                  <div class="item-content">
-                    <span>22 hours on-demand video</span>
+          <div class="block-content">
+            <div class="title-course">Free 0₫</div>
+            <div class="btn-course">
+              <button
+                type="submit"
+                class="btn btn-primary btn-buy"
+                formaction="/student/add_courses/post"
+              >Buy now</button>
+              <button
+                type="submit"
+                class="fa fa-heart-o btn btn-primary btn-like"
+                formaction="/student/add_courses_favorite/post"
+              ></button>
+              {{! <button class="fa fa-heart btn btn-primary btn-like"></button> }}
+            </div>
+            <div class="desciption-course">
+              <div class="title-des">This course includes:</div>
+              <ul>
+                <li>
+                  <div class="block-list-items">
+                    <div
+                      class="fa fa-television item-icon"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="item-content">
+                      <span>22 hours on-demand video</span>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li>
-                <div class="block-list-items">
-                  <div class="fa fa-clock-o item-icon" aria-hidden="true"></div>
-                  <div class="item-content">
-                    <span>
-                      Full lifetime access
-                    </span>
+                </li>
+                <li>
+                  <div class="block-list-items">
+                    <div
+                      class="fa fa-clock-o item-icon"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="item-content">
+                      <span>
+                        Full lifetime access
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li>
-                <div class="block-list-items">
-                  <div class="fa fa-mobile item-icon" aria-hidden="true"></div>
-                  <div class="item-content">
-                    Access on mobile and TV
+                </li>
+                <li>
+                  <div class="block-list-items">
+                    <div
+                      class="fa fa-mobile item-icon"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="item-content">
+                      Access on mobile and TV
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li>
-                <div class="block-list-items">
-                  <div class="fa fa-trophy item-icon" aria-hidden="true"></div>
-                  <div class="item-content">
-                    Certificate of completion
+                </li>
+                <li>
+                  <div class="block-list-items">
+                    <div
+                      class="fa fa-trophy item-icon"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="item-content">
+                      Certificate of completion
+                    </div>
                   </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
