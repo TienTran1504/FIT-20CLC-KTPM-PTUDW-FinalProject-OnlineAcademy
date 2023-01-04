@@ -658,7 +658,6 @@ const updateLanguageCategory = async function (req, res, next) {
   const indexOf = currentLanguageList.findIndex(language => {
     return language._id == LanguageID;
   });
-  console.log(indexOf);
   currentLanguageList.splice(indexOf, 1);
   if (CurrentCategoryName === CategoryName) {
     newLanguageList = currentLanguageList;
@@ -779,7 +778,6 @@ const deleteCourseLanguage = async function (req, res, next) {
 //{{URL}}/admin/managecourses/delete?id
 const deleteCourse = async function (req, res, next) {
   const { CourseID } = req.body;
-  console.log(CourseID);
   await Course.deleteOne({ _id: CourseID });
   res.redirect("/admin/managecourses");
 };
