@@ -115,6 +115,7 @@ const checkLogin = async (req, res, next) => {
             });
         }
         const checkLogin = await bcrypt.compare(password, user.password)
+        
         if (!checkLogin) {
             res.render("vwAccount/login", {
                 custom_style: "login.css",

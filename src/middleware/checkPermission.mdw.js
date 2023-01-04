@@ -1,7 +1,20 @@
 import createError from "http-errors";
-const checkTeacher = (res, req, next) => {
+const checkTeacher = (req, res, next) => {
     try {
-        if (req.authUser.permission === "Teacher"){
+        if (req.session.authUser.permission === "Teacher"){
+            next();
+        }
+        else {
+            res.status(409).send('You do not have permission to access this page');
+            res.redirect('/');
+        }
+    }catch (err){
+        next(createError.InternalServerError(err.message));
+    }
+}
+const checkStudent = (req, res, next) => {
+    try {
+        if (req.session.authUser.permission === "Student"){
             next();
         }
         else {
@@ -12,22 +25,9 @@ const checkTeacher = (res, req, next) => {
         throw createError.InternalServerError(err.message);
     }
 }
-const checkStudent = (res, req, next) => {
+const checkAdmin = (req, res, next) => {
     try {
-        if (req.authUser.permission === "Student"){
-            next();
-        }
-        else {
-            res.status(409).send('You do not have permission to access this page');
-            res.redirect('/');
-        }
-    }catch (err){
-        throw createError.InternalServerError(err.message);
-    }
-}
-const checkAdmin = (res, req, next) => {
-    try {
-        if (req.authUser.permission === "Admin"){
+        if (req.session.authUser.permission === "Admin"){
             next();
         }
         else {
