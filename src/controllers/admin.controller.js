@@ -393,7 +393,9 @@ const viewFeedBacksByID = async function (req, res, next) {
   const course = await Course.findOne({ _id: id }).lean();
   const feedbacks = await Feedback.find({ createdIn: id }).lean();
   let listFeedBacks = [];
-  for (let i = 0; feedbacks.length; i++) {
+
+  for (let i = 0; i < feedbacks.length; i++) {
+
     const user = await User.findById({ _id: feedbacks[i].createdBy });
 
     const objFeedBack = {
