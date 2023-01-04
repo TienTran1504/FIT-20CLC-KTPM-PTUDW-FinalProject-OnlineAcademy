@@ -1,6 +1,8 @@
 import CourseCategory from "../models/coursecategory.model";
 import CourseLanguage from "../models/courselanguage.model";
 import Course from "../models/course.model";
+import User from "../models/user.model";
+import Feedback from "../models/feedback.model";
 
 const SliderList = [
   {
@@ -14,133 +16,154 @@ const SliderList = [
   },
 ];
 
-const LanguageList = [
-  {
-    name: "ReactJS",
-    image: "https://codelearn.io/Upload/Blog/react-js-co-ban-phan-1-63738082145.3856.jpg",
-    courseList: [
-      {
-        studentList: [
-          { id: 1, createdAt: new Date("2022-03-25") },
-          { id: 2, createdAt: new Date("2022-12-29") },
-        ],
-      },
-      { studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] },
-    ],
-  },
-  {
-    name: "AngularJS",
-    image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
-    courseList: [{ studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] }],
-  },
-  {
-    name: "VueJS",
-    image: "https://segwitz.com/wp-content/uploads/2021/06/vuejs-development-malaysia.jpeg",
-    courseList: [],
-  },
-  {
-    name: "React Native",
-    image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    courseList: [
-      { studentList: [{ id: 1, createdAt: new Date("2022-12-30") }] },
-      {
-        studentList: [
-          { id: 1, createdAt: new Date("2022-12-29") },
-          { id: 2, createdAt: new Date("2022-12-29") },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Flutter",
-    image:
-      "https://dailysmarty-production.s3.amazonaws.com/uploads/post/img/7974/flutter-use-cases-mobile-app-development.jpeg",
-    courseList: [],
-  },
-  {
-    name: "Kotlin",
-    image: "https://images.viblo.asia/2185d41e-6e40-42ba-8464-201b818bee58.png",
-    courseList: [],
-  },
-];
+// const LanguageList = [
+//   {
+//     name: "ReactJS",
+//     image: "https://codelearn.io/Upload/Blog/react-js-co-ban-phan-1-63738082145.3856.jpg",
+//     courseList: [
+//       {
+//         studentList: [
+//           { id: 1, createdAt: new Date("2022-03-25") },
+//           { id: 2, createdAt: new Date("2022-12-29") },
+//         ],
+//       },
+//       { studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] },
+//     ],
+//   },
+//   {
+//     name: "AngularJS",
+//     image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+//     courseList: [{ studentList: [{ id: 1, createdAt: new Date("2022-12-29") }] }],
+//   },
+//   {
+//     name: "VueJS",
+//     image: "https://segwitz.com/wp-content/uploads/2021/06/vuejs-development-malaysia.jpeg",
+//     courseList: [],
+//   },
+//   {
+//     name: "React Native",
+//     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+//     courseList: [
+//       { studentList: [{ id: 1, createdAt: new Date("2022-12-30") }] },
+//       {
+//         studentList: [
+//           { id: 1, createdAt: new Date("2022-12-29") },
+//           { id: 2, createdAt: new Date("2022-12-29") },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     name: "Flutter",
+//     image:
+//       "https://dailysmarty-production.s3.amazonaws.com/uploads/post/img/7974/flutter-use-cases-mobile-app-development.jpeg",
+//     courseList: [],
+//   },
+//   {
+//     name: "Kotlin",
+//     image: "https://images.viblo.asia/2185d41e-6e40-42ba-8464-201b818bee58.png",
+//     courseList: [],
+//   },
+// ];
 
-const CourseList = [
-  {
-    CourseID: 1,
-    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    briefDescription:
-      "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    createdBy: "Hau Nguyen",
-    ratingList: [5, 5, 4, 3, 5, 1, 2, 1],
-    categoryName: "Web",
-    languageName: "ReactJS",
-    price: 549000,
-    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: new Date("2022-05-21"),
-    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    studentList: [1, 1, 1, 1, 1, 1, 1, 1],
-  },
-  {
-    CourseID: 2,
-    name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
-    briefDescription:
-      "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
-    createdBy: "Hau Nguyen",
-    ratingList: [5, 5, 4, 3, 5],
-    categoryName: "Web",
-    languageName: "ReactJS",
-    price: 549000,
-    image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
-    createdAt: new Date("2022-08-19"),
-    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    studentList: [1, 1, 1],
-  },
-  {
-    CourseID: 3,
-    name: "React Native - The Practical Guide [2023]",
-    briefDescription:
-      "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
-    createdBy: "Phuoc Dinh",
-    ratingList: [5, 5, 4, 3, 5],
-    categoryName: "Mobile",
-    languageName: "React Native",
-    price: 600000,
-    image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    createdAt: new Date("2021-04-01"),
-    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    studentList: [1, 1, 1, 1, 1],
-  },
-  {
-    CourseID: 4,
-    name: "React Native - The Practical Guide [2023]",
-    briefDescription:
-      "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
-    createdBy: "Phuoc Dinh",
-    ratingList: [5, 5, 4, 2, 5],
-    categoryName: "Mobile",
-    languageName: "React Native",
-    price: 600000,
-    image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
-    createdAt: new Date("2022-12-26"),
-    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  },
-  {
-    CourseID: 5,
-    name: "Angular - The Complete Guide (2023 Edition)",
-    briefDescription:
-      "Master Angular (formerly Angular 2) and build awesome, reactive web apps with the successor of Angular.js",
-    createdBy: "Phuoc Dinh",
-    ratingList: [5, 5, 4, 5, 5, 5],
-    categoryName: "Web",
-    languageName: "AngularJS",
-    price: 500000,
-    image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
-    createdAt: new Date("2022-12-25"),
-    viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  },
-];
+// const CourseList = [
+//   {
+//     CourseID: 1,
+//     name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+//     briefDescription:
+//       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
+//     createdBy: "Hau Nguyen",
+//     ratingList: [5, 5, 4, 3, 5, 1, 2, 1],
+//     categoryName: "Web",
+//     languageName: "ReactJS",
+//     price: 549000,
+//     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+//     createdAt: new Date("2022-05-21"),
+//     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+//     studentList: [1, 1, 1, 1, 1, 1, 1, 1],
+//   },
+//   {
+//     CourseID: 2,
+//     name: "React - The Complete Guide (incl Hooks, React Router, Redux)",
+//     briefDescription:
+//       "Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js and way more!",
+//     createdBy: "Hau Nguyen",
+//     ratingList: [5, 5, 4, 3, 5],
+//     categoryName: "Web",
+//     languageName: "ReactJS",
+//     price: 549000,
+//     image: "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+//     createdAt: new Date("2022-08-19"),
+//     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+//     studentList: [1, 1, 1],
+//   },
+//   {
+//     CourseID: 3,
+//     name: "React Native - The Practical Guide [2023]",
+//     briefDescription:
+//       "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
+//     createdBy: "Phuoc Dinh",
+//     ratingList: [5, 5, 4, 3, 5],
+//     categoryName: "Mobile",
+//     languageName: "React Native",
+//     price: 600000,
+//     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+//     createdAt: new Date("2021-04-01"),
+//     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+//     studentList: [1, 1, 1, 1, 1],
+//   },
+//   {
+//     CourseID: 4,
+//     name: "React Native - The Practical Guide [2023]",
+//     briefDescription:
+//       "Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux",
+//     createdBy: "Phuoc Dinh",
+//     ratingList: [5, 5, 4, 2, 5],
+//     categoryName: "Mobile",
+//     languageName: "React Native",
+//     price: 600000,
+//     image: "http://www.appcoda.com/wp-content/uploads/2015/04/react-native.png",
+//     createdAt: new Date("2022-12-26"),
+//     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+//     studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+//   },
+//   {
+//     CourseID: 5,
+//     name: "Angular - The Complete Guide (2023 Edition)",
+//     briefDescription:
+//       "Master Angular (formerly Angular 2) and build awesome, reactive web apps with the successor of Angular.js",
+//     createdBy: "Phuoc Dinh",
+//     ratingList: [5, 5, 4, 5, 5, 5],
+//     categoryName: "Web",
+//     languageName: "AngularJS",
+//     price: 500000,
+//     image: "https://web888.vn/wp-content/uploads/2022/04/tong-quan-ve-angularjs-1650275790336.jpg",
+//     createdAt: new Date("2022-12-25"),
+//     viewList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+//     studentList: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+//   },
+// ];
+
+// const feedback = [
+//   {
+//     content: "...",
+//     numberRated: 5,
+//     createdIn: "63b327fd2ee7895fa81c82ac",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+//   {
+//     content: "...",
+//     numberRated: 4,
+//     createdIn: "63b327fd2ee7895fa81c82ac",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+//   {
+//     content: "...",
+//     numberRated: 2,
+//     createdIn: "63b327fd2ee7895fa81c82ac",
+//     createdBy: "639e89638b6a384e84c4fae7",
+//   },
+// ];
 
 function fullStar(ratingPoint) {
   var fullStar = [];
@@ -196,11 +219,27 @@ function dateDiffInDays(a, b) {
 
 const renderHome = async (req, res) => {
   const CatList = await CourseCategory.find().lean();
-  // const LanguageList = await CourseLanguage.find().lean();
-  // const CourseList = await Course.find().lean();
+  const LanguageList = await CourseLanguage.find().lean();
+  var CourseList = await Course.find().lean();
+  const users = await User.find().lean();
+  const feedback = await Feedback.find().lean();
+
+  CourseList = CourseList.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString());
+
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      createdBy: user.firstName + " " + user.lastName,
+      viewInWeek: course.viewList.filter((view) => dateDiffInDays(view.createdAt, new Date()) <= 7).length,
+    };
+  });
 
   var sortedLangList = [];
-
   sortedLangList = LanguageList.map((lang) => {
     var sumOfStudents = 0;
     lang.courseList.forEach((course) => {
@@ -225,11 +264,16 @@ const renderHome = async (req, res) => {
     }).slice(0, 5),
   ];
 
-  const featuredCourses = [];
-
-  CourseList.forEach((course) => {
-    if (dateDiffInDays(course.createdAt, new Date()) <= 7) featuredCourses.push(course);
-  });
+  const featuredCourses = [
+    ...CourseList.sort(function (a, b) {
+      return (
+        b.viewInWeek * 2 +
+        b.CourseRatingPoint +
+        b.CourseRatingVote -
+        (a.viewInWeek * 2 + a.CourseRatingPoint + a.CourseRatingVote)
+      );
+    }).slice(0, 5),
+  ];
 
   const mostViewedCourses = [
     ...CourseList.sort(function (a, b) {
@@ -249,64 +293,49 @@ const renderHome = async (req, res) => {
     LanguageList: sortedLangList.slice(0, 8),
     featuredCourses: featuredCourses
       .map((course) => {
-        var CourseRatingVote = course.ratingList.length;
-        var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: featuredCourses.includes(course) ? true : false,
+          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
         };
       })
       .slice(0, 5),
     mostViewedCourses: mostViewedCourses
       .map((course) => {
-        var CourseRatingVote = course.ratingList.length;
-        var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: featuredCourses.includes(course) ? true : false,
+          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
         };
       })
       .slice(0, 10),
     latestCourses: latestCourses
       .map((course) => {
-        var CourseRatingVote = course.ratingList.length;
-        var CourseRatingPoint = course.ratingList.reduce((a, b) => a + b, 0) / course.ratingList.length;
-
         return {
           ...course,
-          CourseRatingVote: CourseRatingVote,
-          CourseRatingPoint: CourseRatingPoint.toFixed(1),
-          fullStar: fullStar(CourseRatingPoint),
-          halfStar: halfStar(CourseRatingPoint),
-          blankStar: blankStar(CourseRatingPoint),
+          fullStar: fullStar(course.CourseRatingPoint),
+          halfStar: halfStar(course.CourseRatingPoint),
+          blankStar: blankStar(course.CourseRatingPoint),
           price: numberWithCommas(course.price),
           createdAt: formatDate(course.createdAt),
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: featuredCourses.includes(course) ? true : false,
+          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
         };
       })
       .slice(0, 10),

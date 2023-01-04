@@ -7,10 +7,6 @@ import Course from "../models/course.model";
 import Lecture from "../models/lecture.model";
 
 const getInfo = async (req, res, next) => {
-  req.session.authUser = await User.findOne({
-    _id: "63b199a2bb67b820d829de77",
-  }).lean();
-
   res.render("vwTeacher/profile", {
     user: req.session.authUser,
   });
@@ -136,7 +132,7 @@ const createCourse1 = async (req, res) => {
 const createCourse2 = async (req, res, next) => {
   try {
     if (!req.query.language) {
-      console.log(req.session.createCourse.cat);
+      // console.log(req.session.createCourse.cat);
       const languages = await CourseLanguage.find({
         categoryName: req.session.createCourse.cat,
       })

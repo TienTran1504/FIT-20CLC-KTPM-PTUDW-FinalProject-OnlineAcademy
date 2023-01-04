@@ -45,7 +45,7 @@
       <div class="menu-container">
         {{#each CatList}}
           <a class="menu-item" href="/categories?category={{name}}">
-            <img class="menu-category-image" src="{{image}}" alt="" />
+            <img class="menu-category-image" src="../../../public/assets/images/{{image}}" alt="" />
             <p class="category-name">{{name}}</p>
           </a>
         {{/each}}
@@ -59,8 +59,9 @@
       <div class="menu-container">
         {{#each LanguageList}}
           <a class="menu-item" href="/categories?language={{name}}">
-            <img class="menu-category-image" src="{{image}}" alt="" />
+            <img class="menu-category-image" src="../../../public/assets/images/{{image}}" alt="" />
             <p class="language-name">{{name}}</p>
+            <p class="language-name">({{categoryName}})</p>
             <p class="language-student">({{numOfStudents}} students registered in this week)</p>
           </a>
         {{/each}}
@@ -75,7 +76,7 @@
         {{#each featuredCourses}}
           <div class="menu-item">
             <div class="parent-image">
-              <img class="menu-item-image" src="{{image}}" alt="" />
+              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
               {{#if bestSeller}}
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
@@ -103,7 +104,7 @@
                 style="font-size: 14px; margin-bottom: 3px; color: gray; vertical-align: text-top"
               >({{CourseRatingVote}})</span>
             </div>
-            <b style="margin-bottom: 5px;">{{price}}đ</b>
+            <b style="margin-bottom: 5px;">${{price}}</b>
             <div class="category-lable-container">
               <p class="category-lable label1">{{categoryName}}</p>
               <p class="category-lable label2">{{languageName}}</p>
@@ -124,7 +125,7 @@
         {{#each mostViewedCourses}}
           <div class="menu-item">
             <div class="parent-image">
-              <img class="menu-item-image" src="{{image}}" alt="" />
+              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
               {{#if bestSeller}}
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
@@ -152,7 +153,7 @@
                 style="font-size: 14px; margin-bottom: 3px; color: gray; vertical-align: text-top"
               >({{CourseRatingVote}})</span>
             </div>
-            <b style="margin-bottom: 5px;">{{price}}đ</b>
+            <b style="margin-bottom: 5px;">${{price}}</b>
             <div class="category-lable-container">
               <p class="category-lable label1">{{categoryName}}</p>
               <p class="category-lable label2">{{languageName}}</p>
@@ -173,7 +174,7 @@
         {{#each latestCourses}}
           <div class="menu-item">
             <div class="parent-image">
-              <img class="menu-item-image" src="{{image}}" alt="" />
+              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
               {{#if bestSeller}}
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
@@ -201,7 +202,7 @@
                 style="font-size: 14px; margin-bottom: 3px; color: gray; vertical-align: text-top"
               >({{CourseRatingVote}})</span>
             </div>
-            <b style="margin-bottom: 5px;">{{price}}đ</b>
+            <b style="margin-bottom: 5px;">${{price}}</b>
             <div class="category-lable-container">
               <p class="category-lable label1">{{categoryName}}</p>
               <p class="category-lable label2">{{languageName}}</p>
@@ -214,4 +215,5 @@
       </div>
     </div>
   </div>
+
 </div>

@@ -396,7 +396,11 @@ const viewFeedBacksByID = async function (req, res, next) {
   for (let i = 0; feedbacks.length; i++) {
     const user = await User.findById({ _id: feedbacks[i].createdBy });
 
-    const objFeedBack = { content: feedbacks[i].content, rating: feedbacks[i].numberRated || 0, email: user.email };
+    const objFeedBack = {
+      content: feedbacks[i].content,
+      rating: feedbacks[i].numberRated || 0,
+      email: user.email,
+    };
     listFeedBacks.push(objFeedBack);
   }
   let rated = 0;
@@ -404,7 +408,7 @@ const viewFeedBacksByID = async function (req, res, next) {
     const totalFeedBacks = listFeedBacks.reduce((total, feedback) => {
       return total + Number(feedback.rating);
     }, 0);
-    rated = Number((totalFeedBacks / listFeedBacks.length));
+    rated = Number(totalFeedBacks / listFeedBacks.length);
   }
   res.render("vwAdminManagement/feedbacks", {
     rated,
@@ -489,14 +493,18 @@ const createCourseCategory = async function (req, res, next) {
   if (!req.body.CategoryName || !req.body.CategoryImage) {
     return next(createError(400, "Please provide category name, image"));
   } else {
-    const checkExistCategory = await CourseCategory.findOne({ name: req.body.CategoryName });
+    const checkExistCategory = await CourseCategory.findOne({
+      name: req.body.CategoryName,
+    });
     if (checkExistCategory) {
-      return next(createError(400, `Already have ${req.body.CategoryName} in database`));
-    }
-    else {
+      return next(
+        createError(400, `Already have ${req.body.CategoryName} in database`)
+      );
+    } else {
       await CourseCategory.create({
         name: req.body.CategoryName,
         image: req.body.CategoryImage,
+        createdBy: req.session.authUser._id,
       });
     }
   }
@@ -537,6 +545,7 @@ const createLanguage = async function (req, res, next) {
       image: req.body.LanguageImage,
       categoryId: category._id,
       categoryName: category.name,
+      createdBy: req.session.authUser._id,
     });
     newLanguage = { _id: createLanguage._id, name: createLanguage.name };
     category.languageList.push(newLanguage);
@@ -626,23 +635,29 @@ const updateCourseCategory = async function (req, res, next) {
   // }
 };
 
-
-
 const updateLanguageCategory = async function (req, res, next) {
   // const userCheck = await User.findOne({ _id: req.user.userId }); // lấy ra đúng user đang login
   // if (userCheck.permission === "Admin") {
-  const { CurrentLanguageName, CurrentCategoryName, LanguageID, LanguageName, CategoryName, LanguageImage } = req.body;
+  const {
+    CurrentLanguageName,
+    CurrentCategoryName,
+    LanguageID,
+    LanguageName,
+    CategoryName,
+    LanguageImage,
+  } = req.body;
   // xoá language trong category cũ
-  const findCurrentCategory = await CourseCategory.findOne({ name: CurrentCategoryName });
+  const findCurrentCategory = await CourseCategory.findOne({
+    name: CurrentCategoryName,
+  });
   const findNewCategory = await CourseCategory.findOne({ name: CategoryName });
-
 
   let currentLanguageList = findCurrentCategory.languageList;
   let newLanguageList = findNewCategory.languageList;
 
   const indexOf = currentLanguageList.findIndex(language => {
     return language._id == LanguageID;
-  })
+  });
   console.log(indexOf);
   currentLanguageList.splice(indexOf, 1);
   if (CurrentCategoryName === CategoryName) {
@@ -656,32 +671,28 @@ const updateLanguageCategory = async function (req, res, next) {
     return next(
       createError(500, `Already have this language in ${findNewCategory.name}`)
     );
-  }
-  else {
+  } else {
     newLanguageList.push(objLanguage);
 
     await CourseCategory.findByIdAndUpdate(
       {
-        _id: findCurrentCategory._id
+        _id: findCurrentCategory._id,
       },
       {
-        languageList: currentLanguageList
+        languageList: currentLanguageList,
       },
       { new: true, runValidators: true }
-    )
+    );
     await CourseCategory.findByIdAndUpdate(
       {
-        _id: findNewCategory._id
+        _id: findNewCategory._id,
       },
       {
-        languageList: newLanguageList
+        languageList: newLanguageList,
       },
       { new: true, runValidators: true }
-    )
+    );
   }
-
-
-
 
   const languageUpdate = await CourseLanguage.findByIdAndUpdate(
     {
@@ -691,7 +702,7 @@ const updateLanguageCategory = async function (req, res, next) {
       name: LanguageName,
       image: LanguageImage,
       categoryName: CategoryName,
-      categoryId: findNewCategory._id
+      categoryId: findNewCategory._id,
     },
     { new: true, runValidators: true }
   );

@@ -2,232 +2,189 @@
   <link rel="stylesheet" href="../../public/assets/css/student_profile.css" />
 {{/section}}
 <div style="margin-top: 80px;">
-  <div class="main-content-student">
-    <div class="container">
-      <div class="row">
-        <div
-          class="col-md-2 d-none d-md-block bg-light sidebar"
-          style="height: 100%;"
-        >
-          <div class="list-group" id="list-tab" role="tablist">
-            <div class="card text-center" style="background-color: #F2F2F2;">
-              <div class="img-profile">
-                {{#if (isEmpty user.image)}}
-                  {{#if gender}}
-                    <img
-                      class="img-fluid rounded-circle img-thumbnail img-responsive"
-                      src="../../public/assets/images/no_avt_male.png"
-                      alt="avatar"
-                    />
+  <form method="post">
+    <div class="main-content-student">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-md-2 d-none d-md-block bg-light sidebar"
+            style="height: 100%;"
+          >
+            <div class="list-group" id="list-tab" role="tablist">
+              <div class="card text-center" style="background-color: #F2F2F2;">
+                <div class="img-profile">
+                  {{#if (isEmpty user.image)}}
+                    {{#if gender}}
+                      <img
+                        class="img-fluid rounded-circle img-thumbnail img-responsive"
+                        src="../../public/assets/images/no_avt_male.png"
+                        alt="avatar"
+                      />
+                    {{else}}
+                      <img
+                        class="img-fluid rounded-circle img-thumbnail img-responsive"
+                        src="../../public/assets/images/no_avt_female.png"
+                        alt="avatar"
+                      />
+                    {{/if}}
                   {{else}}
                     <img
                       class="img-fluid rounded-circle img-thumbnail img-responsive"
-                      src="../../public/assets/images/no_avt_female.png"
+                      src="../../public/assets/images/{{user.image}}"
                       alt="avatar"
                     />
                   {{/if}}
-                {{else}}
-                  <img
-                    class="img-fluid rounded-circle img-thumbnail img-responsive"
-                    src="../../public/assets/images/{{user.image}}"
-                    alt="avatar"
-                  />
-                {{/if}}
-              </div>
-              <div>
-                <p>Name</p>
-              </div>
-            </div>
-            <a
-              href="/student"
-              class="list-group-item list-group-item-action"
-              id="list-profile-list"
-            >Profile</a>
-            <a
-              href="/student/photo"
-              class="list-group-item list-group-item-action"
-              id="list-photo-list"
-            >Photo</a>
-            <a
-              href="/student/account_security"
-              class="list-group-item list-group-item-action"
-              id="list-password-list"
-            >Account Security</a>
-            <a
-              href="/student/course_learn"
-              class="list-group-item list-group-item-action active"
-              id="list-courses-list"
-            >My learning</a>
-            <a
-              href="/student/favorite_course"
-              class="list-group-item list-group-item-action"
-              id="list-favorite-list"
-            >Favorite course</a>
-          </div>
-        </div>
-        <div class="col-9 h-100">
-          <div class="tab-content" id="nav-tabContent">
-            <div
-              class="tab-pane fade show active"
-              id="list-courses"
-              role="tabpanel"
-              aria-labelledby="list-courses-list"
-            >
-              <div class="card text-center">
-                <div
-                  class="card-header"
-                  style="background-color: #2b6777; color: #ffffff;"
-                >
-                  <h3>My Learning</h3>
-                  <p>All your courses </p>
                 </div>
-                <div class="card-body" style="background-color: #f2f2f2;">
-                  <div class="more-courses-container">
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn course</button>
-                      </div>
-                    </div>
+                <div>
+                  <p>Name</p>
+                </div>
+              </div>
+              <a
+                href="/student"
+                class="list-group-item list-group-item-action"
+                id="list-profile-list"
+              >Profile</a>
+              <a
+                href="/student/photo"
+                class="list-group-item list-group-item-action"
+                id="list-photo-list"
+              >Photo</a>
+              <a
+                href="/student/account_security"
+                class="list-group-item list-group-item-action"
+                id="list-password-list"
+              >Account Security</a>
+              <a
+                href="/student/course_learn"
+                class="list-group-item list-group-item-action active"
+                id="list-courses-list"
+              >My learning</a>
+              <a
+                href="/student/favorite_course"
+                class="list-group-item list-group-item-action"
+                id="list-favorite-list"
+              >Favorite course</a>
+            </div>
+          </div>
+          <div class="col-9 h-100">
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="list-courses"
+                role="tabpanel"
+                aria-labelledby="list-courses-list"
+              >
+                <div class="card text-center">
+                  <div
+                    class="card-header"
+                    style="background-color: #2b6777; color: #ffffff;"
+                  >
+                    <h3>My Learning</h3>
+                    <p>All your courses </p>
                   </div>
-                  <div class="block-pagination">
-                    {{#if havePagination}}
-                      <ul class="pagination">
-                        {{#if firstPage}}
-                          <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
-                          </li>
-                        {{else}}
-                          <li class="page-item">
+
+                  <div class="card-body" style="background-color: #f2f2f2;">
+                    <div class="more-courses-container">
+                      {{#if (isFree courses.length)}}
+                        <div class="no-courses">
+                          <div class="title-noti">No courses</div>
+                        </div>
+                      {{/if}}
+
+                      {{#each courses}}
+                        <div class="course">
+                          <div class="course-img">
+                            <img
+                              class="img-fluid"
+                              src="../../public/assets/images/{{image}}"
+                              alt=""
+                            />
+                          </div>
+                          <div class="course-body">
                             <a
-                              class="page-link"
-                              href="{{prevPage}}"
-                            >Previous</a>
-                          </li>
-                        {{/if}}
-                        {{#each this.pageNumbers}}
-                          {{#if isCurrent}}
-                            <li class="page-item active" aria-current="page">
-                              <span class="page-link">{{value}}</span>
+                              class="course-categoty"
+                              href="/courses/learn/{{idCourse}}"
+                            >{{name}}</a>
+                            <div class="course-title">{{des}}</div>
+                            <div class="course-icon-row">
+                              <div class="progress">
+                                <div
+                                  class="progress-bar bg-success"
+                                  role="progressbar"
+                                  style="width: {{process}}%;"
+                                  aria-valuenow="25"
+                                  aria-valuemin="0"
+                                  aria-valuemax="100"
+                                >
+                                </div>
+                              </div>
+                              {{#if (isFree process)}}
+                                <div>START COURSE</div>
+                              {{else}}
+                                <div class="block-review">
+                                  <div style="font-size: 0.75rem;">{{process}}%
+                                    complete</div>
+                                  <div class="rating">
+                                    <div class="star-icon">
+                                      <span>
+                                        {{#star rate}}
+                                          {{this}}
+                                        {{/star}}
+                                      </span>
+                                    </div>
+                                    <div class="">
+                                      Your rating
+                                    </div>
+                                  </div>
+                                </div>
+                              {{/if}}
+                            </div>
+                            {{! <button class="btn course-btn">Learn course</button> }}
+                          </div>
+                        </div>
+                      {{/each}}
+                    </div>
+                    <div class="block-pagination">
+                      {{#if havePagination}}
+                        <ul class="pagination">
+                          {{#if firstPage}}
+                            <li class="page-item disabled">
+                              <span class="page-link">Previous</span>
                             </li>
                           {{else}}
                             <li class="page-item">
                               <a
                                 class="page-link"
-                                href="?page={{value}}"
-                              >{{value}}</a>
+                                href="{{prevPage}}"
+                              >Previous</a>
                             </li>
                           {{/if}}
-                        {{/each}}
-                        {{#if lastPage}}
-                          <li class="page-item disabled">
-                            <span class="page-link">Next</span>
-                          </li>
-                        {{else}}
-                          <li class="page-item">
-                            <a class="page-link" href="{{nextPage}}">Next</a>
-                          </li>
-                        {{/if}}
-                      </ul>
-                    {{/if}}
+                          {{#each this.pageNumbers}}
+                            {{#if isCurrent}}
+                              <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{value}}</span>
+                              </li>
+                            {{else}}
+                              <li class="page-item">
+                                <a
+                                  class="page-link"
+                                  href="?page={{value}}"
+                                >{{value}}</a>
+                              </li>
+                            {{/if}}
+                          {{/each}}
+                          {{#if lastPage}}
+                            <li class="page-item disabled">
+                              <span class="page-link">Next</span>
+                            </li>
+                          {{else}}
+                            <li class="page-item">
+                              <a class="page-link" href="{{nextPage}}">Next</a>
+                            </li>
+                          {{/if}}
+                        </ul>
+                      {{/if}}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -236,5 +193,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>

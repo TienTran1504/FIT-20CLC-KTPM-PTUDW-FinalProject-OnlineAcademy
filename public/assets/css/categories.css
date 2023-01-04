@@ -191,7 +191,8 @@ a:hover {
   height: 200px;
   width: auto;
   display: block;
-  margin: 15vh auto;
+  position: absolute;
+  margin: 25vh 25vw;
 }
 
 .pagination {
@@ -241,4 +242,14 @@ ul {
   cursor: pointer;
   opacity: 0.5;
   color: #52ab98;
+}
+
+.page-item.active .page-link {
+  background-color: #52ab98 !important;
+  border-color: #52ab98;
+}
+
+.pagination > li > a {
+  color: #52ab98 !important;
+  transition: background-color 0.2s;
 }

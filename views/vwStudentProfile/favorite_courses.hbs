@@ -83,88 +83,59 @@
                 </div>
                 <div class="card-body" style="background-color: #f2f2f2;">
                   <div class="more-courses-container">
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
+                    {{#if (isFree courses.length)}}
+                      <div class="no-courses">
+                        <div class="title-noti">No courses</div>
                       </div>
-
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
-                            </div>
+                    {{/if}}
+                    {{#each courses}}
+                      <div class="course">
+                        <div class="course-img">
+                          <div class="img-block">
+                            <img
+                              class="img-fluid"
+                              src="../../public/assets/images/{{image}}"
+                              alt=""
+                            />
+                            <div class="fa fa-heart icon-show"></div>
                           </div>
                         </div>
-                        <button class="btn course-btn">Learn</button>
-                        <button class="btn course-btn">Remove</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
+                        <div class="course-body">
+                          <a
+                            class="course-categoty"
+                            href="/courses/learn/{{idCourse}}"
+                          >{{name}}</a>
+                          <div class="course-title">{{des}}</div>
+                          <div class="rating">
+                            <div style="display: flex;">
+                              <div
+                                class="star-icon"
+                                style="padding-right: 0.1rem;"
+                              >
+                                <span
+                                  class="number-rating-courses"
+                                  style="font-weight: 700;"
+                                >
+                                  {{rate}}
+                                </span>
+                                {{#star rate}}
+                                  {{this}}
+                                {{/star}}
+                              </div>
+                              <span>({{numberRate}})</span>
                             </div>
-                          </div>
-                        </div>
-                        <button class="btn course-btn">Learn</button>
-                        <button class="btn course-btn">Remove</button>
-                      </div>
-                    </div>
-                    <div class="course">
-                      <div class="course-img"><img
-                          class="img-fluid"
-                          src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
-                          alt=""
-                        />
-                      </div>
-                      <div class="course-body">
-                        <div class="course-categoty">Category</div>
-                        <div class="course-title">Title</div>
-                        <div class="course-icon-row">
-                          <div class="progress">
-                            <div
-                              class="progress-bar bg-success"
-                              role="progressbar"
-                              style="width: 25%;"
-                              aria-valuenow="25"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            >25%
+                            <div>
+                              <span>
+                                {{numberLecture}}
+                                lectures
+                              </span>
                             </div>
+                            <div class="price-course">${{price}}</div>
                           </div>
+                          {{! <button class="btn course-btn">Learn course</button> }}
                         </div>
-                        <button class="btn course-btn">Learn</button>
-                        <button class="btn course-btn">Remove</button>
                       </div>
-                    </div>
+                    {{/each}}
                   </div>
                   <div class="block-pagination">
                     {{#if havePagination}}

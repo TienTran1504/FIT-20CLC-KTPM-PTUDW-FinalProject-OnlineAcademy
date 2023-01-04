@@ -5,6 +5,7 @@ import User from "../models/user.model";
 import bcrypt from "bcryptjs";
 import multer from "multer";
 import alert from "alert";
+import Feedback from "../models/feedback.model";
 
 const checkGender = gender => {
   if (gender === "Male") return true;
@@ -252,18 +253,36 @@ const getCourseFavorite = async (req, res) => {
   const getUser = await User.findById({ _id: id }).lean();
 
   const getCoursesId = getUser.watchList;
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
-  console.log(getCoursesId);
+
   let listCourses = [];
-  getCoursesId.forEach(async idCourse => {
-    var course = await Course.findById(idCourse);
-    if (course !== null) {
-      listCourses = [...listCourses, course];
+  for (let i = 0; i < getCoursesId.length; i++) {
+    const course = await Course.findById({ _id: getCoursesId[i] });
+    const feedbacks = course.feedbackList;
+    let averageRate = 0;
+    for (let j = 0; j < feedbacks.length; j++) {
+      averageRate += feedbacks[j].numberRated;
     }
-  });
+    if (averageRate > 0)
+      averageRate = (averageRate / feedbacks.length).toFixed(1);
+    else averageRate = 0;
+
+    const obj = {
+      name: course.name,
+      image: course.image,
+      des: course.briefDescription,
+      category: course.categoryName,
+      idCourse: course._id,
+      rate: averageRate,
+      numberRate: feedbacks.length,
+      numberLecture: course.lecture.length,
+      price: course.price,
+    };
+    listCourses = [...listCourses, obj];
+  }
   const total = listCourses.length;
   const nPages = Math.ceil(total / limit);
   listCourses = listCourses.slice(offset, offset + limit);
@@ -315,20 +334,21 @@ const removeCourseInWatchList = async (req, res, next) => {
 };
 
 const addCourseList = async (req, res, next) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
+  // if (req.session.authUser === null)
+  //   return next(createError(401, "Unauthorized"));
 
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
-  const { courseId } = req.params;
-  const course = await Course.findOne({ _id: courseId });
+  // const { courseId } = req.params;
+  const courseId = "63b19ad71aa34d2d78b7232a";
+  const course = await Course.findById({ _id: courseId });
   const checkCourseExists = getUser.courseList.some(watch => {
-    return watch._id === courseId;
+    return watch.id == courseId;
   });
 
-  if (course === null) {
-    return next(createError(400, "Not found this course with id " + courseId));
+  if (!course) {
+    return next(createError(400, `Not found this course with id ${courseId}`));
   } else if (checkCourseExists) {
     return next(
       createError(
@@ -337,7 +357,11 @@ const addCourseList = async (req, res, next) => {
       )
     );
   } else {
-    getUser.courseList.push(courseId);
+    const addCourse = {
+      id: courseId,
+      process: 0,
+    };
+    getUser.courseList.push(addCourse);
 
     const userUpdate = await User.findByIdAndUpdate(
       {
@@ -348,6 +372,8 @@ const addCourseList = async (req, res, next) => {
       },
       { new: true, runValidators: true }
     );
+    alert("Complete");
+    res.redirect("/courses/test");
   }
 };
 
@@ -358,20 +384,34 @@ const getCourseList = async (req, res) => {
 
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
-
   const getCoursesId = getUser.courseList;
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   const curPage = parseInt(page) || 1;
   const offset = (curPage - 1) * limit;
 
   let listCourses = [];
-  getCoursesId.forEach(async idCourse => {
-    var course = await Course.findById(idCourse);
-    if (course !== null) {
-      listCourses = [...listCourses, course];
-    }
-  });
+  for (let i = 0; i < getCoursesId.length; i++) {
+    const course = await Course.findById({ _id: getCoursesId[i].id });
+    const feedback = await Feedback.findOne({
+      createdBy: id,
+      createdIn: getCoursesId[i],
+    }).lean;
+
+    const rateNumber = feedback.numberRated || 0;
+
+    const obj = {
+      name: course.name,
+      image: course.image,
+      des: course.briefDescription,
+      category: course.categoryName,
+      idCourse: course._id,
+      process: getCoursesId[i].process,
+      rate: rateNumber,
+    };
+    listCourses = [...listCourses, obj];
+  }
+
   const total = listCourses.length;
   const nPages = Math.ceil(total / limit);
   listCourses = listCourses.slice(offset, offset + limit);
@@ -383,7 +423,6 @@ const getCourseList = async (req, res) => {
       isCurrent: i === Number(+curPage),
     });
   }
-
   res.render("vwStudentProfile/courses_learn", {
     user: getUser,
     gender: checkGender(getUser.gender),
@@ -398,45 +437,6 @@ const getCourseList = async (req, res) => {
     nextPage: "?page=" + Number(curPage + 1),
   });
 };
-// {{URL}}/student/courses/:courseId
-const addCourse = async (req, res) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
-  const id = req.session.authUser._id;
-  const getUser = await User.findById({ _id: id }).lean();
-
-  const { courseId } = req.params;
-  const course = await Course.findOne({ _id: courseId });
-  const checkCourseExist = user.courseList.some(course => {
-    return course.course._id == courseId;
-  });
-
-  if (course === null) {
-    throw createError.NotFound();
-  } else if (checkCourseExist) {
-    throw createError.BadRequest(
-      `Already have course with id ${courseId} in student course's list`
-    );
-  } else {
-    const item = { course };
-    user.courseList.push(item);
-    req.body.courseList = user.courseList;
-    const userUpdate = await User.findByIdAndUpdate(
-      {
-        _id: user._id,
-      },
-      req.body,
-      { new: true, runValidators: true }
-    );
-    res.status(StatusCodes.OK).json({
-      msg: `Add ${course.name} successfully`,
-      name: userUpdate.name,
-      courseList: userUpdate.courseList,
-      courseLength: userUpdate.courseList.length,
-    });
-  }
-};
 
 export {
   getProfile,
@@ -448,6 +448,8 @@ export {
   updatePassword,
   changeEmail,
   uploadPhoto,
+  addCourseList,
+  addWatchList,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

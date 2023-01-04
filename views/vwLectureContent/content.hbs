@@ -2,7 +2,7 @@
   <link
     rel="stylesheet"
     type="text/css"
-    href="../../../../public/assets/css/lecture.css"
+    href="../../../public/assets/css/lecture.css"
   />
   <link
     rel="stylesheet"
@@ -48,7 +48,7 @@
           data-setup="{}"
         >
           <source
-            src="https://mp4-c.udemycdn.com/2020-04-24_13-27-46-070c1060ceb1bf4f7bffef781efaa787/WebHD_720p.mp4?Expires=1672668014&Signature=LH75Mh7b-sQZ~Oh6sfiGMYghDQIMhRP4pblHsASm1WvWSZCF0N0xGI4zA8r1fSDGOLXarPqDtgOuGXXMwVQN9VKZwNZPo4HWb0G4o1tL3O1nkFjDbwGYu2QTMwlHYUYBuVIBc0kxXqOiZAsLVPC~dfuqVoworHbo-wtnlqZRqFYUmnXbfS8Jcsj2O4ig0zoFqXm0wv37pcuE68LcaMtwjlBcS~PI3rvLXjz4x3qPmFOZXd3o1D-1q6DzQ10kkS2N0eH7It3rEcOgi9Zro02Dyb64HWf61zAmJQzA7pHlk8PPDoGLk8D3Qhy2Rv0De9oeoGJNVXKRp78Z-le1ckgCcg__&Key-Pair-Id=APKAITJV77WS5ZT7262A"
+            src="../../../public/assets/video/test.mp4"
             type="video/webm"
           />
           <p class="vjs-no-js">
@@ -136,14 +136,13 @@
                     class="btn btn-info btn-lg openmodal"
                     data-toggle="modal"
                     data-target="#myModal"
-                  >Open Modal</button>
+                    style="background-color: #52AB98;"
+                  >Send feedback</button>
 
                   <!--Division for Modal-->
                   <div id="myModal" class="modal fade" role="dialog">
-
                     <!--Modal-->
                     <div class="modal-dialog">
-
                       <!--Modal Content-->
                       <div class="modal-content">
 
@@ -173,45 +172,89 @@
                         </div>
 
                         <!-- Radio Buttons for Rating-->
-                        <div class="form-check mb-4">
-                          <input name="feedback" type="radio" />
-                          <label class="ml-3">Very good</label>
-                        </div>
-                        <div class="form-check mb-4">
-                          <input name="feedback" type="radio" />
-                          <label class="ml-3">Good</label>
-                        </div>
-                        <div class="form-check mb-4">
-                          <input name="feedback" type="radio" />
-                          <label class="ml-3">Mediocre</label>
-                        </div>
-                        <div class="form-check mb-4">
-                          <input name="feedback" type="radio" />
-                          <label class="ml-3">Bad</label>
-                        </div>
-                        <div class="form-check mb-4">
-                          <input name="feedback" type="radio" />
-                          <label class="ml-3">Very Bad</label>
+                        <div
+                          class="container d-flex justify-content-center"
+                          style="background-color: #C8D8E4; width: 80%"
+                        >
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="stars">
+                                <form action="">
+                                  <input
+                                    class="star star-5"
+                                    id="star-5"
+                                    type="radio"
+                                    name="star"
+                                  />
+                                  <label
+                                    class="star star-5"
+                                    for="star-5"
+                                  ></label>
+                                  <input
+                                    class="star star-4"
+                                    id="star-4"
+                                    type="radio"
+                                    name="star"
+                                  />
+                                  <label
+                                    class="star star-4"
+                                    for="star-4"
+                                  ></label>
+                                  <input
+                                    class="star star-3"
+                                    id="star-3"
+                                    type="radio"
+                                    name="star"
+                                  />
+                                  <label
+                                    class="star star-3"
+                                    for="star-3"
+                                  ></label>
+                                  <input
+                                    class="star star-2"
+                                    id="star-2"
+                                    type="radio"
+                                    name="star"
+                                  />
+                                  <label
+                                    class="star star-2"
+                                    for="star-2"
+                                  ></label>
+                                  <input
+                                    class="star star-1"
+                                    id="star-1"
+                                    type="radio"
+                                    name="star"
+                                  />
+                                  <label
+                                    class="star star-1"
+                                    for="star-1"
+                                  ></label>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </div>
 
                         <!--Text Message-->
-                        <div class="text-center">
+                        <div class="text-center modal-body">
                           <h4>What could we improve?</h4>
                         </div>
                         <textarea
                           type="textarea"
-                          placeholder="Your Message"
+                          placeholder=" Your Message"
+                          name="content"
                           rows="3"
                         ></textarea>
 
                         <!-- Modal Footer-->
                         <div class="modal-footer">
-                          <a href="" class="btn btn-primary">Send
+                          <a href="" class="btn btn-primary btn-web-send">Send
                             <i class="fa fa-paper-plane"></i>
                           </a>
                           <a
                             href=""
-                            class="btn btn-outline-primary"
+                            class="btn btn-outline-primary btn-web-cancel"
                             data-dismiss="modal"
                           >Cancel</a>
                         </div>

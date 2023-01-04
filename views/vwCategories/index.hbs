@@ -96,7 +96,7 @@
         <div class="course-container">
           <div class="course">
             <div class="parent-image">
-            <img class="course-img" src="{{image}}" alt="" />
+            <img class="course-img" src="../../../public/assets/images/{{image}}" alt="" />
             {{#if bestSeller}}
                 <img
                   src="../../../public/assets/images/bestseller.png"
@@ -141,7 +141,7 @@
               </div>
             </div>
           </div>
-          <p class="price">{{price}}đ</p>
+          <p class="price">${{price}}</p>
         </div>
       {{/each}}
       <!-- Pagination  -->

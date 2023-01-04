@@ -9,7 +9,7 @@ const checkTeacher = (req, res, next) => {
             res.redirect('/');
         }
     }catch (err){
-        next(createError.InternalServerError(err.message));
+        throw createError.InternalServerError(err.message);
     }
 }
 const checkStudent = (req, res, next) => {

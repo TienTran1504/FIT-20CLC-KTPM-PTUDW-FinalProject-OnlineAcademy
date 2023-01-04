@@ -88,6 +88,12 @@ const CourseSchema = new mongoose.Schema(
   { timestamps: true }
 ); // timestamps -> key createdAt, updatedAt
 
+CourseSchema.index({
+  name: "text",
+  languageName: "text",
+  categoryName: "text",
+});
+
 CourseSchema.pre("deleteOne", function (next) {
   const courseID = this.getQuery()["_id"];
   Lecture.deleteMany({ createdIn: courseID }, function (err, result) {
