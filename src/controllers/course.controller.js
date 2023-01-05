@@ -27,23 +27,52 @@ const getAllCourses = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ sortedCourses, count: sortedCourses.length });
 };
+
+function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [month, day, year].join("-");
+}
+
+
 // {{URL}}/courses/:id
 const getCourse = async (req, res) => {
-  res.render("vwCourseDetails/course_details");
+  try {
+    const course = await Course.findOne({ _id: req.params.id }).lean();
+    const instructor = await User.findOne({ _id: course.createdBy}).lean();
 
-  // const {
-  //   params: { id: courseId },
-  // } = req; // req.user.userId, req.params.id
-  // const course = await Course.findOne({
-  //   _id: courseId,
-  // });
-  // if (!course) {
-  //   throw createError.NotFound();
-  // }
-  // res.status(StatusCodes.OK).json({ course });
+    CourseList = CourseList.map((course) => {
+      var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+      var CourseRatingVote = feedbackList.length;
+      var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+      var user = users.find((u) => u._id == course.createdBy.toString());
+  
+      return {
+        ...course,
+        CourseRatingVote: CourseRatingVote,
+        CourseRatingPoint: CourseRatingPoint,
+        createdBy: user.firstName + " " + user.lastName,
+        viewInWeek: course.viewList.filter((view) => dateDiffInDays(view.createdAt, new Date()) <= 7).length,
+      };
+    });
+
+    res.render("vwCourseDetails/course_details", {
+      course,
+      instructor
+    });
+  }  catch (err) {
+    console.error(err);
+    next(createError.InternalServerError(err.message));
+  }
 };
-// {{URL}}/courses
 
+// {{URL}}/courses
 const feedbackCourse = async (req, res, next) => {
   const { UserID, star, content, CourseID } = req.body;
 
