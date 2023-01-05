@@ -553,7 +553,7 @@ const getCategory = async (req, res) => {
             courseQuantity: numberWithCommas(
               CourseList.filter((u) => u.languageName == lang.name && u.categoryName == cat.name).length
             ),
-            isActive: lang.name === language ? true : false,
+            isActive: lang.name === language && cat.name === category ? true : false,
           };
         }),
       };
