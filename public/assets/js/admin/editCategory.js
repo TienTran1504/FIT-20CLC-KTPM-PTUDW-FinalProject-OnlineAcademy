@@ -3,8 +3,6 @@ const $$ = document.querySelectorAll.bind(document)
 function handleSubmit(e) {
     const inputCategoryName = $("#txtCategoryName");
     const inputCategoryImage = $("#txtCategoryImage");
-    console.log(inputCategoryName);
-    console.log(inputCategoryImage);
     if (inputCategoryName.value.length === 0) {
         alert("Please fill out Category's name");
         inputCategoryName.select();

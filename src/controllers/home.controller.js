@@ -6,13 +6,19 @@ import Feedback from "../models/feedback.model";
 
 const SliderList = [
   {
-    SliderImage: "https://www.inductionhouse.com.au/Online%20Learning%20Slider%202.jpg",
+    SliderImage: "../../../public/assets/images/slider1.jpg",
   },
   {
-    SliderImage: "http://logoman.ca/wp-content/uploads/2018/01/Slider-Banner-Programming-Image-.jpg",
+    SliderImage: "../../../public/assets/images/slider2.jpg",
   },
   {
-    SliderImage: "https://www.wonderplugin.com/wp-content/uploads/2019/05/tutorial-computer-900x288.jpg",
+    SliderImage: "../../../public/assets/images/slider3.jpg",
+  },
+  {
+    SliderImage: "../../../public/assets/images/slider4.jpg",
+  },
+  {
+    SliderImage: "../../../public/assets/images/slider5.jpg",
   },
 ];
 
@@ -243,9 +249,9 @@ const renderHome = async (req, res) => {
   sortedLangList = LanguageList.map((lang) => {
     var sumOfStudents = 0;
     lang.courseList.forEach((course) => {
-      course.studentList.forEach((student) => {
-        if (dateDiffInDays(student.createdAt, new Date()) <= 7) sumOfStudents++;
-      });
+      sumOfStudents += course.studentList.filter(
+        (student) => dateDiffInDays(student.createdAt, new Date()) <= 7
+      ).length;
     });
 
     return {
