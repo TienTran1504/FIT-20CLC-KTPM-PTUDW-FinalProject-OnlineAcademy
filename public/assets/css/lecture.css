@@ -1,5 +1,6 @@
 .main-lecture-content {
     margin-top: 5rem;
+    position: relative;
 }
 
 .heading-lecture .navbar {
@@ -28,10 +29,6 @@
     top: 4.5rem;
     right: 0;
     /* height: 100%; */
-}
-
-.accordion-panel .card div:hover {
-    cursor: pointer;
 }
 
 .accordion-panel .header-course {
@@ -95,10 +92,21 @@
 }
 
 .card-body .section-previewable .block-list-item-content {
+    position: relative;
     width: 100%;
     padding-left: 1rem;
     font-size: 0.9rem;
     font-weight: 490;
+}
+
+.block-list-item-content a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .section-previewable input:hover {
@@ -433,7 +441,7 @@ label.star:before {
 }
 
 .main-content .block-video {
-    width: 70%;
+    width: 65%;
     height: 60vh;
 }
 

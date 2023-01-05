@@ -46,7 +46,6 @@ const CourseSchema = new mongoose.Schema(
       max: [1000, "Price must be below 1000"],
       default: 0,
     },
-    //mỗi khi feedback sẽ lưu một object có id ,name, content
     feedbackList: {
       type: Array,
       default: [],

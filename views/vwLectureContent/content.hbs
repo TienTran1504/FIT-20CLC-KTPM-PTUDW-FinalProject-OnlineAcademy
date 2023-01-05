@@ -10,6 +10,10 @@
     href="https://vjs.zencdn.net/7.20.3/video-js.css"
   />
 {{/section}}
+{{#section "js"}}
+  <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+  <script src="../../public/assets/js/lecture/lecture.js"></script>
+{{/section}}
 <div class="main-lecture-content">
   <div class="container-lecture">
     <div class="heading-lecture">
@@ -35,7 +39,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="name-course">
-          Modern JavaScript for React JS - ES6 [2022]
+          {{course.name}}
         </div>
       </nav>
     </div>
@@ -50,7 +54,7 @@
           data-setup="{}"
         >
           <source
-            src="../../../public/assets/video/test.mp4"
+            src="../../../public/assets/video/{{lecture.video}}"
             type="video/webm"
           />
           <p class="vjs-no-js">
@@ -63,7 +67,7 @@
           </p>
         </video>
         <div class="heading-lecture">
-          ES6 - Variable Creation using "let" and "const"
+          {{lecture.name}}
         </div>
         <div class="main-rating">
           <div class="main-title">
@@ -71,7 +75,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-4">
-                  <div class="rating_circle">4.1</div>
+                  <div id="number_rating" class="rating_circle">{{rate}}</div>
                   <div>
                     <div class="stars-outer mt-4">
                       <div class="stars-inner"></div>
@@ -82,37 +86,37 @@
                   <div class="progress mt-5" style="height:10px">
                     <div
                       class="progress-bar-striped"
-                      style="width:70%;height:10px"
+                      style="width:{{star.s5}}%;height:10px"
                     ></div>
                   </div>
                   <div class="progress mt-3" style="height:10px">
                     <div
                       class="progress-bar-striped"
-                      style="width:10%;height:10px"
+                      style="width:{{star.s4}}%;height:10px"
                     ></div>
                   </div>
                   <div class="progress mt-3" style="height:10px">
                     <div
                       class="progress-bar-striped"
-                      style="width:10%;height:10px"
+                      style="width:{{star.s3}}%;height:10px"
                     ></div>
                   </div>
                   <div class="progress mt-3" style="height:10px">
                     <div
                       class="progress-bar-striped"
-                      style="width:5%;height:10px"
+                      style="width:{{star.s2}}%;height:10px"
                     ></div>
                   </div>
                   <div class="progress mt-3" style="height:10px">
                     <div
                       class="progress-bar-striped"
-                      style="width:5%;height:10px"
+                      style="width:{{star.s1}}%;height:10px"
                     ></div>
                   </div>
                 </div>
                 <div class="col-md-1">
                   <div class="row">
-                    <h6 class="rating_text">5</h6>
+                    <h6 class="">5</h6>
                   </div>
                   <div class="row">
                     <h6 class="">4</h6>
@@ -275,62 +279,75 @@
                 </div>
               </form>
             </div>
-            <div class="content-rating">
-              <div class="review-container">
-                <div class="review-heading">
-                  <div class="review-profile">
-                    <div class="block-img">
-                      <img
-                        src="https://wallpapercave.com/wp/wp5609975.jpg"
-                        alt=""
-                      />
+            {{#each feedbackList}}
+              <div class="content-rating">
+                <div class="review-container">
+                  <div class="review-heading">
+                    <div class="review-profile">
+                      <div class="block-img">
+                        {{#if (isEmpty user.image)}}
+                          {{#if gender}}
+                            <img
+                              src="../../public/assets/images/no_avt_male.png"
+                              alt="avatar"
+                            />
+                          {{else}}
+                            <img
+                              src="../../public/assets/images/no_avt_female.png"
+                              alt="avatar"
+                            />
+                          {{/if}}
+                        {{else}}
+                          <img
+                            src="../../public/assets/images/{{user.image}}"
+                            alt="avatar"
+                          />
+                        {{/if}}
+                      </div>
+                      <div class="review-infomation">
+                        <h3>{{user.lastName}} {{user.firstName}}</h3>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <span class="week">{{feedback.createdAt}}</span>
+                      </div>
                     </div>
-                    <div class="review-infomation">
-                      <h3>Kannan M.</h3>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <span class="week">3 week ago</span>
-                    </div>
-                  </div>
-                  <div class="popper">
-                    <div class="btn-group">
-                      <button
-                        class="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        id="triggerId"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      ></button>
-                      <div
-                        class="dropdown-menu dropdown-menu-right"
-                        aria-labelledby="triggerId"
-                      >
-                        <a class="dropdown-item" href="#">Report</a>
+                    <div class="popper">
+                      <div class="btn-group">
+                        <button
+                          class="btn btn-secondary dropdown-toggle"
+                          type="button"
+                          id="triggerId"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        ></button>
+                        <div
+                          class="dropdown-menu dropdown-menu-right"
+                          aria-labelledby="triggerId"
+                        >
+                          <a class="dropdown-item" href="#">Report</a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="review-content">
-                  Course is really Fantastic. Detailed Explanation given for
-                  each Section. Also Hands on Exercise at end of each topic
-                  gives confidence after learning each topic. Milestone Projects
-                  makes to think a lot while coding.
-                </div>
-                <div class="rewiew-rating">
-                  <div class="help">Helpful?</div>
-                  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                  <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                  <div class="review-content">
+                    {{feedback.content}}
+                  </div>
+                  <div class="rewiew-rating">
+                    <div class="help">Helpful?</div>
+                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                  </div>
                 </div>
               </div>
-            </div>
+            {{/each}}
           </div>
         </div>
       </div>
-      <div class="accordion-panel" style="width: 30%;">
+      <div class="accordion-panel" style="width: 35%;">
         <div
           class="sticky-panel"
           id="accordianId"
@@ -354,9 +371,10 @@
                     <div class="block-title">
                       <button class="btn-list-course">
                         <span class="course-title">
-                          <span>Section 1: ES6</span>
+                          <span>Category: {{course.categoryName}}</span>
                           <span>
-                            0/16 | 1hr29min
+                            {{lectureStudied}}/{{course.lecture.length}}
+                            | 1hr29min
                           </span>
                         </span>
                       </button>
@@ -373,27 +391,33 @@
             >
               <div class="card-body">
                 <ul class="block-list">
-                  <li>
-                    <div class="section-previewable">
-                      <div>
-                        <span>
-                          <input type="checkbox" name="checked" id="checkbox" />
-                        </span>
-                      </div>
-                      <div class="block-list-item-content">
-                        <div class="name-content">
-                          ES6 - Variable Creation using "let" and "const"
+                  {{#each lectureList}}
+                    <li>
+                      <div class="section-previewable">
+                        <div>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name="checked"
+                              id="checkbox"
+                            />
+                          </span>
                         </div>
-                        <div class="review-time">
-                          <i
-                            class="fa fa-play-circle icon-item-content"
-                            aria-hidden="true"
-                          ></i>
-                          <span>4:10</span>
+                        <div class="block-list-item-content">
+                          <a src="/courses/learn/{{_id}}" class="name-content">
+                            {{name}}
+                          </a>
+                          <div class="review-time">
+                            <i
+                              class="fa fa-play-circle icon-item-content"
+                              aria-hidden="true"
+                            ></i>
+                            <span>4:10</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </li>
+                    </li>
+                  {{/each}}
                 </ul>
               </div>
             </div>
@@ -403,11 +427,3 @@
     </div>
   </div>
 </div>
-{{#section "js"}}
-  <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-  <script>
-    $(document).ready(function () { var ratings = 4.1; var starTotal = 5; var
-    starPercentage = ratings / starTotal * 100; var star = starPercentage + '%';
-    $(".stars-inner").width(star); });
-  </script>
-{{/section}}
