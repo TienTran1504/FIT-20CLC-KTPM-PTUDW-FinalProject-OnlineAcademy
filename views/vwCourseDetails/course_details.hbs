@@ -8,23 +8,19 @@
         <div class="col-md-7">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background-color: #2b6777">
-              <li class="breadcrumb-item"><a href="#">Development</a></li>
-              <li class="breadcrumb-item">
-                <a href="#">Programming Languages</a>
-              </li>
+              <li class="breadcrumb-item"><a href="/categories?category={{course.categoryName}}">{{course.categoryName}}</a></li>
               <li class="breadcrumb-item active" aria-current="page">
-                Python
+                <a href="/categories?category={{course.categoryName}}&language={{course.languageName}}">{{course.languageName}}</a>
               </li>
             </ol>
           </nav>
-          <h1>2022 Complete Python Bootcamp From Zero to Hero in Python</h1>
+          <h1>{{course.name}}</h1>
           <div class="describe-details">
-            Learn Python like a Professional Start from the basics and go all
-            the way to creating your own applications and games
+            {{course.briefDescription}}
           </div>
           <div class="rating">
             <a href="#">
-              <span> 4.6 </span>
+              <span> {{course.}} </span>
               <span class="fa fa-star checked"></span>
               <span class="fa fa-star checked"></span>
               <span class="fa fa-star checked"></span>
@@ -40,7 +36,7 @@
           </div>
           <div>
             <i class="fa fa-info-circle" aria-hidden="true"></i>
-            <span>Last updated 3/2021</span>
+            <span>Last updated {{course.updatedAt}}</span>
           </div>
         </div>
       </div>
@@ -48,43 +44,6 @@
     <div class="body-course">
       <div class="row">
         <div class="main-content col-md-7">
-          <div class="what-will-you-learn">
-            <h2>What you'll learn</h2>
-            <div class="content">
-              <div class="">
-                <ul>
-                  <li>
-                    <i class="fa fa-check" aria-hidden="true"></i>
-                    <div>
-                      You will learn how to leverage the power of Python to
-                      solve tasks.
-                    </div>
-                  </li>
-                  <li>
-                    <i class="fa fa-check" aria-hidden="true"></i>
-                    <div>
-                      You will learn how to leverage the power of Python to
-                      solve tasks.
-                    </div>
-                  </li>
-                  <li>
-                    <i class="fa fa-check" aria-hidden="true"></i>
-                    <div>
-                      You will learn how to leverage the power of Python to
-                      solve tasks.
-                    </div>
-                  </li>
-                  <li>
-                    <i class="fa fa-check" aria-hidden="true"></i>
-                    <div>
-                      You will learn how to leverage the power of Python to
-                      solve tasks.
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
           <div class="course-curriculum">
             <div>
               <div class="main-title">
@@ -93,11 +52,7 @@
               <div class="curriculum-header">
                 <div class="infor">
                   <span>
-                    23 sections • 155 lectures •
-                    <span>
-                      <span>22h 13m</span>
-                      total length
-                    </span>
+                    155 lectures
                   </span>
                 </div>
                 <div class="accordion-panel">
@@ -205,15 +160,7 @@
               <h2>Description</h2>
             </div>
             <div class="des-content">
-              <p>
-                Become a Python Programmer and learn one of employer's most
-                requested skills of 2022! This is the most comprehensive, yet
-                straight-forward, course for the Python programming language on
-                Udemy! Whether you have never programmed before, already know
-                basic syntax, or want to learn about the advanced features of
-                Python, this course is for you! In this course we will teach you
-                Python 3.
-              </p>
+              {{{course.detailDescription}}}
             </div>
           </div>
           <div class="hint-5-courses">
@@ -224,26 +171,18 @@
               <h2>Instructor</h2>
             </div>
             <div class="content-instructor">
-              <div><a href="#">Jose Portilla</a></div>
-              <div class="des-content">Head of Data Science at Pierian Training</div>
+              <div><a href="#">{{instructor.firstName}} {{instructor.lastName}}</a></div>
+              <div class="des-content">{{instructor.headline}}</div>
               <div class="teacher-items">
                 <div class="block-img">
                   <img
-                    src="https://img-c.udemycdn.com/user/200_H/9685726_67e7_4.jpg"
-                    alt="none"
+                    src="../../public/assets/images/{{instructor.image}}"
+                    alt="Avatar"
                   />
                 </div>
-
-                <div class="block-items">
-                  <ul>
-                    <li>
-                      <i class="fa fa-star" aria-hidden="true"></i>
-                      <span>4.6 Instructor Rating</span>
-                    </li>
-                    <li>
-                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                      <span>985,184 Reviews</span>
-                    </li>
+                
+                <div class="block-items" >
+                  <ul style="height: 3.7rem;">
                     <li>
                       <i class="fa fa-users" aria-hidden="true"></i>
                       <span>3,170,109 Students</span>
@@ -256,10 +195,7 @@
                 </div>
               </div>
               <div>
-                Jose Marcial Portilla has a BS and MS in Mechanical Engineering
-                from Santa Clara University and years of experience as a
-                professional instructor and trainer for Data Science, Machine
-                Learning and Python Programming
+                {{{instructor.description}}}
               </div>
             </div>
           </div>
@@ -335,12 +271,12 @@
         <div class="main-content-model">
           <div class="block-img">
             <img
-              src="https://internetmarketing.gold/wp-content/uploads/2022/06/jr.png"
+              src="../../public/assets/images/{{course.image}}"
               alt=""
             />
           </div>
           <div class="block-content">
-            <div class="title-course">Free 0₫</div>
+            <div class="title-course">{{course.price}}$</div>
             <div class="btn-course">
               <button
                 type="submit"

@@ -27,23 +27,37 @@ const getAllCourses = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ sortedCourses, count: sortedCourses.length });
 };
+
+function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [month, day, year].join("-");
+}
+
+
 // {{URL}}/courses/:id
 const getCourse = async (req, res) => {
-  res.render("vwCourseDetails/course_details");
+  try {
+    const course = await Course.findOne({ _id: req.params.id }).lean();
+    const instructor = await User.findOne({ _id: course.createdBy}).lean();
 
-  // const {
-  //   params: { id: courseId },
-  // } = req; // req.user.userId, req.params.id
-  // const course = await Course.findOne({
-  //   _id: courseId,
-  // });
-  // if (!course) {
-  //   throw createError.NotFound();
-  // }
-  // res.status(StatusCodes.OK).json({ course });
+    res.render("vwCourseDetails/course_details", {
+      course,
+      instructor
+    });
+  }  catch (err) {
+    console.error(err);
+    next(createError.InternalServerError(err.message));
+  }
 };
-// {{URL}}/courses
 
+// {{URL}}/courses
 const addFeedback = async (req, res, next) => {
   const UserID = req.session.authUser._id;
   // const idcourse = "";
