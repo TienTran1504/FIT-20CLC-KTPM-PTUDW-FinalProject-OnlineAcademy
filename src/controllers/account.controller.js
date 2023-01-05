@@ -21,9 +21,9 @@ const num = Math.floor((Math.random() * (999999 - 100000)) + 100000);
 const OTP = num.toString();
 
 const addAccount = async (req, res, next) => {
-    try{
-        const nameAccount = await User.findOne({firstname: req.body.firstName, lastName: req.body.lastName, email: req.body.email})
-        if (nameAccount === null){
+    try {
+        const nameAccount = await User.findOne({ firstname: req.body.firstName, lastName: req.body.lastName, email: req.body.email })
+        if (nameAccount === null) {
             const rawPassword = req.body.password;
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(rawPassword, salt);
@@ -42,7 +42,7 @@ const addAccount = async (req, res, next) => {
                 return res.status(400).send('There was an error during account creation, please try again.');
             }
             else {
-                const transporter =  nodemailer.createTransport({ // config mail server
+                const transporter = nodemailer.createTransport({ // config mail server
                     host: 'smtp.gmail.com',
                     port: 465,
                     secure: true,
@@ -81,20 +81,20 @@ const addAccount = async (req, res, next) => {
                 });
             }
         }
-        else{
+        else {
             res.status(409).send('This account has already existed.');
         }
-    }catch (err){
+    } catch (err) {
         throw createError.InternalServerError(err.message);
     }
 };
 
 const checkOTP = async (req, res, next) => {
     const enOTP = req.body.otp;
-    if (enOTP !== OTP){
+    if (enOTP !== OTP) {
         res.status(409).send('OTP is incorrect');
     }
-    else{
+    else {
         res.render('vwAccount/login', {
             custom_style: "login.css",
         });
@@ -103,10 +103,10 @@ const checkOTP = async (req, res, next) => {
 };
 
 const checkLogin = async (req, res, next) => {
-    try{
+    try {
         const mail = req.body.email;
         const password = req.body.password;
-        const user = await User.findOne({ email: mail})
+        const user = await User.findOne({ email: mail })
 
         if (!user) {
             res.render('vwAccount/login', {
@@ -115,19 +115,24 @@ const checkLogin = async (req, res, next) => {
             });
         }
         const checkLogin = await bcrypt.compare(password, user.password)
-        
+
         if (!checkLogin) {
             res.render("vwAccount/login", {
                 custom_style: "login.css",
                 err_message: "Invalid username or password",
             });
         }
-            delete user.password;
-            req.session.auth = true;
-            req.session.authUser = user;
-            console.log("login success")
+        delete user.password;
+        req.session.auth = true;
+        req.session.authUser = user;
+        console.log("login success")
+        if (req.session.authUser.permission === "Admin") {
+            res.redirect("/admin");
+        }
+        else {
             res.redirect("/");
-    }catch (err){
+        }
+    } catch (err) {
         throw createError.InternalServerError(err.message);
     }
 };
