@@ -210,14 +210,14 @@ const changeEmail = async (req, res) => {
 };
 
 const addWatchList = async (req, res, next) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
-  const getUser = await User.findById({ _id: req.user.userId });
-  const { courseId } = req.params;
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id });
+  const courseId = "63b19e938ef0fd3598b49b17";
+  // const { courseId } = req.params;
   const course = await Course.findOne({ _id: courseId });
+
   const checkCourseExists = getUser.watchList.some(watch => {
-    return watch._id === courseId;
+    return watch === courseId;
   });
 
   if (course === null) {
@@ -230,7 +230,7 @@ const addWatchList = async (req, res, next) => {
       )
     );
   } else {
-    getUser.watchList.push(courseId);
+    getUser.watchList.push({ _id: courseId });
 
     const userUpdate = await User.findByIdAndUpdate(
       {
@@ -242,6 +242,7 @@ const addWatchList = async (req, res, next) => {
       { new: true, runValidators: true }
     );
   }
+  res.redirect("/courses/test");
 };
 
 // {{URL}}/student/courses
@@ -250,6 +251,7 @@ const getCourseFavorite = async (req, res) => {
     return next(createError(401, "Unauthorized"));
 
   const id = req.session.authUser._id;
+  console.log("User: " + id);
   const getUser = await User.findById({ _id: id }).lean();
 
   const getCoursesId = getUser.watchList;
@@ -260,7 +262,7 @@ const getCourseFavorite = async (req, res) => {
 
   let listCourses = [];
   for (let i = 0; i < getCoursesId.length; i++) {
-    const course = await Course.findById({ _id: getCoursesId[i] });
+    const course = await Course.findById({ _id: getCoursesId[i]._id });
     const feedbacks = course.feedbackList;
     let averageRate = 0;
     for (let j = 0; j < feedbacks.length; j++) {
@@ -317,26 +319,26 @@ const removeCourseInWatchList = async (req, res, next) => {
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
+  // const idCourse = req.body.id;
+  const courseId = "63b19e938ef0fd3598b49b17";
   let watchList = getUser.watchList;
-  const idCourse = req.body.id;
-  const index = watchList.findIndex(watchId => watchId === idCourse);
-  watchList.splice(index, 1);
-  const userUpdate = await User.findByIdAndUpdate(
-    {
-      _id: getUser._id,
-    },
-    {
-      watchList,
-    },
-    { new: true, runValidators: true }
-  );
-  res.redirect("/student/favorite_course");
+  const index = watchList.findIndex(watchId => watchId === courseId);
+  if (index !== -1) {
+    watchList.splice(index, 1);
+    const userUpdate = await User.findByIdAndUpdate(
+      {
+        _id: getUser._id,
+      },
+      {
+        watchList,
+      },
+      { new: true, runValidators: true }
+    );
+  }
+  res.redirect("/courses/test");
 };
 
 const addCourseList = async (req, res, next) => {
-  // if (req.session.authUser === null)
-  //   return next(createError(401, "Unauthorized"));
-
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -450,6 +452,7 @@ export {
   uploadPhoto,
   addCourseList,
   addWatchList,
+  removeCourseInWatchList,
 };
 /*main flow:
 Khi getCourseList sẽ lấy ra danh sách các khoá học mà học viên đã đăng ký

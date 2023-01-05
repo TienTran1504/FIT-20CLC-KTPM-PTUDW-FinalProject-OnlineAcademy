@@ -44,44 +44,41 @@ const getCourse = async (req, res) => {
 };
 // {{URL}}/courses
 
-const feedbackCourse = async (req, res, next) => {
-  const { UserID, star, content, CourseID } = req.body;
+const addFeedback = async (req, res, next) => {
+  const UserID = req.session.authUser._id;
+  // const idcourse = "";
+  const { idcourse, idlecture } = req.params;
+  const { star, content } = req.body;
 
   const createFeedback = await FeedBack.create({
     content: content,
     numberRated: star,
-    createdIn: CourseID,
+    createdIn: idcourse,
     createdBy: UserID,
   });
-  const findCourse = Course.findById({ _id: CourseID });
-  findCourse.feedbackList.push({ _id: createFeedback._id });
+
+  const findCourse = await Course.findById({ _id: idcourse });
+
+  const obj = { _id: createFeedback._id };
+  findCourse.feedbackList.push(obj);
   await Course.findByIdAndUpdate(
-    { _id: CourseID },
+    { _id: idcourse },
     {
       feedbackList: findCourse.feedbackList,
     },
     { new: true, runValidators: true }
   );
+  res.redirect(`/courses/learn/${idcourse}/${idlecture}`);
 };
 
 const viewLecture = async (req, res, next) => {
-  // const { idcourse, idlecture } = req.params;
-  // const lecture = await Lecture.findById({ _id: idlecture }).lean();
-  // const feedbacks = await FeedBack.find({ createdIn: idcourse }).lean();
-
-  // if (!lecture) {
-  //   return next(createError(500, "Dont have this lecture"));
-  // }
-  // if (!feedbacks) {
-  //   return next(createError(500, "Dont have this feedback"));
-  // }
   res.render("vwLectureContent/content", {
     // lecture,
     // feedbacks,
   });
 };
 
-export { getAllCourses, getCourse, viewLecture };
+export { getAllCourses, getCourse, viewLecture, addFeedback };
 
 /* 
 main flow:
