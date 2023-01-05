@@ -283,12 +283,16 @@
                 class="btn btn-primary btn-buy"
                 formaction="/student/add_courses/post"
               >Buy now</button>
-              <button
+              {{! <button
                 type="submit"
                 class="fa fa-heart-o btn btn-primary btn-like"
                 formaction="/student/add_courses_favorite/post"
+              ></button> }}
+              <button
+                type="submit"
+                class="fa fa-heart btn btn-primary btn-like"
+                formaction="/student/remove_courses_favorite/post"
               ></button>
-              {{! <button class="fa fa-heart btn btn-primary btn-like"></button> }}
             </div>
             <div class="desciption-course">
               <div class="title-des">This course includes:</div>

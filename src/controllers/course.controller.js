@@ -47,21 +47,6 @@ const getCourse = async (req, res) => {
     const course = await Course.findOne({ _id: req.params.id }).lean();
     const instructor = await User.findOne({ _id: course.createdBy}).lean();
 
-    CourseList = CourseList.map((course) => {
-      var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
-      var CourseRatingVote = feedbackList.length;
-      var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-      var user = users.find((u) => u._id == course.createdBy.toString());
-  
-      return {
-        ...course,
-        CourseRatingVote: CourseRatingVote,
-        CourseRatingPoint: CourseRatingPoint,
-        createdBy: user.firstName + " " + user.lastName,
-        viewInWeek: course.viewList.filter((view) => dateDiffInDays(view.createdAt, new Date()) <= 7).length,
-      };
-    });
-
     res.render("vwCourseDetails/course_details", {
       course,
       instructor
@@ -73,44 +58,41 @@ const getCourse = async (req, res) => {
 };
 
 // {{URL}}/courses
-const feedbackCourse = async (req, res, next) => {
-  const { UserID, star, content, CourseID } = req.body;
+const addFeedback = async (req, res, next) => {
+  const UserID = req.session.authUser._id;
+  // const idcourse = "";
+  const { idcourse, idlecture } = req.params;
+  const { star, content } = req.body;
 
   const createFeedback = await FeedBack.create({
     content: content,
     numberRated: star,
-    createdIn: CourseID,
+    createdIn: idcourse,
     createdBy: UserID,
   });
-  const findCourse = Course.findById({ _id: CourseID });
-  findCourse.feedbackList.push({ _id: createFeedback._id });
+
+  const findCourse = await Course.findById({ _id: idcourse });
+
+  const obj = { _id: createFeedback._id };
+  findCourse.feedbackList.push(obj);
   await Course.findByIdAndUpdate(
-    { _id: CourseID },
+    { _id: idcourse },
     {
       feedbackList: findCourse.feedbackList,
     },
     { new: true, runValidators: true }
   );
+  res.redirect(`/courses/learn/${idcourse}/${idlecture}`);
 };
 
 const viewLecture = async (req, res, next) => {
-  // const { idcourse, idlecture } = req.params;
-  // const lecture = await Lecture.findById({ _id: idlecture }).lean();
-  // const feedbacks = await FeedBack.find({ createdIn: idcourse }).lean();
-
-  // if (!lecture) {
-  //   return next(createError(500, "Dont have this lecture"));
-  // }
-  // if (!feedbacks) {
-  //   return next(createError(500, "Dont have this feedback"));
-  // }
   res.render("vwLectureContent/content", {
     // lecture,
     // feedbacks,
   });
 };
 
-export { getAllCourses, getCourse, viewLecture };
+export { getAllCourses, getCourse, viewLecture, addFeedback };
 
 /* 
 main flow:

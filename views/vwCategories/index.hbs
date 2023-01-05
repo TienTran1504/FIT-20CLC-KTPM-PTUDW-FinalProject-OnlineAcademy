@@ -93,7 +93,7 @@
       </div>
 
       {{#each courses}}
-        <div class="course-container">
+        <a class="course-container" href="/courses/{{_id}}">
           <div class="course">
             <div class="parent-image">
             <img class="course-img" src="../../../public/assets/images/{{image}}" alt="" />
@@ -142,7 +142,7 @@
             </div>
           </div>
           <p class="price">${{price}}</p>
-        </div>
+        </a>
       {{/each}}
       <!-- Pagination  -->
       {{#if havePagination}}

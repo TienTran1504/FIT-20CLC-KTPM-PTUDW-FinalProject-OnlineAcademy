@@ -69,8 +69,12 @@ const UserSchema = new mongoose.Schema(
       default: "",
     },
     otp: {
-        type: String,
-        default: ""
+      type: String,
+      default: "",
+    },
+    lectureList: {
+      type: Array,
+      default: [],
     },
   },
 
@@ -100,5 +104,5 @@ UserSchema.methods.comparePassword = async function (canditatePassword) {
 export default mongoose.model("User", UserSchema);
 
 /*
-model sẽ có: name, email, password, gender, image, permission (phân hệ ng dùng), courseList(danh sách khoá học của sinh viên),
+  model sẽ có: name, email, password, gender, image, permission (phân hệ ng dùng), courseList(danh sách khoá học của sinh viên),
 */
