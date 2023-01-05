@@ -401,13 +401,15 @@ const getCourseList = async (req, res) => {
     }).lean;
 
     const rateNumber = feedback.numberRated || 0;
+    const idFirstLecture =
+      course.lecture.length === 0 ? course.lecture.length : "0";
 
     const obj = {
       name: course.name,
       image: course.image,
       des: course.briefDescription,
       category: course.categoryName,
-      idCourse: course._id,
+      idLecture: idFirstLecture,
       process: getCoursesId[i].process,
       rate: rateNumber,
     };

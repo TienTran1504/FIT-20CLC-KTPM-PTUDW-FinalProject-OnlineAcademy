@@ -68,10 +68,11 @@ const addFeedback = async (req, res, next) => {
     },
     { new: true, runValidators: true }
   );
-  res.redirect(`/courses/learn/${idcourse}/${idlecture}`);
+  res.redirect(`/courses/learn/${idlecture}`);
 };
 
 const viewLecture = async (req, res, next) => {
+  // req.session.coursesId = ;
   res.render("vwLectureContent/content", {
     // lecture,
     // feedbacks,

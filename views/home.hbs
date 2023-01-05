@@ -1,10 +1,19 @@
 {{#section "css"}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-  <link rel="stylesheet" type="text/css" href="../../public/assets/css/home.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/home.css"
+  />
 {{/section}}
 
 {{#section "js"}}
-  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
+  ></script>
   <script src="../../public/assets/js/home.js"></script>
 {{/section}}
 
@@ -26,15 +35,24 @@
   <br />
   <div class="info-container">
     <div class="info-item">
-      <div class="info-item-icon"><i class="fa fa-play" aria-hidden="true"></i></div>
+      <div class="info-item-icon"><i
+          class="fa fa-play"
+          aria-hidden="true"
+        ></i></div>
       <b>Learn in-demand skills with over 213,000 video courses</b>
     </div>
     <div class="info-item">
-      <div class="info-item-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
+      <div class="info-item-icon"><i
+          class="fa fa-star"
+          aria-hidden="true"
+        ></i></div>
       <b>Choose courses taught by real-world experts</b>
     </div>
     <div class="info-item">
-      <div class="info-item-icon"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></div>
+      <div class="info-item-icon"><i
+          class="fa fa-thumbs-o-up"
+          aria-hidden="true"
+        ></i></div>
       <b>Learn at your own pace, with lifetime access on mobile and desktop</b>
     </div>
   </div>
@@ -45,7 +63,11 @@
       <div class="menu-container">
         {{#each CatList}}
           <a class="menu-item" href="/categories?category={{name}}">
-            <img class="menu-category-image" src="../../../public/assets/images/{{image}}" alt="" />
+            <img
+              class="menu-category-image"
+              src="../../../public/assets/images/{{image}}"
+              alt=""
+            />
             <p class="category-name">{{name}}</p>
           </a>
         {{/each}}
@@ -59,10 +81,15 @@
       <div class="menu-container">
         {{#each LanguageList}}
           <a class="menu-item" href="/categories?language={{name}}">
-            <img class="menu-category-image" src="../../../public/assets/images/{{image}}" alt="" />
+            <img
+              class="menu-category-image"
+              src="../../../public/assets/images/{{image}}"
+              alt=""
+            />
             <p class="language-name">{{name}}</p>
             <p class="language-name">({{categoryName}})</p>
-            <p class="language-student">({{numOfStudents}} students registered in this week)</p>
+            <p class="language-student">({{numOfStudents}}
+              students registered in this week)</p>
           </a>
         {{/each}}
       </div>
@@ -76,9 +103,17 @@
         {{#each featuredCourses}}
           <a class="menu-item" href="/courses/{{_id}}">
             <div class="parent-image">
-              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              <img
+                class="menu-item-image"
+                src="../../../public/assets/images/{{image}}"
+                alt=""
+              />
               {{#if bestSeller}}
-                <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
+                <img
+                  src="../../../public/assets/images/bestseller.png"
+                  alt=""
+                  class="bestseller"
+                />
               {{/if}}
             </div>
             <b class="course-name">{{name}}</b>
@@ -90,7 +125,9 @@
             <p class="sub-info-item">Posting date:
               {{createdAt}}</p>
             <div class="rate">
-              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
+              <span
+                style="font-weight: bold; color: #CE810E;"
+              >{{CourseRatingPoint}}</span>
               {{#each fullStar}}
                 <span class="fa fa-star star"></span>
               {{/each}}
@@ -125,9 +162,17 @@
         {{#each mostViewedCourses}}
           <a class="menu-item" href="/courses/{{_id}}">
             <div class="parent-image">
-              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              <img
+                class="menu-item-image"
+                src="../../../public/assets/images/{{image}}"
+                alt=""
+              />
               {{#if bestSeller}}
-                <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
+                <img
+                  src="../../../public/assets/images/bestseller.png"
+                  alt=""
+                  class="bestseller"
+                />
               {{/if}}
             </div>
             <b class="course-name">{{name}}</b>
@@ -139,7 +184,9 @@
             <p class="sub-info-item">Posting date:
               {{createdAt}}</p>
             <div class="rate">
-              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
+              <span
+                style="font-weight: bold; color: #CE810E;"
+              >{{CourseRatingPoint}}</span>
               {{#each fullStar}}
                 <span class="fa fa-star star"></span>
               {{/each}}
@@ -174,9 +221,17 @@
         {{#each latestCourses}}
           <a class="menu-item" href="/courses/{{_id}}">
             <div class="parent-image">
-              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              <img
+                class="menu-item-image"
+                src="../../../public/assets/images/{{image}}"
+                alt=""
+              />
               {{#if bestSeller}}
-                <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
+                <img
+                  src="../../../public/assets/images/bestseller.png"
+                  alt=""
+                  class="bestseller"
+                />
               {{/if}}
             </div>
             <b class="course-name">{{name}}</b>
@@ -188,7 +243,9 @@
             <p class="sub-info-item">Posting date:
               {{createdAt}}</p>
             <div class="rate">
-              <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
+              <span
+                style="font-weight: bold; color: #CE810E;"
+              >{{CourseRatingPoint}}</span>
               {{#each fullStar}}
                 <span class="fa fa-star star"></span>
               {{/each}}

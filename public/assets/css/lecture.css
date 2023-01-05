@@ -25,7 +25,7 @@
 .accordion-panel .sticky-panel {
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: 4.5rem;
     right: 0;
     /* height: 100%; */
 }
@@ -138,6 +138,10 @@
     font-weight: 700;
 }
 
+.main-rating .main-title .progress-bar-striped {
+    background-color: #17A2B8;
+}
+
 .main-rating .main-title .fa-star {
     font-size: 1.2rem;
     color: #e59819;
@@ -240,11 +244,17 @@
 }
 
 .rating_circle {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 100px;
     height: 100px;
     border-radius: 70px;
-    border: 1px none;
+    border: 1px solid #265B6A;
     font-size: 35px;
+    background-color: #265B6A;
+    color: #fff;
 }
 
 .rating_text {
@@ -414,4 +424,33 @@ label.star:before {
 .btn-web-cancel {
     border-color: #52ab98;
     color: #52ab98;
+}
+
+
+#my-video {
+    width: 100%;
+    height: 60vh;
+}
+
+.main-content .block-video {
+    width: 70%;
+    height: 60vh;
+}
+
+.main-title .card-body {
+    border: 2px solid #D1D7DC;
+    margin-bottom: 1rem;
+    background-color: #C6D8E4;
+    border-radius: 4px;
+}
+
+.btn-send-feedback {
+    width: 11rem;
+    font-size: 1rem;
+}
+
+.stars-outer,
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #E59819;
 }
