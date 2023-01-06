@@ -462,3 +462,7 @@ label.star:before {
     content: "\f005 \f005 \f005 \f005 \f005";
     color: #E59819;
 }
+
+footer {
+    display: none;
+}
