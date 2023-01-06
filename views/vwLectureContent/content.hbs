@@ -391,33 +391,40 @@
             >
               <div class="card-body">
                 <ul class="block-list">
-                  {{#each lectureList}}
-                    <li>
-                      <div class="section-previewable">
-                        <div>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name="checked"
-                              id="checkbox"
-                            />
-                          </span>
-                        </div>
-                        <div class="block-list-item-content">
-                          <a src="/courses/learn/{{_id}}" class="name-content">
-                            {{name}}
-                          </a>
-                          <div class="review-time">
-                            <i
-                              class="fa fa-play-circle icon-item-content"
-                              aria-hidden="true"
-                            ></i>
-                            <span>4:10</span>
+                  <table
+                    class="table-bordered table-striped table-condensed table-fixed"
+                  >
+                    {{#each lectureList}}
+                      <li>
+                        <div class="section-previewable">
+                          <div>
+                            <span>
+                              <input
+                                type="checkbox"
+                                name="checked"
+                                id="checkbox"
+                              />
+                            </span>
+                          </div>
+                          <div class="block-list-item-content">
+                            <a
+                              src="/courses/learn/{{_id}}"
+                              class="name-content"
+                            >
+                              {{name}}
+                            </a>
+                            <div class="review-time">
+                              <i
+                                class="fa fa-play-circle icon-item-content"
+                                aria-hidden="true"
+                              ></i>
+                              <span>4:10</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </li>
-                  {{/each}}
+                      </li>
+                    {{/each}}
+                  </table>
                 </ul>
               </div>
             </div>
