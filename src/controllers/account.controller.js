@@ -114,23 +114,25 @@ const checkLogin = async (req, res, next) => {
                 err_message: 'Invalid username or password'
             });
         }
-        const checkLogin = await bcrypt.compare(password, user.password)
 
+        const checkLogin = await bcrypt.compare(password, user.password)
         if (!checkLogin) {
             res.render("vwAccount/login", {
                 custom_style: "login.css",
                 err_message: "Invalid username or password",
             });
         }
-        delete user.password;
-        req.session.auth = true;
-        req.session.authUser = user;
-        console.log("login success")
-        if (req.session.authUser.permission === "Admin") {
-            res.redirect("/admin");
-        }
         else {
-            res.redirect("/");
+            delete user.password;
+            req.session.auth = true;
+            req.session.authUser = user;
+            console.log("login success")
+            if (req.session.authUser.permission === "Admin") {
+                res.redirect("/admin");
+            }
+            else {
+                res.redirect("/");
+            }
         }
     } catch (err) {
         throw createError.InternalServerError(err.message);
