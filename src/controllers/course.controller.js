@@ -4,6 +4,7 @@ import Course from "../models/course.model";
 import User from "../models/user.model";
 import Lecture from "../models/lecture.model";
 import FeedBack from "../models/feedback.model";
+import { formatDate, fullStar, halfStar, blankStar } from "./home.controller";
 
 // {{URL}}/courses
 const getAllCourses = async (req, res) => {
@@ -28,30 +29,29 @@ const getAllCourses = async (req, res) => {
     .json({ sortedCourses, count: sortedCourses.length });
 };
 
-function formatDate(date) {
-  var d = new Date(date),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
-
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-
-  return [month, day, year].join("-");
-}
-
 // {{URL}}/courses/:id
-const getCourse = async (req, res) => {
+const getCourse = async (req, res, next) => {
   try {
-    const course = await Course.findOne({ _id: req.params.id }).lean();
+    const course = await Course.findById({ _id: req.params.id }).lean();
     const instructor = await User.findOne({ _id: course.createdBy }).lean();
+    
+    course.updatedAt = formatDate(course.updatedAt);
+    course.numberOfStudents = course.studentList.length;
+    course.numberOfFeedbacks = course.feedbackList.length;
+    course.ratingPoint = +(course.feedbackList.reduce((a, b) => a + b.numberRated, 0) / course.numberOfFeedbacks).toFixed(1) || 0;
+    course.fullStar = fullStar(course.ratingPoint);
+    course.halfStar = halfStar(course.ratingPoint);   
+    course.blankStar = blankStar(course.ratingPoint);
+
+    const listOfCourses = await Course.find({ createdBy: instructor._id }).lean();
+    instructor.numberOfStudents = listOfCourses.reduce((a, b) => a + b.studentList.length, 0);
 
     res.render("vwCourseDetails/course_details", {
       course,
       instructor,
     });
   } catch (err) {
-    console.error(err);
+    console.log(err.message);
     next(createError.InternalServerError(err.message));
   }
 };

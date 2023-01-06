@@ -7,20 +7,37 @@
         type="text/css"
         href="../../../public/assets/css/admin/index.css"
     />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" />
     {{!-- <link rel="stylesheet" type="text/css" href="../../../public/assets/css/validation/form.css"/> --}}
 {{/section}}
 
 {{#section 'js'}}
-  {{!-- <script src="../../../public/assets/js/validator.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
   <script>
-      Validator({
-          form: '#form-1',
-          rules: [
-              Validator.isRequired('#title', "Please input lecture title"),
-              Validator.isRequired('#description', "Please input lecture description"),
-          ]
-      })
-  </script> --}}
+    $('#video').fileinput({
+      dropZoneEnabled: false,
+      maxFileCount: 1,
+      theme: 'fa4',
+      allowedFileExtensions: ['mp4'],
+    });
+  </script>
+  <script>
+    var vid = document.createElement('video');
+    document.querySelector('#video').addEventListener('change', function() {
+      // create url to use as the src of the video
+      var fileURL = URL.createObjectURL(this.files[0]);
+      vid.src = fileURL;
+      // wait for duration to change from NaN to the actual duration
+      vid.ondurationchange = function() {
+        $('#duration').val(this.duration);
+      }
+    });
+  </script>
 {{/section}}
 <div class="container-fluid" style="margin-top: 100px; margin-bottom: 1%;">
   <div class="container">
@@ -28,7 +45,7 @@
       <nav class="col-2 bg-light sidebar">
         <ul class="nav flex-column">
           <li class="pt-5 nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="/teacher/course/{{course._id}}/info">
                 Infomation
             </a>
           </li>
@@ -46,7 +63,7 @@
                 <p>Here’s where you create lecture content</p>
             </div>
             <div class="card-body">
-                <form method="post" id="form-1">
+                <form method="post" id="form-1" enctype="multipart/form-data">
                 <div class="pl-5 pr-5">
                     <div class="input-group form-group">
                       <label class="h6" for="">Title</label>
@@ -76,21 +93,12 @@
                       <span class="form-message"></span>
                     </div>
                     
-                    <div class="input-group form-group">
-                        <label class="h6" for="desc">Link video</label>
-                        <div class="input-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Insert link lecture video"
-                                name="video"
-                                id="video"
-                            />
-                            
-                        </div>
-                        <span class="form-message"></span>
+                    <div class="form-group">
+                        <label class="h6 d-flex" for="desc">Link video</label>
+                        <input type="file" id="video" name="video">
                     </div>
-                
+                    <input type="hidden" id="duration" name="duration">
+                    
                     <button type="submit" class="btn btn-primary d-flex px-4 mt-5">Save</button>
                 </div>
                 </form>

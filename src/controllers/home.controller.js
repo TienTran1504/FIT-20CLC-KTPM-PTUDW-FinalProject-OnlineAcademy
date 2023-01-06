@@ -348,4 +348,4 @@ const renderHome = async (req, res) => {
   });
 };
 
-export { renderHome };
+export { renderHome, formatDate, fullStar, halfStar, blankStar };

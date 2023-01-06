@@ -30,11 +30,7 @@
             <p>Here’s where you add course content - like lectures, assignments, and more. </p>
           </div>
           <div>
-            {{#if (isEmpty this.lectures) }}
-                <div class="card-body text-muted">
-                    Empty Data!!!
-                </div>
-            {{else}}
+            {{#if this.lectures }}
             <table class="table">
                 <thead>
                   <tr>
@@ -71,6 +67,11 @@
                 {{/each}}
                 </tbody>
             </table>
+               
+            {{else}}
+             <div class="card-body text-center">
+                You have not any lecture.      
+              </div>
             {{/if}}
         </div>
       </div>

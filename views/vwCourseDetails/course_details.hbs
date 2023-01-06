@@ -20,19 +20,23 @@
           </div>
           <div class="rating">
             <a href="#">
-              <span> {{course.}} </span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star-half-o"></span>
-              <span class="fa fa-star-o"></span>
+              <span> {{course.numberOfFeedbacks}} </span>
+              {{#each course.fullStar}}
+                <span class="fa fa-star checked"></span>
+              {{/each}}
+              {{#each course.halfStar}}
+                <span class="fa fa-star-half-o"></span>
+              {{/each}}
+              {{#each course.blankStar}}
+                <span class="fa fa-star-o"></span>
+              {{/each}}
             </a>
-            <a href="#" style="color: rgb(114, 203, 255)">(445,971 ratings)</a>
-            <span>1,655,274 students</span>
+            <a href="#" style="color: rgb(114, 203, 255)">({{course.numberOfFeedbacks}} ratings)</a>
+            <span>{{course.numberOfStudents}} students</span>
           </div>
           <div class="created">
             <span>Created by</span>
-            <a href="#">Jose Portilla</a>
+            <a>{{instructor.firstName}} {{instructor.lastName}}</a>
           </div>
           <div>
             <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -50,11 +54,6 @@
                 <h2>Course content</h2>
               </div>
               <div class="curriculum-header">
-                <div class="infor">
-                  <span>
-                    155 lectures
-                  </span>
-                </div>
                 <div class="accordion-panel">
                   <div
                     id="accordianId"
@@ -81,7 +80,7 @@
                                   <span class="course-title">
                                     <span>Course Overview</span>
                                     <span>
-                                      <span>5 lectures • </span>
+                                      <span>{{course.lecture.length}} lectures • </span>
                                       <span>19min</span>
                                     </span>
                                   </span>
@@ -185,11 +184,11 @@
                   <ul style="height: 3.7rem;">
                     <li>
                       <i class="fa fa-users" aria-hidden="true"></i>
-                      <span>3,170,109 Students</span>
+                      <span>{{instructor.numberOfStudents}} Students</span>
                     </li>
                     <li>
                       <i class="fa fa-play-circle" aria-hidden="true"></i>
-                      <span>58 Courses</span>
+                      <span>{{instructor.courseList.length}} Courses</span>
                     </li>
                   </ul>
                 </div>
@@ -203,9 +202,9 @@
             <div class="main-title">
               <h2>
                 <i class="fa fa-star" aria-hidden="true"></i>
-                <span>4.6 course rating</span>
+                <span>{{course.ratingPoint}} course rating</span>
                 <i class="fa fa-circle" aria-hidden="true"></i>
-                <span>446K ratings</span>
+                <span>{{course.numberOfFeedbacks}} ratings</span>
               </h2>
               <div class="content-rating">
                 <div class="review-container">
@@ -225,24 +224,6 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <span class="week">3 week ago</span>
-                      </div>
-                    </div>
-                    <div class="popper">
-                      <div class="btn-group">
-                        <button
-                          class="btn btn-secondary dropdown-toggle"
-                          type="button"
-                          id="triggerId"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        ></button>
-                        <div
-                          class="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="triggerId"
-                        >
-                          <a class="dropdown-item" href="#">Report</a>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -276,7 +257,7 @@
             />
           </div>
           <div class="block-content">
-            <div class="title-course">{{course.price}}$</div>
+            <div class="title-course">$ {{course.price}}</div>
             <div class="btn-course">
               <button
                 type="submit"
