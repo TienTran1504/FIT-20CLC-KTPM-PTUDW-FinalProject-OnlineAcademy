@@ -76,6 +76,11 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    blocked: {
+      type: String,
+      enum: ["True", "False"],
+      default: "False",
+    }
   },
 
   { timestamps: true }

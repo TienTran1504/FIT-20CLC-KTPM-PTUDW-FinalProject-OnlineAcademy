@@ -51,7 +51,7 @@ const getAllUsers = async (req, res, next) => {
         length: users.length - 1,
         users: sortedUsers,
         empty: sortedUsers.length === 0,
-        havePagination: users.length > limit ? true : false,
+        havePagination: (users.length - 1) > limit ? true : false,
         pageNumbers: pageNumbers,
         firstPage: Number(curPage) === 1 ? true : false,
         lastPage: Number(curPage) === nPages ? true : false,
@@ -532,12 +532,15 @@ const updateUserPermission = async function (req, res, next) {
   else {
     const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
     if (userChecking.permission === "Admin") {
-      const { UserID, permission } = req.body;
+      const { UserID, permission, blocked } = req.body;
       const userUpdate = await User.findByIdAndUpdate(
         {
           _id: UserID,
         },
-        { permission },
+        {
+          permission,
+          blocked
+        },
         { new: true, runValidators: true }
       );
       if (!userUpdate) {

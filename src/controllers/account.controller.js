@@ -123,15 +123,20 @@ const checkLogin = async (req, res, next) => {
             });
         }
         else {
-            delete user.password;
-            req.session.auth = true;
-            req.session.authUser = user;
-            console.log("login success")
-            if (req.session.authUser.permission === "Admin") {
-                res.redirect("/admin");
+            if (user.blocked === "False") {
+                delete user.password;
+                req.session.auth = true;
+                req.session.authUser = user;
+                console.log("login success")
+                if (req.session.authUser.permission === "Admin") {
+                    res.redirect("/admin");
+                }
+                else {
+                    res.redirect("/");
+                }
             }
             else {
-                res.redirect("/");
+                res.render("500");
             }
         }
     } catch (err) {
