@@ -5,15 +5,13 @@ html, body {
 }
 
 .container {
-  margin: 200px 200px;
+  margin: 25vh;
   height: 100%;
   align-content: center;
 }
 
 .card {
   height: 300px;
-  margin-top: auto;
-  margin-bottom: auto;
   width: 400px;
 
 }
