@@ -17,6 +17,9 @@ const LectureSchema = new mongoose.Schema(
             type: String,
             default: ""
         },
+        duration: {
+            type: Number,
+        },
         createdIn: {
             type: mongoose.Types.ObjectId,
             ref: "Course",

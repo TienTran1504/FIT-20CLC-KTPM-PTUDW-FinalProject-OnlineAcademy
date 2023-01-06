@@ -323,18 +323,36 @@ const getViewCreateLecture = (req, res, next) => {
 
 const createLecture = async (req, res, next) => {
   try {
-    const lecture = await Lecture.create({
-      name: req.body.name,
-      description: req.body.description || "",
-      video: req.body.video || "",
-      createdIn: req.session.currentCourse._id,
-      createdBy: req.session.authUser._id,
+    let fileName;
+
+    const storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, "./public/assets/videos");
+      },
+      filename: function (req, file, cb) {
+        fileName = file.originalname;
+        cb(null, file.originalname);
+      },
     });
 
-    await checkStatusOfCourse(req);
-    res.redirect("curriculum");
+    const upload = multer({ storage: storage });
+    upload.single("video")(req, res, async function (err) {
+      if (err) {
+        next(createError.InternalServerError(err.message));
+      } else {
+        const lecture = await Lecture.create({
+          name: req.body.name,
+          description: req.body.description || "",
+          video: fileName || "",
+          duration: req.body.duration,
+          createdIn: req.session.currentCourse._id,
+          createdBy: req.session.authUser._id,
+        });
+        await checkStatusOfCourse(req);
+        res.redirect("curriculum");
+      }
+    });
   } catch (err) {
-    console.error(err);
     next(createError.InternalServerError(err.message));
   }
 };
@@ -342,7 +360,7 @@ const createLecture = async (req, res, next) => {
 const getViewUpdateLecture = async (req, res, next) => {
   try {
     const lecture = await Lecture.findOne({ _id: req.params.lid }).lean();
-
+   
     res.render("vwTeacher/vwUpdateCourse/update_lecture", {
       user: req.session.authUser,
       course: req.session.currentCourse,
@@ -378,21 +396,56 @@ const checkStatusOfCourse = async req => {
 
 const updateLecture = async (req, res, next) => {
   try {
-    const lecture = await Lecture.findByIdAndUpdate(
-      {
-        _id: req.params.lid,
-      },
-      {
-        name: req.body.name,
-        description: req.body.description || "",
-        video: req.body.video || "",
-        createdIn: req.session.currentCourse._id,
-        createdBy: req.session.authUser._id,
-      }
-    );
+    let fileName;
 
-    await checkStatusOfCourse(req);
-    res.redirect(`/teacher/course/${req.params.id}/curriculum`);
+    const storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, "./public/assets/videos");
+      },
+      filename: function (req, file, cb) {
+        fileName = file.originalname;
+        cb(null, file.originalname);
+      },
+    });
+
+    const upload = multer({ storage: storage });
+    upload.single("video")(req, res, async function (err) {
+      if (err) {
+        next(createError.InternalServerError(err.message));
+      } else {
+        if (fileName) {
+          await Lecture.findByIdAndUpdate(
+            {
+              _id: req.params.lid,
+            },
+            {
+              name: req.body.name,
+              description: req.body.description || "",
+              video: fileName,
+              duration: req.body.duration,
+              createdIn: req.session.currentCourse._id,
+              createdBy: req.session.authUser._id,
+            }
+          );
+        } else {
+          await Lecture.findByIdAndUpdate(
+            {
+              _id: req.params.lid,
+            },
+            {
+              name: req.body.name,
+              description: req.body.description || "",
+              createdIn: req.session.currentCourse._id,
+              createdBy: req.session.authUser._id,
+            }
+          );
+        }
+        
+    
+        await checkStatusOfCourse(req);
+        res.redirect(`/teacher/course/${req.params.id}/curriculum`);
+      }
+    });
   } catch (err) {
     next(createError.InternalServerError(err.message));
   }
