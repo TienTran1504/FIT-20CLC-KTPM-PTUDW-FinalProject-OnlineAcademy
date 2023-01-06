@@ -5,3 +5,10 @@ $(document).ready(function () {
   var star = starPercentage + "%";
   $(".stars-inner").width(star);
 });
+
+$(document).ready(function () {
+  $("topic-lecture").on("click", function () {
+    $(this).siblings().removeClass("active");
+    $(this).addClass("active");
+  });
+});

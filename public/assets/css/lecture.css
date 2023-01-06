@@ -21,6 +21,7 @@
     padding: 2rem 5rem;
     font-size: 1.75rem;
     font-weight: 700;
+    position: relative;
 }
 
 .accordion-panel .sticky-panel {
@@ -69,34 +70,74 @@
     font-weight: 600;
 }
 
-.card-body {
-    padding: 0.5rem 1.25rem !important;
+.lecture-course-topic {
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    height: 73.5vh;
 }
 
-.card-body .block-list {
+.lecture-course-topic .block-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.card-body .block-list li {
-    margin: 0.5rem 0;
+.lecture-course-topic .block-list .topic-lecture .active {
+    background-color: rgb(198, 216, 228);
 }
 
-.card-body .section-previewable {
+.lecture-course-topic .block-list .topic-lecture {
+    padding: 1rem 1.25rem !important;
+    border-left: 2px solid #F7F9FA;
+    border-right: 2px solid #F7F9FA;
+    border-bottom: 2px solid #F7F9FA;
+}
+
+.lecture-course-topic .section-previewable {
     display: flex;
 }
 
-.card-body .section-previewable .icon-item-content {
+.lecture-course-topic .section-previewable .icon-item-content {
     margin: auto;
 }
 
-.card-body .section-previewable .block-list-item-content {
+.card-body .progress-line {
+    margin: auto;
+}
+
+.numstar {
+    align-self: center;
+    padding-top: 0.4rem;
+}
+
+.des-lecture .title {
+    font-size: 2rem;
+    font-weight: 500;
+    padding-left: 5rem;
+}
+
+.des-lecture .content {
+    padding-left: 5rem;
+    font-size: 1.25rem;
+}
+
+.lecture-course-topic .section-previewable .block-list-item-content {
     position: relative;
     width: 100%;
     padding-left: 1rem;
     font-size: 0.9rem;
     font-weight: 490;
+}
+
+.block-list-item-content a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #000000;
+}
+
+.block-list-item-content a:hover {
+    cursor: pointer;
 }
 
 .block-list-item-content a::after {
@@ -139,6 +180,7 @@
 .main-rating {
     margin-left: 5rem;
     margin-top: 5rem;
+    margin-right: 1rem
 }
 
 .main-rating .main-title span {
@@ -166,12 +208,6 @@
     border-top: 1px solid #d1d7dc;
     padding-bottom: 2rem;
 }
-
-/* @media (min-width: 37.56em) {
-    .content-rating .review-container {
-      width: calc(50% - (1rem / 2));
-    }
-  } */
 
 .review-container .review-heading {
     display: flex;
@@ -442,7 +478,6 @@ label.star:before {
 
 .main-content .block-video {
     width: 65%;
-    height: 60vh;
 }
 
 .main-title .card-body {
@@ -463,6 +498,19 @@ label.star:before {
     color: #E59819;
 }
 
-footer {
-    display: none;
+.vjs-big-play-button {
+    top: 45% !important;
+    left: 45% !important;
+}
+
+.btn-floating {
+    display: none !important;
+}
+
+.btn-checkbox {
+    margin: 0;
+    padding: 0;
+    height: min-content;
+    background-color: #fff;
+    border: 0;
 }

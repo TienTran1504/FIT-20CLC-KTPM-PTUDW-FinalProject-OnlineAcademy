@@ -51,11 +51,10 @@
             class="video-js"
             controls
             preload="auto"
-            poster="MY_VIDEO_POSTER.jpg"
             data-setup="{}"
           >
             <source
-              src="../../../public/assets/video/{{lecture.video}}"
+              src="../../../public/assets/videos/{{lecture.video}}"
               type="video/webm"
             />
             <p class="vjs-no-js">
@@ -68,8 +67,16 @@
             </p>
           </video>
         </div>
-        <div class="heading-lecture">
-          {{lecture.name}}
+        <div class="block-infor-course">
+          <div class="heading-lecture">
+            {{lecture.name}}
+          </div>
+          <div class="des-lecture">
+            <div class="title">Description:</div>
+            <div class="content">
+              {{lecture.description}}
+            </div>
+          </div>
         </div>
         <div class="main-rating">
           <div class="main-title">
@@ -84,8 +91,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-7">
-                  <div class="progress mt-5" style="height:10px">
+                <div class="col-md-7 progress-line">
+                  <div class="progress" style="height:10px">
                     <div
                       class="progress-bar-striped"
                       style="width:{{star.s5}}%;height:10px"
@@ -116,7 +123,7 @@
                     ></div>
                   </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 numstar">
                   <div class="row">
                     <h6 class="">5</h6>
                   </div>
@@ -265,7 +272,7 @@
                             {{! href="" }}
                             type="submit"
                             class="btn btn-primary btn-web-send"
-                            formaction="/courses/learn/63b19ad71aa34d2d78b7232a/63b19ad71aa34d2d78b7232a"
+                            formaction="/courses/learn/{{lecture._id}}"
                           >Send
                             <i class="fa fa-paper-plane"></i>
                           </button>
@@ -391,42 +398,41 @@
               role="tabpanel"
               aria-labelledby="section1HeaderId"
             >
-              <div class="card-body">
+              <div class="card-body lecture-course-topic">
                 <ul class="block-list">
-                  <table
-                    class="table-bordered table-striped table-condensed table-fixed"
-                  >
-                    {{#each lectureList}}
-                      <li>
-                        <div class="section-previewable">
-                          <div>
-                            <span>
-                              <input
-                                type="checkbox"
-                                name="checked"
-                                id="checkbox"
-                              />
-                            </span>
-                          </div>
-                          <div class="block-list-item-content">
-                            <a
-                              src="/courses/learn/{{_id}}"
-                              class="name-content"
-                            >
-                              {{name}}
-                            </a>
-                            <div class="review-time">
-                              <i
-                                class="fa fa-play-circle icon-item-content"
-                                aria-hidden="true"
-                              ></i>
-                              <span>{{duration}}</span>
-                            </div>
+                  {{#each lectureList}}
+                  {{log (ifEqualString lecture._id _id)}}
+                    {{#if (ifEqualString lecture._id _id)}}
+                        <li class="topic-lecture active">
+                    {{else}}
+                        <li class="topic-lecture">
+                    {{/if}}
+                    {{!-- <li class="topic-lecture"> --}}
+                      <div class="section-previewable">
+                        <button class="btn-checkbox" type="submit" formaction="">
+                          <span>
+                            <input
+                              type="checkbox"
+                              name="checked"
+                              id="checkbox"
+                            />
+                          </span>
+                        </button>
+                        <div class="block-list-item-content">
+                          <a href="/courses/learn/{{_id}}" class="name-content">
+                            {{name}}
+                          </a>
+                          <div class="review-time">
+                            <i
+                              class="fa fa-play-circle icon-item-content"
+                              aria-hidden="true"
+                            ></i>
+                            <span>{{formatDuration duration}}</span>
                           </div>
                         </div>
-                      </li>
-                    {{/each}}
-                  </table>
+                      </div>
+                    </li>
+                  {{/each}}
                 </ul>
               </div>
             </div>

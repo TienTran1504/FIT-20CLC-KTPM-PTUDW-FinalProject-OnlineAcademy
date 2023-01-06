@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import multer from "multer";
 import alert from "alert";
 import Feedback from "../models/feedback.model";
+import Lecture from "../models/lecture.model";
 
 const checkGender = gender => {
   if (gender === "Male") return true;
@@ -381,9 +382,6 @@ const addCourseList = async (req, res, next) => {
 
 // {{URL}}/student/courses
 const getCourseList = async (req, res) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
   const getCoursesId = getUser.courseList;
@@ -440,6 +438,42 @@ const getCourseList = async (req, res) => {
     prevPage: "?page=" + Number(curPage - 1),
     nextPage: "?page=" + Number(curPage + 1),
   });
+};
+
+const updateCourseLearn = async (req, res) => {
+  const id = req.session.authUser._id;
+  const getUser = await User.findById({ _id: id });
+  const list = getUser.courseList;
+  const { idlecture } = req.params;
+  const lecture = await Lecture.findById({ _id: idlecture });
+  const getAllLecture = await Lecture.find({ createdIn: lecture.createdIn });
+  const getCourse = await Course.findById({ _id: lecture.createdIn });
+
+  getUser.lectureList.push(lecture);
+  let count = 0;
+  for (const key in getUser.lectureList) {
+    if (key.createdIn === lecture.createdIn) {
+      count++;
+    }
+  }
+
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].id === getCourse._id) {
+      list[i].process = Math.round((count * 100) / getAllLecture.length);
+      break;
+    }
+  }
+
+  const userUpdate = await User.findByIdAndUpdate(
+    {
+      _id: getUser._id,
+    },
+    {
+      lectureList: getUser.lectureList,
+      courseList: list,
+    },
+    { new: true, runValidators: true }
+  );
 };
 
 export {

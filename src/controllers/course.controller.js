@@ -68,11 +68,17 @@ const getCourse = async (req, res, next) => {
 // {{URL}}/courses
 const addFeedback = async (req, res, next) => {
   const UserID = req.session.authUser._id;
-  // const idcourse = "";
   const { idlecture } = req.params;
   const { star, content } = req.body;
   const lecture = await Lecture.findById({ _id: idlecture });
   const idcourse = lecture.createdIn;
+
+  const a = {
+    content: content,
+    numberRated: star,
+    createdIn: idcourse,
+    createdBy: UserID,
+  };
 
   const createFeedback = await FeedBack.create({
     content: content,
@@ -103,15 +109,16 @@ const viewLecture = async (req, res, next) => {
   const lecture = await Lecture.findById({ _id: idlecture }).lean();
   const courseId = lecture.createdIn;
   const thisCourse = await Course.findById({ _id: courseId }).lean();
-  const lectureListId = thisCourse.lecture;
+  const lectureList = await Lecture.find({ createdIn: courseId }).lean();
   const feedbacks = thisCourse.feedbackList;
 
-  let lectureList = [];
-  lectureListId.forEach(async value => {
-    const getLecture = await Lecture.findById({ _id: value });
-    lectureList = [...lectureList, getLecture];
-  });
-
+  // let lectureList = [];
+  // for (let i = 0; i < thisCourse.lecture.length; i++) {
+  //   lectureList = [
+  //     ...lectureList,
+  //     await Lecture.findOne({ createdIn: thisCourse._id }).lean(),
+  //   ];
+  // }
   let averageRating = 0;
   let feedbackList = [];
   let star = {
@@ -121,26 +128,30 @@ const viewLecture = async (req, res, next) => {
     s4: 0,
     s5: 0,
   };
-  feedbacks.forEach(async value => {
-    console.log("Có feedback");
-    const feedback = await FeedBack.findById({ _id: value }).lean();
+  for (let i = 0; i < feedbacks.length; i++) {
+    const feedback = await FeedBack.findById({ _id: feedbacks[i]._id }).lean();
     const userFeedback = await User.findById({
       _id: feedback.createdBy,
     }).lean();
+    let f = new Intl.DateTimeFormat("en");
+    feedback.createdAt = f.format(feedback.createdAt);
+
     const obj = {
       feedback: feedback,
       user: userFeedback,
     };
     feedbackList = [...feedbackList, obj];
-    if (feedback.numberRated) {
-      averageRating += feedback.numberRated;
-      if (feedback.numberRated == 1) star.s1 += 1;
-      else if (feedback.numberRated == 2) star.s2 += 1;
-      else if (feedback.numberRated == 3) star.s3 += 1;
-      else if (feedback.numberRated == 4) star.s4 += 1;
-      else if (feedback.numberRated == 5) star.s5 += 1;
+    let numStar = parseInt(feedback.numberRated);
+    if (numStar) {
+      averageRating += numStar;
+      if (numStar == 1) star.s1 += 1;
+      else if (numStar == 2) star.s2 += 1;
+      else if (numStar == 3) star.s3 += 1;
+      else if (numStar == 4) star.s4 += 1;
+      else if (numStar == 5) star.s5 += 1;
     }
-  });
+  }
+
   if (feedbacks.length > 0) {
     averageRating /= feedbacks.length;
     star.s1 = (star.s1 * 100) / feedbacks.length;
@@ -149,23 +160,14 @@ const viewLecture = async (req, res, next) => {
     star.s4 = (star.s4 * 100) / feedbacks.length;
     star.s5 = (star.s5 * 100) / feedbacks.length;
   }
-  const a = {
+
+  res.render("vwLectureContent/content", {
     course: thisCourse,
     lecture: lecture,
     rate: averageRating,
     feedbackList: feedbackList,
     lectureStudied: numberLectureStudied,
     lectureList: lectureList,
-    star: star,
-  };
-  console.log("Star: ", a);
-  res.render("vwLectureContent/content", {
-    course: thisCourse,
-    lecture: lecture,
-    rate: averageRating,
-    // feedbackList: feedbackList,
-    lectureStudied: numberLectureStudied,
-    // lectureList: lectureList,
     star: star,
   });
 };
