@@ -309,6 +309,18 @@ function formatDate(date) {
   return [month, day, year].join("-");
 }
 
+function formatDate2(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+}
+
 function dateDiffInDays(a, b) {
   return ((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24)).toFixed(0);
 }
@@ -425,7 +437,7 @@ const search = async (req, res) => {
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
         };
       })
       .slice(offset, offset + limit),
@@ -572,7 +584,7 @@ const getCategory = async (req, res) => {
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
         };
       })
       .slice(offset, offset + limit),
