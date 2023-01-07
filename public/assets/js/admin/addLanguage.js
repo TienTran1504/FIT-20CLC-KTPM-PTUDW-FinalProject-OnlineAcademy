@@ -3,14 +3,24 @@ const $$ = document.querySelectorAll.bind(document)
 function handleSubmit(e) {
     const inputLanguage = $("#txtLanguageName");
     const inputLanguageImage = $("#txtLanguageImage");
+
+    const messageLanguageName = $("#languageName");
+    const messageImageLink = $("#languageImageLink");
+
+    messageLanguageName.style.display = "none";
+    messageImageLink.style.display = "none";
+    inputLanguage.style.borderColor = "#ced4da";
+    inputLanguageImage.style.borderColor = "#ced4da";
     if (inputLanguage.value.length === 0) {
-        alert("Please fill out Language's name");
+        messageLanguageName.style.display = "block";
+        inputLanguage.style.borderColor = "red";
         inputLanguage.select();
         e.preventDefault();
         return;
     }
     if (inputLanguageImage.value.length === 0) {
-        alert("Please fill out Language's image");
+        messageImageLink.style.display = "block";
+        inputLanguageImage.style.borderColor = "red";
         inputLanguageImage.select();
         e.preventDefault();
         return;

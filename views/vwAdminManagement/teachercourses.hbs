@@ -15,7 +15,8 @@
         class="card-header d-flex justify-content-between"
         style="background-color:#52ab98; color:#fff"
       >
-        {{this.language.name}}'s Management
+        {{this.user.firstName}}
+        {{this.user.lastName}}'s Courses
       </h4>
       {{#if this.empty}}
         <div class="card-body text-muted">
@@ -57,7 +58,7 @@
       <div class="card-footer text-muted">
         <a
           class="btn btn-outline-success"
-          href="/admin/managelanguage"
+          href="/admin/manageteachers"
           role="button"
         >
           <i class="fa fa-backward" aria-hidden="true"></i>

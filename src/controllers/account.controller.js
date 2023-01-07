@@ -136,7 +136,7 @@ const checkLogin = async (req, res, next) => {
                 }
             }
             else {
-                res.render("500");
+                res.render("400");
             }
         }
     } catch (err) {

@@ -433,7 +433,7 @@ const viewLanguagesByID = async function (req, res, next) {
   }
 };
 
-// {{ URL }}/admin/manageclanguageid?id
+// {{ URL }}/admin/managelanguageid?id
 const viewCoursesByID = async function (req, res, next) {
   if (!req.session.authUser) {
     res.render("vwAccount/login");
@@ -457,6 +457,31 @@ const viewCoursesByID = async function (req, res, next) {
     }
   }
 };
+// {{ URL }}/admin/manageteachers?id
+const viewCoursesByTeacherID = async function (req, res, next) {
+  if (!req.session.authUser) {
+    res.render("vwAccount/login");
+  }
+  else {
+    const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
+    if (userChecking.permission === "Admin") {
+      const id = req.query.id || 0;
+      const user = await User.findById({ _id: id }).lean();
+      const courses = await Course.find({ createdBy: id }).lean();
+      if (user === null) {
+        return res.redirect("/admin/manageteachers");
+      }
+      res.render("vwAdminManagement/teachercourses", {
+        user,
+        courses,
+        empty: courses.length === 0,
+      });
+    } else {
+      return next(createError(500, "User has no permission "));
+    }
+  }
+};
+
 // {{ URL }}/admin/managefeedbacksid?id
 const viewFeedBacksByID = async function (req, res, next) {
   if (!req.session.authUser) {
@@ -692,7 +717,7 @@ const createTeacherAccount = async function (req, res, next) {
       } else {
         const checkUser = await User.findOne({ email: req.body.TeacherEmail });
         if (checkUser) {
-          return next(createError(500, "The email has already existed"));
+          return next(createError(500, "The email has already existed in database"));
         }
         const createTeacher = await User.create({
           firstName: req.body.TeacherFirstName,
@@ -935,6 +960,7 @@ export {
   getAddTeacherPage,
   viewLanguagesByID,
   viewCoursesByID,
+  viewCoursesByTeacherID,
   viewFeedBacksByID,
   // viewRatingByID,
   updateUserPermission,

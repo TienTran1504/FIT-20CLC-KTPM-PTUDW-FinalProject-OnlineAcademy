@@ -21,6 +21,7 @@ import {
   deleteCourseCategory,
   viewLanguagesByID,
   viewCoursesByID,
+  viewCoursesByTeacherID,
   register,
   getAllCourseLanguages,
   getAddLanguagePage,
@@ -54,6 +55,7 @@ adminRouter.route('/addlanguage').get(getAddLanguagePage)
 adminRouter.route('/addteacher').get(getAddTeacherPage)
 adminRouter.route('/managecategoryid').get(viewLanguagesByID)
 adminRouter.route('/managelanguageid').get(viewCoursesByID)
+adminRouter.route('/manageteachersid').get(viewCoursesByTeacherID)
 adminRouter.route('/managefeedbacksid').get(viewFeedBacksByID)
 // adminRouter.route('/manageratingid').get(viewRatingByID)
 adminRouter.route('/addcategory/post').post(createCourseCategory)

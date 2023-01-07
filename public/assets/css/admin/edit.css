@@ -17,3 +17,6 @@
   background-color: #52ab98;
   color: #fff;
 }
+label.input-group-text.input-blocked {
+  padding-right: 33px;
+}

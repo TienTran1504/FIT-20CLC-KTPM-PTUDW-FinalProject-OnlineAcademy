@@ -5,6 +5,7 @@
     href="../../../public/assets/css/admin/edit.css"
   />
 {{/section}}
+
 <form method="post" class="form-submit">
   <div
     class="card col-md-9"
@@ -47,15 +48,37 @@
           value="{{user.lastName}}"
           readonly
         />
+        <label for="txtUserDisable" style="font-weight:bold">User Disable Status</label>
+        {{#if (ifEqualString user.blocked "True")}}
+          <input
+            name="UserDisable"
+            type="text"
+            class="form-control"
+            id="txtUserDisable"
+            value="Blocked"
+            readonly
+          />
+        {{else}}
+          <input
+            name="UserDisable"
+            type="text"
+            class="form-control"
+            id="txtUserDisable"
+            value="Activate"
+            readonly
+          />
+        {{/if}}
       </div>
       <div class="form-group">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect02">Options
-              Blocked</label>
+            <label
+              class="input-group-text input-blocked"
+              for="inputGroupSelect02"
+            >Options Blocked</label>
           </div>
           <select class="custom-select" id="inputGroupSelect02" name="blocked">
-            <option selected value="False">Unblocked</option>
+            <option selected value="False">Activate</option>
             <option value="True">Blocked</option>
           </select>
         </div>
