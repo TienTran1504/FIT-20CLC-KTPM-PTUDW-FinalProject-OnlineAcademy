@@ -903,15 +903,15 @@ const deleteCourseLanguage = async function (req, res, next) {
 };
 
 //{{URL}}/admin/managecourses/delete?id
-const deleteCourse = async function (req, res, next) {
+const updateDisableCourse = async function (req, res, next) {
   if (!req.session.authUser) {
     res.render("vwAccount/login");
   }
   else {
     const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
     if (userChecking.permission === "Admin") {
-      const { CourseID } = req.body;
-      await Course.deleteOne({ _id: CourseID });
+      const { CourseID, disabled } = req.body;
+      await Course.findByIdAndUpdate({ _id: CourseID }, { disable: disabled }, { new: true, runValidators: true });
       res.redirect("/admin/managecourses");
     } else {
       return next(createError(500, "User has no permission "));
@@ -946,7 +946,7 @@ export {
   updateLanguageCategory,
   deleteCourseCategory,
   deleteCourseLanguage,
-  deleteCourse,
+  updateDisableCourse,
 };
 
 //flow

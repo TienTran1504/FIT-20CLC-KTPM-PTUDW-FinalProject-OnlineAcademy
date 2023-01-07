@@ -84,8 +84,9 @@ const CourseSchema = new mongoose.Schema(
       required: [true, "Please provide user"],
     },
     disable: {
-      type: Boolean,
-      default: false,
+      type: String,
+      enum: ["True", "False"],
+      default: "False",
     },
   },
   { timestamps: true }

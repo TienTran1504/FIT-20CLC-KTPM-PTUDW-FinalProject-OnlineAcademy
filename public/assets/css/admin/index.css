@@ -44,3 +44,15 @@ td {
 #btn-back-to-top {
   display: none !important;
 }
+.btn-update {
+  background-color: #52ab98;
+  border-color: transparent;
+}
+.btn-update:hover {
+  background-color: #2b6777;
+  border-color: transparent;
+}
+.modal-header {
+  background-color: #52ab98;
+  color: #fff;
+}
