@@ -56,3 +56,6 @@ td {
   background-color: #52ab98;
   color: #fff;
 }
+ul.pagination {
+  margin: 8px auto;
+}

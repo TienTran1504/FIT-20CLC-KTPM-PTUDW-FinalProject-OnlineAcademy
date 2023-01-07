@@ -113,6 +113,7 @@ const checkLogin = async (req, res, next) => {
                 custom_style: "login.css",
                 err_message: 'Invalid username or password'
             });
+            return;
         }
 
         const checkLogin = await bcrypt.compare(password, user.password)
@@ -121,6 +122,7 @@ const checkLogin = async (req, res, next) => {
                 custom_style: "login.css",
                 err_message: "Invalid username or password",
             });
+            return;
         }
         else {
             if (user.blocked === "False") {
@@ -136,11 +138,13 @@ const checkLogin = async (req, res, next) => {
                 }
             }
             else {
-                res.render("500");
+                res.render("400");
             }
         }
+
     } catch (err) {
-        throw createError.InternalServerError(err.message);
+        console.log(err);
+        next(createError.InternalServerError(err.message));
     }
 };
 

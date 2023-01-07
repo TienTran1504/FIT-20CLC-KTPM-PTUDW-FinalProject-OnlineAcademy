@@ -1,17 +1,27 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 function handleSubmit(e) {
-    const inputFirstName = $("#txtCategoryName");
-    const inputLastName = $("#txtCategoryImage");
-    if (inputFirstName.value.length === 0) {
-        alert("Please fill out Category's name");
-        inputFirstName.select();
+    const inputCategoryName = $("#txtCategoryName");
+    const inputImageLink = $("#txtCategoryImage");
+    const messageCategoryName = $("#categoryName");
+    const messageImageLink = $("#linkImage");
+
+    inputCategoryName.style.borderColor = "#ced4da";
+    inputImageLink.style.borderColor = "#ced4da";
+    messageCategoryName.style.display = "none";
+    messageImageLink.style.display = "none";
+
+    if (inputCategoryName.value.length === 0) {
+        messageCategoryName.style.display = "block";
+        inputCategoryName.style.borderColor = "red";
+        inputCategoryName.select();
         e.preventDefault();
         return;
     }
-    if (inputLastName.value.length === 0) {
-        alert("Please fill out Category's image");
-        inputLastName.select();
+    if (inputImageLink.value.length === 0) {
+        messageImageLink.style.display = "block";
+        inputImageLink.style.borderColor = "red";
+        inputImageLink.select();
         e.preventDefault();
         return;
     }

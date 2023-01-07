@@ -1,0 +1,70 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/admin/index.css"
+  />
+{{/section}}
+<div class="container-fluid" style="margin-top: 80px;">
+  <div class="row" style="margin-bottom:16px">
+    <div
+      class="card col-md-9"
+      style="margin-left: auto; margin-right:auto; padding:0"
+    >
+      <h4
+        class="card-header d-flex justify-content-between"
+        style="background-color:#52ab98; color:#fff"
+      >
+        {{this.user.firstName}}
+        {{this.user.lastName}}'s Courses
+      </h4>
+      {{#if this.empty}}
+        <div class="card-body text-muted">
+          Empty Data!!!
+        </div>
+      {{else}}
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Language</th>
+              <th class="text-center" scope="col">Number Student</th>
+              {{! <th scope="col">&nbsp;</th>  }}
+            </tr>
+          </thead>
+          <tbody>
+            {{#each courses}}
+              <tr>
+                <th scope="row">{{math @index "+" 1}}</th>
+                <td>{{name}}</td>
+                <td>{{languageName}}</td>
+                <td class="text-center">{{studentList.length}}</td>
+                {{! <td class="text-right">
+                  <a class="btn btn-sm btn-primary" href="#" role="button">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </a>
+                  <a class="btn btn-sm btn-primary" href="#" role="button">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </a>
+                </td> }}
+
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+
+      <div class="card-footer text-muted">
+        <a
+          class="btn btn-outline-success"
+          href="/admin/manageteachers"
+          role="button"
+        >
+          <i class="fa fa-backward" aria-hidden="true"></i>
+          Back
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
