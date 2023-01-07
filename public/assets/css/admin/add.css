@@ -13,3 +13,14 @@
   margin-top: 80px;
   margin-bottom: 20px;
 }
+#languageName,
+#languageImageLink,
+#firstName,
+#categoryName,
+#linkImage,
+#lastName,
+#email,
+#password {
+  display: none;
+  color: red;
+}
