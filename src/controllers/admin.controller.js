@@ -51,7 +51,7 @@ const getAllUsers = async (req, res, next) => {
         length: users.length - 1,
         users: sortedUsers,
         empty: sortedUsers.length === 0,
-        havePagination: users.length > limit ? true : false,
+        havePagination: (users.length - 1) > limit ? true : false,
         pageNumbers: pageNumbers,
         firstPage: Number(curPage) === 1 ? true : false,
         lastPage: Number(curPage) === nPages ? true : false,
@@ -433,7 +433,7 @@ const viewLanguagesByID = async function (req, res, next) {
   }
 };
 
-// {{ URL }}/admin/manageclanguageid?id
+// {{ URL }}/admin/managelanguageid?id
 const viewCoursesByID = async function (req, res, next) {
   if (!req.session.authUser) {
     res.render("vwAccount/login");
@@ -457,6 +457,31 @@ const viewCoursesByID = async function (req, res, next) {
     }
   }
 };
+// {{ URL }}/admin/manageteachers?id
+const viewCoursesByTeacherID = async function (req, res, next) {
+  if (!req.session.authUser) {
+    res.render("vwAccount/login");
+  }
+  else {
+    const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
+    if (userChecking.permission === "Admin") {
+      const id = req.query.id || 0;
+      const user = await User.findById({ _id: id }).lean();
+      const courses = await Course.find({ createdBy: id }).lean();
+      if (user === null) {
+        return res.redirect("/admin/manageteachers");
+      }
+      res.render("vwAdminManagement/teachercourses", {
+        user,
+        courses,
+        empty: courses.length === 0,
+      });
+    } else {
+      return next(createError(500, "User has no permission "));
+    }
+  }
+};
+
 // {{ URL }}/admin/managefeedbacksid?id
 const viewFeedBacksByID = async function (req, res, next) {
   if (!req.session.authUser) {
@@ -532,12 +557,15 @@ const updateUserPermission = async function (req, res, next) {
   else {
     const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
     if (userChecking.permission === "Admin") {
-      const { UserID, permission } = req.body;
+      const { UserID, permission, blocked } = req.body;
       const userUpdate = await User.findByIdAndUpdate(
         {
           _id: UserID,
         },
-        { permission },
+        {
+          permission,
+          blocked
+        },
         { new: true, runValidators: true }
       );
       if (!userUpdate) {
@@ -689,7 +717,7 @@ const createTeacherAccount = async function (req, res, next) {
       } else {
         const checkUser = await User.findOne({ email: req.body.TeacherEmail });
         if (checkUser) {
-          return next(createError(500, "The email has already existed"));
+          return next(createError(500, "The email has already existed in database"));
         }
         const createTeacher = await User.create({
           firstName: req.body.TeacherFirstName,
@@ -870,7 +898,7 @@ const deleteCourseLanguage = async function (req, res, next) {
       }
       if (languageCheck.courseList.length > 0) {
         return next(
-          createError(400, "Cant delete a language when having courses ")
+          createError(500, "Cant delete a language when having courses ")
         );
       }
       const category = await CourseCategory.findById({
@@ -900,15 +928,15 @@ const deleteCourseLanguage = async function (req, res, next) {
 };
 
 //{{URL}}/admin/managecourses/delete?id
-const deleteCourse = async function (req, res, next) {
+const updateDisableCourse = async function (req, res, next) {
   if (!req.session.authUser) {
     res.render("vwAccount/login");
   }
   else {
     const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
     if (userChecking.permission === "Admin") {
-      const { CourseID } = req.body;
-      await Course.deleteOne({ _id: CourseID });
+      const { CourseID, disabled } = req.body;
+      await Course.findByIdAndUpdate({ _id: CourseID }, { disable: disabled }, { new: true, runValidators: true });
       res.redirect("/admin/managecourses");
     } else {
       return next(createError(500, "User has no permission "));
@@ -932,6 +960,7 @@ export {
   getAddTeacherPage,
   viewLanguagesByID,
   viewCoursesByID,
+  viewCoursesByTeacherID,
   viewFeedBacksByID,
   // viewRatingByID,
   updateUserPermission,
@@ -943,7 +972,7 @@ export {
   updateLanguageCategory,
   deleteCourseCategory,
   deleteCourseLanguage,
-  deleteCourse,
+  updateDisableCourse,
 };
 
 //flow

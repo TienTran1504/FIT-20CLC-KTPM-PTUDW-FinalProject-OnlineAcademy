@@ -264,7 +264,6 @@ import Feedback from "../models/feedback.model";
 function fullStar(ratingPoint) {
   var fullStar = [];
   var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
-  console.log(stars);
   for (let i = 0; i < stars; i++) {
     fullStar.push(stars);
   }
@@ -309,6 +308,18 @@ function formatDate(date) {
   return [month, day, year].join("-");
 }
 
+function formatDate2(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+}
+
 function dateDiffInDays(a, b) {
   return ((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24)).toFixed(0);
 }
@@ -320,16 +331,9 @@ const search = async (req, res) => {
 
   const CatList = await CourseCategory.find().lean();
   const CourseList = await Course.find().lean();
-  var courses = await Course.find({ $text: { $search: key } }).lean();
+  var courses = await Course.find({ $text: { $search: key }, disable: "False" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
-
-  var tmp = [...CourseList];
-  var bestSellerCourse = tmp
-    .sort(function (a, b) {
-      return b.studentList.length - a.studentList.length;
-    })
-    .slice(0, 5);
 
   // var courses = [];
   // CourseList.forEach((course) => {
@@ -342,6 +346,14 @@ const search = async (req, res) => {
   //   }
   // });
 
+  const bestSellerCourse = CourseList.sort(function (a, b) {
+    return b.studentList.length - a.studentList.length;
+  })
+    .slice(0, 5)
+    .map((u) => {
+      return u._id.toString();
+    });
+
   courses = courses.map((course) => {
     var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
     var CourseRatingVote = feedbackList.length;
@@ -350,9 +362,10 @@ const search = async (req, res) => {
 
     return {
       ...course,
-      CourseRatingVote: CourseRatingVote,
-      CourseRatingPoint: CourseRatingPoint,
+      CourseRatingVote: bestSellerCourse.includes(course._id.toString()),
+      CourseRatingPoint: bestSellerCourse.length,
       createdBy: user.firstName + " " + user.lastName,
+      bestSeller: bestSellerCourse.includes(course._id.toString()),
     };
   });
 
@@ -424,8 +437,7 @@ const search = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
-          bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
         };
       })
       .slice(offset, offset + limit),
@@ -452,12 +464,11 @@ const getCategory = async (req, res) => {
   const sort = req.query.sort || "";
 
   const CatList = await CourseCategory.find().lean();
-  const CourseList = await Course.find().lean();
+  const CourseList = await Course.find({ disable: "False" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
-  var tmp = [...CourseList];
-  var bestSellerCourse = tmp
+  var bestSellerCourse = [...CourseList]
     .sort(function (a, b) {
       return b.studentList.length - a.studentList.length;
     })
@@ -496,6 +507,7 @@ const getCategory = async (req, res) => {
       CourseRatingVote: CourseRatingVote,
       CourseRatingPoint: CourseRatingPoint,
       createdBy: user.firstName + " " + user.lastName,
+      bestSeller: bestSellerCourse.includes(course),
     };
   });
 
@@ -571,8 +583,7 @@ const getCategory = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
-          bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
         };
       })
       .slice(offset, offset + limit),

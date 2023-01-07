@@ -13,7 +13,7 @@ import {
   getAddTeacherPage,
   updateUserPermission,
   deleteUser,
-  deleteCourse,
+  updateDisableCourse,
   createCourseCategory,
   createTeacherAccount,
   getEditCategoryPage,
@@ -21,6 +21,7 @@ import {
   deleteCourseCategory,
   viewLanguagesByID,
   viewCoursesByID,
+  viewCoursesByTeacherID,
   register,
   getAllCourseLanguages,
   getAddLanguagePage,
@@ -41,7 +42,7 @@ adminRouter.route('/editlanguage/patch').post(updateLanguageCategory)
 adminRouter.route('/editcategory/del').post(deleteCourseCategory)
 adminRouter.route('/editlanguage/del').post(deleteCourseLanguage)
 adminRouter.route('/edituser/del').post(deleteUser)
-adminRouter.route('/managecourses/delete').post(deleteCourse)
+adminRouter.route('/managecourses/update').post(updateDisableCourse)
 
 adminRouter.route('/').get(getAllUsers)
 adminRouter.route('/managestudents').get(getAllStudents)
@@ -54,6 +55,7 @@ adminRouter.route('/addlanguage').get(getAddLanguagePage)
 adminRouter.route('/addteacher').get(getAddTeacherPage)
 adminRouter.route('/managecategoryid').get(viewLanguagesByID)
 adminRouter.route('/managelanguageid').get(viewCoursesByID)
+adminRouter.route('/manageteachersid').get(viewCoursesByTeacherID)
 adminRouter.route('/managefeedbacksid').get(viewFeedBacksByID)
 // adminRouter.route('/manageratingid').get(viewRatingByID)
 adminRouter.route('/addcategory/post').post(createCourseCategory)

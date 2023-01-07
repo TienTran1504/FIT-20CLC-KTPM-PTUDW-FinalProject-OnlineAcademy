@@ -45,29 +45,38 @@
     </div>
     <div class="main-content">
       <div class="block-video">
-        <video
-          id="my-video"
-          class="video-js"
-          controls
-          preload="auto"
-          poster="MY_VIDEO_POSTER.jpg"
-          data-setup="{}"
-        >
-          <source
-            src="../../../public/assets/video/{{lecture.video}}"
-            type="video/webm"
-          />
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading
-            to a web browser that
-            <a
-              href="https://videojs.com/html5-video-support/"
-              target="_blank"
-            >supports HTML5 video</a>
-          </p>
-        </video>
-        <div class="heading-lecture">
-          {{lecture.name}}
+        <div>
+          <video
+            id="my-video"
+            class="video-js"
+            controls
+            preload="auto"
+            data-setup="{}"
+          >
+            <source
+              src="../../../public/assets/videos/{{lecture.video}}"
+              type="video/webm"
+            />
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider
+              upgrading to a web browser that
+              <a
+                href="https://videojs.com/html5-video-support/"
+                target="_blank"
+              >supports HTML5 video</a>
+            </p>
+          </video>
+        </div>
+        <div class="block-infor-course">
+          <div class="heading-lecture">
+            {{lecture.name}}
+          </div>
+          <div class="des-lecture">
+            <div class="title">Description:</div>
+            <div class="content">
+              {{lecture.description}}
+            </div>
+          </div>
         </div>
         <div class="main-rating">
           <div class="main-title">
@@ -82,8 +91,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-7">
-                  <div class="progress mt-5" style="height:10px">
+                <div class="col-md-7 progress-line">
+                  <div class="progress" style="height:10px">
                     <div
                       class="progress-bar-striped"
                       style="width:{{star.s5}}%;height:10px"
@@ -114,7 +123,7 @@
                     ></div>
                   </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1 numstar">
                   <div class="row">
                     <h6 class="">5</h6>
                   </div>
@@ -263,7 +272,7 @@
                             {{! href="" }}
                             type="submit"
                             class="btn btn-primary btn-web-send"
-                            formaction="/courses/learn/63b19ad71aa34d2d78b7232a/63b19ad71aa34d2d78b7232a"
+                            formaction="/courses/learn/{{lecture._id}}"
                           >Send
                             <i class="fa fa-paper-plane"></i>
                           </button>
@@ -369,7 +378,7 @@
                   <div class="accordion-course">
                     <i class="fa fa-chevron-down icon" aria-hidden="true"></i>
                     <div class="block-title">
-                      <button class="btn-list-course">
+                      <button type="button" class="btn-list-course">
                         <span class="course-title">
                           <span>Category: {{course.categoryName}}</span>
                           <span>
@@ -389,12 +398,18 @@
               role="tabpanel"
               aria-labelledby="section1HeaderId"
             >
-              <div class="card-body">
+              <div class="card-body lecture-course-topic">
                 <ul class="block-list">
                   {{#each lectureList}}
-                    <li>
+                  {{log (ifEqualString lecture._id _id)}}
+                    {{#if (ifEqualString lecture._id _id)}}
+                        <li class="topic-lecture active">
+                    {{else}}
+                        <li class="topic-lecture">
+                    {{/if}}
+                    {{!-- <li class="topic-lecture"> --}}
                       <div class="section-previewable">
-                        <div>
+                        <button class="btn-checkbox" type="submit" formaction="">
                           <span>
                             <input
                               type="checkbox"
@@ -402,9 +417,9 @@
                               id="checkbox"
                             />
                           </span>
-                        </div>
+                        </button>
                         <div class="block-list-item-content">
-                          <a src="/courses/learn/{{_id}}" class="name-content">
+                          <a href="/courses/learn/{{_id}}" class="name-content">
                             {{name}}
                           </a>
                           <div class="review-time">
@@ -412,7 +427,7 @@
                               class="fa fa-play-circle icon-item-content"
                               aria-hidden="true"
                             ></i>
-                            <span>4:10</span>
+                            <span>{{formatDuration duration}}</span>
                           </div>
                         </div>
                       </div>

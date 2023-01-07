@@ -83,6 +83,11 @@ const CourseSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "Please provide user"],
     },
+    disable: {
+      type: String,
+      enum: ["True", "False"],
+      default: "False",
+    },
   },
   { timestamps: true }
 ); // timestamps -> key createdAt, updatedAt

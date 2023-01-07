@@ -115,8 +115,8 @@ const checkLogin = async (req, res, next) => {
             });
             return;
         }
-        const checkLogin = await bcrypt.compare(password, user.password)
 
+        const checkLogin = await bcrypt.compare(password, user.password)
         if (!checkLogin) {
             res.render("vwAccount/login", {
                 custom_style: "login.css",
@@ -124,16 +124,22 @@ const checkLogin = async (req, res, next) => {
             });
             return;
         }
-        delete user.password;
-        req.session.auth = true;
-        req.session.authUser = user;
-
-
-        if (req.session.authUser.permission === "Admin") {
-            res.redirect("/admin");
-        }
         else {
-            res.redirect("/");
+            if (user.blocked === "False") {
+                delete user.password;
+                req.session.auth = true;
+                req.session.authUser = user;
+                console.log("login success")
+                if (req.session.authUser.permission === "Admin") {
+                    res.redirect("/admin");
+                }
+                else {
+                    res.redirect("/");
+                }
+            }
+            else {
+                res.render("400");
+            }
         }
 
     } catch (err) {

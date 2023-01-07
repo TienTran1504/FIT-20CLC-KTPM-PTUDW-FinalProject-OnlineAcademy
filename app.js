@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 const corsOptions = { origin: "*" };
 
-app.use(morgan("combined"));
+// app.use(morgan("combined"));
 app.use(cors(corsOptions));
 app.use("/public", express.static("public"));
 app.engine(
@@ -60,6 +60,14 @@ app.engine(
             tagStar += `<span class="fa fa-star-o"></span>`;
         }
         return tagStar;
+      },
+      formatDuration: function (seconds) {
+        let time = (seconds * 1.0) / 60;
+        let duration = "";
+
+        if (time < 1) duration = Math.round(seconds) + " seconds";
+        else duration = Math.round(time) + " min";
+        return duration;
       },
     },
   })
