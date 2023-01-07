@@ -14,6 +14,8 @@ import {
   addCourseList,
   addWatchList,
   removeCourseInWatchList,
+  updateCourseLearn,
+  removeFavouriteCourseFromProfile,
 } from "../controllers/student.controller";
 
 studentRouter.route("/").get(getProfile);
@@ -31,11 +33,10 @@ studentRouter.route("/add_courses_favorite/post").post(addWatchList);
 studentRouter
   .route("/remove_courses_favorite/post")
   .post(removeCourseInWatchList);
-// studentRouter.route("/updateprofile").post(updateProfile);
-// studentRouter
-//   .route("/courses/:courseId")
-//   .patch(updateStatusCourse)
-//   .post(addCourse);
-// studentRouter.route("/courses/delete/:courseId").patch(removeCourse);
-
+studentRouter
+  .route("/update_process/post/:currentId/:checkboxId")
+  .post(updateCourseLearn);
+studentRouter
+  .route("/remove_courses_favorite_profile/post/:courseId")
+  .post(removeFavouriteCourseFromProfile);
 export default studentRouter;

@@ -83,7 +83,11 @@
     padding: 0;
 }
 
-.lecture-course-topic .block-list .topic-lecture .active {
+.lecture-course-topic .block-list .topic-lecture.active {
+    background-color: rgb(198, 216, 228);
+}
+
+.lecture-course-topic .block-list .topic-lecture:hover {
     background-color: rgb(198, 216, 228);
 }
 
@@ -193,8 +197,12 @@
 }
 
 .main-rating .main-title .fa-star {
-    font-size: 1.2rem;
     color: #e59819;
+    padding-left: 0.1rem;
+}
+
+.main-rating .main-title .star-tag {
+    padding-left: 0.1rem;
 }
 
 .main-rating .main-title .fa-circle {
@@ -511,6 +519,5 @@ label.star:before {
     margin: 0;
     padding: 0;
     height: min-content;
-    background-color: #fff;
     border: 0;
 }

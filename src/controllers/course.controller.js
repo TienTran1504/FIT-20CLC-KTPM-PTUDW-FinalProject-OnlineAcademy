@@ -32,8 +32,29 @@ const getAllCourses = async (req, res) => {
 // {{URL}}/courses/:id
 const getCourse = async (req, res, next) => {
   try {
+    req.session.courseId = req.params.id;
     const course = await Course.findById({ _id: req.params.id }).lean();
     const instructor = await User.findOne({ _id: course.createdBy }).lean();
+    const firstIdLecture = await Lecture.findOne({ createdIn: req.params.id });
+    const getUser = await User.findById({
+      _id: req.session.authUser._id,
+    }).lean();
+
+    let checkCourseExists = false;
+    for (let i = 0; i < getUser.courseList.length; i++) {
+      if (getUser.courseList[i].id === req.params.id) {
+        checkCourseExists = true;
+        break;
+      }
+    }
+
+    let checkFavorites = false;
+    for (let i = 0; i < getUser.watchList.length; i++) {
+      if (getUser.watchList[i].id === req.params.id) {
+        checkFavorites = true;
+        break;
+      }
+    }
 
     course.updatedAt = formatDate(course.updatedAt);
     course.numberOfStudents = course.studentList.length;
@@ -58,6 +79,9 @@ const getCourse = async (req, res, next) => {
     res.render("vwCourseDetails/course_details", {
       course,
       instructor,
+      checkFavorites,
+      checkCourseExists,
+      firstIdLecture: firstIdLecture._id,
     });
   } catch (err) {
     console.log(err.message);
@@ -112,13 +136,19 @@ const viewLecture = async (req, res, next) => {
   const lectureList = await Lecture.find({ createdIn: courseId }).lean();
   const feedbacks = thisCourse.feedbackList;
 
-  // let lectureList = [];
-  // for (let i = 0; i < thisCourse.lecture.length; i++) {
-  //   lectureList = [
-  //     ...lectureList,
-  //     await Lecture.findOne({ createdIn: thisCourse._id }).lean(),
-  //   ];
-  // }
+  let seconds = 0;
+  for (let i = 0; i < lectureList.length; i++) {
+    lectureList[i].currentLectureId = idlecture;
+    lectureList[i].complete = getUser.lectureList.some(e => {
+      return String(e._id) === String(lectureList[i]._id);
+    });
+    seconds += lectureList[i].duration;
+  }
+  const times = {
+    hours: (seconds / 360).toFixed(0),
+    min: (seconds / 60).toFixed(0),
+  };
+
   let averageRating = 0;
   let feedbackList = [];
   let star = {
@@ -153,7 +183,7 @@ const viewLecture = async (req, res, next) => {
   }
 
   if (feedbacks.length > 0) {
-    averageRating /= feedbacks.length;
+    averageRating = (averageRating / feedbacks.length).toFixed(1);
     star.s1 = (star.s1 * 100) / feedbacks.length;
     star.s2 = (star.s2 * 100) / feedbacks.length;
     star.s3 = (star.s3 * 100) / feedbacks.length;
@@ -169,6 +199,7 @@ const viewLecture = async (req, res, next) => {
     lectureStudied: numberLectureStudied,
     lectureList: lectureList,
     star: star,
+    times,
   });
 };
 

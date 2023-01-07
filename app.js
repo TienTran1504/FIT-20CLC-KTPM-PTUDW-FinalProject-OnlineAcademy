@@ -46,18 +46,18 @@ app.engine(
         return value === "Teacher";
       },
       ifEqualString: function (obj, value) {
-        return obj === value;
+        return String(obj) === String(value);
       },
       star: function (numberRate) {
         let tagStar = "";
         for (let i = 1; i <= 5; i++) {
           if (numberRate >= i)
-            tagStar += `<span class="fa fa-star checked"></span>`;
+            tagStar += `<span class="fa fa-star checked star-tag"></span>`;
 
           if (numberRate > i - 1 && numberRate < i)
-            tagStar += `<span class="fa fa-star-half-o"></span>`;
+            tagStar += `<span class="fa fa-star-half-o star-tag"></span>`;
           else if (numberRate < i)
-            tagStar += `<span class="fa fa-star-o"></span>`;
+            tagStar += `<span class="fa fa-star-o star-tag"></span>`;
         }
         return tagStar;
       },
