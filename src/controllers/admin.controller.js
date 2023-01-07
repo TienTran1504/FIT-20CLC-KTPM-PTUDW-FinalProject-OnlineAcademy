@@ -898,7 +898,7 @@ const deleteCourseLanguage = async function (req, res, next) {
       }
       if (languageCheck.courseList.length > 0) {
         return next(
-          createError(400, "Cant delete a language when having courses ")
+          createError(500, "Cant delete a language when having courses ")
         );
       }
       const category = await CourseCategory.findById({

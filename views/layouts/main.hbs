@@ -30,6 +30,13 @@
       body{
           margin-bottom: 12px;
       }
+      .dropdown-item{
+        font-weight:bold;
+      }
+      .dropdown-item:hover{
+        background-color: #52ab98;
+        color:#fff;
+      }
     </style>
     {{{_sections.css}}}
   </head>
@@ -59,7 +66,9 @@
                   </a>
                   <div class="dropdown-menu">
                       {{#each CatList}}
-                          <a class=dropdown-item href="/categories/" role="button" data-toggle="dropdown" aria-expanded="false">{{name}}</a>
+                          {{!-- <a class="dropdown-item" href="/categories?category={{_id}}" role="button" data-toggle="dropdown" aria-expanded="false">{{name}}</a> --}}
+                          <a class="dropdown-item" role="button" href="/categories?category={{name}}">{{name}}</a>
+
                       {{/each}}
                   </div>
               </div>
