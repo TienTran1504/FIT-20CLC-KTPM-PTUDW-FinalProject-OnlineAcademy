@@ -19,6 +19,8 @@ import {
   getViewCreateLecture,
   createLecture,
   getViewUpdateLecture,
+  updateEmail,
+  updatePassword,
   updateLecture,
   deleteLecture,
   updateCourse,
@@ -26,7 +28,8 @@ import {
 } from "../controllers/teacher.controller";
 
 teacherRouter.route("/profile/photo").get(getPhoto).post(uploadPhoto);
-teacherRouter.route("/profile/account_security").get(getAccountSecurity);
+teacherRouter.route("/profile/account_security/email").post(updateEmail);
+teacherRouter.route("/profile/account_security").get(getAccountSecurity).post(updatePassword);
 teacherRouter.route("/profile/my_course").get(getOwnerCourses);
 teacherRouter.route("/profile").get(getInfo).post(updateInfo);
 teacherRouter.route("/course/s1").get(createCourse1);

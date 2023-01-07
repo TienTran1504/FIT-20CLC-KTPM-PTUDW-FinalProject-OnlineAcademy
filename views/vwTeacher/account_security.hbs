@@ -4,19 +4,27 @@
     type="text/css"
     href="../../public/assets/css/teacher/teacher_profile.css"
   />
-  <link rel="stylesheet" type="text/css" href="../../../public/assets/css/validation/form.css"/>
+  <link rel="stylesheet" type="text/css" href="../../public/assets/css/validation/form.css"/>  
 
 {{/section}}
 {{#section 'js'}}
-  <script src="../../../public/assets/js/validator.js"></script>
+  <script src="../../public/assets/js/validator.js"></script>
   <script>
       Validator({
           form: '#form-1',
           rules: [
               Validator.isEmail('#email'),
-              Validator.isRequired('#description', "Please input lecture description"),
+              Validator.isRequired('#password', "Please input your password"),
           ]
-      })
+      });
+      Validator({
+          form: '#form-2',
+          rules: [
+              Validator.isRequired('#p1', "Please input your password"),
+              Validator.minLength('#p2', 6),
+              Validator.isCorrect('#p3', '#p2'),
+          ]
+      });
   </script>
 {{/section}}
 <div class="container-fluid" style="margin-top: 80px;">
@@ -75,7 +83,6 @@
           </div>
 
           <div class="card-body">
-            <form id="form-1" method="post" action="/profile">
               <div class="pl-5 pr-5">
                 <div class="input-group form-group">
                   <label class="h6" for="">Email:</label>
@@ -84,42 +91,127 @@
                       type="text"
                       class="form-control"
                       value="{{this.user.email}}"
-                      id="email"
+                      readonly
                     />
-                  </div>
-                  <span class="form-message"></span>
-                </div>
-                <div class="input-group form-group">
-                  <label class="h6" for="">Password:</label>
-                  <div class="input-group mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter current password"
-                    />
-                  </div>
-                  <span class="form-message"></span>
-                  <div class="input-group mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter new password"
-                    />
-                  </div>
-                  <span class="form-message"></span>
-                  <div class="input-group mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Re-type new password"
-                    />
+                    <button
+                      class="btn btn-primary fa fa-pencil btn-email"
+                      type="button"
+                      data-toggle="modal"
+                      data-target="#form-update-modal2"
+                    >
+                    </button>
+
+                    <div
+                      class="modal fade"
+                      id="form-update-modal2"
+                      tabindex="-1"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog" style="top: 20%;">
+                        <div class="modal-content">
+                          <div
+                            class="modal-header"
+                            style="background-color: #2b6777; color: #ffffff; opacity: 0.9;"
+                          >
+                            <h5
+                              class="modal-title"
+                              id="form-update-modalLabel2"
+                            >Change your email</h5>
+                            <button
+                              type="button"
+                              class="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                            </button>
+                          </div>
+
+                          <form method="post" action="/teacher/profile/account_security/email" id="form-1">
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <input
+                                  id="email"
+                                  type="text"
+                                  name="email"
+                                  class="form-control"
+                                  value="{{this.user.email}}"
+                                  placeholder="Your email address"
+                                />
+                                <span class="form-message"></span>
+                              </div>
+
+                              <div class="form-group">
+                                <input
+                                  id="password"
+                                  type="password"
+                                  name="password"
+                                  class="form-control"
+                                  placeholder="Password"
+                                />
+                                <span class="form-message"></span>
+                              </div>
+                            </div>
+
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                              >Close</button>
+                              <button
+                                type="submit"
+                                class="btn btn-primary course-btn"
+                              >Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <span class="form-message"></span>
                 </div>
 
-                <button type="submit" class="btn btn-primary d-flex px-4">Save</button>
-              </div>
-            </form>
+                <form method="post" action="/teacher/profile/account_security" id="form-2">
+                  <div class="input-group">
+                    <label class="h6" for="">Password:</label>
+                    <div class="form-group input-group" style="display: flex; flex-direction: column;">
+                      <input
+                        id="p1"
+                        type="password"
+                        name="password"
+                        class="form-control w-100"
+                        placeholder="Enter current password"
+                      />
+                      <span class="form-message"></span>
+                    </div>
+                  
+                    <div class="form-group input-group" style="display: flex; flex-direction: column;">
+                      <input
+                        id="p2"
+                        type="password"
+                        name="newpassword"
+                        class="form-control w-100"
+                        placeholder="Enter new password"
+                      />
+                      <span class="form-message"></span>
+                    </div>
+                    
+                    <div class="form-group input-group" style="display: flex; flex-direction: column;">
+                      <input
+                        id="p3"
+                        type="password"
+                        name="prepassword"
+                        class="form-control w-100" 
+                        placeholder="Re-type new password"
+                      />
+                       <span class="form-message"></span>
+                    </div>
+                   
+                    <button type="submit" class="btn btn-primary d-flex px-4">Save</button>
+                
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

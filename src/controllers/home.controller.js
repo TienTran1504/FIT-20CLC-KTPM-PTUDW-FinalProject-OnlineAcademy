@@ -3,6 +3,7 @@ import CourseLanguage from "../models/courselanguage.model";
 import Course from "../models/course.model";
 import User from "../models/user.model";
 import Feedback from "../models/feedback.model";
+import createError from "http-errors";
 
 const SliderList = [
   {
@@ -223,129 +224,134 @@ function dateDiffInDays(a, b) {
   return ((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24)).toFixed(0);
 }
 
-const renderHome = async (req, res) => {
-  const CatList = await CourseCategory.find().lean();
-  const LanguageList = await CourseLanguage.find().lean();
-  var CourseList = await Course.find().lean();
-  const users = await User.find().lean();
-  const feedback = await Feedback.find().lean();
+const renderHome = async (req, res, next) => {
+  try {
+    const CatList = await CourseCategory.find().lean();
+    const LanguageList = await CourseLanguage.find().lean();
+    var CourseList = await Course.find().lean();
+    const users = await User.find().lean();
+    const feedback = await Feedback.find().lean();
 
-  CourseList = CourseList.map((course) => {
-    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
-    var CourseRatingVote = feedbackList.length;
-    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-    var user = users.find((u) => u._id == course.createdBy.toString());
+    CourseList = CourseList.map((course) => {
+      var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+      var CourseRatingVote = feedbackList.length;
+      var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+      var user = users.find((u) => u._id == course.createdBy.toString());
 
-    return {
-      ...course,
-      CourseRatingVote: CourseRatingVote,
-      CourseRatingPoint: CourseRatingPoint,
-      createdBy: user.firstName + " " + user.lastName,
-      viewInWeek: course.viewList.filter((view) => dateDiffInDays(view.createdAt, new Date()) <= 7).length,
-    };
-  });
-
-  var sortedLangList = [];
-  sortedLangList = LanguageList.map((lang) => {
-    var sumOfStudents = 0;
-    lang.courseList.forEach((course) => {
-      sumOfStudents += course.studentList.filter(
-        (student) => dateDiffInDays(student.createdAt, new Date()) <= 7
-      ).length;
+      return {
+        ...course,
+        CourseRatingVote: CourseRatingVote,
+        CourseRatingPoint: CourseRatingPoint,
+        createdBy: user.firstName + " " + user.lastName,
+        viewInWeek: course.viewList.filter((view) => dateDiffInDays(view.createdAt, new Date()) <= 7).length,
+      };
     });
 
-    return {
-      ...lang,
-      numOfStudents: numberWithCommas(sumOfStudents),
-    };
-  });
+    var sortedLangList = [];
+    sortedLangList = LanguageList.map((lang) => {
+      var sumOfStudents = 0;
+      lang.courseList.forEach((course) => {
+        sumOfStudents += course.studentList.filter(
+          (student) => dateDiffInDays(student.createdAt, new Date()) <= 7
+        ).length;
+      });
 
-  sortedLangList.sort((a, b) => {
-    return b.numOfStudents - a.numOfStudents;
-  });
+      return {
+        ...lang,
+        numOfStudents: numberWithCommas(sumOfStudents),
+      };
+    });
 
-  const bestSellerCourse = [
-    ...CourseList.sort(function (a, b) {
-      return b.studentList.length - a.studentList.length;
-    }).slice(0, 5),
-  ];
+    sortedLangList.sort((a, b) => {
+      return b.numOfStudents - a.numOfStudents;
+    });
 
-  const featuredCourses = [
-    ...CourseList.sort(function (a, b) {
-      return (
-        b.viewInWeek * 2 +
-        b.CourseRatingPoint +
-        b.CourseRatingVote -
-        (a.viewInWeek * 2 + a.CourseRatingPoint + a.CourseRatingVote)
-      );
-    }).slice(0, 5),
-  ];
+    const bestSellerCourse = [
+      ...CourseList.sort(function (a, b) {
+        return b.studentList.length - a.studentList.length;
+      }).slice(0, 5),
+    ];
 
-  const mostViewedCourses = [
-    ...CourseList.sort(function (a, b) {
-      return b.viewList.length - a.viewList.length;
-    }),
-  ];
+    const featuredCourses = [
+      ...CourseList.sort(function (a, b) {
+        return (
+          b.viewInWeek * 2 +
+          b.CourseRatingPoint +
+          b.CourseRatingVote -
+          (a.viewInWeek * 2 + a.CourseRatingPoint + a.CourseRatingVote)
+        );
+      }).slice(0, 5),
+    ];
 
-  const latestCourses = [
-    ...CourseList.sort(function (a, b) {
-      return b.createdAt - a.createdAt;
-    }),
-  ];
+    const mostViewedCourses = [
+      ...CourseList.sort(function (a, b) {
+        return b.viewList.length - a.viewList.length;
+      }),
+    ];
 
-  res.render("home", {
-    SliderList: SliderList,
-    CatList: CatList,
-    LanguageList: sortedLangList.slice(0, 8),
-    featuredCourses: featuredCourses
-      .map((course) => {
-        return {
-          ...course,
-          fullStar: fullStar(course.CourseRatingPoint),
-          halfStar: halfStar(course.CourseRatingPoint),
-          blankStar: blankStar(course.CourseRatingPoint),
-          price: numberWithCommas(course.price),
-          createdAt: formatDate(course.createdAt),
-          CourseViews: numberWithCommas(course.viewList.length),
-          Students: numberWithCommas(course.studentList.length),
-          bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
-        };
-      })
-      .slice(0, 5),
-    mostViewedCourses: mostViewedCourses
-      .map((course) => {
-        return {
-          ...course,
-          fullStar: fullStar(course.CourseRatingPoint),
-          halfStar: halfStar(course.CourseRatingPoint),
-          blankStar: blankStar(course.CourseRatingPoint),
-          price: numberWithCommas(course.price),
-          createdAt: formatDate(course.createdAt),
-          CourseViews: numberWithCommas(course.viewList.length),
-          Students: numberWithCommas(course.studentList.length),
-          bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
-        };
-      })
-      .slice(0, 10),
-    latestCourses: latestCourses
-      .map((course) => {
-        return {
-          ...course,
-          fullStar: fullStar(course.CourseRatingPoint),
-          halfStar: halfStar(course.CourseRatingPoint),
-          blankStar: blankStar(course.CourseRatingPoint),
-          price: numberWithCommas(course.price),
-          createdAt: formatDate(course.createdAt),
-          CourseViews: numberWithCommas(course.viewList.length),
-          Students: numberWithCommas(course.studentList.length),
-          bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
-        };
-      })
-      .slice(0, 10),
-  });
+    const latestCourses = [
+      ...CourseList.sort(function (a, b) {
+        return b.createdAt - a.createdAt;
+      }),
+    ];
+
+    res.render("home", {
+      SliderList: SliderList,
+      CatList: CatList,
+      LanguageList: sortedLangList.slice(0, 8),
+      featuredCourses: featuredCourses
+        .map((course) => {
+          return {
+            ...course,
+            fullStar: fullStar(course.CourseRatingPoint),
+            halfStar: halfStar(course.CourseRatingPoint),
+            blankStar: blankStar(course.CourseRatingPoint),
+            price: numberWithCommas(course.price),
+            createdAt: formatDate(course.createdAt),
+            CourseViews: numberWithCommas(course.viewList.length),
+            Students: numberWithCommas(course.studentList.length),
+            bestSeller: bestSellerCourse.includes(course) ? true : false,
+            new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
+          };
+        })
+        .slice(0, 5),
+      mostViewedCourses: mostViewedCourses
+        .map((course) => {
+          return {
+            ...course,
+            fullStar: fullStar(course.CourseRatingPoint),
+            halfStar: halfStar(course.CourseRatingPoint),
+            blankStar: blankStar(course.CourseRatingPoint),
+            price: numberWithCommas(course.price),
+            createdAt: formatDate(course.createdAt),
+            CourseViews: numberWithCommas(course.viewList.length),
+            Students: numberWithCommas(course.studentList.length),
+            bestSeller: bestSellerCourse.includes(course) ? true : false,
+            new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
+          };
+        })
+        .slice(0, 10),
+      latestCourses: latestCourses
+        .map((course) => {
+          return {
+            ...course,
+            fullStar: fullStar(course.CourseRatingPoint),
+            halfStar: halfStar(course.CourseRatingPoint),
+            blankStar: blankStar(course.CourseRatingPoint),
+            price: numberWithCommas(course.price),
+            createdAt: formatDate(course.createdAt),
+            CourseViews: numberWithCommas(course.viewList.length),
+            Students: numberWithCommas(course.studentList.length),
+            bestSeller: bestSellerCourse.includes(course) ? true : false,
+            new: dateDiffInDays(course.createdAt, new Date()) <= 7 ? true : false,
+          };
+        })
+        .slice(0, 10),
+    });
+  } catch(err) {
+    next(createError.InternalServerError(err));
+  }
+  
 };
 
 export { renderHome, formatDate, fullStar, halfStar, blankStar };

@@ -30,7 +30,7 @@
             <p>Here’s where you add course content - like lectures, assignments, and more. </p>
           </div>
           <div>
-            {{#if this.lectures }}
+            
             <table class="table">
                 <thead>
                   <tr>
@@ -47,32 +47,36 @@
                       </th>
                   </tr>
                 </thead>
+                
                 <tbody>
-                {{#each lectures}}
-                    <tr>
-                      <th scope="row">{{math @index "+" 1}}</th>
-                      <td>{{name}}</td>
-                      <td>{{description}}</td>
-                      <td>{{createdAt}}</td>
-                      <td class="text-center">
-                          <a
-                          class="btn btn-sm btn-outline-primary"
-                          href="lecture/{{_id}}"
-                          role="button"
-                          >
-                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                          </a>
-                      </td>
-                    </tr>
-                {{/each}}
+                  {{#if lectures}}
+                    {{#each lectures}}
+                        <tr>
+                          <th scope="row">{{math @index "+" 1}}</th>
+                          <td>{{name}}</td>
+                          <td>{{description}}</td>
+                          <td>{{createdAt}}</td>
+                          <td class="text-center">
+                              <a
+                              class="btn btn-sm btn-outline-primary"
+                              href="lecture/{{_id}}"
+                              role="button"
+                              >
+                              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                              </a>
+                          </td>
+                        </tr>
+                    {{/each}}
+                  {{else}}
+                    <tr><th scope="row" colspan="5" class="text-center" style="font-size:25px; font-weight:400"><p>You have not any lecture.  </p></th></tr>
+                        
+                  {{/if}}
                 </tbody>
+               
             </table>
                
-            {{else}}
-             <div class="card-body text-center">
-                You have not any lecture.      
-              </div>
-            {{/if}}
+            
+            
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ import CourseCategory from "../models/coursecategory.model";
 import CourseLanguage from "../models/courselanguage.model";
 import Course from "../models/course.model";
 import Lecture from "../models/lecture.model";
+import bcrypt from "bcryptjs";
+import { formatDate, fullStar, halfStar, blankStar } from "./home.controller";
 
 const getInfo = async (req, res, next) => {
   res.render("vwTeacher/profile", {
@@ -183,7 +185,7 @@ const createCourse = async (req, res, next) => {
       categoryName: cat.name,
     });
 
-    lang.courseList.push(createdCourse);
+    lang.courseList.push(createdCourse._id);
     await CourseLanguage.findOneAndUpdate(
       { _id: lang._id },
       { courseList: lang.courseList }
@@ -348,7 +350,10 @@ const createLecture = async (req, res, next) => {
           createdIn: req.session.currentCourse._id,
           createdBy: req.session.authUser._id,
         });
+        const course = await Course.findById({_id: req.session.currentCourse._id});
+        course.lecture.push(lecture._id);
         await checkStatusOfCourse(req);
+
         res.redirect("curriculum");
       }
     });
@@ -491,6 +496,65 @@ const updateCourse = async (req, res) => {
   }
 };
 
+const updateEmail = async (req,res,next) => {
+  try {
+    const user = await User.findOne({_id: req.session.authUser._id}).lean();
+
+    const ret = bcrypt.compareSync(req.body.password, user.password);
+    if (ret === false) {
+      res.render("vwTeacher/update_acc", {
+        user: req.session.authUser,
+        err_message: "Password is wrong."
+      });
+    }
+    else {
+      req.session.authUser.email = req.body.email;
+
+      await User.findByIdAndUpdate(
+        { _id: req.session.authUser._id },
+        req.session.authUser
+      );
+  
+      res.redirect("/teacher/profile/account_security");
+    }
+  } catch(err) {
+    console.log(err.message);
+    next(createError.InternalServerError(err));
+  }
+}
+
+const updatePassword = async (req, res, next) => {
+  try {
+    const user = await User.findOne({_id: req.session.authUser._id}).lean();
+
+    const ret = bcrypt.compareSync(req.body.password, user.password);
+    if (ret === false) {
+      res.render("vwTeacher/update_acc", {
+        user: req.session.authUser,
+        err_message: "Password is incorrect."
+      });
+    }
+    else {
+      const rawPassword = req.body.newpassword;
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(rawPassword, salt);
+
+      await User.findByIdAndUpdate(
+        { _id: req.session.authUser._id },
+        {
+          password: hash
+        }
+      );
+  
+      res.redirect("/teacher/profile/account_security");
+    }
+  } catch(err) {
+    console.log(err.message);
+    next(createError.InternalServerError(err));
+  }
+}
+
+
 export {
   getInfo,
   updateInfo,
@@ -508,7 +572,9 @@ export {
   getCourseCurriculum,
   getViewCreateLecture,
   createLecture,
+  updateEmail,
   getViewUpdateLecture,
+  updatePassword,
   updateLecture,
   deleteLecture,
   updateCourse,

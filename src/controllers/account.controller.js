@@ -113,6 +113,7 @@ const checkLogin = async (req, res, next) => {
                 custom_style: "login.css",
                 err_message: 'Invalid username or password'
             });
+            return;
         }
         const checkLogin = await bcrypt.compare(password, user.password)
 
@@ -121,19 +122,23 @@ const checkLogin = async (req, res, next) => {
                 custom_style: "login.css",
                 err_message: "Invalid username or password",
             });
+            return;
         }
         delete user.password;
         req.session.auth = true;
         req.session.authUser = user;
-        console.log("login success")
+
+
         if (req.session.authUser.permission === "Admin") {
             res.redirect("/admin");
         }
         else {
             res.redirect("/");
         }
+
     } catch (err) {
-        throw createError.InternalServerError(err.message);
+        console.log(err);
+        next(createError.InternalServerError(err.message));
     }
 };
 

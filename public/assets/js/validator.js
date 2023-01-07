@@ -3,7 +3,6 @@ const $$ = document.querySelectorAll.bind(document)
 
 function Validator(options) {
     const formElement = $(options.form)
-    let isValid = true
 
     function validate(errorElement, formGroupElement, errorMassage) {
         if (errorMassage) {
@@ -21,7 +20,7 @@ function Validator(options) {
     if (formElement) {
         options.rules.forEach(rule => {
             const inputElement = formElement.querySelector(rule.selector)
-            const formGroupElement = inputElement.parentElement.parentElement
+            const formGroupElement = inputElement.parentElement
             const errorElement = formGroupElement.querySelector('.form-message')
 
             if (inputElement) {
@@ -40,8 +39,9 @@ function Validator(options) {
         
         formElement.onsubmit = (e) => {
             options.rules.forEach(rule => {
+                
                 const inputElement = formElement.querySelector(rule.selector)
-                const formGroupElement = inputElement.parentElement.parentElement
+                const formGroupElement = inputElement.parentElement
                 const errorElement = formGroupElement.querySelector('.form-message')
     
                 if (inputElement) {
@@ -83,6 +83,15 @@ Validator.minLength = (selector, min) => {
         selector,
         test: (value) => {
             return value.length >= min ? undefined : `Please input at least ${min} length.`
+        }
+    }
+}
+
+Validator.isCorrect = (selector, selector2) => {
+    return {
+        selector,
+        test: (value) => {
+            return value === $(selector2).value ? undefined : `Please input correct new password.`
         }
     }
 }
