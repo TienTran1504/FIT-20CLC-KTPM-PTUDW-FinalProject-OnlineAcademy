@@ -264,7 +264,6 @@ import Feedback from "../models/feedback.model";
 function fullStar(ratingPoint) {
   var fullStar = [];
   var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
-  console.log(stars);
   for (let i = 0; i < stars; i++) {
     fullStar.push(stars);
   }
@@ -347,13 +346,12 @@ const search = async (req, res) => {
   //   }
   // });
 
-  var bestSellerCourse = [...CourseList]
-    .sort(function (a, b) {
-      return b.studentList.length - a.studentList.length;
-    })
+  const bestSellerCourse = CourseList.sort(function (a, b) {
+    return b.studentList.length - a.studentList.length;
+  })
     .slice(0, 5)
     .map((u) => {
-      return u._id.toString;
+      return u._id.toString();
     });
 
   courses = courses.map((course) => {
@@ -364,10 +362,10 @@ const search = async (req, res) => {
 
     return {
       ...course,
-      CourseRatingVote: CourseRatingVote,
-      CourseRatingPoint: CourseRatingPoint,
+      CourseRatingVote: bestSellerCourse.includes(course._id.toString()),
+      CourseRatingPoint: bestSellerCourse.length,
       createdBy: user.firstName + " " + user.lastName,
-      bestSeller: bestSellerCourse.includes(course._id.toString) ? true : false,
+      bestSeller: bestSellerCourse.includes(course._id.toString()),
     };
   });
 
@@ -439,7 +437,7 @@ const search = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
-          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
         };
       })
       .slice(offset, offset + limit),
@@ -470,8 +468,7 @@ const getCategory = async (req, res) => {
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
-  var tmp = [...CourseList];
-  var bestSellerCourse = tmp
+  var bestSellerCourse = [...CourseList]
     .sort(function (a, b) {
       return b.studentList.length - a.studentList.length;
     })
@@ -510,7 +507,7 @@ const getCategory = async (req, res) => {
       CourseRatingVote: CourseRatingVote,
       CourseRatingPoint: CourseRatingPoint,
       createdBy: user.firstName + " " + user.lastName,
-      bestSeller: bestSellerCourse.includes(course) ? true : false,
+      bestSeller: bestSellerCourse.includes(course),
     };
   });
 
@@ -586,7 +583,7 @@ const getCategory = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
-          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
         };
       })
       .slice(offset, offset + limit),

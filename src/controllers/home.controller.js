@@ -174,7 +174,6 @@ const SliderList = [
 function fullStar(ratingPoint) {
   var fullStar = [];
   var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
-  console.log(stars);
   for (let i = 0; i < stars; i++) {
     fullStar.push(stars);
   }
@@ -332,7 +331,7 @@ const renderHome = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
         };
       })
       .slice(0, 5),
@@ -348,7 +347,7 @@ const renderHome = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
         };
       })
       .slice(0, 10),
@@ -364,7 +363,7 @@ const renderHome = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
+          new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
         };
       })
       .slice(0, 10),
