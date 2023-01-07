@@ -238,7 +238,7 @@ function dateDiffInDays(a, b) {
 const renderHome = async (req, res) => {
   const CatList = await CourseCategory.find().lean();
   const LanguageList = await CourseLanguage.find().lean();
-  var CourseList = await Course.find().lean();
+  var CourseList = await Course.find({ disable: "False" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
@@ -319,7 +319,7 @@ const renderHome = async (req, res) => {
   res.render("home", {
     SliderList: SliderList,
     CatList: CatList,
-    LanguageList: sortedLangList.slice(0, 8),
+    LanguageList: sortedLangList.slice(0, 5),
     featuredCourses: featuredCourses
       .map((course) => {
         return {

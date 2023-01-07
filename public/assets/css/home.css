@@ -1,6 +1,7 @@
 :root {
-  --language-width: 300px;
-  --course-width: 250px;
+  --category-width: 300px;
+  --language-width: 245px;
+  --course-width: 245px;
 }
 
 .swiper {
@@ -77,11 +78,11 @@
 .menu-item {
   display: flex;
   flex-direction: column;
-  margin: 5px;
   transition: opacity 0.2s, transform 0.2s;
   flex: 0;
+  margin: 10px 0;
   /* word-break: break-all; */
-  width: var(--language-width);
+  width: var(--category-width);
   word-wrap: break-word;
 }
 
@@ -102,7 +103,7 @@ b.course-name {
 }
 
 .language-name {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: bold;
   margin-right: 10px;
   margin-bottom: 0;
@@ -110,7 +111,7 @@ b.course-name {
 }
 
 .language-student {
-  font-size: 16px;
+  font-size: 15px;
   color: gray;
   font-weight: 100;
 }
@@ -124,10 +125,18 @@ b.course-name {
 }
 
 .menu-category-image {
-  width: var(--language-width);
+  width: var(--category-width);
   height: 190px;
   object-fit: cover;
   border-radius: 12px;
+}
+
+.menu-language-image {
+  width: var(--language-width);
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  position: relative;
 }
 
 .star {
