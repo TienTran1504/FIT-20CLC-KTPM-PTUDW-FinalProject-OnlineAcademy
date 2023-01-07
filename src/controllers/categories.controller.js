@@ -336,13 +336,6 @@ const search = async (req, res) => {
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
-  var tmp = [...CourseList];
-  var bestSellerCourse = tmp
-    .sort(function (a, b) {
-      return b.studentList.length - a.studentList.length;
-    })
-    .slice(0, 5);
-
   // var courses = [];
   // CourseList.forEach((course) => {
   //   if (
@@ -353,6 +346,15 @@ const search = async (req, res) => {
   //     courses.push(course);
   //   }
   // });
+
+  var bestSellerCourse = [...CourseList]
+    .sort(function (a, b) {
+      return b.studentList.length - a.studentList.length;
+    })
+    .slice(0, 5)
+    .map((u) => {
+      return u._id.toString;
+    });
 
   courses = courses.map((course) => {
     var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
@@ -365,6 +367,7 @@ const search = async (req, res) => {
       CourseRatingVote: CourseRatingVote,
       CourseRatingPoint: CourseRatingPoint,
       createdBy: user.firstName + " " + user.lastName,
+      bestSeller: bestSellerCourse.includes(course._id.toString) ? true : false,
     };
   });
 
@@ -436,7 +439,6 @@ const search = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
-          bestSeller: bestSellerCourse.includes(course) ? true : false,
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
         };
       })
@@ -508,6 +510,7 @@ const getCategory = async (req, res) => {
       CourseRatingVote: CourseRatingVote,
       CourseRatingPoint: CourseRatingPoint,
       createdBy: user.firstName + " " + user.lastName,
+      bestSeller: bestSellerCourse.includes(course) ? true : false,
     };
   });
 
@@ -583,7 +586,6 @@ const getCategory = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
-          bestSeller: bestSellerCourse.includes(course) ? true : false,
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 7 ? true : false,
         };
       })
