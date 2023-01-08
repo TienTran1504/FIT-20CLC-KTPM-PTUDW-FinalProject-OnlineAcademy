@@ -330,8 +330,8 @@ const search = async (req, res) => {
   const sort = req.query.sort || "";
 
   const CatList = await CourseCategory.find().lean();
-  const CourseList = await Course.find().lean();
-  var courses = await Course.find({ $text: { $search: key }, disable: "False" }).lean();
+  const CourseList = await Course.find({ disable: "False" }).lean();
+  var courses = await Course.find({ $text: { $search: key }, disable: "False", status: "completed" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
@@ -464,7 +464,7 @@ const getCategory = async (req, res) => {
   const sort = req.query.sort || "";
 
   const CatList = await CourseCategory.find().lean();
-  const CourseList = await Course.find({ disable: "False" }).lean();
+  const CourseList = await Course.find({ disable: "False", status: "completed" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
