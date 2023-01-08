@@ -5,8 +5,7 @@ const checkTeacher = (req, res, next) => {
             next();
         }
         else {
-            res.status(409).send('You do not have permission to access this page');
-            res.redirect('/');
+            res.render('401');
         }
     }catch (err){
         throw createError.InternalServerError(err.message);
@@ -18,10 +17,9 @@ const checkStudent = (req, res, next) => {
             next();
         }
         else {
-            res.status(409).send('You do not have permission to access this page');
-            res.redirect('/');
-        }
-    }catch (err){
+            res.render('401');
+        }    
+    } catch (err){
         throw createError.InternalServerError(err.message);
     }
 }
@@ -31,8 +29,7 @@ const checkAdmin = (req, res, next) => {
             next();
         }
         else {
-            res.status(409).send('You do not have permission to access this page');
-            res.redirect('/');
+            res.render('401');
         }
     }catch (err){
         throw createError.InternalServerError(err.message);

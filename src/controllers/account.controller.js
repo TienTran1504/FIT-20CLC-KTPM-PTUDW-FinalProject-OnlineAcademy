@@ -5,12 +5,14 @@ import User from "../models/user.model";
 
 const formRegister = async function (req, res, next) {
     res.render('vwAccount/register', {
+        CatList: req.session.CatList,
         custom_style: "register.css",
     });
 }
 
 const formLogin = async function (req, res, next) {
     res.render('vwAccount/login', {
+        CatList: req.session.CatList,
         custom_style: "login.css",
     });
 }
@@ -30,24 +32,7 @@ const sendMail = async (req, res, next) => {
                 pass: 'tqhbpdfibgjiwnje' //Mật khẩu tài khoản gmail vừa tạo
             }
         });
-        const content = `<mjml>
-                            <mj-body background-color="#fafbfc">
-                            <mj-section padding-bottom="20px" padding-top="20px">
-                                <mj-column vertical-align="middle" width="100%">
-                                <mj-image align="center" padding="25px" src="https://uploads-ssl.webflow.com/5f059a21d0c1c3278fe69842/5f188b94aebb5983b66610dd_logo-arengu.png" width="125px"></mj-image>
-                                </mj-column>
-                            </mj-section>
-                            <mj-section background-color="#fff" padding-bottom="20px" padding-top="20px">
-                                <mj-column vertical-align="middle" width="100%">
-                                <mj-text align="center" font-size="16px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px"><span>Hello,</span></mj-text>
-                                <mj-text align="center" font-size="16px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Please use the verification code below on the ONLINE ACADEMY website:</mj-text>
-                                <mj-text align="center" font-size="24px" background-color="#20c997" font-weight="bold" font-family="open Sans Helvetica, Arial, sans-serif">${OTP}</mj-text>
-                                <mj-text align="center" font-size="16px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="16px">If you didn't request this, you can ignore this email or let us know.</mj-text>
-                                <mj-text align="center" font-size="16px" font-family="open Sans Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px">Thanks! <br />FIT - HCMUS - 20CLC team</mj-text>
-                                </mj-column>
-                            </mj-section>
-                            </mj-body>
-                        </mjml>`;
+        const content = `Please use the verification code below on the ONLINE ACADEMY website: ${OTP} `;
 
 
         const mainOptions = { // thiết lập đối tượng, nội dung gửi mail
@@ -79,6 +64,7 @@ const sendMail = async (req, res, next) => {
         }
 
         res.render('vwAccount/otp', {
+            CatList: req.session.CatList,
             custom_style: "register.css",
         });
     } catch (err) {
@@ -108,7 +94,9 @@ const createUser = async (req, res, next) => {
 }
 
 const getOTP = (req, res) => {
-    res.render('vwAccount/otp');
+    res.render('vwAccount/otp', {
+        CatList: req.session.CatList,
+    });
 }
 
 const checkAvailableEmail = async (req, res) => {
@@ -133,7 +121,7 @@ const isCorrectOTP = async (req, res, next) => {
     }
 }
 
-const checkLogin = async (req, res, next) => {
+const   checkLogin = async (req, res, next) => {
     try {
         const mail = req.body.email;
         const password = req.body.password;
@@ -141,6 +129,7 @@ const checkLogin = async (req, res, next) => {
 
         if (!user) {
             res.render('vwAccount/login', {
+                CatList: req.session.CatList,
                 custom_style: "login.css",
                 err_message: 'Invalid username or password'
             });
@@ -150,6 +139,7 @@ const checkLogin = async (req, res, next) => {
         const checkLogin = await bcrypt.compare(password, user.password)
         if (!checkLogin) {
             res.render("vwAccount/login", {
+                CatList: req.session.CatList,
                 custom_style: "login.css",
                 err_message: "Invalid username or password",
             });

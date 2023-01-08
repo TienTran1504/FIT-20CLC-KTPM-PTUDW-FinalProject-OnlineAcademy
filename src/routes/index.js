@@ -16,25 +16,16 @@ import {
 export default function (app) {
   // app.use('/api/v1/auth', authRouter);
   app.use("/account", accountRouter);
-  app.use("/admin", adminRouter);
+  app.use("/admin", checkAdmin, adminRouter);
   app.use("/courses", coursesRouter);
-  app.use("/student", studentRouter);
-  app.use("/teacher", teacherRouter);
+  app.use("/student", checkStudent, studentRouter);
+  app.use("/teacher", checkTeacher, teacherRouter);
   app.use("/user", userRouter);
   app.use("/categories", categoriesRouter);
 
   app.use("/", homeRouter);
 
-  // app.use((req, res, next) => {
-  //   next(createError.NotFound("This route does not exist."));
-  // });
 
-  // app.use((err, req, res, next) => {
-  //   res.json({
-  //     status: err.status || 500,
-  //     message: err.message,
-  //   });
-  // });
   app.use(function (req, res, next) {
     res.render("404", { layout: false });
   });

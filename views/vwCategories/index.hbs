@@ -1,5 +1,10 @@
 {{#section "css"}}
   <link rel="stylesheet" type="text/css" href="../../../public/assets/css/categories.css" />
+  <style>
+    footer {
+      margin-top: 25px;
+    }
+  </style>
 {{/section}}
 
 <div class="main-container">
@@ -65,8 +70,10 @@
     {{/if}}
 
     {{#if noData}}
-      <img class="no-data" src="../../../public/assets/images/nodata.png" alt="" />
-
+    
+       <img class="no-data" src="../../../public/assets/images/nodata.png" alt="" />
+    
+     
     {{else}}
       <div class="dropdown">
         <a
@@ -90,7 +97,7 @@
           <a class="dropdown-item" href="{{currentURL}}&sort=most-relevant">Most Relevant</a>
         </div>
       </div>
-      </div>
+    </div>
 
       {{#each courses}}
         <a class="course-container" href="/courses/{{_id}}">
@@ -179,6 +186,7 @@
         </ul>
       {{/if}}
     {{/if}}
+  </div>
   </div>
 </div>
 

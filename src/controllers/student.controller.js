@@ -21,6 +21,7 @@ const getProfile = async (req, res, next) => {
   const getUser = await User.findById({ _id: id }).lean();
 
   res.render("vwStudentProfile/profile", {
+    CatList: req.session.CatList,
     user: getUser,
     name: getUser.firstName + " " + getUser.lastName,
     gender: checkGender(getUser.gender),
@@ -65,6 +66,7 @@ const getPhoto = async (req, res) => {
   const getUser = await User.findById({ _id: id }).lean();
 
   res.render("vwStudentProfile/photo", {
+    CatList: req.session.CatList,
     user: getUser,
     gender: checkGender(getUser.gender),
   });
@@ -111,6 +113,7 @@ const getAccountSecurity = async (req, res) => {
   const getUser = await User.findById({ _id: id }).lean();
 
   res.render("vwStudentProfile/account_security", {
+    CatList: req.session.CatList,
     user: getUser,
     gender: checkGender(getUser.gender),
   });
@@ -199,6 +202,7 @@ const changeEmail = async (req, res) => {
       const userCheck = await User.findById({ _id: id }).lean();
       alert("Change email successfully");
       res.render("vwStudentProfile/profile", {
+        CatList: req.session.CatList,
         notif: "Successfully updated",
         user: userCheck,
         name: userCheck.firstName + " " + userCheck.lastName,
@@ -292,6 +296,7 @@ const getCourseFavorite = async (req, res) => {
   }
 
   res.render("vwStudentProfile/favorite_courses", {
+    CatList: req.session.CatList,
     user: getUser,
     gender: checkGender(getUser.gender),
     length: getCoursesId.length,
@@ -368,65 +373,74 @@ const addCourseList = async (req, res, next) => {
 };
 
 // {{URL}}/student/courses
-const getCourseList = async (req, res) => {
-  const id = req.session.authUser._id;
-  const getUser = await User.findById({ _id: id }).lean();
-  const getCoursesId = getUser.courseList;
-  const limit = 3;
-  const page = req.query.page || 1;
-  const curPage = parseInt(page) || 1;
-  const offset = (curPage - 1) * limit;
+const getCourseList = async (req, res, next) => {
+  try {
+    const id = req.session.authUser._id;
+    const getUser = await User.findById({ _id: id }).lean();
+    const getCoursesId = getUser.courseList;
+    const limit = 3;
+    const page = req.query.page || 1;
+    const curPage = parseInt(page) || 1;
+    const offset = (curPage - 1) * limit;
 
-  let listCourses = [];
-  for (let i = 0; i < getCoursesId.length; i++) {
-    const course = await Course.findById({ _id: getCoursesId[i].id });
-    const feedback = await Feedback.findOne({
-      createdBy: id,
-      createdIn: getCoursesId[i],
-    }).lean;
+    let listCourses = [];
+    console.log(getCoursesId);
 
-    const rateNumber = feedback.numberRated || 0;
-    const lectureList = await Lecture.find({
-      createdIn: getCoursesId[i].id,
-    }).lean();
+    for (let i = 0; i < getCoursesId.length; i++) {
+      const course = await Course.findById({ _id: getCoursesId[i].id });
+      
+      const feedback = await Feedback.findOne({
+        createdBy: id,
+        createdIn: getCoursesId[i],
+      }).lean;
 
-    const obj = {
-      name: course.name,
-      image: course.image,
-      des: course.briefDescription,
-      category: course.categoryName,
-      idCourse: course._id,
-      idLecture: lectureList[0]._id,
-      process: getCoursesId[i].process,
-      rate: rateNumber,
-    };
-    listCourses = [...listCourses, obj];
-  }
+      const rateNumber = feedback.numberRated || 0;
+      const lectureList = await Lecture.find({
+        createdIn: getCoursesId[i].id,
+      }).lean();
 
-  const total = listCourses.length;
-  const nPages = Math.ceil(total / limit);
-  listCourses = listCourses.slice(offset, offset + limit);
+      const obj = {
+        name: course.name,
+        image: course.image,
+        des: course.briefDescription,
+        category: course.categoryName,
+        idCourse: course._id,
+        idLecture: lectureList[0]._id,
+        process: getCoursesId[i].process,
+        rate: rateNumber,
+      };
+      listCourses = [...listCourses, obj];
+    }
 
-  const pageNumbers = [];
-  for (let i = 1; i <= nPages; i++) {
-    pageNumbers.push({
-      value: i,
-      isCurrent: i === Number(+curPage),
+    const total = listCourses.length;
+    const nPages = Math.ceil(total / limit);
+    listCourses = listCourses.slice(offset, offset + limit);
+
+    const pageNumbers = [];
+    for (let i = 1; i <= nPages; i++) {
+      pageNumbers.push({
+        value: i,
+        isCurrent: i === Number(+curPage),
+      });
+    }
+    res.render("vwStudentProfile/courses_learn", {
+      CatList: req.session.CatList,
+      user: getUser,
+      gender: checkGender(getUser.gender),
+      length: getCoursesId.length,
+      courses: listCourses,
+      empty: listCourses.length === 0,
+      havePagination: getCoursesId.length > limit ? true : false,
+      pageNumbers: pageNumbers,
+      firstPage: Number(curPage) === 1 ? true : false,
+      lastPage: Number(curPage) === nPages ? true : false,
+      prevPage: "?page=" + Number(curPage - 1),
+      nextPage: "?page=" + Number(curPage + 1),
     });
+  } catch(err) {
+    next(createError.InternalServerError(err.message));
   }
-  res.render("vwStudentProfile/courses_learn", {
-    user: getUser,
-    gender: checkGender(getUser.gender),
-    length: getCoursesId.length,
-    courses: listCourses,
-    empty: listCourses.length === 0,
-    havePagination: getCoursesId.length > limit ? true : false,
-    pageNumbers: pageNumbers,
-    firstPage: Number(curPage) === 1 ? true : false,
-    lastPage: Number(curPage) === nPages ? true : false,
-    prevPage: "?page=" + Number(curPage - 1),
-    nextPage: "?page=" + Number(curPage + 1),
-  });
+  
 };
 
 const updateCourseLearn = async (req, res) => {

@@ -10,6 +10,7 @@ import { formatDate, fullStar, halfStar, blankStar } from "./home.controller";
 
 const getInfo = async (req, res, next) => {
   res.render("vwTeacher/profile", {
+    CatList: req.session.CatList,
     user: req.session.authUser,
   });
 };
@@ -34,6 +35,7 @@ const updateInfo = async (req, res, next) => {
 
 const getPhoto = (req, res) => {
   res.render("vwTeacher/photo", {
+    CatList: req.session.CatList,
     user: req.session.authUser,
   });
 };
@@ -70,6 +72,7 @@ const uploadPhoto = (req, res, next) => {
 
 const getAccountSecurity = (req, res) => {
   res.render("vwTeacher/account_security", {
+    CatList: req.session.CatList,
     user: req.session.authUser,
   });
 };
@@ -101,6 +104,7 @@ const getOwnerCourses = async (req, res, next) => {
   }
 
   res.render("vwTeacher/my_course", {
+    CatList: req.session.CatList,
     user: req.session.authUser,
     courses: coursesList,
     havePagination: courses.length > limit ? true : false,
@@ -510,6 +514,7 @@ const updateEmail = async (req,res,next) => {
     const ret = bcrypt.compareSync(req.body.password, user.password);
     if (ret === false) {
       res.render("vwTeacher/update_acc", {
+        CatList: req.session.CatList,
         user: req.session.authUser,
         err_message: "Password is wrong."
       });
@@ -537,6 +542,7 @@ const updatePassword = async (req, res, next) => {
     const ret = bcrypt.compareSync(req.body.password, user.password);
     if (ret === false) {
       res.render("vwTeacher/update_acc", {
+        CatList: req.session.CatList,
         user: req.session.authUser,
         err_message: "Password is incorrect."
       });

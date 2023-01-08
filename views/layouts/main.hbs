@@ -12,27 +12,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../../public/assets/css/footer.css" />
     <style>
-      #btn-back-to-top {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          display: none;
-      }
       a.navbar1{
-          color: black;
+          color: #333;
           font-weight: bold;
-          border: 1px solid #52ab98;
-          margin: 0px 5px;
           text-align: center;
+          margin: 2px 0;
           text-decoration: none;
           display: inline-block; }
       a.navbar1:hover{
-          background-color: #52ab98; }
-      .dropdown-item{
-        font-weight:bold;
-      }
+          background-color: #333;
+          color: white; 
+        }
       .dropdown-item:hover{
-        background-color: #52ab98;
+        background-color: #333;
         color:#fff;
       }
 
@@ -89,41 +81,29 @@
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-        <div class="row" style="width: 100%">
-          <div class="col-sm-2">
-            <a class="navbar-brand" href="/" style="color: black"><h3>AcademyOnline</h3></a>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
+        <div class="row" style="width:100%">
+          <div class="col-2">
+            <a class="navbar-brand h3" href="/" style="color: black">OnlineAcademy</a>
           </div>
-
-            <div class="col-sm-1">
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle navbar1" href="/categories/" role="button" data-toggle="dropdown" aria-expanded="false">
-                        Explore
-                    </a>
+          <div class="col-2">
+            <div class="nav-item dropdown" >
+                <a class="nav-link dropdown-toggle navbar1" href="/categories/" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Explore
+                </a>
+                <ul class="dropdown-menu">
+                  {{#each CatList}}
+                    <li class="dropdown-submenu">
+                    <a class="dropdown-item" href="/categories?category={{name}}">{{name}}</a>
                     <ul class="dropdown-menu">
-                      {{#each CatList}}
-                        <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="/categories?category={{name}}">{{name}}</a>
-                        <ul class="dropdown-menu">
-                          {{#each languageList}}
-                              <a class="dropdown-item" href="/categories?category={{../name}}&language={{name}}">{{name}}</a></li>
-                          {{/each}}
-                        </ul>
-                      </li>
+                      {{#each languageList}}
+                          <a class="dropdown-item" href="/categories?category={{../name}}&language={{name}}">{{name}}</a></li>
                       {{/each}}
                     </ul>
-                </div>
+                  </li>
+                  {{/each}}
+                </ul>
             </div>
+          </div>
           {{#if auth}}
               {{#if (ifEqualString authUser.permission "Student")}}
                   {{>header_student}}

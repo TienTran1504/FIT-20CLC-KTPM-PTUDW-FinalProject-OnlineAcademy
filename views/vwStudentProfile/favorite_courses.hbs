@@ -1,5 +1,10 @@
 {{#section "css"}}
   <link rel="stylesheet" href="../../public/assets/css/student_profile.css" />
+  <style>
+      footer {
+        margin-top:20px;
+      }
+    </style>
 {{/section}}
 <div style="margin-top: 80px;">
   <form method="post">
@@ -86,7 +91,7 @@
                     <div class="more-courses-container">
                       {{#if (isFree courses.length)}}
                         <div class="no-courses">
-                          <div class="title-noti">No courses</div>
+                          <div class="h1">No courses</div>
                         </div>
                       {{/if}}
                       {{#each courses}}

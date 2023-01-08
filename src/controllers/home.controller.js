@@ -242,6 +242,8 @@ const renderHome = async (req, res) => {
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
+  req.session.CatList = CatList;
+
   CourseList = CourseList.map((course) => {
     var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
     var CourseRatingVote = feedbackList.length;
