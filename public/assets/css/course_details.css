@@ -124,8 +124,12 @@
   font-weight: 600;
 }
 
-.card-body {
+/* .card-body {
   padding: 0.5rem 1.25rem !important;
+} */
+
+.body-course-list {
+  padding: 0;
 }
 
 .card-body .block-list {
@@ -136,6 +140,13 @@
 
 .card-body .block-list li {
   margin: 0.5rem 0;
+  border-top: 1px solid #DFDFDF;
+  padding: 0.5rem 1.25rem;
+}
+
+.vjs-big-play-button {
+  top: 45% !important;
+  left: 43% !important;
 }
 
 .card-body .section-previewable {
@@ -219,13 +230,17 @@
 }
 
 .main-rating .main-title .fa-star {
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
   color: #e59819;
 }
 
 .main-rating .main-title .fa-circle {
   font-size: 0.5rem;
   color: #6a6f73;
+}
+
+.main-rating .main-title .star-tag {
+  padding-left: 0.1rem;
 }
 
 .content-rating .review-container {
@@ -410,4 +425,14 @@
 
 .row {
   margin: 0;
+}
+
+#my-video {
+  width: 100%;
+  height: 60vh;
+}
+
+.block-video {
+  width: 96%;
+  margin: 2%;
 }

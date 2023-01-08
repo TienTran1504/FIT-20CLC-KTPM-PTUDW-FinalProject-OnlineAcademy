@@ -36,10 +36,11 @@ const getCourse = async (req, res, next) => {
     req.session.courseId = req.params.id;
     const course = await Course.findById({ _id: req.params.id }).lean();
     const instructor = await User.findOne({ _id: course.createdBy }).lean();
-    const firstIdLecture = await Lecture.findOne({ createdIn: req.params.id });
+    const lecture = await Lecture.find({ createdIn: req.params.id });
     const getUser = await User.findById({
       _id: req.session.authUser._id,
     }).lean();
+    const feedbacks = course.feedbackList;
 
     let checkCourseExists = false;
     for (let i = 0; i < getUser.courseList.length; i++) {
@@ -60,14 +61,6 @@ const getCourse = async (req, res, next) => {
     course.updatedAt = formatDate(course.updatedAt);
     course.numberOfStudents = course.studentList.length;
     course.numberOfFeedbacks = course.feedbackList.length;
-    course.ratingPoint =
-      +(
-        course.feedbackList.reduce((a, b) => a + b.numberRated, 0) /
-        course.numberOfFeedbacks
-      ).toFixed(1) || 0;
-    course.fullStar = fullStar(course.ratingPoint);
-    course.halfStar = halfStar(course.ratingPoint);
-    course.blankStar = blankStar(course.ratingPoint);
 
     const listOfCourses = await Course.find({
       createdBy: instructor._id,
@@ -77,12 +70,58 @@ const getCourse = async (req, res, next) => {
       0
     );
 
+    //Get feedback list
+    let feedbackList = [];
+    course.ratingPoint = 0;
+    for (let i = 0; i < feedbacks.length; i++) {
+      const feedback = await FeedBack.findById({
+        _id: feedbacks[i]._id,
+      }).lean();
+      const userFeedback = await User.findById({
+        _id: feedback.createdBy,
+      }).lean();
+      let f = new Intl.DateTimeFormat("en");
+      feedback.createdAt = f.format(feedback.createdAt);
+
+      const obj = {
+        feedback: feedback,
+        user: userFeedback,
+      };
+      feedbackList = [...feedbackList, obj];
+
+      course.ratingPoint += feedback.numberRated;
+    }
+    course.ratingPoint = (course.ratingPoint / feedbacks.length).toFixed(1);
+
+    //Get lecture
+    let lectureList = [];
+    let totalTime = 0;
+    for (let i = 0; i < lecture.length; i++) {
+      totalTime += lecture[i].duration;
+      const times = {
+        min: (lecture[i].duration / 60).toFixed(0),
+        seconds: (lecture[i].duration % 60).toFixed(0),
+      };
+      const obj = {
+        name: lecture[i].name,
+        times,
+      };
+      lectureList = [...lectureList, obj];
+    }
+
     res.render("vwCourseDetails/course_details", {
       course,
       instructor,
       checkFavorites,
       checkCourseExists,
-      firstIdLecture: firstIdLecture._id,
+      firstIdLecture: lecture[0]._id,
+      feedbackList: feedbackList,
+      lectureList,
+      inforCourse: {
+        totalTime: (totalTime / 60).toFixed(0),
+        lengthCourse: lecture.length,
+      },
+      videoOfFirstLecture: lecture[0].video,
     });
   } catch (err) {
     console.log(err.message);

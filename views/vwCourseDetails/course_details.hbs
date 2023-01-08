@@ -1,5 +1,13 @@
 {{#section "css"}}
   <link rel="stylesheet" href="../../public/assets/css/course_details.css" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://vjs.zencdn.net/7.20.3/video-js.css"
+  />
+{{/section}}
+{{#section "js"}}
+  <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
 {{/section}}
 <div class="main-content-courses-details">
   <div class="container-course">
@@ -24,16 +32,8 @@
           </div>
           <div class="rating">
             <a href="#">
-              <span> {{course.numberOfFeedbacks}} </span>
-              {{#each course.fullStar}}
-                <span class="fa fa-star checked"></span>
-              {{/each}}
-              {{#each course.halfStar}}
-                <span class="fa fa-star-half-o"></span>
-              {{/each}}
-              {{#each course.blankStar}}
-                <span class="fa fa-star-o"></span>
-              {{/each}}
+              <span> {{course.ratingPoint}} </span>
+              {{#star course.ratingPoint}}{{/star}}
             </a>
             <a
               href="#"
@@ -87,10 +87,10 @@
                                   <span class="course-title">
                                     <span>Course Overview</span>
                                     <span>
-                                      <span>{{course.lecture.length}}
+                                      <span>{{inforCourse.lengthCourse}}
                                         lectures •
                                       </span>
-                                      <span>19min</span>
+                                      <span>{{inforCourse.totalTime}}min</span>
                                     </span>
                                   </span>
                                 </button>
@@ -105,45 +105,55 @@
                         role="tabpanel"
                         aria-labelledby="section1HeaderId"
                       >
-                        <div class="card-body">
+                        <div class="block-video">
+                          <div class="video-lecture-preview">
+                            <video
+                              id="my-video"
+                              class="video-js"
+                              controls
+                              preload="auto"
+                              data-setup="{}"
+                            >
+                              <source
+                                src="../../../public/assets/videos/{{videoOfFirstLecture}}"
+                                type="video/webm"
+                              />
+                              <p class="vjs-no-js">
+                                To view this video please enable JavaScript, and
+                                consider upgrading to a web browser that
+                                <a
+                                  href="https://videojs.com/html5-video-support/"
+                                  target="_blank"
+                                >supports HTML5 video</a>
+                              </p>
+                            </video>
+                          </div>
+                        </div>
+                        <div class="card-body body-course-list">
                           <ul class="block-list">
-                            <li>
-                              <div class="section-previewable">
-                                <i
-                                  class="fa fa-play-circle icon-item-content"
-                                  aria-hidden="true"
-                                ></i>
-                                <div class="block-list-item-content">
-                                  <div class="block-btn">
-                                    <button class="btn-item-course link-course">
-                                      ES6 - Introduction
-                                    </button>
-                                  </div>
-                                  <div class="review-time">
-                                    <span class="link-course">Preview</span>
-                                    <span>4:10</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div class="section-previewable">
-                                <i
-                                  class="fa fa-play-circle icon-item-content"
-                                  aria-hidden="true"
-                                ></i>
-                                <div class="block-list-item-content">
-                                  <div class="block-btn">
-                                    <button class="btn-item-course btn-hidden">
-                                      ES6 - Introduction
-                                    </button>
-                                  </div>
-                                  <div class="review-time">
-                                    <span>4:10</span>
+                            {{#each lectureList}}
+                              <li>
+                                <div class="section-previewable">
+                                  <i
+                                    class="fa fa-play-circle icon-item-content"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <div class="block-list-item-content">
+                                    <div class="block-btn">
+                                      <button
+                                        class="btn-item-course btn-hidden"
+                                      >
+                                        {{name}}
+                                      </button>
+                                    </div>
+                                    <div class="review-time">
+                                      <span
+                                      >{{times.min}}:{{times.seconds}}</span>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </li>
+                              </li>
+                            {{/each}}
                           </ul>
                         </div>
                       </div>
@@ -216,40 +226,67 @@
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 <span>{{course.numberOfFeedbacks}} ratings</span>
               </h2>
-              <div class="content-rating">
-                <div class="review-container">
-                  <div class="review-heading">
-                    <div class="review-profile">
-                      <div class="block-img">
-                        <img
-                          src="https://wallpapercave.com/wp/wp5609975.jpg"
-                          alt=""
-                        />
+              {{#each feedbackList}}
+                <div class="content-rating">
+                  <div class="review-container">
+                    <div class="review-heading">
+                      <div class="review-profile">
+                        <div class="block-img">
+                          {{#if (isEmpty user.image)}}
+                            {{#if gender}}
+                              <img
+                                src="../../public/assets/images/no_avt_male.png"
+                                alt="avatar"
+                              />
+                            {{else}}
+                              <img
+                                src="../../public/assets/images/no_avt_female.png"
+                                alt="avatar"
+                              />
+                            {{/if}}
+                          {{else}}
+                            <img
+                              src="../../public/assets/images/{{user.image}}"
+                              alt="avatar"
+                            />
+                          {{/if}}
+                        </div>
+                        <div class="review-infomation">
+                          <h3>{{user.lastName}} {{user.firstName}}</h3>
+                          {{#star feedback.numberRated}}{{/star}}
+                          <span class="week">{{feedback.createdAt}}</span>
+                        </div>
                       </div>
-                      <div class="review-infomation">
-                        <h3>Kannan M.</h3>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <span class="week">3 week ago</span>
+                      <div class="popper">
+                        <div class="btn-group">
+                          <button
+                            class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="triggerId"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          ></button>
+                          <div
+                            class="dropdown-menu dropdown-menu-right"
+                            aria-labelledby="triggerId"
+                          >
+                            <a class="dropdown-item" href="#">Report</a>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="review-content">
-                    Course is really Fantastic. Detailed Explanation given for
-                    each Section. Also Hands on Exercise at end of each topic
-                    gives confidence after learning each topic. Milestone
-                    Projects makes to think a lot while coding.
-                  </div>
-                  <div class="rewiew-rating">
-                    <div class="help">Helpful?</div>
-                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                    <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                    <div class="review-content">
+                      {{feedback.content}}
+                    </div>
+                    <div class="rewiew-rating">
+                      <div class="help">Helpful?</div>
+                      <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                      <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                    </div>
                   </div>
                 </div>
-              </div>
+              {{/each}}
             </div>
           </div>
         </div>
