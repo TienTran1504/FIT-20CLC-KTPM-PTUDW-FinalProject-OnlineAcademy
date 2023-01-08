@@ -1,7 +1,7 @@
 :root {
   --category-width: 300px;
-  --language-width: 245px;
-  --course-width: 245px;
+  --language-width: 240px;
+  --course-width: 240px;
 }
 
 .swiper {
@@ -80,7 +80,7 @@
   flex-direction: column;
   transition: opacity 0.2s, transform 0.2s;
   flex: 0;
-  margin: 10px 0;
+  margin: 10px 3px;
   /* word-break: break-all; */
   width: var(--category-width);
   word-wrap: break-word;
