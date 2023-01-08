@@ -118,7 +118,7 @@
                         <a class="dropdown-item" href="/categories?category={{name}}">{{name}}</a>
                         <ul class="dropdown-menu">
                           {{#each languageList}}
-                            <li class="dropdown-item"><a href="/categories?category={{../name}}&language={{name}}">{{name}}</a></li>
+                            <a class="dropdown-item" href="/categories?category={{../name}}&language={{name}}">{{name}}</a></li>
                           {{/each}}
                         </ul>
                       </li>
