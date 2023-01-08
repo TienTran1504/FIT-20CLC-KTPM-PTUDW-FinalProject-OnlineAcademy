@@ -2,18 +2,21 @@ import express from "express";
 const accountRouter = express.Router();
 import {
   formRegister,
-  addAccount,
+  sendMail,
+  createUser,
   formLogin,
   checkLogin,
-  checkOTP,
+  getOTP,
+  isCorrectOTP,
   logout,
+  checkAvailableEmail,
 } from "../controllers/account.controller.js";
 
-accountRouter.route("/register").get(formRegister).post(addAccount);
+accountRouter.route("/register/success").get(createUser);
+accountRouter.route("/register").get(formRegister).post(sendMail);
 accountRouter.route("/login").get(formLogin).post(checkLogin);
-//accountRouter.route("/register");
-accountRouter.route("/otp").post(checkOTP);
-//accountRouter.route("/login").post(checkLogin);
+accountRouter.route("/otp").get(isCorrectOTP);
 accountRouter.route("/logout").get(logout);
+accountRouter.route("/is-available").get(checkAvailableEmail);
 
 export default accountRouter;

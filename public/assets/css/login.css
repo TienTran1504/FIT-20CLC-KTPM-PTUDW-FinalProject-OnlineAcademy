@@ -1,19 +1,5 @@
-html, body {
-  height: 100%;
-  font-family: "Numans", sans-serif;
-  color: black;
-}
-
-.container {
-  margin: 25vh;
-  height: 100%;
-  align-content: center;
-}
-
 .card {
-  height: 300px;
   width: 400px;
-
 }
 
 .social_icon span {
@@ -22,16 +8,13 @@ html, body {
   color: #ffc312;
 }
 
-.social_icon span:hover {
-  color: black;
-  cursor: pointer;
-}
 
 .card-header{
   background: #2b6777;
   color: white;
   margin: 0 0 15px 0;
   font-family: "JetBrains Mono";
+  opacity: 0.9;
 }
 
 .social_icon {
@@ -41,9 +24,8 @@ html, body {
 }
 
 .input-group-prepend span {
-  width: 50px;
+  text-align: center;
   background-color: #52ab98;
-  color: black;
   border: 0 !important;
 }
 
@@ -57,13 +39,7 @@ input:focus {
   font-weight: bold;
   font-size: 18px;
   background-color: #52ab98;
-  width: 100px;
-}
-
-.login_btn:hover {
-  color: black;
-  font-weight: bold;
-  background-color: #c8d8e4;
+  width: 100%;
 }
 
 .links {

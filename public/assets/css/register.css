@@ -1,46 +1,22 @@
-* {box-sizing: border-box}
-body{
-    font-family: 'Noto Sans JP', sans-serif;
-    margin-top: 2cm;
-    color: black;
-}
-
 .card-header{
     background: #2b6777;
     color: white;
     margin: 0 0 15px 0;
     font-family: "JetBrains Mono";
 }
-input[type=text], input[type=password] {
-    margin: 0 0 15px 0;
-    display: inline-block;
-    width:100%;
-    border:1px black solid;
-}
-input[type=text]:focus, input[type=password]:focus {
-    outline: none;
-}
-.signupbtn {
-    background-color: #52ab98;
+.login_btn {
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
     font-weight: bold;
-}
-button:hover {
-    opacity:1;
-}
-.signupbtn {
-    float: left;
+    font-size: 18px;
+    background-color: #52ab98;
     width: 100%;
-    border-radius:15px;
-    border:0;
-    box-shadow:4px 4px 10px rgba(0,0,0,0.2);
 }
+
+.login_btn:hover {
+    opacity: 0.9;
+    color: white;
+}
+
 .container {
     padding: 16px;
 }

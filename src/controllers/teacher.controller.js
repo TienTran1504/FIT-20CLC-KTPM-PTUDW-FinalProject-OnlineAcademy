@@ -185,7 +185,7 @@ const createCourse = async (req, res, next) => {
       categoryName: cat.name,
     });
 
-    lang.courseList.push(createdCourse._id);
+    lang.courseList.push(createdCourse);
     await CourseLanguage.findOneAndUpdate(
       { _id: lang._id },
       { courseList: lang.courseList }
@@ -201,7 +201,14 @@ const createCourse = async (req, res, next) => {
 };
 
 const deleteCourse = async (req, res, next) => {
-  try {
+  try { 
+    const lang = Language.findById({_id: req.session.currentCourse.languageId});
+    const indexOf = lang.courseList.findIndex(course => {
+      return course._id === CourseID
+    })
+
+    lang.courseList.splice(indexOf, 1);
+    await Language.findByIdAndUpdate({_id: lang._id}, lang);
     await Course.deleteOne({ _id: req.params.id });
 
     delete req.session.currentCourse;
