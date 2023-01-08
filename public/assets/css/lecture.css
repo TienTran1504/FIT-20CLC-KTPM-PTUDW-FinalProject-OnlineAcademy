@@ -319,6 +319,7 @@
     font-family: FontAwesome;
     font-size: 20px;
     letter-spacing: 5px;
+    color: #E59819;
 }
 
 .stars-outer::before {
@@ -329,14 +330,11 @@
     position: absolute;
     top: 0;
     left: 0;
+    font-family: FontAwesome;
     white-space: nowrap;
     overflow: hidden;
     width: 0;
-}
-
-.stars-inner::before {
-    content: "\f005 \f005 \f005 \f005 \f005";
-    color: #000000;
+    color: #E59819;
 }
 
 .dark {
@@ -500,10 +498,8 @@ label.star:before {
     font-size: 1rem;
 }
 
-.stars-outer,
 .stars-inner::before {
     content: "\f005 \f005 \f005 \f005 \f005";
-    color: #E59819;
 }
 
 .vjs-big-play-button {

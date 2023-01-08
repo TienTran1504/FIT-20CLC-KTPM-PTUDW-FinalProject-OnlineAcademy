@@ -6,21 +6,13 @@
     href="../../public/assets/css/validation/form.css"
   />
   <style>
-      footer {
-        margin-top:20px;
-      }
-    </style>
+    footer { margin-top:20px; }
+  </style>
 {{/section}}
 {{#section "js"}}
-  <script src="../../../public/assets/js/validator.js"></script>
-  <script>
-    Validator({ form: '#form-1', rules: [Validator.isEmail('#email'),
-    Validator.minLength('#password', 6) , Validator.minLength('#password1',
-    6),Validator.minLength('#firstname', 1),Validator.minLength('#lastname', 1)
-    ] })
-  </script>
+  <script src="../../public/assets/js/profile/profile.js"></script>
 {{/section}}
-<form id="form-1" method="post">
+<form method="post">
   <div style="margin-top: 80px;">
     <div class="main-content-student">
       <div class="container">
@@ -166,7 +158,7 @@
                                         class="form-control"
                                         placeholder="Password"
                                       />
-                                      <span class="form-message"></span>
+                                      <div id="strengthMessage"></div>
                                     </div>
                                   </div>
                                   <div class="modal-footer">
@@ -285,7 +277,7 @@
                                     class="form-control"
                                     placeholder="Password"
                                   />
-                                  <span class="form-message"></span>
+                                  <div id="strengthMessage"></div>
                                 </div>
                               </div>
                               <div class="modal-footer">

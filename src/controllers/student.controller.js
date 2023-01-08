@@ -343,6 +343,15 @@ const addCourseList = async (req, res, next) => {
     return watch.id == courseId;
   });
 
+  course.studentList.push(id);
+  await Course.findByIdAndUpdate(
+    { _id: course._id },
+    {
+      studentList: course.studentList,
+    },
+    { new: true, runValidators: true }
+  );
+
   if (!course) {
     return next(createError(400, `Not found this course with id ${courseId}`));
   } else if (checkCourseExists) {

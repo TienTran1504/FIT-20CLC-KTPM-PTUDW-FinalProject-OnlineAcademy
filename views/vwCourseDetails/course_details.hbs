@@ -267,12 +267,12 @@
             <div class="title-course">$ {{course.price}}</div>
             <div class="btn-course">
               {{#if checkCourseExists}}
-                <button
+                <a
                   type="submit"
-                  class="btn btn-primary btn-buy"
-                  formaction="/courses/learn/{{firstIdLecture}}"
+                  class="btn btn-primary btn-buy btn-learn"
+                  href="/courses/learn/{{firstIdLecture}}"
                 >
-                  Learn</button>
+                  Learn</a>
               {{else}}
                 <button
                   type="submit"

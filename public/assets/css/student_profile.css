@@ -212,3 +212,13 @@
 .btn-file {
   background-color: #52AB98 !important;
 }
+
+.Short {
+  width: 100%;
+  background-color: #dc3545;
+  margin-top: 5px;
+  height: 3px;
+  color: #dc3545;
+  font-weight: 500;
+  font-size: 12px;
+}

@@ -377,7 +377,7 @@
                       <div class="block-title">
                         <button type="button" class="btn-list-course">
                           <span class="course-title">
-                            <span>Category: {{course.categoryName}}</span>
+                            {{!-- <span>Category: {{course.categoryName}}</span> --}}
                             <span>
                               {{lectureStudied}}/{{lectureList.length}}
                               | {{times.hours}}hr{{times.min}}min
@@ -406,7 +406,6 @@
                         <div class="section-previewable">
                           <button
                             type="submit"
-                              {{log complete}}
                             {{#if complete}}
                               class="btn-checkbox fa fa fa-check-square"
                             {{else}}

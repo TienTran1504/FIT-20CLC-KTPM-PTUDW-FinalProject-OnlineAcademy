@@ -4,6 +4,7 @@ import Course from "../models/course.model";
 import User from "../models/user.model";
 import Lecture from "../models/lecture.model";
 import FeedBack from "../models/feedback.model";
+import View from "../models/view.model";
 import { formatDate, fullStar, halfStar, blankStar } from "./home.controller";
 
 // {{URL}}/courses
@@ -133,8 +134,28 @@ const viewLecture = async (req, res, next) => {
   const lecture = await Lecture.findById({ _id: idlecture }).lean();
   const courseId = lecture.createdIn;
   const thisCourse = await Course.findById({ _id: courseId }).lean();
+
+  let checkAccount = thisCourse.studentList.some(idStudent => {
+    return String(UserID) === String(idStudent);
+  });
+  if (!checkAccount) return next(createError(401));
+
   const lectureList = await Lecture.find({ createdIn: courseId }).lean();
   const feedbacks = thisCourse.feedbackList;
+
+  const newView = await View.create({
+    createdIn: thisCourse._id,
+    createdBy: UserID,
+  });
+
+  thisCourse.viewList.push(newView);
+  await Course.findByIdAndUpdate(
+    { _id: thisCourse._id },
+    {
+      viewList: thisCourse.viewList,
+    },
+    { new: true, runValidators: true }
+  );
 
   let seconds = 0;
   for (let i = 0; i < lectureList.length; i++) {
@@ -144,8 +165,9 @@ const viewLecture = async (req, res, next) => {
     });
     seconds += lectureList[i].duration;
   }
+
   const times = {
-    hours: (seconds / 360).toFixed(0),
+    hours: (seconds / 3600).toFixed(0),
     min: (seconds / 60).toFixed(0),
   };
 

@@ -366,6 +366,10 @@
   font-weight: 600;
 }
 
+.btn-learn {
+  padding-top: 0.5rem !important;
+}
+
 .sidebar-container-model .btn-course .btn-like {
   height: 3rem;
   width: 3rem;
