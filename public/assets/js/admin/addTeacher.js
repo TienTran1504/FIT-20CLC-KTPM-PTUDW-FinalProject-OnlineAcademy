@@ -13,6 +13,11 @@ function handleSubmit(e) {
     const messageEmail = $("#email");
     const messagePassword = $("#password");
 
+    const messageFirstNameText = $("#firstNameText");
+    const messageLastNameText = $("#lastNameText");
+    const messageEmailText = $("#emailText");
+    const messagePasswordText = $("#passwordText");
+
     inputFirstName.style.borderColor = "#ced4da";
     inputLastName.style.borderColor = "#ced4da";
     inputEmail.style.borderColor = "#ced4da";
@@ -23,6 +28,7 @@ function handleSubmit(e) {
     messagePassword.style.display = "none";
     if (inputFirstName.value.length === 0) {
         messageFirstName.style.display = "block";
+        messageFirstNameText.innerText = "Please fill out first name";
         inputFirstName.style.borderColor = "red";
         inputFirstName.select();
         e.preventDefault();
@@ -30,6 +36,7 @@ function handleSubmit(e) {
     }
     if (inputLastName.value.length === 0) {
         messageLastName.style.display = "block";
+        messageLastNameText.innerText = "Please fill out last name";
         inputLastName.style.borderColor = "red";
         inputLastName.select();
         e.preventDefault();
@@ -37,34 +44,34 @@ function handleSubmit(e) {
     }
 
     if (inputEmail.value.length === 0) {
-        alert("Please fill out your Email");
         messageEmail.style.display = "block";
+        messageEmailText.innerText = "Please fill out your email";
+        inputEmail.style.borderColor = "red";
+        inputEmail.select();
+        e.preventDefault();
+        return;
+    }
+    if (!filter.test(inputEmail.value)) {
+        messageEmail.style.display = "block";
+        messageEmailText.innerText = "Please fill out a valid email";
         inputEmail.style.borderColor = "red";
         inputEmail.select();
         e.preventDefault();
         return;
     }
     if (inputPassword.value.length === 0) {
-        alert("Please fill out your Password");
         messagePassword.style.display = "block";
+        messagePasswordText.innerText = "Please fill out your password"
         inputPassword.style.borderColor = "red";
         inputPassword.select();
         e.preventDefault();
         return;
     }
     if (inputPassword.value.length < 6) {
-        alert("Password must be more than 6 characters");
         messagePassword.style.display = "block";
+        messagePasswordText.innerText = "Password must be more than 6 characters"
         inputPassword.style.borderColor = "red";
         inputPassword.select();
-        e.preventDefault();
-        return;
-    }
-    if (!filter.test(inputEmail.value)) {
-        alert("Please fill out a valid email format");
-        messageEmail.style.display = "block";
-        inputEmail.style.borderColor = "red";
-        inputEmail.select();
         e.preventDefault();
         return;
     }

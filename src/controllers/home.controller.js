@@ -174,6 +174,7 @@ const SliderList = [
 function fullStar(ratingPoint) {
   var fullStar = [];
   var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
+  var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
   for (let i = 0; i < stars; i++) {
     fullStar.push(stars);
   }
@@ -237,7 +238,7 @@ function dateDiffInDays(a, b) {
 const renderHome = async (req, res) => {
   const CatList = await CourseCategory.find().lean();
   const LanguageList = await CourseLanguage.find().lean();
-  var CourseList = await Course.find({ disable: "False" }).lean();
+  var CourseList = await Course.find({ disable: "False", status: "completed" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 

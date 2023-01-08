@@ -9,6 +9,7 @@ const FeedbackSchema = new mongoose.Schema(
       type: Number,
       min: [0, "Rating must above 0"],
       max: [5, "Rating must below 5"],
+      default: 0,
     },
     createdIn: {
       type: mongoose.Types.ObjectId,

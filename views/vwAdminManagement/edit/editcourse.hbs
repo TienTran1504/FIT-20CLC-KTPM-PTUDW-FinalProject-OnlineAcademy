@@ -1,0 +1,168 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../../public/assets/css/admin/edit.css"
+  />
+{{/section}}
+
+<form method="post" class="form-submit">
+  <div
+    class="card col-md-9"
+    style="margin-left: auto; margin-right:auto; padding:0"
+  >
+    <h4
+      class="card-header d-flex justify-content-between"
+      style="background-color:#52ab98; color:#fff"
+    >
+      Edit Permission
+    </h4>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="txtCourseID" style="font-weight:bold">Course ID</label>
+        <input
+          name="CourseID"
+          type="text"
+          class="form-control"
+          id="txtCourseID"
+          value="{{course._id}}"
+          readonly
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="txtCourseName" style="font-weight:bold">Name</label>
+        <input
+          name="CourseName"
+          type="text"
+          class="form-control"
+          id="txtCourseName"
+          value="{{course.name}}"
+          readonly
+        />
+        <label for="txtCourseLanguage" style="font-weight:bold">Last Name</label>
+        <input
+          name="CourseLanguage"
+          type="text"
+          class="form-control"
+          id="txtCourseLanguage"
+          value="{{course.languageName}}"
+          readonly
+        />
+        <label for="txtCourseCategory" style="font-weight:bold">Last Name</label>
+        <input
+          name="CourseCategory"
+          type="text"
+          class="form-control"
+          id="txtCourseCategory"
+          value="{{course.categoryName}}"
+          readonly
+        />
+        <label for="txtCourseDisable" style="font-weight:bold">Course Disable
+          Status</label>
+        {{#if (ifEqualString course.disable "True")}}
+          <input
+            name="CourseDisable"
+            type="text"
+            class="form-control"
+            id="txtCourseDisable"
+            value="Disabled"
+            readonly
+          />
+        {{else}}
+          <input
+            name="CourseDisable"
+            type="text"
+            class="form-control"
+            id="txtCourseDisable"
+            value="Available"
+            readonly
+          />
+        {{/if}}
+      </div>
+      <div class="form-group">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label
+              class="input-group-text input-blocked"
+              for="inputGroupSelect02"
+            >Options Disabled</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect02" name="disable">
+            <option selected value="False">Available</option>
+            <option value="True">Disabled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer d-flex text-muted justify-content-between">
+      <a
+        class="btn btn-outline-success"
+        href="/admin/managecourses"
+        role="button"
+      >
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back
+      </a>
+
+      <div>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          <i class="fa fa-trash" aria-hidden="true"></i>
+          Delete
+        </button>
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure want to delete this course?
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >Close</button>
+                <button
+                  type="submit"
+                  class="btn btn-danger"
+                  formaction="/admin/editcourse/del"
+                >Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-save"
+          formaction="/admin/editcourse/patch"
+        >
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

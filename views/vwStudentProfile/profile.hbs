@@ -1,7 +1,21 @@
 {{#section "css"}}
   <link rel="stylesheet" href="../../public/assets/css/student_profile.css" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../public/assets/css/validation/form.css"
+  />
 {{/section}}
-<form method="post">
+{{#section "js"}}
+  <script src="../../../public/assets/js/validator.js"></script>
+  <script>
+    Validator({ form: '#form-1', rules: [Validator.isEmail('#email'),
+    Validator.minLength('#password', 6) , Validator.minLength('#password1',
+    6),Validator.minLength('#firstname', 1),Validator.minLength('#lastname', 1)
+    ] })
+  </script>
+{{/section}}
+<form id="form-1" method="post">
   <div style="margin-top: 80px;">
     <div class="main-content-student">
       <div class="container">
@@ -125,25 +139,29 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                  <div class="form-row">
+                                  <div class="form-row form-group">
                                     <div class="col">
                                       <input
+                                        id="email"
                                         type="text"
                                         name="email"
                                         class="form-control"
                                         value="{{user.email}}"
                                         placeholder="Your email address"
                                       />
+                                      <span class="form-message"></span>
                                     </div>
                                   </div>
-                                  <div class="form-row">
+                                  <div class="form-row form-group">
                                     <div class="col">
                                       <input
+                                        id="password"
                                         type="password"
                                         name="password_email"
                                         class="form-control"
                                         placeholder="Password"
                                       />
+                                      <span class="form-message"></span>
                                     </div>
                                   </div>
                                   <div class="modal-footer">
@@ -225,22 +243,26 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <div class="form-row">
+                              <div class="form-row form-group">
                                 <div class="col">
                                   <input
+                                    id="firstname"
                                     type="text"
                                     name="firstname"
                                     class="form-control"
                                     placeholder="First name"
                                   />
+                                  <span class="form-message"></span>
                                 </div>
                                 <div class="col">
                                   <input
+                                    id="lastname"
                                     type="text"
                                     name="lastname"
                                     class="form-control"
                                     placeholder="Last name"
                                   />
+                                  <span class="form-message"></span>
                                 </div>
                               </div>
                               <div class="form-group pt-3">
@@ -249,14 +271,16 @@
                                   <option value="Female">Female</option>
                                 </select>
                               </div>
-                              <div class="form-row">
+                              <div class="form-row form-group">
                                 <div class="col">
                                   <input
+                                    id="password1"
                                     type="password"
                                     name="password_profile"
                                     class="form-control"
                                     placeholder="Password"
                                   />
+                                  <span class="form-message"></span>
                                 </div>
                               </div>
                               <div class="modal-footer">

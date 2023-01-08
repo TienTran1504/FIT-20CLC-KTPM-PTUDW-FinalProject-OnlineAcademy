@@ -101,10 +101,7 @@
                             />
                           </div>
                           <div class="course-body">
-                            <a
-                              class="course-categoty"
-                              href="/courses/learn/{{idLecture}}"
-                            >{{name}}</a>
+                            <div class="course-categoty">{{name}}</div>
                             <div class="course-title">{{des}}</div>
                             <div class="course-icon-row">
                               <div class="progress">
@@ -118,9 +115,7 @@
                                 >
                                 </div>
                               </div>
-                              {{#if (isFree process)}}
-                                <div>START COURSE</div>
-                              {{else}}
+                              {{#if (isFree process)}}{{else}}
                                 <div class="block-review">
                                   <div style="font-size: 0.75rem;">{{process}}%
                                     complete</div>
@@ -138,8 +133,21 @@
                                   </div>
                                 </div>
                               {{/if}}
+                              <div class="btn-lean-view">
+                                <a
+                                  class="btn-course"
+                                  href="/courses/learn/{{idLecture}}"
+                                >
+                                  Learn
+                                </a>
+                                <a
+                                  class="btn-course"
+                                  href="/courses/{{idCourse}}"
+                                >
+                                  View
+                                </a>
+                              </div>
                             </div>
-                            {{! <button class="btn course-btn">Learn course</button> }}
                           </div>
                         </div>
                       {{/each}}

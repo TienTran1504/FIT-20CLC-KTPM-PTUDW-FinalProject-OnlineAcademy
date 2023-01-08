@@ -20,3 +20,10 @@
 label.input-group-text.input-blocked {
   padding-right: 33px;
 }
+#LanguageName,
+#LanguageImage,
+#CategoryName,
+#CategoryImage {
+  display: none;
+  color: red;
+}

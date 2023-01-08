@@ -115,7 +115,8 @@
   padding-left: 1rem;
 }
 
-.more-courses-container .course-body a::after {
+/* 
+.more-courses-container .course-body button::after {
   content: '';
   display: block;
   position: absolute;
@@ -123,7 +124,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-}
+} */
 
 .more-courses-container .course-body .progress {
   height: 0.2rem;
@@ -138,24 +139,36 @@
   font-size: 0.9rem;
   font-weight: 700;
   color: #000;
-
+  background-color: #fff;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
-.course-categoty:hover {
-  cursor: pointer;
+.btn-lean-view {
+  margin-top: 0.5rem;
+}
+
+.btn-view {
+  padding-top: 0.37rem !important;
+  padding-bottom: 0.37rem !important;
+  font-size: 1rem;
+}
+
+.btn-lean-view .btn-course {
+  position: relative;
+  border: 1px solid #52AB98;
+  background-color: #52AB98;
+  color: #fff;
   text-decoration: none;
-  color: #000;
+  border-radius: 5px;
+  padding: 0.3rem 0.9rem;
+  margin-left: 0.2rem;
 }
 
-/* .course-categoty ::after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-} */
+.btn-lean-view .btn-course:hover {
+  background-color: #C8D8E4;
+}
 
 .course-title {
   font-size: 0.75rem;
@@ -185,4 +198,17 @@
 .price-course {
   font-size: 1.3rem;
   font-weight: 660;
+}
+
+.custom-file .file-input-new {
+  width: 100%;
+  display: block;
+}
+
+.btn-file:hover {
+  cursor: pointer;
+}
+
+.btn-file {
+  background-color: #52AB98 !important;
 }

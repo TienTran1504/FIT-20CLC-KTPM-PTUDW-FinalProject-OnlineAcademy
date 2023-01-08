@@ -8,9 +8,13 @@
         <div class="col-md-7">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background-color: #2b6777">
-              <li class="breadcrumb-item"><a href="/categories?category={{course.categoryName}}">{{course.categoryName}}</a></li>
+              <li class="breadcrumb-item"><a
+                  href="/categories?category={{course.categoryName}}"
+                >{{course.categoryName}}</a></li>
               <li class="breadcrumb-item active" aria-current="page">
-                <a href="/categories?category={{course.categoryName}}&language={{course.languageName}}">{{course.languageName}}</a>
+                <a
+                  href="/categories?category={{course.categoryName}}&language={{course.languageName}}"
+                >{{course.languageName}}</a>
               </li>
             </ol>
           </nav>
@@ -31,7 +35,10 @@
                 <span class="fa fa-star-o"></span>
               {{/each}}
             </a>
-            <a href="#" style="color: rgb(114, 203, 255)">({{course.numberOfFeedbacks}} ratings)</a>
+            <a
+              href="#"
+              style="color: rgb(114, 203, 255)"
+            >({{course.numberOfFeedbacks}} ratings)</a>
             <span>{{course.numberOfStudents}} students</span>
           </div>
           <div class="created">
@@ -80,7 +87,9 @@
                                   <span class="course-title">
                                     <span>Course Overview</span>
                                     <span>
-                                      <span>{{course.lecture.length}} lectures • </span>
+                                      <span>{{course.lecture.length}}
+                                        lectures •
+                                      </span>
                                       <span>19min</span>
                                     </span>
                                   </span>
@@ -170,7 +179,8 @@
               <h2>Instructor</h2>
             </div>
             <div class="content-instructor">
-              <div><a href="#">{{instructor.firstName}} {{instructor.lastName}}</a></div>
+              <div><a href="#">{{instructor.firstName}}
+                  {{instructor.lastName}}</a></div>
               <div class="des-content">{{instructor.headline}}</div>
               <div class="teacher-items">
                 <div class="block-img">
@@ -179,8 +189,8 @@
                     alt="Avatar"
                   />
                 </div>
-                
-                <div class="block-items" >
+
+                <div class="block-items">
                   <ul style="height: 3.7rem;">
                     <li>
                       <i class="fa fa-users" aria-hidden="true"></i>
@@ -251,29 +261,40 @@
       <div class="sidebar-container-model">
         <div class="main-content-model">
           <div class="block-img">
-            <img
-              src="../../public/assets/images/{{course.image}}"
-              alt=""
-            />
+            <img src="../../public/assets/images/{{course.image}}" alt="" />
           </div>
           <div class="block-content">
             <div class="title-course">$ {{course.price}}</div>
             <div class="btn-course">
-              <button
-                type="submit"
-                class="btn btn-primary btn-buy"
-                formaction="/student/add_courses/post"
-              >Buy now</button>
-              {{! <button
-                type="submit"
-                class="fa fa-heart-o btn btn-primary btn-like"
-                formaction="/student/add_courses_favorite/post"
-              ></button> }}
-              <button
-                type="submit"
-                class="fa fa-heart btn btn-primary btn-like"
-                formaction="/student/remove_courses_favorite/post"
-              ></button>
+              {{#if checkCourseExists}}
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-buy"
+                  formaction="/courses/learn/{{firstIdLecture}}"
+                >
+                  Learn</button>
+              {{else}}
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-buy"
+                  formaction="/student/add_courses/post"
+                >Buy now</button>
+              {{/if}}
+
+              {{#if checkFavorites}}
+                <button
+                  type="submit"
+                  class="fa fa-heart btn btn-primary btn-like"
+                  formaction="/student/remove_courses_favorite/post"
+                ></button>
+              {{else}}
+                <button
+                  type="submit"
+                  class="fa fa-heart-o btn btn-primary btn-like"
+                  formaction="/student/add_courses_favorite/post"
+                ></button>
+              {{/if}}
+
             </div>
             <div class="desciption-course">
               <div class="title-des">This course includes:</div>
