@@ -306,6 +306,29 @@ const getEditUserPage = async function (req, res, next) {
   }
 };
 
+//{{URL}}/admin/editcourse?id
+const getEditCoursePage = async function (req, res, next) {
+  if (!req.session.authUser) {
+    res.render("vwAccount/login");
+  }
+  else {
+    const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
+    if (userChecking.permission === "Admin") {
+      const id = req.query.id || 0;
+      const course = await Course.findById({ _id: id }).lean();
+      if (course === null) {
+        return res.redirect("/admin");
+      }
+
+      res.render("vwAdminManagement/edit/editcourse", {
+        course,
+      });
+    } else {
+      return next(createError(500, "User has no permission "));
+    }
+  }
+};
+
 //{{URL}}/admin/editcategory
 const getEditCategoryPage = async function (req, res, next) {
   if (!req.session.authUser) {
@@ -494,11 +517,9 @@ const viewFeedBacksByID = async function (req, res, next) {
       const course = await Course.findOne({ _id: id }).lean();
       const feedbacks = await Feedback.find({ createdIn: id }).lean();
       let listFeedBacks = [];
-
       for (let i = 0; i < feedbacks.length; i++) {
 
         const user = await User.findById({ _id: feedbacks[i].createdBy });
-
         const objFeedBack = {
           content: feedbacks[i].content,
           rating: feedbacks[i].numberRated || 0,
@@ -578,6 +599,34 @@ const updateUserPermission = async function (req, res, next) {
   }
 };
 
+//{{URL}}/admin/editcourse/patch
+const updateCourseDisable = async function (req, res, next) {
+  if (!req.session.authUser) {
+    res.render("vwAccount/login");
+  }
+  else {
+    const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
+    if (userChecking.permission === "Admin") {
+      const { CourseID, disable } = req.body;
+      const courseUpdate = await Course.findByIdAndUpdate(
+        {
+          _id: CourseID,
+        },
+        {
+          disable
+        },
+        { new: true, runValidators: true }
+      );
+      if (!courseUpdate) {
+        return next(createError(400, "Please provide a user"));
+      }
+      res.redirect("/admin/managecourses");
+    } else {
+      return next(createError(500, "User has no permission "));
+    }
+  }
+};
+
 //{{URL}}/admin/edituser/del
 const deleteUser = async function (req, res, next) {
   if (!req.session.authUser) {
@@ -596,6 +645,41 @@ const deleteUser = async function (req, res, next) {
         return next(createError(400, "Please provide a user"));
       }
       res.redirect("/admin");
+    } else {
+      return next(createError(500, "User has no permission "));
+    }
+  }
+};
+//{{URL}}/admin/editcourse/del
+const deleteCourse = async function (req, res, next) {
+  if (!req.session.authUser) {
+    res.render("vwAccount/login");
+  }
+  else {
+    const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
+    if (userChecking.permission === "Admin") {
+      const { CourseID } = req.body;
+      const courseCheck = await Course.findById({ _id: CourseID });
+      const language = await CourseLanguage.findById({ _id: courseCheck.languageId });
+      const indexOf = language.courseList.findIndex(course => {
+        return course._id === CourseID
+      })
+      language.courseList.splice(indexOf, 1);
+
+      await CourseLanguage.findByIdAndUpdate(
+        { _id: language._id },
+        {
+          courseList: language.courseList
+        },
+        {
+          new: true, runValidators: true
+        }
+      );
+      const deleteCourse = await Course.deleteOne({ _id: CourseID });
+      if (!deleteCourse) {
+        return next(createError(400, "Please provide a course"));
+      }
+      res.redirect("/admin/managecourses");
     } else {
       return next(createError(500, "User has no permission "));
     }
@@ -927,23 +1011,6 @@ const deleteCourseLanguage = async function (req, res, next) {
   }
 };
 
-//{{URL}}/admin/managecourses/delete?id
-const updateDisableCourse = async function (req, res, next) {
-  if (!req.session.authUser) {
-    res.render("vwAccount/login");
-  }
-  else {
-    const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
-    if (userChecking.permission === "Admin") {
-      const { CourseID, disabled } = req.body;
-      await Course.findByIdAndUpdate({ _id: CourseID }, { disable: disabled }, { new: true, runValidators: true });
-      res.redirect("/admin/managecourses");
-    } else {
-      return next(createError(500, "User has no permission "));
-    }
-  }
-};
-
 export {
   register,
   getAllUsers,
@@ -953,6 +1020,7 @@ export {
   getAllCourseCategories,
   getAllCourseLanguages,
   getEditUserPage,
+  getEditCoursePage,
   getEditCategoryPage,
   getEditLanguagePage,
   getAddCategoryPage,
@@ -964,7 +1032,9 @@ export {
   viewFeedBacksByID,
   // viewRatingByID,
   updateUserPermission,
+  updateCourseDisable,
   deleteUser,
+  deleteCourse,
   createCourseCategory,
   createTeacherAccount,
   createLanguage,
@@ -972,7 +1042,6 @@ export {
   updateLanguageCategory,
   deleteCourseCategory,
   deleteCourseLanguage,
-  updateDisableCourse,
 };
 
 //flow

@@ -9,11 +9,13 @@ import {
   // deleteUser, getAllUsers, getUser, updateUser
   getAllUsers,
   getEditUserPage,
+  getEditCoursePage,
   getAddCategoryPage,
   getAddTeacherPage,
   updateUserPermission,
+  updateCourseDisable,
   deleteUser,
-  updateDisableCourse,
+  deleteCourse,
   createCourseCategory,
   createTeacherAccount,
   getEditCategoryPage,
@@ -34,7 +36,9 @@ import {
 } from '../controllers/admin.controller'
 adminRouter.route('/register').post(register)
 adminRouter.route('/edituser').get(getEditUserPage)
+adminRouter.route('/editcourse').get(getEditCoursePage)
 adminRouter.route('/edituser/patch').post(updateUserPermission)
+adminRouter.route('/editcourse/patch').post(updateCourseDisable)
 adminRouter.route('/editcategory').get(getEditCategoryPage)
 adminRouter.route('/editlanguage').get(getEditLanguagePage)
 adminRouter.route('/editcategory/patch').post(updateCourseCategory)
@@ -42,7 +46,7 @@ adminRouter.route('/editlanguage/patch').post(updateLanguageCategory)
 adminRouter.route('/editcategory/del').post(deleteCourseCategory)
 adminRouter.route('/editlanguage/del').post(deleteCourseLanguage)
 adminRouter.route('/edituser/del').post(deleteUser)
-adminRouter.route('/managecourses/update').post(updateDisableCourse)
+adminRouter.route('/editcourse/del').post(deleteCourse)
 
 adminRouter.route('/').get(getAllUsers)
 adminRouter.route('/managestudents').get(getAllStudents)

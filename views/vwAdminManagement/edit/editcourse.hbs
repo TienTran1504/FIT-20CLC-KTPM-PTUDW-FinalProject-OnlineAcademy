@@ -5,6 +5,7 @@
     href="../../../public/assets/css/admin/edit.css"
   />
 {{/section}}
+
 <form method="post" class="form-submit">
   <div
     class="card col-md-9"
@@ -14,116 +15,95 @@
       class="card-header d-flex justify-content-between"
       style="background-color:#52ab98; color:#fff"
     >
-      Edit Language
+      Edit Permission
     </h4>
     <div class="card-body">
       <div class="form-group">
-        <label for="txtLanguageID" style="font-weight:bold">Language ID</label>
+        <label for="txtCourseID" style="font-weight:bold">Course ID</label>
         <input
-          name="LanguageID"
+          name="CourseID"
           type="text"
           class="form-control"
-          id="txtLanguageID"
-          value="{{language._id}}"
+          id="txtCourseID"
+          value="{{course._id}}"
           readonly
         />
       </div>
       <div class="form-group mb-3">
-        <label for="txtCurrentLanguageName" style="font-weight:bold">Current
-          Name</label>
+        <label for="txtCourseName" style="font-weight:bold">Name</label>
         <input
-          name="CurrentLanguageName"
+          name="CourseName"
           type="text"
           class="form-control"
-          id="txtCurrentLanguageName"
-          value="{{language.name}}"
+          id="txtCourseName"
+          value="{{course.name}}"
           readonly
         />
-      </div>
-      <div class="form-group mb-3">
-        <label for="txtCurrentLanguageImage" style="font-weight:bold">Current
-          Image Link</label>
+        <label for="txtCourseLanguage" style="font-weight:bold">Last Name</label>
         <input
-          name="CurrentLanguageImage"
+          name="CourseLanguage"
           type="text"
           class="form-control"
-          id="txtCurrentLanguageImage"
-          value="{{language.image}}"
+          id="txtCourseLanguage"
+          value="{{course.languageName}}"
           readonly
         />
-      </div>
-      <div class="form-group mb-3">
-        <label for="txtCurrentCategoryName" style="font-weight:bold">Current
-          Category Name</label>
+        <label for="txtCourseCategory" style="font-weight:bold">Last Name</label>
         <input
-          name="CurrentCategoryName"
+          name="CourseCategory"
           type="text"
           class="form-control"
-          id="txtCurrentCategoryName"
-          value="{{language.categoryName}}"
+          id="txtCourseCategory"
+          value="{{course.categoryName}}"
           readonly
         />
+        <label for="txtCourseDisable" style="font-weight:bold">Course Disable
+          Status</label>
+        {{#if (ifEqualString course.disable "True")}}
+          <input
+            name="CourseDisable"
+            type="text"
+            class="form-control"
+            id="txtCourseDisable"
+            value="Disabled"
+            readonly
+          />
+        {{else}}
+          <input
+            name="CourseDisable"
+            type="text"
+            class="form-control"
+            id="txtCourseDisable"
+            value="Available"
+            readonly
+          />
+        {{/if}}
       </div>
-      <div class="form-group mb-3">
-        <label for="txtLanguageName" style="font-weight:bold">New Language's
-          Name</label>
-        <div id="LanguageName">
-          <i class="fa fa-exclamation" aria-hidden="true"></i>
-          <span id="LanguageNameText">Please fill out Language's name</span>
-        </div>
-        <input
-          name="LanguageName"
-          type="text"
-          class="form-control"
-          id="txtLanguageName"
-          value="{{language.name}}"
-          placeholder="Enter new language's name"
-        />
-      </div>
-      <div class="form-group mb-3">
-        <label for="txtLanguageImage" style="font-weight:bold">New Language's
-          Image Link</label>
-        <div id="LanguageImage">
-          <i class="fa fa-exclamation" aria-hidden="true"></i>
-          <span id="LanguageImageText">Please fill out Language's image link</span>
-        </div>
-        <input
-          name="LanguageImage"
-          type="text"
-          class="form-control"
-          id="txtLanguageImage"
-          value="{{language.image}}"
-          placeholder="Enter new language's link image"
-        />
-      </div>
-      <div class="form-group mb-3">
+      <div class="form-group">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Options
-              Category</label>
+            <label
+              class="input-group-text input-blocked"
+              for="inputGroupSelect02"
+            >Options Disabled</label>
           </div>
-          <select
-            class="custom-select"
-            id="inputGroupSelect01"
-            name="CategoryName"
-          >
-            {{#each categories}}
-              <option value="{{name}}">{{name}}</option>
-            {{/each}}
+          <select class="custom-select" id="inputGroupSelect02" name="disable">
+            <option selected value="False">Available</option>
+            <option value="True">Disabled</option>
           </select>
         </div>
       </div>
-
     </div>
     <div class="card-footer d-flex text-muted justify-content-between">
       <a
         class="btn btn-outline-success"
-        href="/admin/managelanguage"
+        href="/admin/managecourses"
         role="button"
       >
         <i class="fa fa-backward" aria-hidden="true"></i>
         Back
       </a>
+
       <div>
         <button
           type="button"
@@ -156,7 +136,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                Are you sure want to delete this language ?
+                Are you sure want to delete this course?
               </div>
               <div class="modal-footer">
                 <button
@@ -167,7 +147,7 @@
                 <button
                   type="submit"
                   class="btn btn-danger"
-                  formaction="/admin/editlanguage/del"
+                  formaction="/admin/editcourse/del"
                 >Delete</button>
               </div>
             </div>
@@ -177,7 +157,7 @@
         <button
           type="submit"
           class="btn btn-primary btn-save"
-          formaction="/admin/editlanguage/patch"
+          formaction="/admin/editcourse/patch"
         >
           <i class="fa fa-check" aria-hidden="true"></i>
           Save
@@ -186,6 +166,3 @@
     </div>
   </div>
 </form>
-{{#section "js"}}
-  <script src="../../../public/assets/js/admin/editLanguage.js"></script>
-{{/section}}
