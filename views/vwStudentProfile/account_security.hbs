@@ -1,10 +1,11 @@
 {{#section "css"}}
   <link rel="stylesheet" href="../../public/assets/css/student_profile.css" />
   <style>
-      footer {
-        margin-top:30px;
-      }
-    </style>
+    footer { margin-top:30px; }
+  </style>
+{{/section}}
+{{#section "js"}}
+  <script src="../../public/assets/js/profile/security.js"></script>
 {{/section}}
 <form id="form" method="post">
   <div style="margin-top: 80px;">
@@ -93,27 +94,33 @@
                     <div class="form-group">
                       <label for="" class="d-flex p-2">Password:</label>
                       <input
+                        id="currentPassword"
                         name="currentPassword"
                         type="password"
                         class="form-control"
                         placeholder="Enter current password"
                       />
+                      <div id="strengthMessage"></div>
                     </div>
                     <div class="form-group">
                       <input
+                        id="newPassword"
                         name="newPassword"
                         type="password"
                         class="form-control"
                         placeholder="Enter new password"
                       />
+                      <div id="strengthMessage1"></div>
                     </div>
                     <div class="form-group">
                       <input
+                        id="rePassword"
                         name="rePassword"
                         type="password"
                         class="form-control"
                         placeholder="Re-type new password"
                       />
+                      <div id="strengthMessage2"></div>
                     </div>
                     <button
                       type="submit"

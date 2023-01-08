@@ -517,3 +517,20 @@ label.star:before {
     height: min-content;
     border: 0;
 }
+
+.improve-content {
+    margin-top: 0.5rem;
+}
+
+.text-content-feedback {
+    margin: 0.2rem;
+    border: 1px solid #265B6A;
+}
+
+.modal {
+    top: 4%;
+}
+
+label.star {
+    color: #E59819;
+}
