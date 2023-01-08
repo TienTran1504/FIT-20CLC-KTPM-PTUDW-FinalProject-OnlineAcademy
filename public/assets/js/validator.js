@@ -1,55 +1,58 @@
-const $ = document.querySelector.bind(document)
-const $$ = document.querySelectorAll.bind(document)
 
 function Validator(options) {
-    const formElement = $(options.form)
+    const formElement = document.querySelector(options.form)
+    let selectorRules = {} 
 
-    function validate(errorElement, formGroupElement, errorMassage) {
-        if (errorMassage) {
-            errorElement.innerText = errorMassage
-            formGroupElement.classList.add('invalid')
+    function validate(inputElement, rule) {
+        const errorElement = inputElement.parentElement.querySelector('.form-message')
+        let errorMessage 
+
+        const rules = selectorRules[rule.selector]
+
+        for (var i = 0; i < rules.length; i++) {
+            errorMessage = rules[i](inputElement.value)
+            if (errorMessage) break
+        }
+
+        if (errorMessage) {
+            errorElement.innerText = errorMessage
+            inputElement.parentElement.classList.add('invalid')
             return false
         }
         else {
             errorElement.innerText = ''
-            formGroupElement.classList.remove('invalid')
+            inputElement.parentElement.classList.remove('invalid')
             return true
         }
     }   
 
     if (formElement) {
         options.rules.forEach(rule => {
+            if (Array.isArray(selectorRules[rule.selector])) {
+                selectorRules[rule.selector].push(rule.test);
+            } else {
+                selectorRules[rule.selector] = [rule.test];
+            }
+            
             const inputElement = formElement.querySelector(rule.selector)
-            const formGroupElement = inputElement.parentElement
-            const errorElement = formGroupElement.querySelector('.form-message')
 
             if (inputElement) {
                 inputElement.onblur = () => {
-                    const errorMassage = rule.test(inputElement.value)
-                    
-                    validate(errorElement, formGroupElement, errorMassage)
+                    validate(inputElement, rule)
                 }
-
                 inputElement.oninput = () => {
-                    errorElement.innerText = ''
-                    formGroupElement.classList.remove('invalid')
+                    inputElement.parentElement.querySelector('.form-message').innerText = ''
+                    inputElement.parentElement.classList.remove('invalid')
                 }
             }
         })
         
         formElement.onsubmit = (e) => {
             options.rules.forEach(rule => {
-                
                 const inputElement = formElement.querySelector(rule.selector)
-                const formGroupElement = inputElement.parentElement
-                const errorElement = formGroupElement.querySelector('.form-message')
-    
-                if (inputElement) {
-                    const errorMassage = rule.test(inputElement.value)
-                    if (validate(errorElement, formGroupElement, errorMassage) === false) {
-                        e.preventDefault()
-                        return
-                    }
+                if (validate(inputElement, rule) === false) {
+                    e.preventDefault()
+                    return
                 }
             })
         }
@@ -91,7 +94,22 @@ Validator.isCorrect = (selector, selector2) => {
     return {
         selector,
         test: (value) => {
-            return value === $(selector2).value ? undefined : `Please input correct new password.`
+            return value ===  document.querySelector(selector2).value ? undefined : `Please input correct new password.`
+        }
+    }
+}
+
+
+Validator.checkAvailableEmail = (selector) => {
+    return {
+        selector,
+        test: (value) => {
+            $.getJSON(`/account/is-available?email=${value}`, function (data) {
+                if (data === false) {
+                    return 'This email is already used.';
+                } 
+                return undefined;
+            });
         }
     }
 }

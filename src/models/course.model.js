@@ -99,7 +99,7 @@ CourseSchema.index({
 });
 
 CourseSchema.pre("deleteOne", function (next) {
-  const courseID = this.getQuery()["_id"];
+  
   Lecture.deleteMany({ createdIn: courseID }, function (err, result) {
     if (err) {
       next(err);
