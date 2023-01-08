@@ -173,14 +173,8 @@ const SliderList = [
 
 function fullStar(ratingPoint) {
   var fullStar = [];
-<<<<<<< HEAD
-  var stars =
-    ratingPoint - parseInt(ratingPoint) >= 0.75
-      ? parseInt(ratingPoint) + 1
-      : parseInt(ratingPoint);
-=======
   var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
->>>>>>> 4f55054f6a89161e73544cb21c97d9060a60dbe0
+  var stars = ratingPoint - parseInt(ratingPoint) >= 0.75 ? parseInt(ratingPoint) + 1 : parseInt(ratingPoint);
   for (let i = 0; i < stars; i++) {
     fullStar.push(stars);
   }
@@ -248,26 +242,18 @@ const renderHome = async (req, res) => {
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
-  CourseList = CourseList.map(course => {
-    var feedbackList = feedback.filter(
-      u => u.createdIn.toString() == course._id.toString()
-    );
+  CourseList = CourseList.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
     var CourseRatingVote = feedbackList.length;
-    var CourseRatingPoint =
-      +(
-        feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote
-      ).toFixed(1) || 0;
-    var user = users.find(u => u._id == course.createdBy.toString());
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString());
 
     var feedbackListInWeek = feedbackList.filter(
-      u => dateDiffInDays(new Date(formatDate2(u.createdAt)), new Date()) <= 7
+      (u) => dateDiffInDays(new Date(formatDate2(u.createdAt)), new Date()) <= 7
     );
     var CourseRatingVoteInWeek = feedbackListInWeek.length;
     var CourseRatingPointInWeek =
-      +(
-        feedbackListInWeek.reduce((a, b) => a + b.numberRated, 0) /
-        CourseRatingVoteInWeek
-      ).toFixed(1) || 0;
+      +(feedbackListInWeek.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVoteInWeek).toFixed(1) || 0;
 
     return {
       ...course,
@@ -275,8 +261,7 @@ const renderHome = async (req, res) => {
       CourseRatingPoint: CourseRatingPoint,
       createdBy: user.firstName + " " + user.lastName,
       viewInWeek: course.viewList.filter(
-        view =>
-          dateDiffInDays(new Date(formatDate2(view.createdAt)), new Date()) <= 7
+        (view) => dateDiffInDays(new Date(formatDate2(view.createdAt)), new Date()) <= 7
       ).length,
       CourseRatingVoteInWeek: CourseRatingVoteInWeek,
       CourseRatingPointInWeek: CourseRatingPointInWeek,
@@ -284,15 +269,11 @@ const renderHome = async (req, res) => {
   });
 
   var sortedLangList = [];
-  sortedLangList = LanguageList.map(lang => {
+  sortedLangList = LanguageList.map((lang) => {
     var sumOfStudents = 0;
-    lang.courseList.forEach(course => {
+    lang.courseList.forEach((course) => {
       sumOfStudents += course.studentList.filter(
-        student =>
-          dateDiffInDays(
-            new Date(formatDate2(student.createdAt)),
-            new Date()
-          ) <= 7
+        (student) => dateDiffInDays(new Date(formatDate2(student.createdAt)), new Date()) <= 7
       ).length;
     });
 
@@ -318,9 +299,7 @@ const renderHome = async (req, res) => {
         b.viewInWeek * 2 +
         b.CourseRatingPointInWeek +
         b.CourseRatingVoteInWeek -
-        (a.viewInWeek * 2 +
-          a.CourseRatingPointInWeek +
-          a.CourseRatingVoteInWeek)
+        (a.viewInWeek * 2 + a.CourseRatingPointInWeek + a.CourseRatingVoteInWeek)
       );
     }).slice(0, 5),
   ];
@@ -342,7 +321,7 @@ const renderHome = async (req, res) => {
     CatList: CatList,
     LanguageList: sortedLangList.slice(0, 5),
     featuredCourses: featuredCourses
-      .map(course => {
+      .map((course) => {
         return {
           ...course,
           fullStar: fullStar(course.CourseRatingPoint),
@@ -353,22 +332,12 @@ const renderHome = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-<<<<<<< HEAD
-          new:
-            dateDiffInDays(
-              new Date(formatDate2(course.createdAt)),
-              new Date()
-            ) <= 7
-              ? true
-              : false,
-=======
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
->>>>>>> 4f55054f6a89161e73544cb21c97d9060a60dbe0
         };
       })
       .slice(0, 5),
     mostViewedCourses: mostViewedCourses
-      .map(course => {
+      .map((course) => {
         return {
           ...course,
           fullStar: fullStar(course.CourseRatingPoint),
@@ -379,22 +348,12 @@ const renderHome = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-<<<<<<< HEAD
-          new:
-            dateDiffInDays(
-              new Date(formatDate2(course.createdAt)),
-              new Date()
-            ) <= 7
-              ? true
-              : false,
-=======
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
->>>>>>> 4f55054f6a89161e73544cb21c97d9060a60dbe0
         };
       })
       .slice(0, 10),
     latestCourses: latestCourses
-      .map(course => {
+      .map((course) => {
         return {
           ...course,
           fullStar: fullStar(course.CourseRatingPoint),
@@ -405,17 +364,7 @@ const renderHome = async (req, res) => {
           CourseViews: numberWithCommas(course.viewList.length),
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
-<<<<<<< HEAD
-          new:
-            dateDiffInDays(
-              new Date(formatDate2(course.createdAt)),
-              new Date()
-            ) <= 7
-              ? true
-              : false,
-=======
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
->>>>>>> 4f55054f6a89161e73544cb21c97d9060a60dbe0
         };
       })
       .slice(0, 10),
