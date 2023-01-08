@@ -362,8 +362,8 @@ const search = async (req, res) => {
 
     return {
       ...course,
-      CourseRatingVote: bestSellerCourse.includes(course._id.toString()),
-      CourseRatingPoint: bestSellerCourse.length,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
       createdBy: user.firstName + " " + user.lastName,
       bestSeller: bestSellerCourse.includes(course._id.toString()),
     };
