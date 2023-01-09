@@ -1,14 +1,12 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { engine } from "express-handlebars";
 import morgan from "morgan";
 import connectDB from "./src/config/connect.js";
 import activate_route from "./src/routes";
-import hbs_sections from "express-handlebars-sections";
 import activate_session from "./src/middleware/session.mdw";
 import activate_locals from "./src/middleware/locals.mdw";
-
+import activate_hbs from "./src/middleware/handlebars.mdw";
 dotenv.config();
 
 const app = express();
@@ -17,67 +15,11 @@ const corsOptions = { origin: "*" };
 // app.use(morgan("combined"));
 app.use(cors(corsOptions));
 app.use("/public", express.static("public"));
-app.engine(
-  "hbs",
-  engine({
-    // defaultLayout: 'main.hbs'
-    extname: "hbs",
-    helpers: {
-      // Function to do basic mathematical operation in handlebar
-      section: hbs_sections(),
-      math: function (lvalue, operator, rvalue) {
-        lvalue = parseFloat(lvalue);
-        rvalue = parseFloat(rvalue);
-        return {
-          "+": lvalue + rvalue,
-          "-": lvalue - rvalue,
-          "*": lvalue * rvalue,
-          "/": lvalue / rvalue,
-          "%": lvalue % rvalue,
-        }[operator];
-      },
-      isEmpty: function (value) {
-        return value === "";
-      },
-      isFree: function (value) {
-        return value === 0;
-      },
-      checkTeacher: function (value) {
-        return value === "Teacher";
-      },
-      ifEqualString: function (obj, value) {
-        return String(obj) === String(value);
-      },
-      star: function (numberRate) {
-        let tagStar = "";
-        for (let i = 1; i <= 5; i++) {
-          if (numberRate >= i)
-            tagStar += `<span class="fa fa-star checked star-tag"></span>`;
 
-          if (numberRate > i - 1 && numberRate < i)
-            tagStar += `<span class="fa fa-star-half-o star-tag"></span>`;
-          else if (numberRate < i)
-            tagStar += `<span class="fa fa-star-o star-tag"></span>`;
-        }
-        return tagStar;
-      },
-      formatDuration: function (seconds) {
-        let time = (seconds * 1.0) / 60;
-        let duration = "";
-
-        if (time < 1) duration = Math.round(seconds) + " seconds";
-        else duration = Math.round(time) + " min";
-        return duration;
-      },
-    },
-  })
-);
-
-app.set("view engine", "hbs");
-app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+activate_hbs(app);
 activate_session(app);
 activate_locals(app);
 activate_route(app);

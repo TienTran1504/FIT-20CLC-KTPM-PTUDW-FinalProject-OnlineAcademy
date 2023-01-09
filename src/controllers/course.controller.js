@@ -121,6 +121,7 @@ const getCourse = async (req, res, next) => {
 
 
     res.render("vwCourseDetails/course_details", {
+      CatList: req.session.CatList,
       course,
       instructor,
       checkFavorites,
@@ -265,6 +266,7 @@ const viewLecture = async (req, res, next) => {
   }
 
   res.render("vwLectureContent/content", {
+    CatList: req.session.CatList,
     course: thisCourse,
     lecture: lecture,
     rate: averageRating,

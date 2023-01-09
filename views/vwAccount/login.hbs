@@ -1,18 +1,10 @@
 {{#section "css"}}
     <link rel="stylesheet" type="text/css" href="../../public/assets/css/login.css" />
     <link rel="stylesheet" type="text/css" href="../../public/assets/css/validation/form.css"/>  
-    <style>
-      @media only screen and (min-width: 55em) and (max-width: 80.9375em){
-        footer {
-         margin-top: 50px;
-        }
-      }
-      @media only screen and (min-width: 81em){
-        footer {
-          position: fixed;
-        }
-      }
-    </style>
+   <style>
+    footer
+    { margin-top: 50px; } 
+  </style>
 {{/section}}
 {{#section "js"}}
   <script src="../../public/assets/js/validator.js"></script>
@@ -29,8 +21,8 @@
   </script>
   
 {{/section}}
-<div class="container-fluid">
-  <div class="row" style="margin-top:130px; margin-bottom: 20px; justify-content: center; ">
+<div class="container-fluid" style="min-height:600px">
+  <div class="row" style="margin-top:130px; margin-bottom: 20px; justify-content: center;" >
         <div class="card">
             {{#if err_message}}
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
