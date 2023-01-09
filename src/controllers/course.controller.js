@@ -45,7 +45,7 @@ const getCourse = async (req, res, next) => {
     let checkFavorites = false;
     let checkLogin = false;
 
-    if (req.session.authUser !== null) {
+    if (req.session.authUser) {
       getUser = await User.findById({
         _id: req.session.authUser._id,
       }).lean();
