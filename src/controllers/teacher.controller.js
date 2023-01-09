@@ -89,6 +89,20 @@ const getOwnerCourses = async (req, res, next) => {
     .lean();
 
   let coursesList = [...courses];
+  
+  coursesList = coursesList.map((course) => {
+    var CourseRatingVote = course.feedbackList.length;
+    var CourseRatingPoint = +(course.feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      fullStar: fullStar(CourseRatingPoint),
+      halfStar: halfStar(CourseRatingPoint),
+      blankStar: blankStar(CourseRatingPoint),
+    };
+  });
 
   const total = coursesList.length;
   const nPages = Math.ceil(total / limit);

@@ -367,7 +367,8 @@
 }
 
 .sidebar-container-model .btn-course button:hover {
-  background-color: #C8D8E4;
+  opacity: 0.9;
+  color: black;
 }
 
 .sidebar-container-model .btn-course .btn-buy {

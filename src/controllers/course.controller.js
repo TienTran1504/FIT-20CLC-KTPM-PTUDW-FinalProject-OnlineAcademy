@@ -41,7 +41,7 @@ const getCourse = async (req, res, next) => {
       _id: req.session.authUser._id,
     }).lean();
     const feedbacks = course.feedbackList;
-
+    
     let checkCourseExists = false;
     for (let i = 0; i < getUser.courseList.length; i++) {
       if (getUser.courseList[i].id === req.params.id) {
@@ -69,6 +69,7 @@ const getCourse = async (req, res, next) => {
       (a, b) => a + b.studentList.length,
       0
     );
+    instructor.numberOfCourses = listOfCourses.length;
 
     //Get feedback list
     let feedbackList = [];
@@ -108,6 +109,8 @@ const getCourse = async (req, res, next) => {
       };
       lectureList = [...lectureList, obj];
     }
+
+    
 
     res.render("vwCourseDetails/course_details", {
       course,

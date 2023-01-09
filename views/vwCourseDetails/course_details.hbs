@@ -113,6 +113,7 @@
                               controls
                               preload="auto"
                               data-setup="{}"
+                              style="height: 45vh;"
                             >
                               <source
                                 src="../../../public/assets/videos/{{videoOfFirstLecture}}"
@@ -208,7 +209,7 @@
                     </li>
                     <li>
                       <i class="fa fa-play-circle" aria-hidden="true"></i>
-                      <span>{{instructor.courseList.length}} Courses</span>
+                      <span>{{instructor.numberOfCourses}} Courses</span>
                     </li>
                   </ul>
                 </div>
@@ -309,7 +310,7 @@
                   class="btn btn-primary btn-buy btn-learn"
                   href="/courses/learn/{{firstIdLecture}}"
                 >
-                  Learn</a>
+                  Learn now</a>
               {{else}}
                 <button
                   type="submit"
@@ -343,7 +344,7 @@
                       aria-hidden="true"
                     ></div>
                     <div class="item-content">
-                      <span>22 hours on-demand video</span>
+                      <span>{{inforCourse.totalTime}} minutes on-demand video</span>
                     </div>
                   </div>
                 </li>
