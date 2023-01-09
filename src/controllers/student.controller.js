@@ -416,7 +416,6 @@ const getCourseList = async (req, res, next) => {
         createdIn: getCoursesId[i].id,
       }).lean();
 
-      const rateNumber = feedback.numberRated;
       const lectureList = await Lecture.find({
         createdIn: getCoursesId[i].id,
       }).lean();
@@ -429,7 +428,6 @@ const getCourseList = async (req, res, next) => {
         idCourse: course._id,
         idLecture: lectureList[0]._id,
         process: getCoursesId[i].process,
-        rate: rateNumber,
       };
       listCourses = [...listCourses, obj];
     }
