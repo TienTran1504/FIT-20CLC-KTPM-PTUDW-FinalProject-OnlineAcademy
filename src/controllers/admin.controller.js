@@ -532,7 +532,7 @@ const viewFeedBacksByID = async function (req, res, next) {
         const totalFeedBacks = listFeedBacks.reduce((total, feedback) => {
           return total + Number(feedback.rating);
         }, 0);
-        rated = Number(totalFeedBacks / listFeedBacks.length);
+        rated = Number(totalFeedBacks / listFeedBacks.length).toFixed(1);
       }
       res.render("vwAdminManagement/feedbacks", {
         rated,
