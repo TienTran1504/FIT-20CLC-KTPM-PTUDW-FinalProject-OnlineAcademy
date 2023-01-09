@@ -39,7 +39,7 @@ const getCourse = async (req, res, next) => {
     const instructor = await User.findOne({ _id: course.createdBy }).lean();
     const lecture = await Lecture.find({ createdIn: req.params.id });
     const feedbacks = course.feedbackList;
-    
+
     let getUser;
     let checkCourseExists = false;
     let checkFavorites = false;
@@ -118,7 +118,7 @@ const getCourse = async (req, res, next) => {
       lectureList = [...lectureList, obj];
     }
 
-    
+
 
     res.render("vwCourseDetails/course_details", {
       course,
@@ -187,7 +187,7 @@ const viewLecture = async (req, res, next) => {
   const thisCourse = await Course.findById({ _id: courseId }).lean();
 
   let checkAccount = thisCourse.studentList.some(idStudent => {
-    return String(UserID) === String(idStudent);
+    return String(UserID) === String(idStudent.id);
   });
   if (!checkAccount) return next(createError(401));
 
