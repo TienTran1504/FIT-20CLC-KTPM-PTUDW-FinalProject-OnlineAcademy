@@ -5,8 +5,7 @@
     href="../../public/assets/css/admin/index.css"
   />
   <style>
-    footer
-    { margin-top: 50px; } 
+    footer { margin-top: 50px; }
   </style>
 {{/section}}
 <div class="container-fluid" style="margin-top: 80px; min-width: 600px;">
@@ -84,31 +83,59 @@
             </thead>
             <tbody>
               {{#each courses}}
-                <tr>
-                  <th scope="row">{{math @index "+" 1}}</th>
-                  <td>{{name}}</td>
-                  <td>{{languageName}}</td>
-                  <td>{{categoryName}}</td>
-                  <td class="text-center">{{studentList.length}}</td>
-                  <td class="text-center">{{viewList.length}}</td>
-                  <td class="text-right" style="display:flex">
-                    <a
-                      class="btn btn-sm btn-primary view"
-                      href="/admin/managefeedbacksid?id={{_id}}"
-                      role="button"
-                      style="margin-right:4px"
-                    >
-                      <i class="fa fa-eye" aria-hidden="true"></i>
-                    </a>
-                    <a
-                      class="btn btn-sm btn-primary editPencil"
-                      href="/admin/editcourse?id={{_id}}"
-                      role="button"
-                    >
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                  </td>
-                </tr>
+                {{#if (ifEqualString disable "True")}}
+                  <tr style="background-color:#fe8484;">
+                    <th scope="row">{{math @index "+" 1}}</th>
+                    <td>{{name}}</td>
+                    <td>{{languageName}}</td>
+                    <td>{{categoryName}}</td>
+                    <td class="text-center">{{studentList.length}}</td>
+                    <td class="text-center">{{viewList.length}}</td>
+                    <td class="text-right" style="display:flex">
+                      <a
+                        class="btn btn-sm btn-primary view"
+                        href="/admin/managefeedbacksid?id={{_id}}"
+                        role="button"
+                        style="margin-right:4px"
+                      >
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                      </a>
+                      <a
+                        class="btn btn-sm btn-primary editPencil"
+                        href="/admin/editcourse?id={{_id}}"
+                        role="button"
+                      >
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {{else}}
+                  <tr>
+                    <th scope="row">{{math @index "+" 1}}</th>
+                    <td>{{name}}</td>
+                    <td>{{languageName}}</td>
+                    <td>{{categoryName}}</td>
+                    <td class="text-center">{{studentList.length}}</td>
+                    <td class="text-center">{{viewList.length}}</td>
+                    <td class="text-right" style="display:flex">
+                      <a
+                        class="btn btn-sm btn-primary view"
+                        href="/admin/managefeedbacksid?id={{_id}}"
+                        role="button"
+                        style="margin-right:4px"
+                      >
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                      </a>
+                      <a
+                        class="btn btn-sm btn-primary editPencil"
+                        href="/admin/editcourse?id={{_id}}"
+                        role="button"
+                      >
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {{/if}}
               {{/each}}
             </tbody>
           </table>
