@@ -248,7 +248,7 @@ const renderHome = async (req, res) => {
     var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
     var CourseRatingVote = feedbackList.length;
     var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-    var user = users.find((u) => u._id == course.createdBy.toString());
+    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
 
     var feedbackListInWeek = feedbackList.filter(
       (u) => dateDiffInDays(new Date(formatDate2(u.createdAt)), new Date()) <= 7
@@ -261,7 +261,7 @@ const renderHome = async (req, res) => {
       ...course,
       CourseRatingVote: CourseRatingVote,
       CourseRatingPoint: CourseRatingPoint,
-      createdBy: user.firstName + " " + user.lastName,
+      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
       viewInWeek: course.viewList.filter(
         (view) => dateDiffInDays(new Date(formatDate2(view.createdAt)), new Date()) <= 7
       ).length,
