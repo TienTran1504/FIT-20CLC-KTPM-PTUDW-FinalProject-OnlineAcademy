@@ -6,8 +6,17 @@
     href="../../public/assets/css/validation/form.css"
   />
   <style>
-    footer { margin-top:20px; }
-  </style>
+      @media only screen and (min-width: 55em) and (max-width: 80.9375em){
+        footer {
+         margin-top: 50px;
+        }
+      }
+      @media only screen and (min-width: 81em){
+        footer {
+          position: fixed;
+        }
+      }
+    </style>
 {{/section}}
 {{#section "js"}}
   <script src="../../public/assets/js/profile/profile.js"></script>

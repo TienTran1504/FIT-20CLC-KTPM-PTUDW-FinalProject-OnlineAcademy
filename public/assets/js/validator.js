@@ -94,7 +94,7 @@ Validator.isCorrect = (selector, selector2) => {
     return {
         selector,
         test: (value) => {
-            return value ===  document.querySelector(selector2).value ? undefined : `Please input correct new password.`
+            return value === document.querySelector(selector2).value ? undefined : `Please input correct new password.`
         }
     }
 }

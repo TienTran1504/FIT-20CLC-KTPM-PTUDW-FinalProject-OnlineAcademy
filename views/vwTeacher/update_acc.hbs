@@ -5,7 +5,18 @@
     href="../../../public/assets/css/teacher/teacher_profile.css"
   />
   <link rel="stylesheet" type="text/css" href="../../../public/assets/css/validation/form.css"/>  
-
+  <style>
+      @media only screen and (min-width: 55em) and (max-width: 80.9375em){
+        footer {
+         margin-top: 50px;
+        }
+      }
+      @media only screen and (min-width: 81em){
+        footer {
+          position: fixed;
+        }
+      }
+    </style>
 {{/section}}
 {{#section 'js'}}
   <script src="../../../public/assets/js/validator.js"></script>
@@ -22,7 +33,7 @@
           rules: [
               Validator.isRequired('#p1', "Please input your password"),
               Validator.minLength('#p2', 6),
-              Validator.minLength('#p3', 6),
+              Validator.isCorrect('#p3', '#p2'),
           ]
       });
   </script>

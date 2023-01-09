@@ -88,12 +88,13 @@ const getOwnerCourses = async (req, res, next) => {
   const courses = await Course.find({ createdBy: req.session.authUser._id })
     .sort("createdAt")
     .lean();
-
+  const feedback = await Feedback.find().lean();
   let coursesList = [...courses];
-  
+ 
   coursesList = coursesList.map((course) => {
-    var CourseRatingVote = course.feedbackList.length;
-    var CourseRatingPoint = +(course.feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
     
     return {
       ...course,

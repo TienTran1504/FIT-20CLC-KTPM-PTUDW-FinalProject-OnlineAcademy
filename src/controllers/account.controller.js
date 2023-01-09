@@ -2,6 +2,8 @@ import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import createError from "http-errors";
 import User from "../models/user.model";
+import dotenv from "dotenv";
+dotenv.config();
 
 const formRegister = async function (req, res, next) {
     res.render('vwAccount/register', {
@@ -28,15 +30,15 @@ const sendMail = async (req, res, next) => {
             port: 465,
             secure: false,
             auth: {
-                user: 'leewiner102@gmail.com', //Tài khoản gmail vừa tạo
-                pass: 'tqhbpdfibgjiwnje' //Mật khẩu tài khoản gmail vừa tạo
+                user: process.env.MAIL_ADD, //Tài khoản gmail vừa tạo
+                pass: process.env.MAIL_PASS //Mật khẩu tài khoản gmail vừa tạo
             }
         });
         const content = `Please use the verification code below on the ONLINE ACADEMY website: ${OTP} `;
 
 
         const mainOptions = { // thiết lập đối tượng, nội dung gửi mail
-            from: 'leewiner102@gmail.com',
+            from: process.env.MAIL_ADD,
             to: req.body.email,
             subject: 'OTP Confirm',
             text: 'Your OTP is here',//Thường thi mình không dùng cái này thay vào đó mình sử dụng html để dễ edit hơn
@@ -76,17 +78,10 @@ const createUser = async (req, res, next) => {
     try {
         const user = req.session.newUser;
 
-        const rawPassword = user.password;
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(rawPassword, salt);
-
-        user.password = hash;
-
         const createdUser = await User.create(user);
         delete req.session.newUser;
     
-        if (createdUser) 
-            redirect('/');
+        if (createdUser) res.redirect('/account/login');
         else next(createError.InternalServerError());
     } catch(err) {
         next(createError.InternalServerError(err.message));
@@ -121,26 +116,26 @@ const isCorrectOTP = async (req, res, next) => {
     }
 }
 
-const   checkLogin = async (req, res, next) => {
+const checkLogin = async (req, res, next) => {
     try {
         const mail = req.body.email;
         const password = req.body.password;
         const user = await User.findOne({ email: mail })
+        
 
         if (!user) {
             res.render('vwAccount/login', {
                 CatList: req.session.CatList,
-                custom_style: "login.css",
                 err_message: 'Invalid username or password'
             });
             return;
         }
 
-        const checkLogin = await bcrypt.compare(password, user.password)
+        const checkLogin = await bcrypt.compare(password, user.password);
+        
         if (!checkLogin) {
             res.render("vwAccount/login", {
                 CatList: req.session.CatList,
-                custom_style: "login.css",
                 err_message: "Invalid username or password",
             });
             return;
