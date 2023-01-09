@@ -39,6 +39,7 @@ const getCourse = async (req, res, next) => {
     const instructor = await User.findOne({ _id: course.createdBy }).lean();
     const lecture = await Lecture.find({ createdIn: req.params.id });
     const feedbacks = course.feedbackList;
+    
     let getUser;
     let checkCourseExists = false;
     let checkFavorites = false;
@@ -76,6 +77,7 @@ const getCourse = async (req, res, next) => {
       (a, b) => a + b.studentList.length,
       0
     );
+    instructor.numberOfCourses = listOfCourses.length;
 
     //Get feedback list
     let feedbackList = [];
@@ -115,6 +117,8 @@ const getCourse = async (req, res, next) => {
       };
       lectureList = [...lectureList, obj];
     }
+
+    
 
     res.render("vwCourseDetails/course_details", {
       course,

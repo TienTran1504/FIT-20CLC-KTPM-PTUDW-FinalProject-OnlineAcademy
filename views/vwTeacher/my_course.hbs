@@ -9,11 +9,6 @@
     type="text/css"
     href="../../public/assets/css/teacher/teacher_profile.css"
   />
-  <style>
-    footer {
-      margin-top:20px;
-    }
-  </style>
 {{/section}}
 
 <div class="container-fluid" style="margin-top: 80px;">
@@ -104,13 +99,17 @@
               <div class="col-7">
                 <b>{{name}}</b>
                 <div class="r">
-                  <span style="font-weight: bold; color: #CE810E;">{{rating}}</span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">(621)</span>
+                  <span style="font-weight: bold; color: #CE810E;">{{CourseRatingPoint}}</span>
+                  {{#each fullStar}}
+                    <span class="fa fa-star checked"></span>
+                  {{/each}}
+                  {{#each halfStar}}
+                    <span class="fa fa-star-half-o star"></span>
+                  {{/each}}
+                  {{#each blankStar}}
+                    <span class="fa fa-star"></span>
+                  {{/each}}
+                  <span style="font-size: 14px; margin-bottom: 3px; color: rgb(109, 107, 107);">({{CourseRatingVote}})</span>
                 </div>
                 <b>{{price}}</b>
                 <p class="category-label">{{categoryName}}</p>

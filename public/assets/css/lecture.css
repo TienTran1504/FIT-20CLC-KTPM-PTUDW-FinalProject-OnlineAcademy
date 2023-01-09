@@ -494,8 +494,10 @@ label.star:before {
 }
 
 .btn-send-feedback {
-    width: 11rem;
+    width: 9rem;
     font-size: 1rem;
+    font-weight: 500;
+    padding: 3px !important;
 }
 
 .stars-inner::before {

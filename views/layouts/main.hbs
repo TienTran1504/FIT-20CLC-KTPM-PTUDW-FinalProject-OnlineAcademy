@@ -75,6 +75,18 @@
         -moz-border-radius: 6px 0 6px 6px;
         border-radius: 6px 0 6px 6px;
       }
+      
+      @media only screen and (min-width: 55em) and (max-width: 80.9375em){
+        footer {
+          margin-top: 50px;
+        }
+      }
+      @media only screen and (min-width: 81em){
+        footer {
+          display: fixed;
+        }
+      }
+      
     </style>
     {{{_sections.css}}}
   </head>
@@ -83,7 +95,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
         <div class="row" style="width:100%">
           <div class="col-2">
-            <a class="navbar-brand h3" href="/" style="color: black">OnlineAcademy</a>
+            <a class="navbar-brand h3" href="/" style="color: black">Online<span style="color:#52ab98">Academy</span></a>
           </div>
           <div class="col-2">
             <div class="nav-item dropdown" >

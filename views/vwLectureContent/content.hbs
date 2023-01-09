@@ -22,23 +22,6 @@
           class="navbar navbar-expand-lg navbar-light bg-light"
           style="background-color: #2B6777 !important; color: #fff"
         >
-          <a
-            class="navbar-brand"
-            href="#"
-            style="color: #fff; margin-left: 0;"
-          >AcademyOnline</a>
-
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
           <div class="name-course">
             {{course.name}}
           </div>
@@ -70,10 +53,10 @@
           </div>
           <div class="block-infor-course">
             <div class="heading-lecture">
-              {{lecture.name}}
+              Title: {{lecture.name}}
             </div>
             <div class="des-lecture">
-              <div class="title">Description:</div>
+              <div class="title" style="font-size: 1.5rem;">Description:</div>
               <div class="content">
                 {{lecture.description}}
               </div>
@@ -81,15 +64,13 @@
           </div>
           <div class="main-rating">
             <div class="main-title">
-              <h2>Student feedback</h2>
+              <div class="title" style="font-size: 1.5rem;">Student feedback:</div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-4" style="display: flex;flex-direction: column;align-items: center;">
                     <div id="number_rating" class="rating_circle">{{rate}}</div>
-                    <div>
-                      <div class="stars-outer mt-4">
-                        <div class="stars-inner"></div>
-                      </div>
+                    <div class="stars-outer mt-4">
+                      <div class="stars-inner"></div>
                     </div>
                   </div>
                   <div class="col-md-7 progress-line">
@@ -180,16 +161,16 @@
                             class="far fa-file-alt fa-4x mb-3 animated rotateIn icon1"
                           ></i>
                           <h3 style="font-weight: 600;">Your opinion matters</h3>
-                          <h5>Help us improve our product? <br />
+                          <h5>Help us improve our course? <br />
                             <strong>Give us your feedback.</strong></h5>
                           <hr />
-                          <h4>Your Rating</h4>
+                          <h5>Your Rating</h5>
                         </div>
 
                         <!-- Radio Buttons for Rating-->
                         <div
                           class="container d-flex justify-content-center  improve-content"
-                          style="background-color: #C8D8E4; width: 80%"
+                          style="background-color: white; width: 100%"
                         >
                           <div class="row">
                             <div class="col-md-12">
@@ -258,14 +239,15 @@
 
                         <!--Text Message-->
                         <div class="text-center modal-body improve-content">
-                          <h4>What could we improve?</h4>
+                          <h5>What could we improve?</h5>
                         </div>
-                        <div class="improve-content text-content-feedback">
+                        <div class="improve-content text-content-feedback" style="display: flex;justify-content: center;">
                           <textarea
                             type="textarea"
                             placeholder=" Your Message"
                             name="content"
                             rows="3"
+                            cols="50"
                           ></textarea>
                         </div>
 
