@@ -48,6 +48,7 @@ const getAllUsers = async (req, res, next) => {
         });
       }
       res.render("vwAdminManagement/index", {
+        CatList: req.session.CatList,
         length: users.length - 1,
         users: sortedUsers,
         empty: sortedUsers.length === 0,
@@ -92,6 +93,7 @@ const getAllStudents = async (req, res, next) => {
         });
       }
       res.render("vwAdminManagement/students", {
+        CatList: req.session.CatList,
         length: users.length,
         users: sortedUsers,
         empty: sortedUsers.length === 0,
@@ -135,6 +137,7 @@ const getAllTeachers = async (req, res, next) => {
         });
       }
       res.render("vwAdminManagement/teachers", {
+        CatList: req.session.CatList,
         length: users.length,
         users: sortedUsers,
         empty: sortedUsers.length === 0,
@@ -178,6 +181,7 @@ const getAllCourses = async (req, res, next) => {
       }
 
       res.render("vwAdminManagement/courses", {
+        CatList: req.session.CatList,
         length: courses.length,
         courses: sortedCourses,
         empty: sortedCourses.length === 0,
@@ -223,6 +227,7 @@ const getAllCourseCategories = async (req, res, next) => {
         });
       }
       res.render("vwAdminManagement/coursecategory", {
+        CatList: req.session.CatList,
         length: courseCategories.length,
         categories: sortedCourseCategories,
         empty: sortedCourseCategories.length === 0,
@@ -267,6 +272,7 @@ const getAllCourseLanguages = async (req, res, next) => {
         });
       }
       res.render("vwAdminManagement/courselanguage", {
+        CatList: req.session.CatList,
         length: courseLanguages.length,
         languages: sortedCourseLanguages,
         empty: sortedCourseLanguages.length === 0,
@@ -298,6 +304,7 @@ const getEditUserPage = async function (req, res, next) {
       }
 
       res.render("vwAdminManagement/edit/edituser", {
+        CatList: req.session.CatList,
         user,
       });
     } else {
@@ -321,6 +328,7 @@ const getEditCoursePage = async function (req, res, next) {
       }
 
       res.render("vwAdminManagement/edit/editcourse", {
+        CatList: req.session.CatList,
         course,
       });
     } else {
@@ -344,6 +352,7 @@ const getEditCategoryPage = async function (req, res, next) {
       }
 
       res.render("vwAdminManagement/edit/editcategory", {
+        CatList: req.session.CatList,
         category,
       });
     } else {
@@ -370,6 +379,7 @@ const getEditLanguagePage = async function (req, res, next) {
         return res.redirect("/admin/managelanguage");
       }
       res.render("vwAdminManagement/edit/editlanguage", {
+        CatList: req.session.CatList,
         language,
         categories: sortedCourseCategories,
       });
@@ -387,7 +397,9 @@ const getAddCategoryPage = async function (req, res, next) {
   else {
     const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
     if (userChecking.permission === "Admin") {
-      res.render("vwAdminManagement/add/addcategory");
+      res.render("vwAdminManagement/add/addcategory", {
+        CatList: req.session.CatList,
+      });
     } else {
       return next(createError(500, "User has no permission "));
     }
@@ -408,6 +420,7 @@ const getAddLanguagePage = async function (req, res, next) {
       let sortedCourseCategories = [...courseCategories];
 
       res.render("vwAdminManagement/add/addlanguage", {
+        CatList: req.session.CatList,
         categories: sortedCourseCategories,
       });
     } else {
@@ -424,7 +437,9 @@ const getAddTeacherPage = async function (req, res, next) {
   else {
     const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
     if (userChecking.permission === "Admin") {
-      res.render("vwAdminManagement/add/addteacher");
+      res.render("vwAdminManagement/add/addteacher", {
+        CatList: req.session.CatList,
+      });
     } else {
       return next(createError(500, "User has no permission "));
     }
@@ -446,6 +461,7 @@ const viewLanguagesByID = async function (req, res, next) {
         return res.redirect("/admin/managecategory");
       }
       res.render("vwAdminManagement/languagesID", {
+        CatList: req.session.CatList,
         category,
         languages,
         empty: languages.length === 0,
@@ -471,6 +487,7 @@ const viewCoursesByID = async function (req, res, next) {
         return res.redirect("/admin/managelanguage");
       }
       res.render("vwAdminManagement/coursesID", {
+        CatList: req.session.CatList,
         language,
         courses,
         empty: courses.length === 0,
@@ -495,6 +512,7 @@ const viewCoursesByTeacherID = async function (req, res, next) {
         return res.redirect("/admin/manageteachers");
       }
       res.render("vwAdminManagement/teachercourses", {
+        CatList: req.session.CatList,
         user,
         courses,
         empty: courses.length === 0,
@@ -535,6 +553,7 @@ const viewFeedBacksByID = async function (req, res, next) {
         rated = Number(totalFeedBacks / listFeedBacks.length).toFixed(1);
       }
       res.render("vwAdminManagement/feedbacks", {
+        CatList: req.session.CatList,
         rated,
         course,
         listFeedBacks,

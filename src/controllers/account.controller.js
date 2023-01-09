@@ -145,7 +145,6 @@ const checkLogin = async (req, res, next) => {
                 delete user.password;
                 req.session.auth = true;
                 req.session.authUser = user;
-                console.log("login success")
                 if (req.session.authUser.permission === "Admin") {
                     res.redirect("/admin");
                 }

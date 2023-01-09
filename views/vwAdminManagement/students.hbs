@@ -5,8 +5,7 @@
     href="../../public/assets/css/admin/index.css"
   />
   <style>
-    footer
-    { margin-top: 50px; } 
+    footer { margin-top: 50px; }
   </style>
 {{/section}}
 <div class="container-fluid" style="margin-top: 80px; min-height: 600px;">
@@ -78,35 +77,54 @@
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Gender</th>
-                {{! <th scope="col">DOB</th> }}
                 <th scope="col">Permission</th>
                 <th scope="col">Email</th>
                 <th scope="col">&nbsp;</th>
               </tr>
             </thead>
             <tbody>
-              {{!-- {{log users}} --}}
               {{#each users}}
-
-                <tr>
-                  <th scope="row">{{math @index "+" 1}}</th>
-                  <td>{{this.firstName}}</td>
-                  <td>{{this.lastName}}</td>
-                  <td>{{this.gender}}</td>
-                  {{!-- <td>{{this.dob}}</td> --}}
-                  <td>{{this.permission}}</td>
-                  <td>{{this.email}}</td>
-                  <td class="text-right">
-                    <a
-                      class="btn btn-sm btn-primary editPencil"
-                      href="/admin/edituser?id={{this._id}}"
-                      role="button"
-                      title="Edit"
-                    >
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                  </td>
-                </tr>
+                {{#if (ifEqualString blocked "True")}}
+                  <tr style="background-color: #fe8484;">
+                    <th scope="row">{{math @index "+" 1}}</th>
+                    <td>{{this.firstName}}</td>
+                    <td>{{this.lastName}}</td>
+                    <td>{{this.gender}}</td>
+                    {{!-- <td>{{this.dob}}</td> --}}
+                    <td>{{this.permission}}</td>
+                    <td>{{this.email}}</td>
+                    <td class="text-right">
+                      <a
+                        class="btn btn-sm btn-primary editPencil"
+                        href="/admin/edituser?id={{this._id}}"
+                        role="button"
+                        title="Edit"
+                      >
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {{else}}
+                  <tr>
+                    <th scope="row">{{math @index "+" 1}}</th>
+                    <td>{{this.firstName}}</td>
+                    <td>{{this.lastName}}</td>
+                    <td>{{this.gender}}</td>
+                    {{!-- <td>{{this.dob}}</td> --}}
+                    <td>{{this.permission}}</td>
+                    <td>{{this.email}}</td>
+                    <td class="text-right">
+                      <a
+                        class="btn btn-sm btn-primary editPencil"
+                        href="/admin/edituser?id={{this._id}}"
+                        role="button"
+                        title="Edit"
+                      >
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {{/if}}
               {{/each}}
             </tbody>
           </table>

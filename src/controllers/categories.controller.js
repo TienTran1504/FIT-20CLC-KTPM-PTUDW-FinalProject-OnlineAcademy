@@ -358,13 +358,13 @@ const search = async (req, res) => {
     var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
     var CourseRatingVote = feedbackList.length;
     var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-    var user = users.find((u) => u._id == course.createdBy.toString());
+    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
 
     return {
       ...course,
       CourseRatingVote: CourseRatingVote,
       CourseRatingPoint: CourseRatingPoint,
-      createdBy: user.firstName + " " + user.lastName,
+      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
       bestSeller: bestSellerCourse.includes(course._id.toString()),
     };
   });
@@ -500,13 +500,13 @@ const getCategory = async (req, res) => {
     var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
     var CourseRatingVote = feedbackList.length;
     var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-    var user = users.find((u) => u._id == course.createdBy.toString());
+    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
 
     return {
       ...course,
       CourseRatingVote: CourseRatingVote,
       CourseRatingPoint: CourseRatingPoint,
-      createdBy: user.firstName + " " + user.lastName,
+      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
       bestSeller: bestSellerCourse.includes(course),
     };
   });
