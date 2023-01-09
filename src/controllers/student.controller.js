@@ -413,10 +413,10 @@ const getCourseList = async (req, res, next) => {
 
       const feedback = await Feedback.findOne({
         createdBy: id,
-        createdIn: getCoursesId[i],
-      }).lean;
+        createdIn: getCoursesId[i].id,
+      }).lean();
 
-      const rateNumber = feedback.numberRated || 0;
+      const rateNumber = feedback.numberRated;
       const lectureList = await Lecture.find({
         createdIn: getCoursesId[i].id,
       }).lean();
