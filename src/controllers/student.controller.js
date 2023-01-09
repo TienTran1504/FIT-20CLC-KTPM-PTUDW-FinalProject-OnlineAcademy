@@ -69,6 +69,7 @@ const getPhoto = async (req, res) => {
     CatList: req.session.CatList,
     user: getUser,
     gender: checkGender(getUser.gender),
+    name: getUser.firstName + " " + getUser.lastName,
   });
 };
 
@@ -115,6 +116,7 @@ const getAccountSecurity = async (req, res) => {
   res.render("vwStudentProfile/account_security", {
     CatList: req.session.CatList,
     user: getUser,
+    name: getUser.firstName + " " + getUser.lastName,
     gender: checkGender(getUser.gender),
   });
 };
@@ -298,6 +300,7 @@ const getCourseFavorite = async (req, res) => {
   res.render("vwStudentProfile/favorite_courses", {
     CatList: req.session.CatList,
     user: getUser,
+    name: getUser.firstName + " " + getUser.lastName,
     gender: checkGender(getUser.gender),
     length: getCoursesId.length,
     courses: listCourses,
@@ -397,7 +400,7 @@ const getCourseList = async (req, res, next) => {
 
     for (let i = 0; i < getCoursesId.length; i++) {
       const course = await Course.findById({ _id: getCoursesId[i].id });
-      
+
       const feedback = await Feedback.findOne({
         createdBy: id,
         createdIn: getCoursesId[i],
@@ -435,6 +438,7 @@ const getCourseList = async (req, res, next) => {
     res.render("vwStudentProfile/courses_learn", {
       CatList: req.session.CatList,
       user: getUser,
+      name: getUser.firstName + " " + getUser.lastName,
       gender: checkGender(getUser.gender),
       length: getCoursesId.length,
       courses: listCourses,
@@ -446,10 +450,9 @@ const getCourseList = async (req, res, next) => {
       prevPage: "?page=" + Number(curPage - 1),
       nextPage: "?page=" + Number(curPage + 1),
     });
-  } catch(err) {
+  } catch (err) {
     next(createError.InternalServerError(err.message));
   }
-  
 };
 
 const updateCourseLearn = async (req, res) => {
