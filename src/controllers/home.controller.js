@@ -354,6 +354,7 @@ const renderHome = async (req, res) => {
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
+          featured: featuredCourses.includes(course) ? true : false,
         };
       })
       .slice(0, 10),
@@ -370,6 +371,7 @@ const renderHome = async (req, res) => {
           Students: numberWithCommas(course.studentList.length),
           bestSeller: bestSellerCourse.includes(course) ? true : false,
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
+          featured: featuredCourses.includes(course) ? true : false,
         };
       })
       .slice(0, 10),

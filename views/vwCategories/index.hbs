@@ -103,7 +103,11 @@
         <a class="course-container" href="/courses/{{_id}}">
           <div class="course">
             <div class="parent-image">
-            <img class="course-img" src="../../../public/assets/images/{{image}}" alt="" />
+            {{#if featured}}
+              <img class="course-img moving-border" src="../../../public/assets/images/{{image}}" alt="" />
+            {{else}}
+              <img class="course-img" src="../../../public/assets/images/{{image}}" alt="" />
+            {{/if}}
             {{#if bestSeller}}
                 <img
                   src="../../../public/assets/images/bestseller.png"

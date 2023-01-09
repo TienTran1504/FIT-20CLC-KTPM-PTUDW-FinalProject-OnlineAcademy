@@ -77,7 +77,7 @@
         {{#each featuredCourses}}
           <a class="menu-item" href="/courses/{{_id}}">
             <div class="parent-image">
-              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              <img class="menu-item-image moving-border" src="../../../public/assets/images/{{image}}" alt="" />
               {{#if bestSeller}}
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
@@ -126,7 +126,11 @@
         {{#each mostViewedCourses}}
           <a class="menu-item" href="/courses/{{_id}}">
             <div class="parent-image">
-              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              {{#if featured}}
+                <img class="menu-item-image moving-border" src="../../../public/assets/images/{{image}}" alt="" />
+              {{else}}
+                <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              {{/if}}
               {{#if bestSeller}}
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}
@@ -175,7 +179,11 @@
         {{#each latestCourses}}
           <a class="menu-item" href="/courses/{{_id}}">
             <div class="parent-image">
-              <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              {{#if featured}}
+                <img class="menu-item-image moving-border" src="../../../public/assets/images/{{image}}" alt="" />
+              {{else}}
+                <img class="menu-item-image" src="../../../public/assets/images/{{image}}" alt="" />
+              {{/if}}
               {{#if bestSeller}}
                 <img src="../../../public/assets/images/bestseller.png" alt="" class="bestseller" />
               {{/if}}

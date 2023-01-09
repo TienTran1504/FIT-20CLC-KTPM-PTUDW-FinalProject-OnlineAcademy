@@ -330,21 +330,36 @@ const search = async (req, res) => {
   const sort = req.query.sort || "";
 
   const CatList = await CourseCategory.find().lean();
-  const CourseList = await Course.find({ disable: "False", status: "completed" }).lean();
+  var CourseList = await Course.find({ disable: "False", status: "completed" }).lean();
   var courses = await Course.find({ $text: { $search: key }, disable: "False", status: "completed" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
-  // var courses = [];
-  // CourseList.forEach((course) => {
-  //   if (
-  //     course.name.toLowerCase().includes(key.toLowerCase()) ||
-  //     course.languageName.toLowerCase().includes(key.toLowerCase()) ||
-  //     course.categoryName.toLowerCase().includes(key.toLowerCase())
-  //   ) {
-  //     courses.push(course);
-  //   }
-  // });
+  CourseList = CourseList.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
+
+    var feedbackListInWeek = feedbackList.filter(
+      (u) => dateDiffInDays(new Date(formatDate2(u.createdAt)), new Date()) <= 7
+    );
+    var CourseRatingVoteInWeek = feedbackListInWeek.length;
+    var CourseRatingPointInWeek =
+      +(feedbackListInWeek.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVoteInWeek).toFixed(1) || 0;
+
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
+      viewInWeek: course.viewList.filter(
+        (view) => dateDiffInDays(new Date(formatDate2(view.createdAt)), new Date()) <= 7
+      ).length,
+      CourseRatingVoteInWeek: CourseRatingVoteInWeek,
+      CourseRatingPointInWeek: CourseRatingPointInWeek,
+    };
+  });
 
   const bestSellerCourse = CourseList.sort(function (a, b) {
     return b.studentList.length - a.studentList.length;
@@ -354,20 +369,27 @@ const search = async (req, res) => {
       return u._id.toString();
     });
 
-  courses = courses.map((course) => {
-    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
-    var CourseRatingVote = feedbackList.length;
-    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
+  const mostViewedCourses = [
+    ...CourseList.sort(function (a, b) {
+      return b.viewList.length - a.viewList.length;
+    }),
+  ];
 
-    return {
-      ...course,
-      CourseRatingVote: CourseRatingVote,
-      CourseRatingPoint: CourseRatingPoint,
-      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
-      bestSeller: bestSellerCourse.includes(course._id.toString()),
-    };
-  });
+  const mostView = mostViewedCourses[0].viewList.length;
+  const featuredCourses = [
+    ...CourseList.sort(function (a, b) {
+      return (
+        b.viewInWeek / mostView +
+        b.CourseRatingPointInWeek / 5 +
+        b.CourseRatingVoteInWeek / mostView -
+        (a.viewInWeek / mostView + a.CourseRatingPointInWeek / 5 + a.CourseRatingVoteInWeek / mostView)
+      );
+    })
+      .slice(0, 5)
+      .map((u) => {
+        return u._id.toString();
+      }),
+  ];
 
   if (sort === "highest-rated")
     courses.sort(function (a, b) {
@@ -438,6 +460,8 @@ const search = async (req, res) => {
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
+          bestSeller: bestSellerCourse.includes(course._id.toString()),
+          featured: featuredCourses.includes(course._id.toString()) ? true : false,
         };
       })
       .slice(offset, offset + limit),
@@ -464,15 +488,65 @@ const getCategory = async (req, res) => {
   const sort = req.query.sort || "";
 
   const CatList = await CourseCategory.find().lean();
-  const CourseList = await Course.find({ disable: "False", status: "completed" }).lean();
+  var CourseList = await Course.find({ disable: "False", status: "completed" }).lean();
   const users = await User.find().lean();
   const feedback = await Feedback.find().lean();
 
-  var bestSellerCourse = [...CourseList]
-    .sort(function (a, b) {
-      return b.studentList.length - a.studentList.length;
+  CourseList = CourseList.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
+
+    var feedbackListInWeek = feedbackList.filter(
+      (u) => dateDiffInDays(new Date(formatDate2(u.createdAt)), new Date()) <= 7
+    );
+    var CourseRatingVoteInWeek = feedbackListInWeek.length;
+    var CourseRatingPointInWeek =
+      +(feedbackListInWeek.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVoteInWeek).toFixed(1) || 0;
+
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
+      viewInWeek: course.viewList.filter(
+        (view) => dateDiffInDays(new Date(formatDate2(view.createdAt)), new Date()) <= 7
+      ).length,
+      CourseRatingVoteInWeek: CourseRatingVoteInWeek,
+      CourseRatingPointInWeek: CourseRatingPointInWeek,
+    };
+  });
+
+  const bestSellerCourse = CourseList.sort(function (a, b) {
+    return b.studentList.length - a.studentList.length;
+  })
+    .slice(0, 5)
+    .map((u) => {
+      return u._id.toString();
+    });
+
+  const mostViewedCourses = [
+    ...CourseList.sort(function (a, b) {
+      return b.viewList.length - a.viewList.length;
+    }),
+  ];
+
+  const mostView = mostViewedCourses[0].viewList.length;
+  const featuredCourses = [
+    ...CourseList.sort(function (a, b) {
+      return (
+        b.viewInWeek / mostView +
+        b.CourseRatingPointInWeek / 5 +
+        b.CourseRatingVoteInWeek / mostView -
+        (a.viewInWeek / mostView + a.CourseRatingPointInWeek / 5 + a.CourseRatingVoteInWeek / mostView)
+      );
     })
-    .slice(0, 5);
+      .slice(0, 5)
+      .map((u) => {
+        return u._id.toString();
+      }),
+  ];
 
   var courses = [];
 
@@ -495,21 +569,6 @@ const getCategory = async (req, res) => {
         courses.push(course);
       }
     });
-
-  courses = courses.map((course) => {
-    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
-    var CourseRatingVote = feedbackList.length;
-    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
-
-    return {
-      ...course,
-      CourseRatingVote: CourseRatingVote,
-      CourseRatingPoint: CourseRatingPoint,
-      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
-      bestSeller: bestSellerCourse.includes(course),
-    };
-  });
 
   if (sort === "highest-rated")
     courses.sort(function (a, b) {
@@ -584,6 +643,8 @@ const getCategory = async (req, res) => {
           students: numberWithCommas(course.studentList.length),
           createdAt: formatDate(course.createdAt),
           new: dateDiffInDays(new Date(formatDate2(course.createdAt)), new Date()) <= 3 ? true : false,
+          bestSeller: bestSellerCourse.includes(course._id.toString()),
+          featured: featuredCourses.includes(course._id.toString()) ? true : false,
         };
       })
       .slice(offset, offset + limit),

@@ -93,6 +93,7 @@ a:hover {
   object-fit: cover;
   border-radius: 12px;
   position: relative;
+  box-shadow: 0 0 10px gray;
 }
 
 .course-info {
@@ -246,4 +247,37 @@ ul {
 .pagination > li > a {
   color: #52ab98 !important;
   transition: background-color 0.2s;
+}
+
+.moving-border {
+  --border-size: 5px;
+  border: var(--border-size) dotted transparent;
+  background-image: linear-gradient(to right, rgb(255 255 255), rgb(255 255 255)),
+    conic-gradient(
+      from var(--angle),
+      #52ab98 0deg 90deg,
+      transparent 90deg 180deg,
+      #52ab98 180deg 270deg,
+      transparent 270deg 360deg
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+@supports (background: paint(houdini)) {
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes rotate {
+    to {
+      --angle: 360deg;
+    }
+  }
+
+  .moving-border {
+    animation: rotate 15s linear infinite;
+  }
 }
