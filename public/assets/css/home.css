@@ -56,7 +56,7 @@
   object-fit: cover;
   border-radius: 12px;
   position: relative;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   box-shadow: 0 0 10px gray;
 }
 
@@ -133,6 +133,7 @@ b.course-name {
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 0 10px gray;
+  margin-bottom: 5px;
 }
 
 .menu-language-image {
@@ -141,6 +142,7 @@ b.course-name {
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 0 10px gray;
+  margin-bottom: 5px;
 }
 
 .star {
