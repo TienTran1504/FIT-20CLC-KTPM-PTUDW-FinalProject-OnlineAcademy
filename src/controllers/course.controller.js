@@ -34,28 +34,35 @@ const getAllCourses = async (req, res) => {
 const getCourse = async (req, res, next) => {
   try {
     req.session.courseId = req.params.id;
+
     const course = await Course.findById({ _id: req.params.id }).lean();
     const instructor = await User.findOne({ _id: course.createdBy }).lean();
     const lecture = await Lecture.find({ createdIn: req.params.id });
-    const getUser = await User.findById({
-      _id: req.session.authUser._id,
-    }).lean();
     const feedbacks = course.feedbackList;
-
+    let getUser;
     let checkCourseExists = false;
-    for (let i = 0; i < getUser.courseList.length; i++) {
-      if (getUser.courseList[i].id === req.params.id) {
-        checkCourseExists = true;
-        break;
-      }
-    }
-
     let checkFavorites = false;
-    for (let i = 0; i < getUser.watchList.length; i++) {
-      if (getUser.watchList[i].id === req.params.id) {
-        checkFavorites = true;
-        break;
+    let checkLogin = false;
+
+    if (req.session.authUser !== null) {
+      getUser = await User.findById({
+        _id: req.session.authUser._id,
+      }).lean();
+
+      for (let i = 0; i < getUser.courseList.length; i++) {
+        if (getUser.courseList[i].id === req.params.id) {
+          checkCourseExists = true;
+          break;
+        }
       }
+
+      for (let i = 0; i < getUser.watchList.length; i++) {
+        if (getUser.watchList[i].id === req.params.id) {
+          checkFavorites = true;
+          break;
+        }
+      }
+      checkLogin = true;
     }
 
     course.updatedAt = formatDate(course.updatedAt);
@@ -114,6 +121,7 @@ const getCourse = async (req, res, next) => {
       instructor,
       checkFavorites,
       checkCourseExists,
+      checkLogin,
       firstIdLecture: lecture[0]._id,
       feedbackList: feedbackList,
       lectureList,
