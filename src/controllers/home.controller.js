@@ -275,7 +275,7 @@ const renderHome = async (req, res) => {
     var sumOfStudents = 0;
     lang.courseList.forEach((course) => {
       sumOfStudents += CourseList.find((u) => u._id.toString() == course._id.toString()).studentList.filter(
-        (student) => dateDiffInDays(new Date(formatDate2(student.createdAt)), new Date()) <= 7
+        (student) => dateDiffInDays(new Date(student.time), new Date()) <= 7
       ).length;
     });
 
