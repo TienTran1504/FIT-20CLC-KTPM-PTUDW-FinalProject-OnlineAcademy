@@ -14,9 +14,6 @@ const checkGender = gender => {
 };
 
 const getProfile = async (req, res, next) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -25,19 +22,24 @@ const getProfile = async (req, res, next) => {
     user: getUser,
     name: getUser.firstName + " " + getUser.lastName,
     gender: checkGender(getUser.gender),
+    error_message: "none",
   });
 };
 
 const updateProfile = async (req, res, next) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
   const { firstname, lastname, gender, password_profile } = req.body;
   const id = req.session.authUser._id;
-  const getUser = await User.findById({ _id: id }).lean();
+  const infor = req.session.getInput;
+  let getUser = await User.findById({ _id: id }).lean();
 
-  if (!firstname || !lastname || !gender || !password_profile) {
-    alert("Input information is empty");
+  if (
+    infor &&
+    infor.firstname === firstname &&
+    infor.lastname === lastname &&
+    infor.gender === gender &&
+    infor.password_profile === password_profile
+  ) {
+    req.session.getInput = null;
     res.redirect("/student");
     return;
   }
@@ -46,8 +48,23 @@ const updateProfile = async (req, res, next) => {
     password_profile,
     getUser.password
   );
+
+  req.session.getInput = {
+    firstname,
+    lastname,
+    gender,
+    password_profile,
+  };
+
   if (!isPasswordCorrect) {
-    alert("Incorrect password");
+    res.render("vwStudentProfile/profile", {
+      CatList: req.session.CatList,
+      user: getUser,
+      name: getUser.firstName + " " + getUser.lastName,
+      gender: checkGender(getUser.gender),
+      error_message: " Incorrect password",
+    });
+    return;
   } else {
     const updateUser = await User.findByIdAndUpdate(
       { _id: getUser._id },
@@ -55,7 +72,15 @@ const updateProfile = async (req, res, next) => {
       { new: true, runValidators: true }
     );
   }
-  res.redirect("/student");
+
+  getUser = await User.findById({ _id: id }).lean();
+  res.render("vwStudentProfile/profile", {
+    CatList: req.session.CatList,
+    user: getUser,
+    name: getUser.firstName + " " + getUser.lastName,
+    gender: checkGender(getUser.gender),
+    error_message: "",
+  });
 };
 
 const getPhoto = async (req, res) => {
@@ -107,9 +132,6 @@ const uploadPhoto = async (req, res) => {
 };
 
 const getAccountSecurity = async (req, res) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
   const id = req.session.authUser._id;
   const getUser = await User.findById({ _id: id }).lean();
 
@@ -118,77 +140,101 @@ const getAccountSecurity = async (req, res) => {
     user: getUser,
     name: getUser.firstName + " " + getUser.lastName,
     gender: checkGender(getUser.gender),
+    error_message: "none",
   });
 };
 
 const updatePassword = async (req, res, next) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
   const id = req.session.authUser._id;
+  const infor = req.session.getInput;
   const getUser = await User.findById({ _id: id }).lean();
   const { currentPassword, newPassword, rePassword } = req.body;
-
-  if (!newPassword || !currentPassword) {
-    alert("Input information is empty");
-  } else {
-    //compare password
-    const isPasswordCorrect = await bcrypt.compare(
-      currentPassword,
-      getUser.password
-    );
-
-    if (!isPasswordCorrect) {
-      alert("Incorrect password");
-    } else if (newPassword.length < 6) {
-      alert("New password must be at least 6 characters");
-    } else if (newPassword !== rePassword) {
-      alert("Re-enter incorrect password");
-    } else {
-      //Hashing password
-      const salt = await bcrypt.genSalt(10);
-      const passwordHashed = await bcrypt.hash(newPassword, salt);
-      const updatePassword = {
-        password: passwordHashed,
-      };
-      const getUserUpdate = await User.findByIdAndUpdate(
-        {
-          _id: getUser._id,
-        },
-        updatePassword,
-        { new: true, runValidators: true }
-      );
-      alert("Change password successfully");
-    }
+  console.log(infor);
+  console.log(currentPassword, newPassword, rePassword);
+  if (
+    infor &&
+    infor.currentPassword === currentPassword &&
+    infor.newPassword === newPassword &&
+    infor.rePassword === rePassword
+  ) {
+    req.session.getInput = null;
+    res.redirect("/student/account_security");
+    return;
   }
-  res.redirect("/student/account_security");
+
+  //compare password
+  const isPasswordCorrect = await bcrypt.compare(
+    currentPassword,
+    getUser.password
+  );
+
+  req.session.getInput = { currentPassword, newPassword, rePassword };
+
+  if (!isPasswordCorrect) {
+    res.render("vwStudentProfile/account_security", {
+      CatList: req.session.CatList,
+      user: getUser,
+      name: getUser.firstName + " " + getUser.lastName,
+      gender: checkGender(getUser.gender),
+      error_message: " Incorrect current password",
+    });
+    return;
+  } else {
+    //Hashing password
+    const salt = await bcrypt.genSalt(10);
+    const passwordHashed = await bcrypt.hash(newPassword, salt);
+    const updatePassword = {
+      password: passwordHashed,
+    };
+    const getUserUpdate = await User.findByIdAndUpdate(
+      {
+        _id: getUser._id,
+      },
+      updatePassword,
+      { new: true, runValidators: true }
+    );
+    const getUserUpdated = await User.findById({ _id: id }).lean();
+    res.render("vwStudentProfile/account_security", {
+      CatList: req.session.CatList,
+      user: getUserUpdated,
+      name: getUserUpdated.firstName + " " + getUserUpdated.lastName,
+      gender: checkGender(getUserUpdated.gender),
+      error_message: "",
+    });
+    return;
+  }
 };
 
 const changeEmail = async (req, res) => {
-  if (req.session.authUser === null)
-    return next(createError(401, "Unauthorized"));
-
   const id = req.session.authUser._id;
-  const getUser = await User.findById({ _id: id }).lean();
-
+  const infor = req.session.getInput;
+  let getUser = await User.findById({ _id: id }).lean();
   const { email, password_email } = req.body;
+  let checkMail = await User.findOne({ email: email }).lean();
 
-  console.log(email, password_email);
-
-  if (!email || !password_email) {
-    alert("Please enter email and password");
+  if (infor && infor.pass === password_email && infor.email === email) {
+    req.session.getInput = null;
+    res.redirect("/student");
+    return;
   }
-  // else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-  //   alert("Email invalid");
-  // }
-  else {
+
+  req.session.getInput = { pass: password_email, email: email };
+
+  if (!checkMail || String(checkMail._id) === String(getUser._id)) {
     //compare password
     const isPasswordCorrect = await bcrypt.compare(
       password_email,
       getUser.password
     );
     if (!isPasswordCorrect) {
-      alert("Incorrect password");
+      res.render("vwStudentProfile/profile", {
+        CatList: req.session.CatList,
+        user: getUser,
+        name: getUser.firstName + " " + getUser.lastName,
+        gender: checkGender(getUser.gender),
+        error_message: " Incorrect password",
+      });
+      return;
     } else {
       const changeEmail = {
         email: email,
@@ -202,18 +248,26 @@ const changeEmail = async (req, res) => {
       );
 
       const userCheck = await User.findById({ _id: id }).lean();
-      alert("Change email successfully");
       res.render("vwStudentProfile/profile", {
         CatList: req.session.CatList,
         notif: "Successfully updated",
         user: userCheck,
         name: userCheck.firstName + " " + userCheck.lastName,
         gender: checkGender(getUser.gender),
+        error_message: "",
       });
       return;
     }
+  } else {
+    res.render("vwStudentProfile/profile", {
+      CatList: req.session.CatList,
+      user: getUser,
+      name: getUser.firstName + " " + getUser.lastName,
+      gender: checkGender(getUser.gender),
+      error_message: " Email is existed",
+    });
+    return;
   }
-  res.redirect("/student");
 };
 
 const addWatchList = async (req, res, next) => {

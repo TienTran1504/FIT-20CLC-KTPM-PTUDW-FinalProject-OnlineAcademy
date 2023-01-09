@@ -1,72 +1,105 @@
 $(document).ready(function () {
   $("#password").keyup(function () {
-    $("#strengthMessage").html(checkStrength($("#password").val()));
+    $("#strengthMessage").html(
+      checkPassword($("#password").val(), $("#strengthMessage"))
+    );
   });
   $("#password1").keyup(function () {
-    $("#strengthMessage1").html(checkStrength1($("#password1").val()));
+    $("#strengthMessage1").html(
+      checkPassword($("#password1").val(), $("#strengthMessage1"))
+    );
   });
   $("#email").keyup(function () {
-    $("#strengthMessage2").html(checkStrength2($("#email").val()));
+    $("#strengthMessage2").html(checkEmail($("#email").val()));
   });
   $("#lastname").keyup(function () {
-    $("#strengthMessage3").html(checkStrength3($("#lastname").val()));
+    $("#strengthMessage3").html(
+      checkName($("#lastname").val(), $("#strengthMessage3"))
+    );
   });
   $("#firstname").keyup(function () {
-    $("#strengthMessage4").html(checkStrength4($("#firstname").val()));
+    $("#strengthMessage4").html(
+      checkName($("#firstname").val(), $("#strengthMessage4"))
+    );
   });
-  function checkStrength(password) {
+
+  function checkPassword(password, selector) {
     if (password.length < 1) {
-      $("#strengthMessage").removeClass();
-      $("#strengthMessage").addClass("Short");
-      return "Input cannot be blank";
+      selector.removeClass();
+      selector.addClass("Short");
+      return "Input cannot be empty";
     } else {
-      $("#strengthMessage").removeClass();
-      $("#strengthMessage").addClass("");
+      selector.removeClass();
+      selector.addClass("");
       return "";
     }
   }
-  function checkStrength1(password) {
-    if (password.length < 1) {
-      $("#strengthMessage1").removeClass();
-      $("#strengthMessage1").addClass("Short");
-      return "Input cannot be blank";
-    } else {
-      $("#strengthMessage1").removeClass();
-      $("#strengthMessage1").addClass("");
-      return "";
-    }
-  }
-  function checkStrength2(password) {
-    if (password.length < 1) {
+  function checkEmail(email) {
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       $("#strengthMessage2").removeClass();
       $("#strengthMessage2").addClass("Short");
-      return "Input cannot be blank";
+      return "Invalid email";
     } else {
       $("#strengthMessage2").removeClass();
       $("#strengthMessage2").addClass("");
       return "";
     }
   }
-  function checkStrength3(password) {
-    if (password.length < 1) {
-      $("#strengthMessage3").removeClass();
-      $("#strengthMessage3").addClass("Short");
-      return "Input cannot be blank";
+  function checkName(lastname, selector) {
+    if (lastname.length < 1) {
+      selector.removeClass();
+      selector.addClass("Short");
+      return "Input cannot be empty";
     } else {
-      $("#strengthMessage3").removeClass();
-      $("#strengthMessage3").addClass("");
+      selector.removeClass();
+      selector.addClass("");
       return "";
     }
   }
-  function checkStrength4(password) {
-    if (password.length < 1) {
-      $("#strengthMessage4").removeClass();
-      $("#strengthMessage4").addClass("Short");
-      return "Input cannot be blank";
-    } else {
-      $("#strengthMessage4").removeClass();
-      $("#strengthMessage4").addClass("");
-      return "";
+
+  $("#form-profile").submit(function (e) {
+    const valuePass = $("#password").val();
+    const valuePass1 = $("#password1").val();
+    const valueEmail = $("#email").val();
+    const valueLastName = $("#lastname").val();
+    const valueFirstName = $("#firstname").val();
+    if (valueEmail.length < 1) {
+      if (valuePass.length < 1) {
+        e.preventDefault();
+        return;
+      }
+    } else if (
+      valuePass1.length < 1 ||
+      valueLastName.length < 1 ||
+      valueFirstName.length < 1
+    ) {
+      $("#strengthMessage1").html(
+        checkPassword(valuePass1, $("#strengthMessage1"))
+      );
+      $("#strengthMessage3").html(
+        checkName(valueLastName, $("#strengthMessage3"))
+      );
+      $("#strengthMessage4").html(
+        checkName(valueFirstName, $("#strengthMessage4"))
+      );
+      e.preventDefault();
+      return;
     }
-  }
+  });
+
+  $("#form-profile-2").submit(function (e) {
+    const valuePass = $("#password").val();
+    const valueEmail = $("#email").val();
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(valueEmail) ||
+      valuePass.length < 1
+    ) {
+      $("#strengthMessage").html(
+        checkPassword($("#password").val(), $("#strengthMessage"))
+      );
+      $("#strengthMessage2").html(checkEmail($("#email").val()));
+      e.preventDefault();
+      return;
+    }
+  });
 });

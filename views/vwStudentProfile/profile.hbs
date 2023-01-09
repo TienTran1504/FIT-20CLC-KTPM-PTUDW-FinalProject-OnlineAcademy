@@ -6,14 +6,13 @@
     href="../../public/assets/css/validation/form.css"
   />
   <style>
-    footer
-    { margin-top: 50px; } 
+    footer { margin-top: 50px; }
   </style>
 {{/section}}
 {{#section "js"}}
   <script src="../../public/assets/js/profile/profile.js"></script>
 {{/section}}
-<form method="post">
+
   <div style="margin-top: 80px; min-height: 600px;">
     <div class="main-content-student">
       <div class="container">
@@ -95,7 +94,33 @@
                     <p>Add information about yourself</p>
                   </div>
                   <div class="card-body" style="background-color: #f2f2f2;">
-                    <form>
+                    <div class="text-center">
+                        {{#if (ifEqualString error_message 'none')}}{{else}}
+                            {{#if error_message}}
+                                <div
+                                  class="alert alert-warning alert-dismissible fade show"
+                                  role="alert"
+                                >
+                                  <strong>Update infomation fail!</strong>
+                              {{else}}
+                                <div
+                                  class="alert alert-success alert-dismissible fade show"
+                                  role="alert"
+                                >
+                                  <strong>Update infomation complete!</strong>
+                            {{/if}}
+                            {{error_message}}
+                            <button
+                              type="button"
+                              class="close"
+                              data-dismiss="alert"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                        {{/if}}
+                      </div>
                       <div class="form-group">
                         <label class="px-2" for="email">Email address:</label>
                         <div class="email-input-block">
@@ -105,7 +130,6 @@
                             value="{{user.email}}"
                             readonly
                           />
-                          <div class="strengthMessage2"></div>
                           <button
                             class="btn btn-primary fa fa-pencil-square btn-email"
                             type="button"
@@ -113,6 +137,7 @@
                             data-target="#form-update-modal2"
                           >
                           </button>
+                          <form id="form-profile-2" method="post" action="">
                           <div
                             class="modal fade"
                             id="form-update-modal2"
@@ -148,7 +173,7 @@
                                         value="{{user.email}}"
                                         placeholder="Your email address"
                                       />
-                                      <span class="form-message"></span>
+                                      <div id="strengthMessage2"></div>
                                     </div>
                                   </div>
                                   <div class="form-row form-group">
@@ -157,6 +182,7 @@
                                         id="password"
                                         type="password"
                                         name="password_email"
+                                        value="{{reloadPass}}"
                                         class="form-control"
                                         placeholder="Password"
                                       />
@@ -179,6 +205,7 @@
                               </div>
                             </div>
                           </div>
+                          </form>
                         </div>
                       </div>
                       <div class="form-group">
@@ -241,64 +268,65 @@
                               >
                               </button>
                             </div>
-                            <div class="modal-body">
-                              <div class="form-row form-group">
-                                <div class="col">
-                                  <input
-                                    id="firstname"
-                                    type="text"
-                                    name="firstname"
-                                    class="form-control"
-                                    placeholder="First name"
-                                  />
-                                  <div id="strengthMessage4"></div>
+                            <form id="form-profile" method="post" action="">
+                              <div class="modal-body">
+                                <div class="form-row form-group">
+                                  <div class="col">
+                                    <input
+                                      id="firstname"
+                                      type="text"
+                                      name="firstname"
+                                      class="form-control"
+                                      placeholder="First name"
+                                    />
+                                    <div id="strengthMessage4"></div>
+                                  </div>
+                                  <div class="col">
+                                    <input
+                                      id="lastname"
+                                      type="text"
+                                      name="lastname"
+                                      class="form-control"
+                                      placeholder="Last name"
+                                    />
+                                    <div id="strengthMessage3"></div>
+                                  </div>
                                 </div>
-                                <div class="col">
-                                  <input
-                                    id="lastname"
-                                    type="text"
-                                    name="lastname"
-                                    class="form-control"
-                                    placeholder="Last name"
-                                  />
-                                  <div id="strengthMessage3"></div>
+                                <div class="form-group pt-3">
+                                  <select class="custom-select" name="gender">
+                                    <option selected value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                  </select>
+                                </div>
+                                <div class="form-row form-group">
+                                  <div class="col">
+                                    <input
+                                      id="password1"
+                                      type="password"
+                                      name="password_profile"
+                                      class="form-control"
+                                      placeholder="Password"
+                                    />
+                                    <div id="strengthMessage1"></div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-dismiss="modal"
+                                  >Close</button>
+                                  <button
+                                    type="submit"
+                                    class="btn btn-primary course-btn"
+                                    formaction="/student/update_profile/post"
+                                  >Save</button>
                                 </div>
                               </div>
-                              <div class="form-group pt-3">
-                                <select class="custom-select" name="gender">
-                                  <option selected value="Male">Male</option>
-                                  <option value="Female">Female</option>
-                                </select>
-                              </div>
-                              <div class="form-row form-group">
-                                <div class="col">
-                                  <input
-                                    id="password1"
-                                    type="password"
-                                    name="password_profile"
-                                    class="form-control"
-                                    placeholder="Password"
-                                  />
-                                  <div id="strengthMessage1"></div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button
-                                  type="button"
-                                  class="btn btn-secondary"
-                                  data-dismiss="modal"
-                                >Close</button>
-                                <button
-                                  type="submit"
-                                  class="btn btn-primary course-btn"
-                                  formaction="/student/update_profile/post"
-                                >Save</button>
-                              </div>
-                            </div>
+                            </form>
                           </div>
                         </div>
                       </div>
-                    </form>
                   </div>
                 </div>
               </div>

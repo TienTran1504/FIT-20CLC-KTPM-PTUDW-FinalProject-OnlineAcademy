@@ -33,7 +33,7 @@ $(document).ready(function () {
     }
   }
   function checkStrength2(newPassword, rePassword) {
-    if (newPassword !== rePassword) {
+    if (newPassword !== rePassword || rePassword.length < 1) {
       $("#strengthMessage2").removeClass();
       $("#strengthMessage2").addClass("Short");
       return "Confirmation password does not match";
@@ -43,4 +43,20 @@ $(document).ready(function () {
       return "Valid confirmation password";
     }
   }
+  $("#form-security").submit(function (e) {
+    const currentPass = $("#currentPassword").val();
+    const newPass = $("#newPassword").val();
+    const rePass = $("#rePassword").val();
+    console.log(rePass, newPass, currentPass);
+
+    if (currentPass.length < 1 || newPass.length < 6 || rePass !== newPass) {
+      $("#strengthMessage").html(checkStrength($("#currentPassword").val()));
+      $("#strengthMessage1").html(checkStrength1($("#newPassword").val()));
+      $("#strengthMessage2").html(
+        checkStrength2($("#rePassword").val(), $("#newPassword").val())
+      );
+      e.preventDefault();
+      return;
+    }
+  });
 });

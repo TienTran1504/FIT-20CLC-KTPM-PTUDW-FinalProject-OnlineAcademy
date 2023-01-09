@@ -1,14 +1,13 @@
 {{#section "css"}}
   <link rel="stylesheet" href="../../public/assets/css/student_profile.css" />
   <style>
-    footer
-    { margin-top: 50px; } 
+    footer { margin-top: 50px; }
   </style>
 {{/section}}
 {{#section "js"}}
   <script src="../../public/assets/js/profile/security.js"></script>
 {{/section}}
-<form id="form" method="post" style="min-height: 600px;">
+<form id="form-security" method="post" style="min-height: 600px;">
   <div style="margin-top: 80px;">
     <div class="main-content-student">
       <div class="container">
@@ -91,7 +90,31 @@
                     </p>
                   </div>
                   <div class="card-body" style="background-color: #f2f2f2;">
-
+                    {{#if (ifEqualString error_message 'none')}}{{else}}
+                          {{#if error_message}}
+                              <div
+                                class="alert alert-warning alert-dismissible fade show"
+                                role="alert"
+                              >
+                                <strong>Update password fail!</strong>
+                            {{else}}
+                              <div
+                                class="alert alert-success alert-dismissible fade show"
+                                role="alert"
+                              >
+                                <strong>Update password complete!</strong>
+                          {{/if}}
+                          {{error_message}}
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      {{/if}}
                     <div class="form-group">
                       <label for="" class="d-flex p-2">Password:</label>
                       <input
@@ -126,7 +149,7 @@
                     <button
                       type="submit"
                       class="btn btn-primary d-flex px-4 course-btn"
-                      formaction="/student/account_security"
+                      formaction="/student/update_password/post"
                     >Change password</button>
                   </div>
                 </div>
