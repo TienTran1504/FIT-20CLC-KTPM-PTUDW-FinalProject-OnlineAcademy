@@ -5,6 +5,7 @@ import CourseCategory from "../models/coursecategory.model";
 import CourseLanguage from "../models/courselanguage.model";
 import Course from "../models/course.model";
 import Lecture from "../models/lecture.model";
+import Feedback from "../models/feedback.model";
 import bcrypt from "bcryptjs";
 import { formatDate, fullStar, halfStar, blankStar } from "./home.controller";
 
@@ -219,15 +220,16 @@ const createCourse = async (req, res, next) => {
 };
 
 const deleteCourse = async (req, res, next) => {
-  try { 
-    const lang = Language.findById({_id: req.session.currentCourse.languageId});
+  try {
+    const lang = await CourseLanguage.findById({ _id: req.session.currentCourse.languageId });
     const indexOf = lang.courseList.findIndex(course => {
-      return course._id === CourseID
+      return course._id == req.params.id;
     })
-
     lang.courseList.splice(indexOf, 1);
-    await Language.findByIdAndUpdate({_id: lang._id}, lang);
-    await Course.deleteOne({ _id: req.params.id });
+    await CourseLanguage.findByIdAndUpdate({ _id: lang._id }, lang, { new: true, runValidators: true });
+    await Feedback.deleteMany({ createdIn: req.params.id });
+    await Lecture.deleteMany({ createdIn: req.params.id });
+    await Course.findByIdAndDelete({ _id: req.params.id });
 
     delete req.session.currentCourse;
     res.redirect("/teacher/profile/my_course");
@@ -375,7 +377,7 @@ const createLecture = async (req, res, next) => {
           createdIn: req.session.currentCourse._id,
           createdBy: req.session.authUser._id,
         });
-        const course = await Course.findById({_id: req.session.currentCourse._id});
+        const course = await Course.findById({ _id: req.session.currentCourse._id });
         course.lecture.push(lecture._id);
         await checkStatusOfCourse(req);
 
@@ -390,7 +392,7 @@ const createLecture = async (req, res, next) => {
 const getViewUpdateLecture = async (req, res, next) => {
   try {
     const lecture = await Lecture.findOne({ _id: req.params.lid }).lean();
-   
+
     res.render("vwTeacher/vwUpdateCourse/update_lecture", {
       user: req.session.authUser,
       course: req.session.currentCourse,
@@ -470,8 +472,8 @@ const updateLecture = async (req, res, next) => {
             }
           );
         }
-        
-    
+
+
         await checkStatusOfCourse(req);
         res.redirect(`/teacher/course/${req.params.id}/curriculum`);
       }
@@ -521,9 +523,9 @@ const updateCourse = async (req, res) => {
   }
 };
 
-const updateEmail = async (req,res,next) => {
+const updateEmail = async (req, res, next) => {
   try {
-    const user = await User.findOne({_id: req.session.authUser._id}).lean();
+    const user = await User.findOne({ _id: req.session.authUser._id }).lean();
 
     const ret = bcrypt.compareSync(req.body.password, user.password);
     if (ret === false) {
@@ -540,10 +542,10 @@ const updateEmail = async (req,res,next) => {
         { _id: req.session.authUser._id },
         req.session.authUser
       );
-  
+
       res.redirect("/teacher/profile/account_security");
     }
-  } catch(err) {
+  } catch (err) {
     console.log(err.message);
     next(createError.InternalServerError(err));
   }
@@ -551,7 +553,7 @@ const updateEmail = async (req,res,next) => {
 
 const updatePassword = async (req, res, next) => {
   try {
-    const user = await User.findOne({_id: req.session.authUser._id}).lean();
+    const user = await User.findOne({ _id: req.session.authUser._id }).lean();
 
     const ret = bcrypt.compareSync(req.body.password, user.password);
     if (ret === false) {
@@ -572,10 +574,10 @@ const updatePassword = async (req, res, next) => {
           password: hash
         }
       );
-  
+
       res.redirect("/teacher/profile/account_security");
     }
-  } catch(err) {
+  } catch (err) {
     console.log(err.message);
     next(createError.InternalServerError(err));
   }

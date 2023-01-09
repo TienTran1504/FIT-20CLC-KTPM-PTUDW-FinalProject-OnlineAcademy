@@ -304,35 +304,45 @@
           <div class="block-content">
             <div class="title-course">$ {{course.price}}</div>
             <div class="btn-course">
-              {{#if checkCourseExists}}
+              {{#if checkLogin}}
+                {{#if checkCourseExists}}
+                  <a
+                    type="submit"
+                    class="btn btn-primary btn-buy btn-learn"
+                    href="/courses/learn/{{firstIdLecture}}"
+                  >
+                    Learn now</a>
+                {{else}}
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-buy"
+                    formaction="/student/add_courses/post"
+                  >Buy now</button>
+                {{/if}}
+
+                {{#if checkFavorites}}
+                  <button
+                    type="submit"
+                    class="fa fa-heart btn btn-primary btn-like"
+                    formaction="/student/remove_courses_favorite/post"
+                  ></button>
+                {{else}}
+                  <button
+                    type="submit"
+                    class="fa fa-heart-o btn btn-primary btn-like"
+                    formaction="/student/add_courses_favorite/post"
+                  ></button>
+                {{/if}}
+              {{else}}
                 <a
-                  type="submit"
                   class="btn btn-primary btn-buy btn-learn"
-                  href="/courses/learn/{{firstIdLecture}}"
-                >
-                  Learn now</a>
-              {{else}}
-                <button
-                  type="submit"
-                  class="btn btn-primary btn-buy"
-                  formaction="/student/add_courses/post"
-                >Buy now</button>
+                  href="/account/login"
+                >Buy now</a>
+                <a
+                  class="fa fa-heart-o btn btn-primary btn-like btn-like-a"
+                  href="/account/login"
+                ></a>
               {{/if}}
-
-              {{#if checkFavorites}}
-                <button
-                  type="submit"
-                  class="fa fa-heart btn btn-primary btn-like"
-                  formaction="/student/remove_courses_favorite/post"
-                ></button>
-              {{else}}
-                <button
-                  type="submit"
-                  class="fa fa-heart-o btn btn-primary btn-like"
-                  formaction="/student/add_courses_favorite/post"
-                ></button>
-              {{/if}}
-
             </div>
             <div class="desciption-course">
               <div class="title-des">This course includes:</div>

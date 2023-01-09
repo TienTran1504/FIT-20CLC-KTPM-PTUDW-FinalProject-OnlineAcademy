@@ -393,6 +393,10 @@
   border-color: #52AB98;
 }
 
+.sidebar-container-model .btn-course .btn-like-a {
+  padding-top: 1rem !important;
+}
+
 .sidebar-container-model .desciption-course {
   margin-top: 1rem;
 }
