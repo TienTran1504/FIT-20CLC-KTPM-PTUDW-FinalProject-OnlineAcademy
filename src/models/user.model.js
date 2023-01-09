@@ -80,7 +80,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ["True", "False"],
       default: "False",
-    }
+    },
   },
 
   { timestamps: true }

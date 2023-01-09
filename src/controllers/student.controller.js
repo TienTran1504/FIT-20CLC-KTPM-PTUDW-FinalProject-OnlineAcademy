@@ -346,7 +346,18 @@ const addCourseList = async (req, res, next) => {
     return watch.id == courseId;
   });
 
-  course.studentList.push(id);
+  let today = new Date();
+  const obj = {
+    id: id,
+    time:
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate(),
+  };
+  course.studentList.push(obj);
+
   await Course.findByIdAndUpdate(
     { _id: course._id },
     {
@@ -396,7 +407,6 @@ const getCourseList = async (req, res, next) => {
     const offset = (curPage - 1) * limit;
 
     let listCourses = [];
-    console.log(getCoursesId);
 
     for (let i = 0; i < getCoursesId.length; i++) {
       const course = await Course.findById({ _id: getCoursesId[i].id });
