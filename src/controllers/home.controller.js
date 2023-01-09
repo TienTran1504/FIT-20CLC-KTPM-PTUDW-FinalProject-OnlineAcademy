@@ -274,7 +274,7 @@ const renderHome = async (req, res) => {
   sortedLangList = LanguageList.map((lang) => {
     var sumOfStudents = 0;
     lang.courseList.forEach((course) => {
-      sumOfStudents += course.studentList.filter(
+      sumOfStudents += CourseList.find((u) => u._id.toString() == course._id.toString()).studentList.filter(
         (student) => dateDiffInDays(new Date(formatDate2(student.createdAt)), new Date()) <= 7
       ).length;
     });
@@ -295,21 +295,22 @@ const renderHome = async (req, res) => {
     }).slice(0, 5),
   ];
 
-  const featuredCourses = [
-    ...CourseList.sort(function (a, b) {
-      return (
-        b.viewInWeek * 2 +
-        b.CourseRatingPointInWeek +
-        b.CourseRatingVoteInWeek -
-        (a.viewInWeek * 2 + a.CourseRatingPointInWeek + a.CourseRatingVoteInWeek)
-      );
-    }).slice(0, 5),
-  ];
-
   const mostViewedCourses = [
     ...CourseList.sort(function (a, b) {
       return b.viewList.length - a.viewList.length;
     }),
+  ];
+
+  const mostView = mostViewedCourses[0].viewList.length;
+  const featuredCourses = [
+    ...CourseList.sort(function (a, b) {
+      return (
+        b.viewInWeek / mostView +
+        b.CourseRatingPointInWeek / 5 +
+        b.CourseRatingVoteInWeek / mostView -
+        (a.viewInWeek / mostView + a.CourseRatingPointInWeek / 5 + a.CourseRatingVoteInWeek / mostView)
+      );
+    }).slice(0, 5),
   ];
 
   const latestCourses = [
