@@ -287,7 +287,7 @@ const updateCourseInfo = (req, res, next) => {
       if (err) {
         next(createError.InternalServerError(err.message));
       } else {
-        if (fileName !== null) {
+        if (fileName !== undefined) {
           await Course.findOneAndUpdate(
             { _id: req.body._id },
             {
@@ -306,7 +306,6 @@ const updateCourseInfo = (req, res, next) => {
               briefDescription: req.body.briefDescription,
               detailDescription: req.body.detailDescription,
               price: parseInt(req.body.price),
-              image: fileName,
             }
           ).lean();
         }
