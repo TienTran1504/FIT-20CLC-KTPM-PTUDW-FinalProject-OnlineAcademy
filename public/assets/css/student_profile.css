@@ -165,10 +165,12 @@
   border-radius: 5px;
   padding: 0.3rem 0.9rem;
   margin-left: 0.2rem;
+  font-weight: 500;
 }
 
 .btn-lean-view .btn-course:hover {
-  background-color: #C8D8E4;
+  opacity: 0.9;
+  color: black;
 }
 
 .course-title {
