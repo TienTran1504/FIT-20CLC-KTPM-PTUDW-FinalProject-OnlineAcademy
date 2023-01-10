@@ -278,6 +278,18 @@ ul {
   }
 
   .moving-border {
-    animation: rotate 15s linear infinite;
+    animation: rotate 15s linear infinite, glowing 3s infinite;
+  }
+}
+
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 5px #52ab98;
+  }
+  50% {
+    box-shadow: 0 0 20px #52ab98;
+  }
+  100% {
+    box-shadow: 0 0 5px #52ab98;
   }
 }
