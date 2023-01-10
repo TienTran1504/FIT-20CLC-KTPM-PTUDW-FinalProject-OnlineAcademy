@@ -337,10 +337,6 @@ const search = async (req, res) => {
 
   CourseList = CourseList.map((course) => {
     var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
-    var CourseRatingVote = feedbackList.length;
-    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
-    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
-
     var feedbackListInWeek = feedbackList.filter(
       (u) => dateDiffInDays(new Date(formatDate2(u.createdAt)), new Date()) <= 7
     );
@@ -350,14 +346,28 @@ const search = async (req, res) => {
 
     return {
       ...course,
-      CourseRatingVote: CourseRatingVote,
-      CourseRatingPoint: CourseRatingPoint,
-      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
+      // CourseRatingVote: CourseRatingVote,
+      // CourseRatingPoint: CourseRatingPoint,
+      // createdBy: user !== null ? user.firstName + " " + user.lastName : "",
       viewInWeek: course.viewList.filter(
         (view) => dateDiffInDays(new Date(formatDate2(view.createdAt)), new Date()) <= 7
       ).length,
       CourseRatingVoteInWeek: CourseRatingVoteInWeek,
       CourseRatingPointInWeek: CourseRatingPointInWeek,
+    };
+  });
+
+  courses = courses.map((course) => {
+    var feedbackList = feedback.filter((u) => u.createdIn.toString() == course._id.toString());
+    var CourseRatingVote = feedbackList.length;
+    var CourseRatingPoint = +(feedbackList.reduce((a, b) => a + b.numberRated, 0) / CourseRatingVote).toFixed(1) || 0;
+    var user = users.find((u) => u._id == course.createdBy.toString()) || null;
+
+    return {
+      ...course,
+      CourseRatingVote: CourseRatingVote,
+      CourseRatingPoint: CourseRatingPoint,
+      createdBy: user !== null ? user.firstName + " " + user.lastName : "",
     };
   });
 
