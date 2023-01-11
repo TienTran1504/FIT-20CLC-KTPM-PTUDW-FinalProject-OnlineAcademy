@@ -3,6 +3,8 @@ import Course from "../models/course.model.js";
 import CourseCategory from "../models/coursecategory.model.js";
 import CourseLanguage from "../models/courselanguage.model";
 import Feedback from "../models/feedback.model";
+import Lecture from "../models/lecture.model";
+
 import createError from "http-errors";
 
 const register = async (req, res, next) => {
@@ -694,7 +696,9 @@ const deleteCourse = async function (req, res, next) {
           new: true, runValidators: true
         }
       );
-      const deleteCourse = await Course.deleteOne({ _id: CourseID });
+      await Feedback.deleteMany({ createdIn: CourseID });
+      await Lecture.deleteMany({ createdIn: CourseID });
+      const deleteCourse = await Course.findByIdAndDelete({ _id: CourseID });
       if (!deleteCourse) {
         return next(createError(400, "Please provide a course"));
       }
@@ -846,8 +850,9 @@ const updateCourseCategory = async function (req, res, next) {
   else {
     const userChecking = await User.findOne({ _id: req.session.authUser._id }); // lấy ra đúng user đang login
     if (userChecking.permission === "Admin") {
-      const { CategoryID, CategoryName, CategoryImage } = req.body;
-      const courseUpdate = await CourseCategory.findByIdAndUpdate(
+      const { CategoryCurrentName, CategoryID, CategoryName, CategoryImage } = req.body;
+      const courses = await Course.find({ categoryId: CategoryID });
+      const categoryUpdate = await CourseCategory.findByIdAndUpdate(
         {
           _id: CategoryID,
         },
@@ -865,7 +870,21 @@ const updateCourseCategory = async function (req, res, next) {
           categoryName: CategoryName,
         }
       );
-      if (!courseUpdate) {
+      for (let i = 0; i < courses.length; i++) {
+        await Course.findByIdAndUpdate(
+          {
+            _id: courses[i]._id
+          },
+          {
+            categoryName: CategoryName
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        )
+      }
+      if (!categoryUpdate) {
         return next(createError(400, "Please provide a course"));
       }
       res.redirect("/admin/managecategory");
@@ -890,6 +909,7 @@ const updateLanguageCategory = async function (req, res, next) {
         CategoryName,
         LanguageImage,
       } = req.body;
+      const courses = await Course.find({ languageName: CurrentLanguageName, categoryName: CurrentCategoryName });
       // xoá language trong category cũ
       const findCurrentCategory = await CourseCategory.findOne({
         name: CurrentCategoryName,
@@ -949,6 +969,22 @@ const updateLanguageCategory = async function (req, res, next) {
         },
         { new: true, runValidators: true }
       );
+      for (let i = 0; i < courses.length; i++) {
+        await Course.findByIdAndUpdate(
+          {
+            _id: courses[i]._id
+          },
+          {
+            languageName: languageUpdate.name,
+            categoryId: languageUpdate.categoryId,
+            categoryName: languageUpdate.categoryName,
+          },
+          {
+            new: true,
+            runValidators: true
+          }
+        )
+      }
       if (!languageUpdate) {
         return next(createError(400, "Please provide a language"));
       }
