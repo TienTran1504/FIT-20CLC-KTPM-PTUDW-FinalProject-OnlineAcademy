@@ -42,5 +42,5 @@
 
 <script>
   document.querySelector("#search-form").addEventListener("submit", function (e) { if
-  (document.getElementById("search-textfield").value === "") { e.preventDefault(); } });
+  (document.getElementById("search-textfield").value.trim() === "") { e.preventDefault(); } });
 </script>
