@@ -317,10 +317,15 @@ const getCourseFavorite = async (req, res) => {
   let listCourses = [];
   for (let i = 0; i < getCoursesId.length; i++) {
     const course = await Course.findById({ _id: getCoursesId[i].id });
+    const courseLecture = await Lecture.find({
+      createdIn: getCoursesId[i].id,
+    }).lean();
+
     const feedbacks = course.feedbackList;
     let averageRate = 0;
     for (let j = 0; j < feedbacks.length; j++) {
-      averageRate += feedbacks[j].numberRated;
+      const feedback = await Feedback.findById({ _id: feedbacks[j]._id });
+      averageRate += feedback.numberRated;
     }
     if (averageRate > 0)
       averageRate = (averageRate / feedbacks.length).toFixed(1);
@@ -334,7 +339,7 @@ const getCourseFavorite = async (req, res) => {
       idCourse: course._id,
       rate: averageRate,
       numberRate: feedbacks.length,
-      numberLecture: course.lecture.length,
+      numberLecture: courseLecture.length,
       price: course.price,
     };
     listCourses = [...listCourses, obj];
