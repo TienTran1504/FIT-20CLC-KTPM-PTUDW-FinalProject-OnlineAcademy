@@ -10,6 +10,7 @@
       margin-top: 30px;
     }
   </style>
+   <link rel="stylesheet" type="text/css" href="../../public/assets/css/validation/form.css"/>  
 {{/section}}
 
 {{#section "js"}}
@@ -25,7 +26,17 @@
       ],
     });
   </script>
-
+  <script src="../../public/assets/js/validator.js"></script>
+  <script>
+      Validator({
+          form: '#form-1',
+          rules: [
+              Validator.isRequired('#firstName', 'Please input your first name'),
+              Validator.isRequired('#lastName', 'Please input your last name'),
+              Validator.isRequired('#headline', 'Please input your headline'),
+          ]
+      })
+    </script>
 {{/section}}
 
 <div class="container-fluid" style="margin-top: 80px; min-height: 600px;">
@@ -83,26 +94,29 @@
           </div>
 
           <div class="card-body">
-            <form method="post" id="form-update">
+            <form method="post" id="form-1">
               <div class="pl-5 pr-5">
-                <div class="input-group form-group">
+                <div class="form-group">
                   <input
                     type="text"
                     class="form-control"
                     value="{{this.user.firstName}}"
                     name="firstName"
+                    id="firstName"
                   />
+                   <span class="form-message"></span>
                 </div>
-                <div class="input-group form-group">
+                <div class="form-group">
                   <input
                     type="text"
                     class="form-control"
                     value="{{this.user.lastName}}"
                     name="lastName"
+                    id="lastName"
                   />
+                   <span class="form-message"></span>
                 </div>
-
-                <div class="input-group form-group" style="margin-bottom: 2px;">
+                <div class="form-group" style="margin-bottom: 2px;">
                   <input
                     type="text"
                     class="form-control"
@@ -112,16 +126,18 @@
                     value="{{this.user.headline}}"
                     {{/if}}
                     name="headline"
+                    id="headline"
                   />
+                   <span class="form-message"></span>
                 </div>
-                <p
+                
+
+                <div style="margin-bottom: 2px;">
+                  <p
                   class="form-group"
                   style="font-size: 12px; text-align: left;"
                 >Add a professional headline like, "Instructor at Udemy" or
                   "Architect."</p>
-
-                <!-- Create the editor container -->
-                <div style="margin-bottom: 2px;">
                   <textarea id="desc" name="description">
                     {{#if (isEmpty this.user.description)}}
                     
