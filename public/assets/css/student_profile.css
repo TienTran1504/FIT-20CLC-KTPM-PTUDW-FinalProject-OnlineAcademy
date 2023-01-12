@@ -241,3 +241,16 @@
 #strengthMessage2 {
   text-align: start;
 }
+
+.favotite-container {
+  height: 40rem;
+}
+
+.page-item.active .page-link {
+  background-color: #64B4A3;
+  border-color: #64B4A3;
+}
+
+.page-link {
+  color: #64B4A3;
+}
